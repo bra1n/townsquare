@@ -1,0 +1,42 @@
+@mixin on-circle($item-count) {
+  $angle: (360 / $item-count);
+  $rot: 0;
+
+  @for $i from 1 through $item-count {
+    &:nth-child(#{$i}) {
+      transform: rotate($rot * 1deg);
+      > * {
+        transform: rotate($rot * -1deg);
+      }
+    }
+    $rot: $rot + $angle;
+  }
+}
+
+
+.circle {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  overflow: hidden;
+  position: relative;
+  margin: 0;
+  box-sizing: border-box;
+
+  li {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 50%;
+    transform-origin: 0 100%;
+    text-align: center;
+
+    > * {
+      margin-left: -100px;
+      width: 200px;
+    }
+
+    @include on-circle($item-count: 12);
+  }
+}

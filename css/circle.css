@@ -1,0 +1,96 @@
+.circle {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  overflow: hidden;
+  position: relative;
+  margin: 0;
+  box-sizing: border-box;
+}
+.circle li {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 50%;
+  transform-origin: 0 100%;
+  text-align: center;
+}
+.circle li > * {
+  margin-left: -100px;
+  width: 200px;
+}
+.circle li:nth-child(1) {
+  transform: rotate(0deg);
+}
+.circle li:nth-child(1) > * {
+  transform: rotate(0deg);
+}
+.circle li:nth-child(2) {
+  transform: rotate(30deg);
+}
+.circle li:nth-child(2) > * {
+  transform: rotate(-30deg);
+}
+.circle li:nth-child(3) {
+  transform: rotate(60deg);
+}
+.circle li:nth-child(3) > * {
+  transform: rotate(-60deg);
+}
+.circle li:nth-child(4) {
+  transform: rotate(90deg);
+}
+.circle li:nth-child(4) > * {
+  transform: rotate(-90deg);
+}
+.circle li:nth-child(5) {
+  transform: rotate(120deg);
+}
+.circle li:nth-child(5) > * {
+  transform: rotate(-120deg);
+}
+.circle li:nth-child(6) {
+  transform: rotate(150deg);
+}
+.circle li:nth-child(6) > * {
+  transform: rotate(-150deg);
+}
+.circle li:nth-child(7) {
+  transform: rotate(180deg);
+}
+.circle li:nth-child(7) > * {
+  transform: rotate(-180deg);
+}
+.circle li:nth-child(8) {
+  transform: rotate(210deg);
+}
+.circle li:nth-child(8) > * {
+  transform: rotate(-210deg);
+}
+.circle li:nth-child(9) {
+  transform: rotate(240deg);
+}
+.circle li:nth-child(9) > * {
+  transform: rotate(-240deg);
+}
+.circle li:nth-child(10) {
+  transform: rotate(270deg);
+}
+.circle li:nth-child(10) > * {
+  transform: rotate(-270deg);
+}
+.circle li:nth-child(11) {
+  transform: rotate(300deg);
+}
+.circle li:nth-child(11) > * {
+  transform: rotate(-300deg);
+}
+.circle li:nth-child(12) {
+  transform: rotate(330deg);
+}
+.circle li:nth-child(12) > * {
+  transform: rotate(-330deg);
+}
+
+/*# sourceMappingURL=circle.css.map */
