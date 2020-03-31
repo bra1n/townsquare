@@ -14,10 +14,10 @@
 html, body {
     font-size: 1.2em;
     line-height: 1.4;
-    background: black;
+    background: #333;
     color: white;
     height: 100%;
-    font-family: 'PapyrusW01', serif;
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 /*
@@ -110,15 +110,12 @@ textarea {
     box-sizing: border-box;
 }
 
-.square .player {
-
-}
+.square .player {margin-bottom: 10px;}
 
 .square .token {
-    background: gray;
     border-radius: 50%;
-    height: 150px;
-    width: 150px;
+    height: 156px;
+    width: 156px;
     background: url('../img/token.png') center center;
     background-size: 100%;
     display: inline-block;
@@ -127,28 +124,68 @@ textarea {
     color: black;
     font-weight: 600;
     text-shadow:
-        -1px -1px 0 #fff,  
+        -1px -1px 0 #fff,
         1px -1px 0 #fff,
         -1px 1px 0 #fff,
          1px 1px 0 #fff,
-         0 0 5px rgba(0,0,0,0.5)
+         0 0 5px rgba(0,0,0,0.75);
+    padding-top: 110px;
+    box-sizing: border-box;
+    font-family: 'PapyrusW01', serif;
+    border: 3px solid black;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
-.square .token:after {
-    content: attr(data-role);
-    text-transform: capitalize;
+.square .token:before {
+    content: " ";
+    background-size: 100%;
     position: absolute;
-    bottom: 10px;
-    text-align: center;
     width: 100%;
+    height: 100%;
     left: 0;
+    top: 0;
 }
 
 .square .name {
+    font-size: 120%;
+    line-height: 120%;
+    text-shadow:
+            -2px -2px 0 #000,
+            2px -2px 0 #000,
+            -2px 2px 0 #000,
+            2px 2px 0 #000,
+            0 0 10px rgba(0,0,0,0.75);
 }
 
-.square .reminders {
-    margin-top: 20px;
+.square .reminder {
+    background: url('../img/reminder.png') center center;
+    background-size: 100%;
+    width: 76px;
+    height: 76px;
+    color: black;
+    font-size: 50%;
+    font-weight: bold;
+    display: block;
+    margin: 5px -38px 0;
+    text-align: center;
+    position: relative;
+    box-sizing: border-box;
+    padding-top: 47px;
+    border-radius: 50%;
+    border: 3px solid black;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.square .reminder:before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 100%;
+    background-position: center 0px;
+    background-repeat: no-repeat;
 }
 
 
