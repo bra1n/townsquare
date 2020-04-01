@@ -33,7 +33,7 @@
     },
     data () {
       return {
-        role: this.roles.get(this.player.role)
+        role: this.roles.get(this.player.role) || { reminders: [] }
       }
     },
     methods: {
