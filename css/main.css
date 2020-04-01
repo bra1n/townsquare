@@ -18,10 +18,12 @@
 html, body {
   font-size: 1.2em;
   line-height: 1.4;
-  background: #333;
+  background: url("../img/background.jpg") center center;
+  background-size: cover;
   color: white;
   height: 100%;
   font-family: "Roboto Condensed", sans-serif;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 /*
@@ -103,21 +105,45 @@ textarea {
   height: 100%;
   position: relative;
   border-radius: 50%;
-  border: 2px solid red;
   box-sizing: border-box;
+  padding: 20px;
+}
+.square .circle {
+  background: url("../img/demon-head2.png") center center no-repeat;
+  background-size: 10%;
+}
+.square.public .circle {
+  background-image: url("../img/demon-head.png");
 }
 .square .player {
   margin-bottom: 10px;
 }
-.square .player.dead:after {
+.square .player .shroud {
   content: " ";
   background: url("../img/shroud.png") center -10px no-repeat;
   background-size: auto 100%;
   position: absolute;
-  width: 100%;
+  margin-left: -50px;
+  width: 100px;
   height: 100px;
-  left: 0;
+  left: 50%;
   top: 0;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 200ms;
+  z-index: 2;
+}
+.square .player .shroud:hover {
+  opacity: 1;
+}
+.square .player.dead .shroud {
+  opacity: 1;
+}
+.square .player.dead .name {
+  color: #999;
+}
+.square.public .player.dead .shroud {
+  display: none;
 }
 .square.public .player.dead:after {
   background: url("../img/vote.png") center center no-repeat;
@@ -147,6 +173,7 @@ textarea {
   font-family: "Papyrus", serif;
   border: 3px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 }
 .square .token:before {
   content: " ";
@@ -157,13 +184,43 @@ textarea {
   left: 0;
   top: 0;
 }
+.square .token span {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: 100%;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+.square .token span.leaf-left {
+  background-image: url("../img/leaf-left.png");
+}
+.square .token span.leaf-orange {
+  background-image: url("../img/leaf-orange.png");
+}
+.square .token span.leaf-right {
+  background-image: url("../img/leaf-right.png");
+}
+.square .token span.leaf-top1 {
+  background-image: url("../img/leaf-top1.png");
+}
+.square .token span.leaf-top2 {
+  background-image: url("../img/leaf-top2.png");
+}
+.square .token span.leaf-top3 {
+  background-image: url("../img/leaf-top3.png");
+}
+.square .token span.leaf-top4 {
+  background-image: url("../img/leaf-top4.png");
+}
+.square .token span.leaf-top5 {
+  background-image: url("../img/leaf-top5.png");
+}
 .square.public .token {
   background-image: url("../img/life.png");
 }
-.square.public .token:before {
-  display: none;
-}
-.square.public .token:after {
+.square.public .token:before, .square.public .token:after, .square.public .token span {
   display: none;
 }
 .square.public .player.dead .token {
@@ -194,8 +251,10 @@ textarea {
   border-radius: 50%;
   border: 3px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: opacity 200ms;
+  cursor: pointer;
 }
-.square .reminder:before {
+.square .reminder:before, .square .reminder:after {
   content: " ";
   position: absolute;
   left: 0;
@@ -205,6 +264,30 @@ textarea {
   background-size: 100%;
   background-position: center 0;
   background-repeat: no-repeat;
+  background-image: url("../img/icon-plus.png");
+  transition: opacity 200ms;
+}
+.square .reminder:after {
+  background-image: url("../img/icon-x.png");
+  opacity: 0;
+}
+.square .reminder.add {
+  opacity: 0;
+}
+.square .reminder.add:after {
+  display: none;
+}
+.square .reminder:hover:before {
+  opacity: 0;
+}
+.square .reminder:hover:after {
+  opacity: 1;
+}
+.square .circle li:hover .reminder.add {
+  opacity: 1;
+}
+.square .circle li:hover .reminder.add:before {
+  opacity: 1;
 }
 .square.public .reminder {
   display: none;
