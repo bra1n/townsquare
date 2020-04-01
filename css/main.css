@@ -1,23 +1,27 @@
 /*! HTML5 Boilerplate v7.3.0 | MIT License | https://html5boilerplate.com/ */
-
 /* main.css 2.0.0 | MIT License | https://github.com/h5bp/main.css#readme */
 /*
  * What follows is the result of much research on cross-browser styling.
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
  * Kroc Camen, and the H5BP dev community and team.
  */
-
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
-
+@font-face {
+  font-family: "Papyrus";
+  src: url("../fonts/papyrus.eot");
+  /* IE9*/
+  src: url("../fonts/papyrus.eot?#iefix") format("embedded-opentype"), url("../fonts/papyrus.woff2") format("woff2"), url("../fonts/papyrus.woff") format("woff"), url("../fonts/papyrus.ttf") format("truetype"), url("../fonts/papyrus.svg#PapyrusW01") format("svg");
+  /* iOS 4.1- */
+}
 html, body {
-    font-size: 1.2em;
-    line-height: 1.4;
-    background: #333;
-    color: white;
-    height: 100%;
-    font-family: 'Roboto Condensed', sans-serif;
+  font-size: 1.2em;
+  line-height: 1.4;
+  background: #333;
+  color: white;
+  height: 100%;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 /*
@@ -29,28 +33,26 @@ html, body {
  *
  * Customize the background color to match your design.
  */
-
 ::-moz-selection {
-    background: #b3d4fc;
-    text-shadow: none;
+  background: #b3d4fc;
+  text-shadow: none;
 }
 
 ::selection {
-    background: #b3d4fc;
-    text-shadow: none;
+  background: #b3d4fc;
+  text-shadow: none;
 }
 
 /*
  * A better looking default horizontal rule
  */
-
 hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
 }
 
 /*
@@ -58,158 +60,169 @@ hr {
  * images, videos and the bottom of their containers:
  * https://github.com/h5bp/html5-boilerplate/issues/440
  */
-
 audio,
 canvas,
 iframe,
 img,
 svg,
 video {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 /*
  * Remove default fieldset styles.
  */
-
 fieldset {
-    border: 0;
-    margin: 0;
-    padding: 0;
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
 
 /*
  * Allow only vertical resizing of textareas.
  */
-
 textarea {
-    resize: vertical;
+  resize: vertical;
 }
 
 /* ==========================================================================
    Browser Upgrade Prompt
    ========================================================================== */
-
 .browserupgrade {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
 }
 
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-
 .square {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    border-radius: 50%;
-    border: 2px solid red;
-    box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 50%;
+  border: 2px solid red;
+  box-sizing: border-box;
 }
-
-.square .player {margin-bottom: 10px;}
-
+.square .player {
+  margin-bottom: 10px;
+}
+.square .player.dead:after {
+  content: " ";
+  background: url("../img/shroud.png") center -10px no-repeat;
+  background-size: auto 100%;
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  left: 0;
+  top: 0;
+}
+.square.public .player.dead:after {
+  background: url("../img/vote.png") center center no-repeat;
+  background-size: 40%;
+  height: 153px;
+}
+.square.public .player.dead.traveller:after {
+  filter: grayscale(100%);
+}
+.square.public .player.dead.no-vote:after {
+  display: none;
+}
 .square .token {
-    border-radius: 50%;
-    height: 156px;
-    width: 156px;
-    background: url('../img/token.png') center center;
-    background-size: 100%;
-    display: inline-block;
-    text-align: center;
-    position: relative;
-    color: black;
-    font-weight: 600;
-    text-shadow:
-        -1px -1px 0 #fff,
-        1px -1px 0 #fff,
-        -1px 1px 0 #fff,
-         1px 1px 0 #fff,
-         0 0 5px rgba(0,0,0,0.75);
-    padding-top: 105px;
-    box-sizing: border-box;
-    font-family: 'PapyrusW01', serif;
-    border: 3px solid black;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  border-radius: 50%;
+  height: 153px;
+  width: 153px;
+  background: url("../img/token.png") center center;
+  background-size: 100%;
+  text-align: center;
+  position: relative;
+  color: black;
+  margin: auto;
+  font-weight: 600;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 0 5px rgba(0, 0, 0, 0.75);
+  padding-top: 105px;
+  box-sizing: border-box;
+  font-family: "Papyrus", serif;
+  border: 3px solid black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-
 .square .token:before {
-    content: " ";
-    background-size: 100%;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
+  content: " ";
+  background-size: 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
 }
-
-.square .player.dead:before {
-    content: " ";
-    background: url('../img/shroud.png') center -10px no-repeat;
-    background-size: 30%;
-    position: absolute;
-    width: 100%;
-    height: 100px;
-    z-index: 2;
-    left: 0;
+.square.public .token {
+  background-image: url("../img/life.png");
 }
-
+.square.public .token:before {
+  display: none;
+}
+.square.public .token:after {
+  display: none;
+}
+.square.public .player.dead .token {
+  background-image: url("../img/death.png");
+}
+.square.public .player.traveller .token {
+  filter: grayscale(100%);
+}
 .square .name {
-    font-size: 120%;
-    line-height: 120%;
-    text-shadow:
-            -2px -2px 0 #000,
-            2px -2px 0 #000,
-            -2px 2px 0 #000,
-            2px 2px 0 #000,
-            0 0 10px rgba(0,0,0,0.75);
+  font-size: 120%;
+  line-height: 120%;
+  text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, 0 0 10px rgba(0, 0, 0, 0.75);
 }
-
 .square .reminder {
-    background: url('../img/reminder.png') center center;
-    background-size: 100%;
-    width: 76px;
-    height: 76px;
-    color: black;
-    font-size: 50%;
-    font-weight: bold;
-    display: block;
-    margin: 5px -38px 0;
-    text-align: center;
-    position: relative;
-    box-sizing: border-box;
-    padding-top: 47px;
-    border-radius: 50%;
-    border: 3px solid black;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  background: url("../img/reminder.png") center center;
+  background-size: 100%;
+  width: 75px;
+  height: 75px;
+  color: black;
+  font-size: 50%;
+  font-weight: bold;
+  display: block;
+  margin: 5px -37.5px 0;
+  text-align: center;
+  position: relative;
+  box-sizing: border-box;
+  padding-top: 45px;
+  border-radius: 50%;
+  border: 3px solid black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-
 .square .reminder:before {
-    content: " ";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-size: 100%;
-    background-position: center 0px;
-    background-repeat: no-repeat;
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 100%;
+  background-position: center 0;
+  background-repeat: no-repeat;
 }
-
+.square.public .reminder {
+  display: none;
+}
+.square .controls {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
 
 /* ==========================================================================
    Helper classes
    ========================================================================== */
-
 /*
  * Hide visually and from screen readers
  */
-
 .hidden {
-    display: none !important;
+  display: none !important;
 }
 
 /*
@@ -220,18 +233,17 @@ textarea {
 *    causes content to wrap 1 word per line:
 *    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
 */
-
 .sr-only {
-    border: 0;
-    clip: rect(0, 0, 0, 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-    /* 1 */
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  /* 1 */
 }
 
 /*
@@ -239,24 +251,22 @@ textarea {
 * to be focusable when navigated to via the keyboard:
 * https://www.drupal.org/node/897638
 */
-
 .sr-only.focusable:active,
 .sr-only.focusable:focus {
-    clip: auto;
-    height: auto;
-    margin: 0;
-    overflow: visible;
-    position: static;
-    white-space: inherit;
-    width: auto;
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  white-space: inherit;
+  width: auto;
 }
 
 /*
 * Hide visually and from screen readers, but maintain layout
 */
-
 .invisible {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 /*
@@ -270,17 +280,16 @@ textarea {
 * 2. The use of `table` rather than `block` is only necessary if using
 *    `:before` to contain the top-margins of child elements.
 */
-
 .clearfix:before,
 .clearfix:after {
-    content: " ";
-    /* 1 */
-    display: table;
-    /* 2 */
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
 }
 
 .clearfix:after {
-    clear: both;
+  clear: both;
 }
 
 /* ==========================================================================
@@ -288,79 +297,84 @@ textarea {
    These examples override the primary ('mobile first') styles.
    Modify as content requires.
    ========================================================================== */
-
 @media only screen and (min-width: 35em) {
-    /* Style adjustments for viewports that meet the condition */
+  /* Style adjustments for viewports that meet the condition */
 }
-
-@media print,
-(-webkit-min-device-pixel-ratio: 1.25),
-(min-resolution: 1.25dppx),
-(min-resolution: 120dpi) {
-    /* Style adjustments for high resolution devices */
+@media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 1.25dppx), (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
 }
-
 /* ==========================================================================
    Print styles.
    Inlined to avoid the additional HTTP request:
    https://www.phpied.com/delay-loading-your-print-css/
    ========================================================================== */
-
 @media print {
-    *,
-    *:before,
-    *:after {
-        background: transparent !important;
-        color: #000 !important;
-        /* Black prints faster */
-        box-shadow: none !important;
-        text-shadow: none !important;
-    }
-    a,
-    a:visited {
-        text-decoration: underline;
-    }
-    a[href]:after {
-        content: " (" attr(href) ")";
-    }
-    abbr[title]:after {
-        content: " (" attr(title) ")";
-    }
-    /*
-       * Don't show links that are fragment identifiers,
-       * or use the `javascript:` pseudo protocol
-       */
-    a[href^="#"]:after,
-    a[href^="javascript:"]:after {
-        content: "";
-    }
-    pre {
-        white-space: pre-wrap !important;
-    }
-    pre,
-    blockquote {
-        border: 1px solid #999;
-        page-break-inside: avoid;
-    }
-    /*
-       * Printing Tables:
-       * https://web.archive.org/web/20180815150934/http://css-discuss.incutio.com/wiki/Printing_Tables
-       */
-    thead {
-        display: table-header-group;
-    }
-    tr,
-    img {
-        page-break-inside: avoid;
-    }
-    p,
-    h2,
-    h3 {
-        orphans: 3;
-        widows: 3;
-    }
-    h2,
-    h3 {
-        page-break-after: avoid;
-    }
+  *,
+*:before,
+*:after {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+  a[href^="#"]:after,
+a[href^="javascript:"]:after {
+    content: "";
+  }
+
+  pre {
+    white-space: pre-wrap !important;
+  }
+
+  pre,
+blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  /*
+     * Printing Tables:
+     * https://web.archive.org/web/20180815150934/http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+  thead {
+    display: table-header-group;
+  }
+
+  tr,
+img {
+    page-break-inside: avoid;
+  }
+
+  p,
+h2,
+h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+h3 {
+    page-break-after: avoid;
+  }
 }
+
+/*# sourceMappingURL=main.css.map */

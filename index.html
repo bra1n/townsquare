@@ -11,7 +11,6 @@
 <!--  <link rel="apple-touch-icon" href="icon.png">-->
   <!-- Place favicon.ico in the root directory -->
 
-  <link href="//db.onlinewebfonts.com/c/a0e1b1883c0cf520e9c50d0cd91cd0d0?family=PapyrusW01" rel="stylesheet" type="text/css"/>
   <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
@@ -26,7 +25,7 @@
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
 <![endif]-->
 
-<div class="square">
+<div class="square" id="townsquare" v-bind:class="{ public: isPublic }">
   <ul class="circle size-12">
     <li>
       <div class="player">
@@ -52,7 +51,7 @@
     <li>
       <div class="player dead">
         <div class="token empath"></div>
-        <div class="name">Steffen</div>
+        <div class="name">Tot</div>
       </div>
       <div class="reminder drunk">Drunk</div>
     </li>
@@ -64,16 +63,16 @@
       <div class="reminder drunk">Drunk</div>
     </li>
     <li>
-      <div class="player">
+      <div class="player traveller">
         <div class="token mayor"></div>
-        <div class="name">Steffen</div>
+        <div class="name">Traveller</div>
       </div>
       <div class="reminder drunk">Drunk</div>
     </li>
     <li>
-      <div class="player">
+      <div class="player traveller dead">
         <div class="token recluse"></div>
-        <div class="name">Steffen</div>
+        <div class="name">Toter Traveller</div>
       </div>
       <div class="reminder drunk">Drunk</div>
     </li>
@@ -85,9 +84,9 @@
       <div class="reminder drunk">Drunk</div>
     </li>
     <li>
-      <div class="player">
+      <div class="player dead no-vote">
         <div class="token virgin"></div>
-        <div class="name">Steffen</div>
+        <div class="name">Keine Stimme</div>
       </div>
       <div class="reminder drunk">Drunk</div>
     </li>
@@ -113,8 +112,12 @@
       <div class="reminder imp">Dies</div>
     </li>
   </ul>
+  <div class="controls">
+    <button v-on:click="togglePublic">Toggle</button>
+  </div>
 </div>
 
+<script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/main.js"></script>
 </body>
-
 </html>

@@ -218,6 +218,7 @@
 }
 .square .token.undertaker:after {
   content: "Undertaker";
+  line-height: 100%;
 }
 
 .square .reminder.undertaker:before {
@@ -239,7 +240,8 @@
   font-size: 75%;
 }
 .square .token.washerwoman:before {
-  background-image: url("../img/icon-washerwoman.png");
+  background: url("../img/leaf-top2.png") top center no-repeat, url("../img/leaf-left.png") left center no-repeat, url("../img/icon-washerwoman.png");
+  background-size: 25px, 25px, 100%;
 }
 .square .token.washerwoman:after {
   content: "Washerwoman";
