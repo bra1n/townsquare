@@ -17,13 +17,13 @@ $roles:
   'slayer' 'Slayer',
   'soldier' 'Soldier',
   'spy' 'Spy',
-  'scarletwoman' 'Scarlet Woman',
+  'scarletwoman' 'Scarlet Woman' 80%,
   'undertaker' 'Undertaker' 85%,
   'virgin' 'Virgin',
   'washerwoman' 'Washerwoman' 75%;
 
 @each $img, $name, $fontsize in $roles {
-  .square .token.#{$img} {
+  .token.#{$img} {
     &:before {
       background-image: url('../img/icon-#{$img}.png');
     }
@@ -33,7 +33,7 @@ $roles:
     font-size: $fontsize;
   }
 
-  .square .reminder.#{$img}:before {
+  .reminder.#{$img}:before {
     background-image: url('../img/icon-#{$img}.png');
   }
 }
