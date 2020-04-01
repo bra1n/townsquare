@@ -43,7 +43,8 @@
     color: white;
     height: 100%;
     font-family: 'Roboto Condensed', sans-serif;
-    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     padding: 0;
     margin: 0;
   }
