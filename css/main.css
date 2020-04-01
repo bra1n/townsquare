@@ -129,7 +129,7 @@ textarea {
         -1px 1px 0 #fff,
          1px 1px 0 #fff,
          0 0 5px rgba(0,0,0,0.75);
-    padding-top: 110px;
+    padding-top: 105px;
     box-sizing: border-box;
     font-family: 'PapyrusW01', serif;
     border: 3px solid black;
@@ -144,6 +144,17 @@ textarea {
     height: 100%;
     left: 0;
     top: 0;
+}
+
+.square .player.dead:before {
+    content: " ";
+    background: url('../img/shroud.png') center -10px no-repeat;
+    background-size: 30%;
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    z-index: 2;
+    left: 0;
 }
 
 .square .name {
