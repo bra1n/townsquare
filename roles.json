@@ -1,6 +1,7 @@
 [
   {
-    "name": "washerwoman",
+    "id": "washerwoman",
+    "name": "Washerwoman",
     "set": "TB",
     "team": "townsfolk",
     "firstNight": true,
@@ -10,7 +11,8 @@
     "ability": "You start knowing 1 of 2 players is a particular Townsfolk."
   },
   {
-    "name": "librarian",
+    "id": "librarian",
+    "name": "Librarian",
     "set": "TB",
     "team": "townsfolk",
     "firstNight": true,
@@ -20,7 +22,8 @@
     "ability": "You start knowing that 1 of 2 players is a particular Outsider. (Or that zero are in play)"
   },
   {
-    "name": "investigator",
+    "id": "investigator",
+    "name": "Investigator",
     "set": "TB",
     "team": "townsfolk",
     "firstNight": true,
@@ -30,7 +33,8 @@
     "ability": "You start knowing 1 of 2 players is a particular Minion."
   },
   {
-    "name": "chef",
+    "id": "chef",
+    "name": "Chef",
     "set": "TB",
     "team": "townsfolk",
     "firstNight": true,
@@ -40,7 +44,8 @@
     "ability": "You start knowing how many pairs of evil players there are."
   },
   {
-    "name": "empath",
+    "id": "empath",
+    "name": "Empath",
     "set": "TB",
     "team": "townsfolk",
     "firstNight": true,
@@ -50,7 +55,8 @@
     "ability": "Each night, you learn how many of your 2 alive neighbours are evil."
   },
   {
-    "name": "fortuneteller",
+    "id": "fortuneteller",
+    "name": "Fortune Teller",
     "set": "TB",
     "team": "townsfolk",
     "firstNight": true,
@@ -60,7 +66,8 @@
     "ability": "Each night, choose 2 players: you learn if either is a Demon. There is 1 good player that registers falsely to you."
   },
   {
-    "name": "undertaker",
+    "id": "undertaker",
+    "name": "Undertaker",
     "set": "TB",
     "team": "townsfolk",
     "firstNight": false,
@@ -70,7 +77,8 @@
     "ability": "Each night*, you learn which character died by execution today."
   },
   {
-    "name": "monk",
+    "id": "monk",
+    "name": "Monk",
     "set": "TB",
     "team": "townsfolk",
     "firstNight": false,
@@ -80,7 +88,8 @@
     "ability": "Each night*, choose a player (not yourself): they are safe from the Demon tonight."
   },
   {
-    "name": "ravenkeeper",
+    "id": "ravenkeeper",
+    "name": "Ravenkeeper",
     "set": "TB",
     "team": "townsfolk",
     "firstNight": false,
@@ -90,7 +99,8 @@
     "ability": "If you die at night, you are woken to choose a player: you learn their character."
   },
   {
-    "name": "mayor",
+    "id": "mayor",
+    "name": "Mayor",
     "set": "TB",
     "team": "townsfolk",
     "firstNight": false,
@@ -100,7 +110,8 @@
     "ability": "If only 3 players live & no execution occurs, your team wins. If you die at night, another player might die instead."
   },
   {
-    "name": "slayer",
+    "id": "slayer",
+    "name": "Slayer",
     "set": "TB",
     "team": "townsfolk",
     "firstNight": false,
@@ -110,7 +121,8 @@
     "ability": "Once per game, during the day, publicly choose a player: if they are the Demon, they die."
   },
   {
-    "name": "soldier",
+    "id": "soldier",
+    "name": "Soldier",
     "set": "TB",
     "team": "townsfolk",
     "firstNight": false,
@@ -120,7 +132,8 @@
     "ability": "You are safe from the Demon."
   },
   {
-    "name": "virgin",
+    "id": "virgin",
+    "name": "Virgin",
     "set": "TB",
     "team": "townsfolk",
     "firstNight": false,
@@ -130,7 +143,8 @@
     "ability": "The first time you are nominated, if the nominator is a Townsfolk, they are executed immediately."
   },
   {
-    "name": "butler",
+    "id": "butler",
+    "name": "Butler",
     "set": "TB",
     "team": "outsider",
     "firstNight": true,
@@ -140,7 +154,8 @@
     "ability": "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too."
   },
   {
-    "name": "drunk",
+    "id": "drunk",
+    "name": "Drunk",
     "set": "TB",
     "team": "outsider",
     "firstNight": false,
@@ -150,7 +165,8 @@
     "ability": "You do not know you are the Drunk. You think you are a Townsfolk, but your ability malfunctions."
   },
   {
-    "name": "recluse",
+    "id": "recluse",
+    "name": "Recluse",
     "set": "TB",
     "team": "outsider",
     "firstNight": false,
@@ -160,7 +176,8 @@
     "ability": "You might register as evil and as a Minion or Demon, even if dead."
   },
   {
-    "name": "saint",
+    "id": "saint",
+    "name": "Saint",
     "set": "TB",
     "team": "outsider",
     "firstNight": false,
@@ -170,7 +187,8 @@
     "ability": "If you die by execution, your team loses."
   },
   {
-    "name": "baron",
+    "id": "baron",
+    "name": "Baron",
     "set": "TB",
     "team": "minion",
     "firstNight": false,
@@ -180,7 +198,8 @@
     "ability": "There are extra Outsiders in play. [+2 Outsiders]"
   },
   {
-    "name": "poisoner",
+    "id": "poisoner",
+    "name": "Poisoner",
     "set": "TB",
     "team": "minion",
     "firstNight": true,
@@ -190,7 +209,8 @@
     "ability": "Each night, choose a player: their ability malfunctions tonight and tomorrow day."
   },
   {
-    "name": "spy",
+    "id": "spy",
+    "name": "Spy",
     "set": "TB",
     "team": "minion",
     "firstNight": true,
@@ -200,7 +220,8 @@
     "ability": "Each night, you see the Grimoire. You might register as good and as a Townsfolk or Outsider, even if dead."
   },
   {
-    "name": "scarletwoman",
+    "id": "scarletwoman",
+    "name": "Scarlet Woman",
     "set": "TB",
     "team": "minion",
     "firstNight": false,
@@ -210,7 +231,8 @@
     "ability": "If there are 5 or more players alive (Travellers don't count) and the Demon dies, you become the Demon."
   },
   {
-    "name": "imp",
+    "id": "imp",
+    "name": "Imp",
     "set": "TB",
     "team": "demon",
     "firstNight": false,

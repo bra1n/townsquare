@@ -33,7 +33,7 @@
           { name: "Sean", role: "recluse" },
           { name: "Petra", role: "undertaker" },
         ],
-        roles: new Map(roles.map(role => [role.name, role])),
+        roles: new Map(roles.map(role => [role.id, role])),
       }
     }
   }
@@ -49,6 +49,15 @@
         transform: rotate($rot * 1deg);
         @if $i - 1 <= $item-count / 2 {
           z-index: $item-count - $i + 1;
+          .ability {
+            left: 100%; right: auto;
+            &:after {
+              border-left-color: transparent;
+              border-right-color: black;
+              left: auto;
+              right: 100%;
+            }
+          }
         } @else {
           z-index: $i - 1;
         }
@@ -78,6 +87,10 @@
       transform-origin: 0 100%;
       text-align: center;
 
+      &:hover {
+        z-index: 25 !important;
+      }
+
       > * {
         margin-left: -100px;
         width: 200px;
@@ -85,23 +98,11 @@
     }
   }
 
-  .circle.size-5 li { @include on-circle($item-count: 5); }
-  .circle.size-6 li { @include on-circle($item-count: 6); }
-  .circle.size-7 li { @include on-circle($item-count: 7); }
-  .circle.size-8 li { @include on-circle($item-count: 8); }
-  .circle.size-9 li { @include on-circle($item-count: 9); }
-  .circle.size-10 li { @include on-circle($item-count: 10); }
-  .circle.size-11 li { @include on-circle($item-count: 11); }
-  .circle.size-12 li { @include on-circle($item-count: 12); }
-  .circle.size-13 li { @include on-circle($item-count: 13); }
-  .circle.size-14 li { @include on-circle($item-count: 14); }
-  .circle.size-15 li { @include on-circle($item-count: 15); }
-  .circle.size-16 li { @include on-circle($item-count: 16); }
-  .circle.size-17 li { @include on-circle($item-count: 17); }
-  .circle.size-18 li { @include on-circle($item-count: 18); }
-  .circle.size-19 li { @include on-circle($item-count: 19); }
-  .circle.size-20 li { @include on-circle($item-count: 20); }
-
+  @for $i from 5 through 20 {
+    .circle.size-#{$i} li {
+      @include on-circle($item-count: $i);
+    }
+  }
 
   // player circle
   .circle {

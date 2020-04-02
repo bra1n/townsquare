@@ -8,7 +8,9 @@
         <span class="leaf-right" v-if="role.otherNight"></span>
         <span v-if="role.reminders.length" v-bind:class="['leaf-top' + role.reminders.length]"></span>
         <span class="leaf-orange" v-if="role.setup"></span>
+        <div>{{ role.name }}</div>
       </div>
+      <div class="ability" v-if="role.ability">{{ role.ability }}</div>
       <div class="name">{{ player.name }}</div>
     </div>
     <div class="reminder add"></div>
@@ -163,6 +165,7 @@
 
   #townsquare.public .token {
     background-image: url('../img/life.png');
+    div { display: none; }
     &:before, &:after, span { display: none; }
   }
 
@@ -185,6 +188,36 @@
         2px 2px 0 #000,
         0 0 10px rgba(0,0,0,0.75);
   }
+
+  /***** Ability text *****/
+  #townsquare.public .ability { display: none; }
+  .circle .ability {
+    position: absolute;
+    padding: 5px 10px;
+    top: 20px;
+    right: 100%;
+    width: 200px;
+    z-index: 25;
+    font-size: 80%;
+    background: rgba(0,0,0,0.7);
+    border-radius: 10px;
+    border: 3px solid black;
+    text-align: left;
+    display: none;
+    &:after {
+      content: " ";
+      border: 10px solid transparent;
+      position: absolute;
+      left: 100%;
+      width: 0;
+      height: 0;
+      border-left-color: black;
+      top: 20px;
+      margin: 0 2px;
+    }
+  }
+
+  .player:hover .ability { display: block; }
 
   /***** Reminder token *****/
   .circle .reminder {
