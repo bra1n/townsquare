@@ -6,7 +6,8 @@
   "dependencies": {
     "sass": "^1.26.3",
     "sass-loader": "^8.0.2",
-    "@vue/cli-service": "^4.2.3"
+    "@vue/cli-service": "^4.2.3",
+    "vue": "^2.3.3",
   },
   "devDependencies": {},
   "scripts": {
