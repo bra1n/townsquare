@@ -8,6 +8,7 @@
           :roles="roles"
           :is-public="isPublic"
           @add-reminder="openReminderModal"
+          @set-role="openRoleModal"
       ></Player>
     </ul>
     <Modal v-show="availableReminders.length" @close="closeModal">
@@ -19,13 +20,24 @@
         </li>
       </ul>
     </Modal>
+    <Modal v-show="availableRoles.length" @close="closeModal">
+      <ul class="tokens">
+        <li v-for="role in availableRoles" class="token"
+            v-bind:class="[role.id, role.team]"
+            @click="setRole(role)">
+          {{ role.name }}
+        </li>
+      </ul>
+    </Modal>
   </div>
 </template>
 
 <script>
-  import roles from '../roles.json'
+  import rolesJSON from '../roles.json'
   import Player from './Player'
   import Modal from "./Modal";
+
+  const roles = new Map(rolesJSON.sort((a, b) => b.team.localeCompare(a.team)).map(role => [role.id, role]));
 
   export default {
     components: {
@@ -36,18 +48,18 @@
     data () {
       return {
         players: [
-          { name: "Steffen", role: "baron", reminders: [{ role: 'imp', name: 'Die' }] },
-          { name: "Tino", role: "imp" },
-          { name: "Basti", role: "chef", reminders: [] },
-          { name: "Bernd", role: "ravenkeeper", reminders: [] },
-          { name: "Tim", role: "drunk", reminders: [] },
-          { name: "Yann", role: "librarian", reminders: [] },
-          { name: "Marie", role: "empath", reminders: [] },
-          { name: "Bogdan", role: "scarletwoman", reminders: [] },
-          { name: "Sean", role: "recluse", reminders: [] },
-          { name: "Petra", role: "undertaker", reminders: [] },
+          { name: "Steffen", role: roles.get('baron'), reminders: [{ role: 'imp', name: 'Die' }] },
+          { name: "Tino", role: roles.get("imp") },
+          { name: "Basti", role: roles.get("chef"), reminders: [] },
+          { name: "Bernd", role: roles.get("ravenkeeper"), reminders: [] },
+          { name: "Tim", role: roles.get("drunk"), reminders: [] },
+          { name: "Yann", role: roles.get("librarian"), reminders: [] },
+          { name: "Marie", role: roles.get("empath"), reminders: [] },
+          { name: "Bogdan", role: roles.get("scarletwoman"), reminders: [] },
+          { name: "Sean", role: roles.get("recluse"), reminders: [] },
+          { name: "Petra", role: roles.get("undertaker"), reminders: [] },
         ],
-        roles: new Map(roles.map(role => [role.id, role])),
+        roles,
         selectedPlayer: false,
         availableReminders: [],
         availableRoles: [],
@@ -58,17 +70,29 @@
         this.selectedPlayer = player;
         this.availableReminders = [];
         this.roles.forEach(role => {
-          if (this.players.some(p => p.role === role.id)) {
+          if (this.players.some(p => p.role.id === role.id)) {
             this.availableReminders = [
               ...this.availableReminders,
               ...role.reminders.map(name => ({role: role.id, name}))
             ];
           }
         });
-        console.log('open', player.reminders);
+      },
+      openRoleModal (player) {
+        this.selectedPlayer = player;
+        this.availableRoles = [];
+        this.roles.forEach(role => {
+          if(role.id !== player.role) {
+            this.availableRoles.push(role);
+          }
+        });
       },
       addReminder (reminder) {
         this.selectedPlayer.reminders.push(reminder);
+        this.closeModal();
+      },
+      setRole (role) {
+        this.selectedPlayer.role = role;
         this.closeModal();
       },
       closeModal () {
@@ -166,8 +190,8 @@
     background-image: url('../assets/demon-head.png');
   }
 
-  /***** Reminder token modal ******/
-  ul.reminders {
+  /***** Role token modal ******/
+  ul.tokens {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -177,6 +201,58 @@
     align-items: center;
     overflow: hidden;
     justify-content: center;
+    font-size: 75%;
+    line-height: 100%;
+
+    .token {
+      border-radius: 50%;
+      height: 120px;
+      width: 120px;
+      background: url('../assets/token.png') center center;
+      background-size: 100%;
+      text-align: center;
+      position: relative;
+      color: black;
+      margin: 5px;
+      font-weight: 600;
+      text-shadow:
+          -1px -1px 0 #fff,
+          1px -1px 0 #fff,
+          -1px 1px 0 #fff,
+          1px 1px 0 #fff,
+          0 0 5px rgba(0,0,0,0.75);
+      padding-top: 85px;
+      box-sizing: border-box;
+      font-family: 'Papyrus', serif;
+      border: 3px solid black;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      cursor: pointer;
+      transition: transform 500ms ease;
+
+      &.townsfolk { box-shadow: 0 0 10px #004cff, 0 0 10px #004cff; }
+      &.outsider { box-shadow: 0 0 10px #00D6FF, 0 0 10px #00d6ff; }
+      &.minion { box-shadow: 0 0 10px #ff6900, 0 0 10px #ff6900; }
+      &.demon { box-shadow: 0 0 10px #ff0000, 0 0 10px #ff0000; }
+
+      &:before {
+        content: " ";
+        background-size: 100%;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+      }
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  /***** Reminder token modal ******/
+  ul.reminders {
+    @extend .tokens;
 
     .reminder {
       background: url('../assets/reminder.png') center center;

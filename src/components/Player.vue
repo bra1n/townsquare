@@ -3,14 +3,14 @@
     <div class="player"
          :class="{ dead: player.hasDied, 'no-vote': player.hasVoted }">
       <div class="shroud" @click="toggleStatus()"></div>
-      <div class="token" @click="changeRole()" :class="[player.role]">
-        <span class="leaf-left" v-if="role.firstNight"></span>
-        <span class="leaf-right" v-if="role.otherNight"></span>
-        <span v-if="role.reminders.length" v-bind:class="['leaf-top' + role.reminders.length]"></span>
-        <span class="leaf-orange" v-if="role.setup"></span>
-        <div>{{ role.name }}</div>
+      <div class="token" @click="changeRole()" :class="[player.role.id]">
+        <span class="leaf-left" v-if="player.role.firstNight"></span>
+        <span class="leaf-right" v-if="player.role.otherNight"></span>
+        <span v-if="player.role.reminders.length" v-bind:class="['leaf-top' + player.role.reminders.length]"></span>
+        <span class="leaf-orange" v-if="player.role.setup"></span>
+        <div>{{ player.role.name }}</div>
       </div>
-      <div class="ability" v-if="role.ability">{{ role.ability }}</div>
+      <div class="ability" v-if="player.role.ability">{{ player.role.ability }}</div>
       <div class="name">{{ player.name }}</div>
     </div>
     <div class="reminder"
@@ -39,9 +39,7 @@
       }
     },
     data () {
-      return {
-        role: this.roles.get(this.player.role) || { reminders: [] }
-      }
+      return {}
     },
     methods: {
       toggleStatus () {
@@ -56,7 +54,7 @@
       },
       changeRole () {
         if (!this.isPublic) {
-          console.log('role change');
+          this.$emit('set-role', this.player);
         } else {
           this.toggleStatus();
         }

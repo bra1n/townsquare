@@ -43,7 +43,7 @@
     overflow-x: auto;
     display: flex;
     flex-direction: column;
-    max-width: 70%;
+    max-width: 60%;
   }
 
   .modal-fade-enter,
