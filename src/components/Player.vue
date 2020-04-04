@@ -13,7 +13,12 @@
       <div class="ability" v-if="role.ability">{{ role.ability }}</div>
       <div class="name">{{ player.name }}</div>
     </div>
-    <div class="reminder add"></div>
+    <div class="reminder"
+         v-if="player.reminders"
+         v-for="reminder in player.reminders"
+         v-bind:class="[reminder.role]"
+         @click="removeReminder(reminder)">{{ reminder.name }}</div>
+    <div class="reminder add" @click="$emit('add-reminder', player)"></div>
   </li>
 </template>
 
@@ -55,13 +60,15 @@
         } else {
           this.toggleStatus();
         }
+      },
+      removeReminder (reminder) {
+        this.player.reminders.splice(this.player.reminders.indexOf(reminder), 1);
       }
     }
   }
 </script>
 
 <style lang="scss">
-  @import '../roles.scss';
 
   // token size
   $token: 150px;
@@ -72,7 +79,7 @@
 
     .shroud {
       content: " ";
-      background: url('../img/shroud.png') center -10px no-repeat;
+      background: url('../assets/shroud.png') center -10px no-repeat;
       background-size: auto 100%;
       position: absolute;
       margin-left: -2/6 * $token;
@@ -98,7 +105,7 @@
       left: 0;
       top: 0;
       width: 100%;
-      background: url('../img/vote.png') center center no-repeat;
+      background: url('../assets/vote.png') center center no-repeat;
       background-size: 40%;
       height: $token + 3px;
       pointer-events: none;
@@ -114,7 +121,7 @@
     border-radius: 50%;
     height: $token + 3px;
     width: $token + 3px;
-    background: url('../img/token.png') center center;
+    background: url('../assets/token.png') center center;
     background-size: 100%;
     text-align: center;
     position: relative;
@@ -152,25 +159,25 @@
       left: 0;
       top: 0;
       pointer-events: none;
-      &.leaf-left { background-image: url('../img/leaf-left.png'); }
-      &.leaf-orange { background-image: url('../img/leaf-orange.png'); }
-      &.leaf-right { background-image: url('../img/leaf-right.png'); }
-      &.leaf-top1 { background-image: url('../img/leaf-top1.png'); }
-      &.leaf-top2 { background-image: url('../img/leaf-top2.png'); }
-      &.leaf-top3 { background-image: url('../img/leaf-top3.png'); }
-      &.leaf-top4 { background-image: url('../img/leaf-top4.png'); }
-      &.leaf-top5 { background-image: url('../img/leaf-top5.png'); }
+      &.leaf-left { background-image: url('../assets/leaf-left.png'); }
+      &.leaf-orange { background-image: url('../assets/leaf-orange.png'); }
+      &.leaf-right { background-image: url('../assets/leaf-right.png'); }
+      &.leaf-top1 { background-image: url('../assets/leaf-top1.png'); }
+      &.leaf-top2 { background-image: url('../assets/leaf-top2.png'); }
+      &.leaf-top3 { background-image: url('../assets/leaf-top3.png'); }
+      &.leaf-top4 { background-image: url('../assets/leaf-top4.png'); }
+      &.leaf-top5 { background-image: url('../assets/leaf-top5.png'); }
     }
   }
 
   #townsquare.public .token {
-    background-image: url('../img/life.png');
+    background-image: url('../assets/life.png');
     div { display: none; }
     &:before, &:after, span { display: none; }
   }
 
   #townsquare.public .player.dead .token {
-    background-image: url('../img/death.png');
+    background-image: url('../assets/death.png');
   }
 
   #townsquare.public .player.traveller .token {
@@ -221,7 +228,7 @@
 
   /***** Reminder token *****/
   .circle .reminder {
-    background: url('../img/reminder.png') center center;
+    background: url('../assets/reminder.png') center center;
     background-size: 100%;
     width: $token / 2;
     height: $token / 2;
@@ -250,12 +257,12 @@
       background-size: 100%;
       background-position: center 0;
       background-repeat: no-repeat;
-      background-image: url('../img/icon-plus.png');
+      background-image: url('../assets/icons/plus.png');
       transition: opacity 200ms;
     }
 
     &:after {
-      background-image: url('../img/icon-x.png');
+      background-image: url('../assets/icons/x.png');
       opacity: 0;
     }
 

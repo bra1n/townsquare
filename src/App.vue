@@ -1,5 +1,5 @@
 <template>
-  <div id="townsquare" class="square"  v-bind:class="{ public: isPublic }">
+  <div id="app">
     <TownSquare :is-public="isPublic"></TownSquare>
     <div class="controls">
       <button v-on:click="togglePublic">Toggle</button>
@@ -27,18 +27,18 @@
 
 <style lang="scss">
   @font-face { font-family: "Papyrus";
-    src: url("fonts/papyrus.eot"); /* IE9*/
-    src: url("fonts/papyrus.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
-    url("fonts/papyrus.woff2") format("woff2"), /* chrome firefox */
-    url("fonts/papyrus.woff") format("woff"), /* chrome firefox */
-    url("fonts/papyrus.ttf") format("truetype"), /* chrome firefox opera Safari, Android, iOS 4.2+*/
-    url("fonts/papyrus.svg#PapyrusW01") format("svg"); /* iOS 4.1- */
+    src: url("assets/fonts/papyrus.eot"); /* IE9*/
+    src: url("assets/fonts/papyrus.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("assets/fonts/papyrus.woff2") format("woff2"), /* chrome firefox */
+    url("assets/fonts/papyrus.woff") format("woff"), /* chrome firefox */
+    url("assets/fonts/papyrus.ttf") format("truetype"), /* chrome firefox opera Safari, Android, iOS 4.2+*/
+    url("assets/fonts/papyrus.svg#PapyrusW01") format("svg"); /* iOS 4.1- */
   }
 
   html, body {
     font-size: 1.2em;
     line-height: 1.4;
-    background: url('img/background.jpg') center center;
+    background: url('assets/background.jpg') center center;
     background-size: cover;
     color: white;
     height: 100%;
@@ -49,13 +49,8 @@
     margin: 0;
   }
 
-  #townsquare {
-    width: 100%;
+  #app {
     height: 100%;
-    position: relative;
-    border-radius: 50%;
-    box-sizing: border-box;
-    padding: 20px;
   }
 
   // Controls
