@@ -1,5 +1,5 @@
 <template>
-  <div class="square" id="townsquare" v-bind:class="{ public: isPublic }">
+  <div id="townsquare" class="square"  v-bind:class="{ public: isPublic }">
     <TownSquare :is-public="isPublic"></TownSquare>
     <div class="controls">
       <button v-on:click="togglePublic">Toggle</button>
