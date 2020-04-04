@@ -21,7 +21,7 @@
     </div>
   </transition>
 </template>
-<style>
+<style lang="scss">
   .modal-backdrop {
     position: fixed;
     top: 0;
@@ -44,6 +44,11 @@
     display: flex;
     flex-direction: column;
     max-width: 60%;
+
+    h2 {
+      margin: 0;
+      text-align: center;
+    }
   }
 
   .modal-fade-enter,

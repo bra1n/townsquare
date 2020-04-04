@@ -12,6 +12,7 @@
       ></Player>
     </ul>
     <Modal v-show="availableReminders.length" @close="closeModal">
+      <h2>Choose a reminder token:</h2>
       <ul class="reminders">
         <li v-for="reminder in availableReminders" class="reminder"
             v-bind:class="[reminder.role]"
@@ -21,6 +22,7 @@
       </ul>
     </Modal>
     <Modal v-show="availableRoles.length" @close="closeModal">
+      <h2>Choose a new role:</h2>
       <ul class="tokens">
         <li v-for="role in availableRoles" class="token"
             v-bind:class="[role.id, role.team]"

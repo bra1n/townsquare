@@ -84,15 +84,24 @@
       width: 2/3 * $token;
       height: 2/3 * $token;
       left: 50%;
-      top: 0;
+      top: -30px;
       cursor: pointer;
       opacity: 0;
-      transition: opacity 200ms;
+      transform: scale(1.5);
+      transition: all 200ms;
       z-index: 2;
-      &:hover { opacity: 0.5; }
+      &:hover {
+        opacity: 0.5;
+        top: -10px;
+        transform: scale(1);
+      }
     }
 
-    &.dead .shroud { opacity: 1; }
+    &.dead .shroud {
+      opacity: 1;
+      top: 0;
+      transform: scale(1);
+    }
     &.dead .name { color: #999; }
   }
 
@@ -242,7 +251,7 @@
     border-radius: 50%;
     border: 3px solid black;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    transition: opacity 200ms;
+    transition: all 200ms;
     cursor: pointer;
 
     &:before, &:after {
@@ -266,13 +275,14 @@
 
     &.add {
       opacity: 0;
+      top: 30px;
       &:after { display: none; }
     }
 
     &:hover:before { opacity: 0; }
     &:hover:after { opacity: 1; }
   }
-  .circle li:hover .reminder.add, { opacity: 1; }
+  .circle li:hover .reminder.add, { opacity: 1; top: 0; }
   .circle li:hover .reminder.add:before { opacity: 1; }
 
   #townsquare.public .reminder { display: none; }
