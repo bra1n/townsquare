@@ -1,51 +1,35 @@
 <template>
   <div id="app">
-    <ul class="info">
-      <li>
-        {{ players.length }} <font-awesome-icon icon="users" />
-        {{ teams.alive }} <font-awesome-icon icon="heartbeat" />
-        {{ teams.votes }} <font-awesome-icon icon="vote-yea" />
-      </li>
-      <li>
-        {{ teams.townsfolk }}
-        <span class="townsfolk"><font-awesome-icon icon="user-friends"/></span>
-        {{ teams.outsiders }}
-        <span class="outsider"><font-awesome-icon v-bind:icon="teams.outsiders > 1 ? 'user-friends' : 'user'"/></span>
-        {{ teams.minions }}
-        <span class="minion"><font-awesome-icon v-bind:icon="teams.minions > 1 ? 'user-friends' : 'user'"/></span>
-        {{ teams.demons }}
-        <span class="demon"><font-awesome-icon v-bind:icon="teams.demons > 1 ? 'user-friends' : 'user'"/></span>
-        <template v-if="teams.travellers">
-          {{ teams.travellers }}
-          <span class="traveller"
-            ><font-awesome-icon v-bind:icon="teams.travellers > 1 ? 'user-friends' : 'user'"/></span>
-        </template>
-      </li>
-    </ul>
+    <TownInfo :players="players"></TownInfo>
     <TownSquare
-      v-if="players.length >= 5"
       :is-public="isPublic"
       :players="players"
       :roles="roles"
     ></TownSquare>
     <div class="controls">
-      <button v-on:click="togglePublic">Toggle</button>
-      <button v-on:click="addPlayer" v-bind:disabled="players.length >= 20">
-        Add Player
-      </button>
-      <button v-on:click="togglePublic" v-bind:disabled="players.length <= 0">
-        Remove Player
-      </button>
-      <button v-on:click="togglePublic">Select Roles</button>
-      <button v-on:click="togglePublic">Randomize Roles</button>
+      <font-awesome-icon icon="cogs" @click="isControlOpen = !isControlOpen"/>
+      <ul v-if="isControlOpen">
+        <li v-on:click="togglePublic">
+          Toggle Grimoire
+        </li>
+        <li v-on:click="addPlayer" v-if="players.length < 20">
+          Add Player
+        </li>
+        <li v-on:click="togglePublic" v-if="players.length > 4">
+          Select Roles
+        </li>
+        <li v-on:click="randomizeSeatings" v-if="players.length > 2">
+          Randomize Seatings
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
-import TownSquare from "./components/TownSquare.vue";
+import TownSquare from "./components/TownSquare";
+import TownInfo from "./components/TownInfo";
 import rolesJSON from "./roles";
-import gameJSON from "./game";
 
 const roles = new Map(
   rolesJSON
@@ -55,44 +39,27 @@ const roles = new Map(
 
 export default {
   components: {
-    TownSquare
-  },
-  computed: {
-    teams: function() {
-      const nontravellers = this.players.filter(
-        player => player.role.team !== "traveller"
-      ).length;
-      const alive = this.players.filter(player => player.hasDied !== true)
-        .length;
-      return {
-        ...gameJSON[nontravellers - 5],
-        travellers: this.players.length - nontravellers,
-        alive,
-        votes:
-          alive +
-          this.players.filter(
-            player => player.hasDied === true && player.hasVoted !== true
-          ).length
-      };
-    }
+    TownSquare,
+    TownInfo
   },
   data: () => ({
     isPublic: true,
+    isControlOpen: false,
     players: [
-      {
-        name: "Steffen",
-        role: roles.get("baron"),
-        reminders: [{ role: "imp", name: "Die" }]
-      },
-      { name: "Tino", role: roles.get("harlot"), reminders: [] },
-      { name: "Basti", role: roles.get("chef"), reminders: [] },
-      { name: "Bernd", role: roles.get("ravenkeeper"), reminders: [] },
-      { name: "Tim", role: roles.get("drunk"), reminders: [] },
-      { name: "Yann", role: roles.get("librarian"), reminders: [] },
-      { name: "Marie", role: roles.get("empath"), reminders: [] },
-      { name: "Bogdan", role: roles.get("scarletwoman"), reminders: [] },
-      { name: "Sean", role: roles.get("recluse"), reminders: [] },
-      { name: "Petra", role: roles.get("undertaker"), reminders: [] }
+      // {
+      //   name: "Steffen",
+      //   role: roles.get("baron"),
+      //   reminders: [{ role: "imp", name: "Die" }]
+      // },
+      // { name: "Tino", role: roles.get("harlot"), reminders: [] },
+      // { name: "Basti", role: roles.get("chef"), reminders: [] },
+      // { name: "Bernd", role: roles.get("ravenkeeper"), reminders: [] },
+      // { name: "Tim", role: roles.get("drunk"), reminders: [] },
+      // { name: "Yann", role: roles.get("librarian"), reminders: [] },
+      // { name: "Marie", role: roles.get("empath"), reminders: [] },
+      // { name: "Bogdan", role: roles.get("scarletwoman"), reminders: [] },
+      // { name: "Sean", role: roles.get("recluse"), reminders: [] },
+      // { name: "Petra", role: roles.get("undertaker"), reminders: [] }
     ],
     roles,
     set: "TB"
@@ -100,6 +67,7 @@ export default {
   methods: {
     togglePublic() {
       this.isPublic = !this.isPublic;
+      this.isControlOpen = false;
     },
     addPlayer() {
       const name = prompt("Player name");
@@ -110,14 +78,20 @@ export default {
           reminders: []
         });
       }
+    },
+    randomizeSeatings() {
+      if (confirm("Are you sure you want to randomize seatings?")) {
+        this.players = this.players
+          .map(a => [Math.random(), a])
+          .sort((a, b) => a[0] - b[0])
+          .map(a => a[1]);
+      }
     }
   }
 };
 </script>
 
 <style lang="scss">
-@import "vars.scss";
-
 @font-face {
   font-family: "Papyrus";
   src: url("assets/fonts/papyrus.eot"); /* IE9*/
@@ -158,56 +132,30 @@ body {
   position: absolute;
   right: 0;
   top: 0;
-}
-
-.info {
-  position: absolute;
-  display: flex;
-  left: 50%;
-  top: 50%;
-  width: 20%;
-  height: 20%;
-  margin-left: -10%;
-  margin-top: -5%;
-  padding: 0;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  background: url("assets/demon-head.png") center center no-repeat;
-  background-size: auto 100%;
-
-  li {
-    display: block;
-    white-space: nowrap;
-    font-weight: bold;
-    text-shadow: 0 0 2px black;
-    text-align: center;
-    padding: 0 5px;
-    width: 100%;
-
-    svg {
-      margin-right: 10px;
-    }
-
-    .townsfolk {
-      color: $townsfolk;
-    }
-    .outsider {
-      color: $outsider;
-    }
-    .minion {
-      color: $minion;
-    }
-    .demon {
-      color: $demon;
-    }
-    .traveller {
-      color: $traveller;
-    }
-    .alive,
-    .votes {
-      color: #aaa;
+  text-align: right;
+  padding: 10px;
+  svg {
+    cursor: pointer;
+  }
+  ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    flex-direction: column;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px black;
+    li {
+      padding: 5px 10px;
+      color: white;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.7);
+      margin-bottom: 1px;
+      cursor: pointer;
+      &:hover {
+        background-color: red;
+      }
     }
   }
 }

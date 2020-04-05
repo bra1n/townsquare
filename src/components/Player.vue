@@ -22,7 +22,12 @@
       <div class="ability" v-if="player.role.ability">
         {{ player.role.ability }}
       </div>
-      <div class="name" @click="changeName">{{ player.name }}</div>
+      <div class="name" @click="changeName">
+        {{ player.name }}
+        <span class="remove" @click.stop="$emit('remove-player', player)">
+          <font-awesome-icon icon="times-circle" />
+        </span>
+      </div>
     </div>
     <template v-if="player.reminders">
       <div
@@ -238,9 +243,19 @@ export default {
 .name {
   font-size: 120%;
   line-height: 120%;
-  text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
-    2px 2px 0 #000, 0 0 10px rgba(0, 0, 0, 0.75);
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 1))
+    drop-shadow(0 0 1px rgba(0, 0, 0, 1))
+    drop-shadow(0 0 1px rgba(0, 0, 0, 1));
   cursor: pointer;
+  span {
+    display: none;
+  }
+  &:hover span {
+    display: inline-block;
+    &:hover {
+      color: red;
+    }
+  }
 }
 
 /***** Ability text *****/

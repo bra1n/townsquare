@@ -6,11 +6,21 @@ import {
   faHeartbeat,
   faVoteYea,
   faUserFriends,
-  faUser
+  faUser,
+  faTimesCircle,
+  faCogs
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faUsers, faHeartbeat, faVoteYea, faUserFriends, faUser);
+library.add(
+  faUsers,
+  faHeartbeat,
+  faVoteYea,
+  faUserFriends,
+  faUser,
+  faTimesCircle,
+  faCogs
+);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 

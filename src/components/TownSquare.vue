@@ -9,6 +9,7 @@
         :is-public="isPublic"
         @add-reminder="openReminderModal"
         @set-role="openRoleModal"
+        @remove-player="removePlayer"
       ></Player>
     </ul>
     <Modal v-show="availableReminders.length" @close="closeModal">
@@ -51,7 +52,20 @@ export default {
     Modal,
     Player
   },
-  props: ["isPublic", "players", "roles"],
+  props: {
+    isPublic: {
+      type: Boolean,
+      required: true
+    },
+    players: {
+      type: Array,
+      required: true
+    },
+    roles: {
+      type: Map,
+      required: true
+    }
+  },
   data() {
     return {
       selectedPlayer: false,
@@ -96,6 +110,11 @@ export default {
       this.selectedPlayer = false;
       this.availableReminders = [];
       this.availableRoles = [];
+    },
+    removePlayer(player) {
+      if (confirm(`Do you really want to remove ${player.name}?`)) {
+        this.players.splice(this.players.indexOf(player), 1);
+      }
     }
   }
 };
@@ -174,7 +193,7 @@ export default {
   }
 }
 
-@for $i from 5 through 20 {
+@for $i from 1 through 20 {
   .circle.size-#{$i} li {
     @include on-circle($item-count: $i);
   }
