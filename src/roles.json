@@ -240,5 +240,16 @@
     "reminders": ["Die"],
     "setup": false,
     "ability": "Each night*, choose a player: they die. If you kill yourself this way, a Minion becomes the Imp."
+  },
+  {
+    "id": "harlot",
+    "name": "Harlot",
+    "set": "SNV",
+    "team": "traveller",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Die"],
+    "setup": false,
+    "ability": "Each night*, choose a living player: if they agree, you learn their character, but you both might die."
   }
 ]

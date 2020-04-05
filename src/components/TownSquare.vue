@@ -2,8 +2,8 @@
   <div id="townsquare" class="square" v-bind:class="{ public: isPublic }">
     <ul class="circle" v-bind:class="['size-' + players.length]">
       <Player
-        v-for="player in players"
-        :key="player.name"
+        v-for="(player, index) in players"
+        :key="index"
         :player="player"
         :roles="roles"
         :is-public="isPublic"
@@ -43,41 +43,17 @@
 </template>
 
 <script>
-import rolesJSON from "../roles.json";
 import Player from "./Player";
 import Modal from "./Modal";
-
-const roles = new Map(
-  rolesJSON
-    .sort((a, b) => b.team.localeCompare(a.team))
-    .map(role => [role.id, role])
-);
 
 export default {
   components: {
     Modal,
     Player
   },
-  props: ["isPublic"],
+  props: ["isPublic", "players", "roles"],
   data() {
     return {
-      players: [
-        {
-          name: "Steffen",
-          role: roles.get("baron"),
-          reminders: [{ role: "imp", name: "Die" }]
-        },
-        { name: "Tino", role: roles.get("imp") },
-        { name: "Basti", role: roles.get("chef"), reminders: [] },
-        { name: "Bernd", role: roles.get("ravenkeeper"), reminders: [] },
-        { name: "Tim", role: roles.get("drunk"), reminders: [] },
-        { name: "Yann", role: roles.get("librarian"), reminders: [] },
-        { name: "Marie", role: roles.get("empath"), reminders: [] },
-        { name: "Bogdan", role: roles.get("scarletwoman"), reminders: [] },
-        { name: "Sean", role: roles.get("recluse"), reminders: [] },
-        { name: "Petra", role: roles.get("undertaker"), reminders: [] }
-      ],
-      roles,
       selectedPlayer: false,
       availableReminders: [],
       availableRoles: []
@@ -95,6 +71,8 @@ export default {
           ];
         }
       });
+      this.availableReminders.push({ role: "good", name: "Good" });
+      this.availableReminders.push({ role: "evil", name: "Evil" });
     },
     openRoleModal(player) {
       this.selectedPlayer = player;
@@ -104,6 +82,7 @@ export default {
           this.availableRoles.push(role);
         }
       });
+      this.availableRoles.push({});
     },
     addReminder(reminder) {
       this.selectedPlayer.reminders.push(reminder);
@@ -123,7 +102,47 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../roles.scss";
+@import "../vars.scss";
+
+@each $img, $fontsize in $roles {
+  .token.#{$img} {
+    &:before {
+      background-image: url("../assets/icons/#{$img}.png");
+    }
+    font-size: $fontsize;
+  }
+
+  .reminder.#{$img}:before {
+    background-image: url("../assets/icons/#{$img}.png");
+  }
+}
+
+.circle {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  overflow: hidden;
+  margin: 0;
+
+  li {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 50%;
+    transform-origin: 0 100%;
+    text-align: center;
+
+    &:hover {
+      z-index: 25 !important;
+    }
+
+    > * {
+      margin-left: -100px;
+      width: 200px;
+    }
+  }
+}
 
 @mixin on-circle($item-count) {
   $angle: (360 / $item-count);
@@ -155,35 +174,6 @@ export default {
   }
 }
 
-.circle {
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  list-style: none;
-  overflow: hidden;
-  position: relative;
-  margin: 0;
-  box-sizing: border-box;
-
-  li {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    height: 50%;
-    transform-origin: 0 100%;
-    text-align: center;
-
-    &:hover {
-      z-index: 25 !important;
-    }
-
-    > * {
-      margin-left: -100px;
-      width: 200px;
-    }
-  }
-}
-
 @for $i from 5 through 20 {
   .circle.size-#{$i} li {
     @include on-circle($item-count: $i);
@@ -193,20 +183,8 @@ export default {
 #townsquare {
   width: 100%;
   height: 100%;
-  position: relative;
   border-radius: 50%;
-  box-sizing: border-box;
   padding: 20px;
-}
-
-// player circle
-.circle {
-  background: url("../assets/demon-head2.png") center center no-repeat;
-  background-size: 10%;
-}
-
-#townsquare.public .circle {
-  background-image: url("../assets/demon-head.png");
 }
 
 /***** Role token modal ******/
@@ -230,14 +208,12 @@ ul.tokens {
     background: url("../assets/token.png") center center;
     background-size: 100%;
     text-align: center;
-    position: relative;
     color: black;
     margin: 5px;
     font-weight: 600;
     text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
       1px 1px 0 #fff, 0 0 5px rgba(0, 0, 0, 0.75);
     padding-top: 85px;
-    box-sizing: border-box;
     font-family: "Papyrus", serif;
     border: 3px solid black;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -245,16 +221,19 @@ ul.tokens {
     transition: transform 500ms ease;
 
     &.townsfolk {
-      box-shadow: 0 0 10px #004cff, 0 0 10px #004cff;
+      box-shadow: 0 0 10px $townsfolk, 0 0 10px #004cff;
     }
     &.outsider {
-      box-shadow: 0 0 10px #00d6ff, 0 0 10px #00d6ff;
+      box-shadow: 0 0 10px $outsider, 0 0 10px $outsider;
     }
     &.minion {
-      box-shadow: 0 0 10px #ff6900, 0 0 10px #ff6900;
+      box-shadow: 0 0 10px $minion, 0 0 10px $minion;
     }
     &.demon {
-      box-shadow: 0 0 10px #ff0000, 0 0 10px #ff0000;
+      box-shadow: 0 0 10px $demon, 0 0 10px $demon;
+    }
+    &.traveller {
+      box-shadow: 0 0 10px $traveller, 0 0 10px $traveller;
     }
 
     &:before {
@@ -288,12 +267,10 @@ ul.reminders {
     display: block;
     margin: 5px;
     text-align: center;
-    position: relative;
     border-radius: 50%;
     border: 3px solid black;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     cursor: pointer;
-    box-sizing: border-box;
     padding-top: 65px;
     transition: transform 500ms ease;
 

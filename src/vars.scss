@@ -1,4 +1,13 @@
+$token: 150px;
+$townsfolk: #1f65ff;
+$outsider: #46d5ff;
+$minion: #ff6900;
+$demon: #ff0000;
+$traveller: #cc04ff;
+
 $roles:
+  'good',
+  'evil',
   'baron',
   'butler',
   'chef',
@@ -20,17 +29,6 @@ $roles:
   'scarletwoman' 75%,
   'undertaker' 85%,
   'virgin',
+  'harlot',
   'washerwoman' 75%;
 
-@each $img, $fontsize in $roles {
-  .token.#{$img} {
-    &:before {
-      background-image: url('../assets/icons/#{$img}.png');
-    }
-    font-size: $fontsize;
-  }
-
-  .reminder.#{$img}:before {
-    background-image: url('../assets/icons/#{$img}.png');
-  }
-}

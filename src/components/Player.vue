@@ -2,14 +2,18 @@
   <li>
     <div
       class="player"
-      :class="{ dead: player.hasDied, 'no-vote': player.hasVoted }"
+      :class="{
+        dead: player.hasDied,
+        'no-vote': player.hasVoted,
+        traveller: player.role.team === 'traveller'
+      }"
     >
       <div class="shroud" @click="toggleStatus()"></div>
       <div class="token" @click="changeRole()" :class="[player.role.id]">
         <span class="leaf-left" v-if="player.role.firstNight"></span>
         <span class="leaf-right" v-if="player.role.otherNight"></span>
         <span
-          v-if="player.role.reminders.length"
+          v-if="player.role.reminders && player.role.reminders.length"
           v-bind:class="['leaf-top' + player.role.reminders.length]"
         ></span>
         <span class="leaf-orange" v-if="player.role.setup"></span>
@@ -18,7 +22,7 @@
       <div class="ability" v-if="player.role.ability">
         {{ player.role.ability }}
       </div>
-      <div class="name">{{ player.name }}</div>
+      <div class="name" @click="changeName">{{ player.name }}</div>
     </div>
     <template v-if="player.reminders">
       <div
@@ -72,6 +76,10 @@ export default {
         this.toggleStatus();
       }
     },
+    changeName() {
+      const name = prompt("Player name", this.player.name);
+      this.player.name = name || this.player.name;
+    },
     removeReminder(reminder) {
       this.player.reminders.splice(this.player.reminders.indexOf(reminder), 1);
     }
@@ -80,8 +88,7 @@ export default {
 </script>
 
 <style lang="scss">
-// token size
-$token: 150px;
+@import "../vars.scss";
 
 /***** Player token *****/
 .circle .player {
@@ -115,7 +122,7 @@ $token: 150px;
     transform: scale(1);
   }
   &.dead .name {
-    color: #999;
+    opacity: 0.5;
   }
 }
 
@@ -151,14 +158,12 @@ $token: 150px;
   background: url("../assets/token.png") center center;
   background-size: 100%;
   text-align: center;
-  position: relative;
   color: black;
   margin: auto;
   font-weight: 600;
   text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
     1px 1px 0 #fff, 0 0 5px rgba(0, 0, 0, 0.75);
   padding-top: $token * 0.7;
-  box-sizing: border-box;
   font-family: "Papyrus", serif;
   border: 3px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -235,6 +240,7 @@ $token: 150px;
   line-height: 120%;
   text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
     2px 2px 0 #000, 0 0 10px rgba(0, 0, 0, 0.75);
+  cursor: pointer;
 }
 
 /***** Ability text *****/
@@ -283,8 +289,6 @@ $token: 150px;
   display: block;
   margin: 5px ($token / -4) 0;
   text-align: center;
-  position: relative;
-  box-sizing: border-box;
   padding-top: $token * 0.3;
   border-radius: 50%;
   border: 3px solid black;
