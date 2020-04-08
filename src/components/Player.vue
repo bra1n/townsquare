@@ -9,6 +9,7 @@
       }"
     >
       <div class="shroud" @click="toggleStatus()"></div>
+      <div class="life" @click="toggleStatus()"></div>
       <div class="token" @click="changeRole()" :class="[player.role.id]">
         <span class="leaf-left" v-if="player.role.firstNight"></span>
         <span class="leaf-right" v-if="player.role.otherNight"></span>
@@ -65,21 +66,21 @@ export default {
   },
   methods: {
     toggleStatus() {
-      if (!this.isPublic || !this.player.hasDied) {
-        this.$set(this.player, "hasDied", !this.player.hasDied);
+      if (this.isPublic) {
         if (!this.player.hasDied) {
+          this.$set(this.player, "hasDied", true);
+        } else if (this.player.hasVoted) {
           this.$set(this.player, "hasVoted", false);
+          this.$set(this.player, "hasDied", false);
+        } else {
+          this.$set(this.player, "hasVoted", true);
         }
       } else {
-        this.$set(this.player, "hasVoted", !this.player.hasVoted);
+        this.$set(this.player, "hasDied", !this.player.hasDied);
       }
     },
     changeRole() {
-      if (!this.isPublic) {
-        this.$emit("set-role", this.player);
-      } else {
-        this.toggleStatus();
-      }
+      this.$emit("set-role", this.player);
     },
     changeName() {
       const name = prompt("Player name", this.player.name);
@@ -98,6 +99,7 @@ export default {
 /***** Player token *****/
 .circle .player {
   margin-bottom: 10px;
+  padding-top: $token + 6px;
 
   .shroud {
     content: " ";
@@ -111,7 +113,8 @@ export default {
     top: -30px;
     cursor: pointer;
     opacity: 0;
-    transform: scale(1.5);
+    transform: perspective(400px) scale(1.5);
+    transform-origin: top center;
     transition: all 200ms;
     z-index: 2;
     &:hover {
@@ -124,47 +127,79 @@ export default {
   &.dead .shroud {
     opacity: 1;
     top: 0;
-    transform: scale(1);
+    transform: perspective(400px) scale(1);
   }
   &.dead .name {
     opacity: 0.5;
   }
 }
 
-#townsquare.public .player.dead {
-  &:after {
-    content: " ";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    background: url("../assets/vote.png") center center no-repeat;
-    background-size: 40%;
-    height: $token + 3px;
-    pointer-events: none;
-  }
-  &.traveller:after {
-    filter: grayscale(100%);
-  }
-  &.no-vote:after {
-    display: none;
-  }
+/****** Life token *******/
+.player .life {
+  border-radius: 50%;
+  height: $token + 6px;
+  width: $token + 6px;
+  background: url("../assets/life.png") center center;
+  background-size: 100%;
+  margin: auto;
+  border: 3px solid black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: transform 200ms ease-in-out;
+  transform: perspective(400px) rotateY(180deg);
+  backface-visibility: hidden;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  margin-left: ($token + 6) / -2;
 }
 
-#townsquare.public .player .shroud {
-  display: none;
+#townsquare.public .player {
+  .shroud {
+    transform: perspective(400px) rotateX(90deg);
+    opacity: 0;
+  }
+
+  .life {
+    transform: perspective(400px) rotateY(0deg)
+  }
+
+  &.dead {
+    &.traveller {
+      filter: grayscale(100%);
+    }
+
+    &.no-vote .life:after {
+      display: none;
+    }
+
+    .life {
+      background-image: url("../assets/death.png");
+
+      &:after {
+        content: " ";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: url("../assets/vote.png") center center no-repeat;
+        background-size: 50%;
+        height: $token + 3px;
+        pointer-events: none;
+      }
+    }
+  }
 }
 
 /***** Role token ******/
 .circle .token {
   border-radius: 50%;
-  height: $token + 3px;
-  width: $token + 3px;
+  height: $token + 6px;
+  width: $token + 6px;
   background: url("../assets/token.png") center center;
   background-size: 100%;
   text-align: center;
   color: black;
-  margin: auto;
   font-weight: 600;
   text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
     1px 1px 0 #fff, 0 0 5px rgba(0, 0, 0, 0.75);
@@ -173,6 +208,13 @@ export default {
   border: 3px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   cursor: pointer;
+  transition: transform 200ms ease-in-out;
+  transform: perspective(400px) rotateY(0deg);
+  backface-visibility: hidden;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  margin-left: ($token + 6) / -2;
 
   &:before {
     content: " ";
@@ -220,23 +262,7 @@ export default {
 }
 
 #townsquare.public .token {
-  background-image: url("../assets/life.png");
-  div {
-    display: none;
-  }
-  &:before,
-  &:after,
-  span {
-    display: none;
-  }
-}
-
-#townsquare.public .player.dead .token {
-  background-image: url("../assets/death.png");
-}
-
-#townsquare.public .player.traveller .token {
-  filter: grayscale(100%);
+  transform: perspective(400px) rotateY(-180deg);
 }
 
 /***** Player name *****/

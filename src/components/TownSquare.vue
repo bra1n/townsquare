@@ -188,6 +188,9 @@ export default {
       > * {
         transform: rotate($rot * -1deg);
       }
+      .life, .token {
+        transition-delay: $i * 50ms;
+      }
     }
     $rot: $rot + $angle;
   }
