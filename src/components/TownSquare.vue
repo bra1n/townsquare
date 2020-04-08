@@ -141,7 +141,6 @@ export default {
   width: 100%;
   height: 100%;
   list-style: none;
-  overflow: hidden;
   margin: 0;
 
   li {
@@ -188,7 +187,8 @@ export default {
       > * {
         transform: rotate($rot * -1deg);
       }
-      .life, .token {
+      .life,
+      .token {
         transition-delay: $i * 50ms;
       }
     }

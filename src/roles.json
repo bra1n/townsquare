@@ -6,7 +6,10 @@
     "team": "townsfolk",
     "firstNight": true,
     "otherNight": false,
-    "reminders": ["Townsfolk", "Decoy"],
+    "reminders": [
+      "Townsfolk",
+      "Decoy"
+    ],
     "setup": false,
     "ability": "You start knowing 1 of 2 players is a particular Townsfolk."
   },
@@ -17,7 +20,10 @@
     "team": "townsfolk",
     "firstNight": true,
     "otherNight": false,
-    "reminders": ["Outsider", "Decoy"],
+    "reminders": [
+      "Outsider",
+      "Decoy"
+    ],
     "setup": false,
     "ability": "You start knowing that 1 of 2 players is a particular Outsider. (Or that zero are in play)"
   },
@@ -28,7 +34,10 @@
     "team": "townsfolk",
     "firstNight": true,
     "otherNight": false,
-    "reminders": ["Minion", "Decoy"],
+    "reminders": [
+      "Minion",
+      "Decoy"
+    ],
     "setup": false,
     "ability": "You start knowing 1 of 2 players is a particular Minion."
   },
@@ -61,7 +70,9 @@
     "team": "townsfolk",
     "firstNight": true,
     "otherNight": true,
-    "reminders": ["Decoy"],
+    "reminders": [
+      "Decoy"
+    ],
     "setup": false,
     "ability": "Each night, choose 2 players: you learn if either is a Demon. There is 1 good player that registers falsely to you."
   },
@@ -72,7 +83,9 @@
     "team": "townsfolk",
     "firstNight": false,
     "otherNight": true,
-    "reminders": ["Executed"],
+    "reminders": [
+      "Executed"
+    ],
     "setup": false,
     "ability": "Each night*, you learn which character died by execution today."
   },
@@ -83,7 +96,9 @@
     "team": "townsfolk",
     "firstNight": false,
     "otherNight": true,
-    "reminders": ["Protected"],
+    "reminders": [
+      "Protected"
+    ],
     "setup": false,
     "ability": "Each night*, choose a player (not yourself): they are safe from the Demon tonight."
   },
@@ -116,7 +131,9 @@
     "team": "townsfolk",
     "firstNight": false,
     "otherNight": false,
-    "reminders": ["Used"],
+    "reminders": [
+      "Used"
+    ],
     "setup": false,
     "ability": "Once per game, during the day, publicly choose a player: if they are the Demon, they die."
   },
@@ -138,7 +155,9 @@
     "team": "townsfolk",
     "firstNight": false,
     "otherNight": false,
-    "reminders": ["Used"],
+    "reminders": [
+      "Used"
+    ],
     "setup": false,
     "ability": "The first time you are nominated, if the nominator is a Townsfolk, they are executed immediately."
   },
@@ -149,7 +168,9 @@
     "team": "outsider",
     "firstNight": true,
     "otherNight": true,
-    "reminders": ["Master"],
+    "reminders": [
+      "Master"
+    ],
     "setup": false,
     "ability": "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too."
   },
@@ -160,7 +181,9 @@
     "team": "outsider",
     "firstNight": false,
     "otherNight": false,
-    "reminders": ["Drunk"],
+    "reminders": [
+      "Drunk"
+    ],
     "setup": true,
     "ability": "You do not know you are the Drunk. You think you are a Townsfolk, but your ability malfunctions."
   },
@@ -204,7 +227,9 @@
     "team": "minion",
     "firstNight": true,
     "otherNight": true,
-    "reminders": ["Poisoned"],
+    "reminders": [
+      "Poisoned"
+    ],
     "setup": false,
     "ability": "Each night, choose a player: their ability malfunctions tonight and tomorrow day."
   },
@@ -226,7 +251,9 @@
     "team": "minion",
     "firstNight": false,
     "otherNight": true,
-    "reminders": ["Demon"],
+    "reminders": [
+      "Demon"
+    ],
     "setup": false,
     "ability": "If there are 5 or more players alive (Travellers don't count) and the Demon dies, you become the Demon."
   },
@@ -237,19 +264,725 @@
     "team": "demon",
     "firstNight": false,
     "otherNight": true,
-    "reminders": ["Die"],
+    "reminders": [
+      "Die"
+    ],
     "setup": false,
     "ability": "Each night*, choose a player: they die. If you kill yourself this way, a Minion becomes the Imp."
   },
   {
-    "id": "harlot",
-    "name": "Harlot",
-    "set": "SNV",
-    "team": "traveller",
+    "id": "grandmother",
+    "set": "BMR",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Grandchild"],
+    "setup": false,
+    "name": "Grandmother",
+    "team": "townsfolk",
+    "ability": "You start knowing a good player & character. If the Demon kills them, you die too."
+  },
+  {
+    "id": "sailor",
+    "set": "BMR",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Drunk"],
+    "setup": false,
+    "name": "Sailor",
+    "team": "townsfolk",
+    "ability": "Each night, choose a player: either you or they are drunk until dusk. You can not die."
+  },
+  {
+    "id": "chambermaid",
+    "set": "BMR",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": [],
+    "setup": false,
+    "name": "Chambermaid",
+    "team": "townsfolk",
+    "ability": "Each night, choose 2 alive players (not yourself): you learn how many woke tonight due to their ability."
+  },
+  {
+    "id": "exorcist",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Chosen"],
+    "setup": false,
+    "name": "Exorcist",
+    "team": "townsfolk",
+    "ability": "Each night*, choose a player (not the same as last night): the Demon, if chosen, learns who you are & does not act tonight."
+  },
+  {
+    "id": "innkeeper",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Protected", "Drunk"],
+    "setup": false,
+    "name": "Innkeeper",
+    "team": "townsfolk",
+    "ability": "Each night*, choose 2 players: they cannot die tonight, but 1 is drunk until dusk."
+  },
+  {
+    "id": "gambler",
+    "set": "BMR",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Die"],
     "setup": false,
+    "name": "Gambler",
+    "team": "townsfolk",
+    "ability": "Each night*, choose a player & guess their character: if you guess wrong, you die."
+  },
+  {
+    "id": "gossip",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Die"],
+    "setup": false,
+    "name": "Gossip",
+    "team": "townsfolk",
+    "ability": "Each day, you may make a public statement. Tonight, if it was true, a player dies."
+  },
+  {
+    "id": "courtier",
+    "set": "BMR",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Drunk 1", "Drunk 2", "Drunk 3", "Used"],
+    "setup": false,
+    "name": "Courtier",
+    "team": "townsfolk",
+    "ability": "Once per game, at night, choose a character: they are drunk for 3 nights & 3 days."
+  },
+  {
+    "id": "professor",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Alive", "Used"],
+    "setup": false,
+    "name": "Professor",
+    "team": "townsfolk",
+    "ability": "Once per game, at night*, choose a dead player. If they are a Townsfolk, they are resurrected."
+  },
+  {
+    "id": "minstrel",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Everyone drunk"],
+    "setup": false,
+    "name": "Minstrel",
+    "team": "townsfolk",
+    "ability": "If a Minion died today, all other players (except Travelers) are drunk all night, until dusk."
+  },
+  {
+    "id": "tealady",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": ["Protected"],
+    "setup": false,
+    "name": "Tea Lady",
+    "team": "townsfolk",
+    "ability": "If both your alive neighbors are good, they can not die."
+  },
+  {
+    "id": "pacifist",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": [],
+    "setup": false,
+    "name": "Pacifist",
+    "team": "townsfolk",
+    "ability": "Executed good players might not die."
+  },
+  {
+    "id": "fool",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": ["Used"],
+    "setup": false,
+    "name": "Fool",
+    "team": "townsfolk",
+    "ability": "The first time you die, you don't."
+  },
+  {
+    "id": "tinker",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Die"],
+    "setup": false,
+    "name": "Tinker",
+    "team": "outsider",
+    "ability": "You might die at any time."
+  },
+  {
+    "id": "moonchild",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Die"],
+    "setup": false,
+    "name": "Moonchild",
+    "team": "outsider",
+    "ability": "When you learn that you died, choose 1 alive player: if good, they die tonight."
+  },
+  {
+    "id": "goon",
+    "set": "BMR",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Drunk"],
+    "setup": false,
+    "name": "Goon",
+    "team": "outsider",
+    "ability": "Each night, the 1st player to choose you with their ability is drunk until dusk. You become their alignment."
+  },
+  {
+    "id": "lunatic",
+    "set": "BMR",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Attack 1", "Attack 2", "Attack 3", "Decoy"],
+    "setup": false,
+    "name": "Lunatic",
+    "team": "outsider",
+    "ability": "You think you are a Demon, but your abilities malfunction. The Demon knows who you are & who you attack."
+  },
+  {
+    "id": "godfather",
+    "set": "BMR",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Died today", "Die"],
+    "setup": true,
+    "name": "Godfather",
+    "team": "minion",
+    "ability": "You start knowing which Outsiders are in-play. If 1 died today, choose a player tonight: they die. [-1 or +1 Outsider]"
+  },
+  {
+    "id": "devilsadvocate",
+    "set": "BMR",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Survives execution"],
+    "setup": false,
+    "name": "Devils Advocate",
+    "team": "minion",
+    "ability": "Each night, choose a living player (not the same as last night): if executed tomorrow, they do not die."
+  },
+  {
+    "id": "assassin",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Die", "Used"],
+    "setup": false,
+    "name": "Assassin",
+    "team": "minion",
+    "ability": "Once per game, at night*, choose a player: they die, even if for some reason they could not."
+  },
+  {
+    "id": "mastermind",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": [],
+    "setup": false,
+    "name": "Mastermind",
+    "team": "minion",
+    "ability": "If the Demon dies by execution, play for 1 more day. If a player is then executed, their team loses."
+  },
+  {
+    "id": "po",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Die 1", "Die 2", "Die 3", "Attack x3"],
+    "setup": false,
+    "name": "Po",
+    "team": "demon",
+    "ability": "Each night*, you may choose a player: they die. If you chose no-one last night, choose 3 players tonight."
+  },
+  {
+    "id": "zombuul",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["No death today", "Die"],
+    "setup": false,
+    "name": "Zombuul",
+    "team": "demon",
+    "ability": "Each night*, if no-one died today, choose a player: they die. The 1st time you die, you live but register as dead."
+  },
+  {
+    "id": "pukka",
+    "set": "BMR",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Poisoned", "Die"],
+    "setup": false,
+    "name": "Pukka",
+    "team": "demon",
+    "ability": "Each night, choose a player: they are poisoned until tomorrow night, then die. You act on the 1st night."
+  },
+  {
+    "id": "shabaloth",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Die 1", "Die 2", "Alive"],
+    "setup": false,
+    "name": "Shabaloth",
+    "team": "demon",
+    "ability": "Each night*, choose 2 players: they die. A dead player you chose last night might be regurgitated."
+  },
+  {
+    "id": "clockmaker",
+    "set": "SNV",
+    "firstNight": true,
+    "otherNight": false,
+    "reminders": [],
+    "setup": false,
+    "name": "Clockmaker",
+    "team": "townsfolk",
+    "ability": "You start knowing how many steps from the Demon to its nearest Minion."
+  },
+  {
+    "id": "dreamer",
+    "set": "SNV",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": [],
+    "setup": false,
+    "name": "Dreamer",
+    "team": "townsfolk",
+    "ability": "Each night, choose a player (not yourself): you learn 1 good & 1 evil character, 1 of which is correct."
+  },
+  {
+    "id": "snakecharmer",
+    "set": "SNV",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Poisoned"],
+    "setup": false,
+    "name": "Snake Charmer",
+    "team": "townsfolk",
+    "ability": "Each night, choose an alive player: a chosen Demon swaps characters & alignments with you & is then poisoned."
+  },
+  {
+    "id": "mathematician",
+    "set": "SNV",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Abnormal effect"],
+    "setup": false,
+    "name": "Mathematician",
+    "team": "townsfolk",
+    "ability": "Each night, you learn how many players' abilities worked abnormally (since dawn) due to another character's ability."
+  },
+  {
+    "id": "flowergirl",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Demon did vote", "Demon did not vote"],
+    "setup": false,
+    "name": "Flowergirl",
+    "team": "townsfolk",
+    "ability": "Each night*, you learn if the Demon voted today."
+  },
+  {
+    "id": "towncrier",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["No Minion nominated", "Minion nominated"],
+    "setup": false,
+    "name": "Town Crier",
+    "team": "townsfolk",
+    "ability": "Each night*, you learn if a Minion nominated today."
+  },
+  {
+    "id": "oracle",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": [],
+    "setup": false,
+    "name": "Oracle",
+    "team": "townsfolk",
+    "ability": "Each night*, you learn how many dead players are evil."
+  },
+  {
+    "id": "savant",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": [],
+    "setup": false,
+    "name": "Savant",
+    "team": "townsfolk",
+    "ability": "Each day, you may visit the Storyteller to learn 2 things in private: 1 is true & 1 is false."
+  },
+  {
+    "id": "seamstress",
+    "set": "SNV",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Used"],
+    "setup": false,
+    "name": "Seamstress",
+    "team": "townsfolk",
+    "ability": "Once per game, at night, choose 2 players (not yourself): you learn if they are the same alignment."
+  },
+  {
+    "id": "philosopher",
+    "set": "SNV",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Used", "Drunk"],
+    "setup": false,
+    "name": "Philosopher",
+    "team": "townsfolk",
+    "ability": "Once per game, at night, choose a good character: become them. If you duplicate an in-play character, they are drunk."
+  },
+  {
+    "id": "artist",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": ["Used"],
+    "setup": false,
+    "name": "Artist",
+    "team": "townsfolk",
+    "ability": "Once per game, during the day, privately ask the Storyteller any yes/no question."
+  },
+  {
+    "id": "juggler",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Correct"],
+    "setup": false,
+    "name": "Juggler",
+    "team": "townsfolk",
+    "ability": "On your 1st day, publicly guess up to 5 player's characters. That night, you learn how many you got correct."
+  },
+  {
+    "id": "sage",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": [],
+    "setup": false,
+    "name": "Sage",
+    "team": "townsfolk",
+    "ability": "If the Demon kills you, you learn that it is 1 of 2 players."
+  },
+  {
+    "id": "mutant",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": [],
+    "setup": false,
+    "name": "Mutant",
+    "team": "outsider",
+    "ability": "If you are \"mad\" about being an Outsider, you might be executed."
+  },
+  {
+    "id": "sweetheart",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Drunk"],
+    "setup": false,
+    "name": "Sweetheart",
+    "team": "outsider",
+    "ability": "If you die, 1 player is drunk from now on."
+  },
+  {
+    "id": "barber",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Swap"],
+    "setup": false,
+    "name": "Barber",
+    "team": "outsider",
+    "ability": "If you die, tonight the Demon may choose 2 players to swap characters."
+  },
+  {
+    "id": "klutz",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": [],
+    "setup": false,
+    "name": "Klutz",
+    "team": "outsider",
+    "ability": "When you learn that you died, publicly choose 1 alive good player: if they are evil, your team loses."
+  },
+  {
+    "id": "eviltwin",
+    "set": "SNV",
+    "firstNight": true,
+    "otherNight": false,
+    "reminders": ["Twin"],
+    "setup": false,
+    "name": "Evil Twin",
+    "team": "minion",
+    "ability": "You & an opposing player know each other. If the good player is executed, evil wins. Good can't win if you both live."
+  },
+  {
+    "id": "witch",
+    "set": "SNV",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Cursed"],
+    "setup": false,
+    "name": "Witch",
+    "team": "minion",
+    "ability": "Each night, choose a player: if they nominate tomorrow, they die. If just 3 players live, you lose this ability."
+  },
+  {
+    "id": "cerenovus",
+    "set": "SNV",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Mad"],
+    "setup": false,
+    "name": "Cerenovus",
+    "team": "minion",
+    "ability": "Each night, choose a player & a good character: they are \"mad\" they are this character tomorrow, or might be executed."
+  },
+  {
+    "id": "pithag",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": [],
+    "setup": false,
+    "name": "Pit Hag",
+    "team": "minion",
+    "ability": "Each night*, choose a player & a character they become (if not-in-play). If a Demon is made, deaths tonight are arbitrary."
+  },
+  {
+    "id": "fanggu",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Die"],
+    "setup": true,
+    "name": "Fang Gu",
+    "team": "demon",
+    "ability": "Each night*, choose a player: they die. The 1st Outsider chosen becomes an evil Fang Gu & you die instead. [+1 Outsider]"
+  },
+  {
+    "id": "vigormortis",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Die", "Poisoned", "Ability active"],
+    "setup": true,
+    "name": "Vigormortis",
+    "team": "demon",
+    "ability": "Each night*, choose a player: they die. Minions you kill keep their ability & poison 1 Townsfolk neighbor. [-1 Outsider]."
+  },
+  {
+    "id": "nodashii",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Die", "Poisoned"],
+    "setup": false,
+    "name": "No Dashii",
+    "team": "demon",
+    "ability": "Each night*, choose a player: they die. Your 2 Townsfolk neighbors are poisoned."
+  },
+  {
+    "id": "vortox",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Die"],
+    "setup": false,
+    "name": "Vortox",
+    "team": "demon",
+    "ability": "Each night*, choose a player: they die. Good abilities yield false information. Each day, if no-one was executed, evil wins."
+  },
+  {
+    "id": "scapegoat",
+    "set": "TB",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": [],
+    "setup": false,
+    "name": "Scapegoat",
+    "team": "traveler",
+    "ability": "If a player of your alignment is executed, you might be executed instead."
+  },
+  {
+    "id": "gunslinger",
+    "set": "TB",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": [],
+    "setup": false,
+    "name": "Gunslinger",
+    "team": "traveler",
+    "ability": "Each day, after the 1st vote has been tallied, you may choose a player that voted: they die."
+  },
+  {
+    "id": "beggar",
+    "set": "TB",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": [],
+    "setup": false,
+    "name": "Beggar",
+    "team": "traveler",
+    "ability": "You must use a vote token to vote. Dead players may choose to give you theirs. If so, you learn their alignment."
+  },
+  {
+    "id": "bureaucrat",
+    "set": "TB",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Vote x3"],
+    "setup": false,
+    "name": "Bureaucrat",
+    "team": "traveler",
+    "ability": "Each night, choose a player (not yourself): their vote counts as 3 votes tomorrow."
+  },
+  {
+    "id": "thief",
+    "set": "TB",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Negative vote"],
+    "setup": false,
+    "name": "Thief",
+    "team": "traveler",
+    "ability": "Each night, choose a player (not yourself): their vote counts negatively tomorrow."
+  },
+  {
+    "id": "apprentice",
+    "set": "BMR",
+    "firstNight": true,
+    "otherNight": false,
+    "reminders": ["Apprentice ability"],
+    "setup": false,
+    "name": "Apprentice",
+    "team": "traveler",
+    "ability": "On your 1st night, you gain a Townsfolk ability (if good), or a Minion ability (if evil)."
+  },
+  {
+    "id": "matron",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": [],
+    "setup": false,
+    "name": "Matron",
+    "team": "traveler",
+    "ability": "Each day, you may choose up to 3 pairs of players to swap seats. Players may not leave their seats to talk in private."
+  },
+  {
+    "id": "voudon",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": [],
+    "setup": false,
+    "name": "Voudon",
+    "team": "traveler",
+    "ability": "Only you & the dead can vote. They don't need a vote token to do so. A 50% majority is not required."
+  },
+  {
+    "id": "judge",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": ["Used"],
+    "setup": false,
+    "name": "Judge",
+    "team": "traveler",
+    "ability": "Once per game, if another player nominated, you may choose to force the current execution to pass or fail."
+  },
+  {
+    "id": "bishop",
+    "set": "BMR",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": ["Nominate Good", "Nominate Evil"],
+    "setup": false,
+    "name": "Bishop",
+    "team": "traveler",
+    "ability": "Only the Storyteller can nominate. At least 1 opposite player must be nominated each day."
+  },
+  {
+    "id": "butcher",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": [],
+    "setup": false,
+    "name": "Butcher",
+    "team": "traveler",
+    "ability": "Each day, after the 1st execution, you nominate again."
+  },
+  {
+    "id": "bonecollector",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Used", "Ability active"],
+    "setup": false,
+    "name": "Bone Collector",
+    "team": "traveler",
+    "ability": "Once per game, at night, choose a dead player: they regain their ability until dusk."
+  },
+  {
+    "id": "harlot",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": true,
+    "reminders": ["Die"],
+    "setup": false,
+    "name": "Harlot",
+    "team": "traveler",
     "ability": "Each night*, choose a living player: if they agree, you learn their character, but you both might die."
+  },
+  {
+    "id": "barista",
+    "set": "SNV",
+    "firstNight": true,
+    "otherNight": true,
+    "reminders": ["Ability x2", "Healthy & Sober"],
+    "setup": false,
+    "name": "Barista",
+    "team": "traveler",
+    "ability": "Each night, until dusk, 1) a player becomes sober, healthy & gets true info, or 2) their ability works twice. They learn which."
+  },
+  {
+    "id": "deviant",
+    "set": "SNV",
+    "firstNight": false,
+    "otherNight": false,
+    "reminders": [],
+    "setup": false,
+    "name": "Deviant",
+    "team": "traveler",
+    "ability": "If you were funny today, you can not be exiled."
   }
 ]

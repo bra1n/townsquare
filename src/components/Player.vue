@@ -115,7 +115,7 @@ export default {
     opacity: 0;
     transform: perspective(400px) scale(1.5);
     transform-origin: top center;
-    transition: all 200ms;
+    transition: all 200ms ease-in-out;
     z-index: 2;
     &:hover {
       opacity: 0.5;
@@ -141,7 +141,6 @@ export default {
   width: $token + 6px;
   background: url("../assets/life.png") center center;
   background-size: 100%;
-  margin: auto;
   border: 3px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   cursor: pointer;
@@ -157,11 +156,11 @@ export default {
 #townsquare.public .player {
   .shroud {
     transform: perspective(400px) rotateX(90deg);
-    opacity: 0;
+    pointer-events: none;
   }
 
   .life {
-    transform: perspective(400px) rotateY(0deg)
+    transform: perspective(400px) rotateY(0deg);
   }
 
   &.dead {
@@ -270,8 +269,7 @@ export default {
   font-size: 120%;
   line-height: 120%;
   filter: drop-shadow(0 0 1px rgba(0, 0, 0, 1))
-    drop-shadow(0 0 1px rgba(0, 0, 0, 1))
-    drop-shadow(0 0 1px rgba(0, 0, 0, 1));
+    drop-shadow(0 0 1px rgba(0, 0, 0, 1)) drop-shadow(0 0 1px rgba(0, 0, 0, 1));
   cursor: pointer;
   span {
     display: none;
@@ -330,8 +328,9 @@ export default {
   display: block;
   margin: 5px ($token / -4) 0;
   text-align: center;
-  padding-top: $token * 0.3;
+  padding-top: $token * 0.3 + 2px;
   border-radius: 50%;
+  line-height: 90%;
   border: 3px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   transition: all 200ms;
@@ -381,6 +380,7 @@ export default {
 }
 
 #townsquare.public .reminder {
-  display: none;
+  opacity: 0;
+  pointer-events: none;
 }
 </style>

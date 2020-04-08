@@ -33,6 +33,7 @@ import rolesJSON from "./roles";
 
 const roles = new Map(
   rolesJSON
+    .filter(r => r.set === (window.location.hash.substr(1) || "TB"))
     .sort((a, b) => b.team.localeCompare(a.team))
     .map(role => [role.id, role])
 );
@@ -51,7 +52,7 @@ export default {
       //   role: roles.get("baron"),
       //   reminders: [{ role: "imp", name: "Die" }]
       // },
-      // { name: "Tino", role: roles.get("harlot"), reminders: [] },
+      // { name: "Tino", role: roles.get("beggar"), reminders: [] },
       // { name: "Basti", role: roles.get("chef"), reminders: [] },
       // { name: "Bernd", role: roles.get("ravenkeeper"), reminders: [] },
       // { name: "Tim", role: roles.get("drunk"), reminders: [] },
