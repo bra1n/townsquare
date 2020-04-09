@@ -7,11 +7,9 @@
       :roles="roles"
     ></TownSquare>
     <div class="controls">
-      <font-awesome-icon icon="cogs" @click="isControlOpen = !isControlOpen"/>
+      <font-awesome-icon icon="cogs" @click="isControlOpen = !isControlOpen" />
       <ul v-if="isControlOpen">
-        <li v-on:click="togglePublic">
-          Toggle <em>G</em>rimoire
-        </li>
+        <li v-on:click="togglePublic">Toggle <em>G</em>rimoire</li>
         <li v-on:click="addPlayer" v-if="players.length < 20">
           <em>A</em>dd Player
         </li>
