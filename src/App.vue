@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @keyup="keyup" tabindex="-1">
     <TownInfo :players="players"></TownInfo>
     <TownSquare
       :is-public="isPublic"
@@ -10,16 +10,16 @@
       <font-awesome-icon icon="cogs" @click="isControlOpen = !isControlOpen"/>
       <ul v-if="isControlOpen">
         <li v-on:click="togglePublic">
-          Toggle Grimoire
+          Toggle <em>G</em>rimoire
         </li>
         <li v-on:click="addPlayer" v-if="players.length < 20">
-          Add Player
+          <em>A</em>dd Player
         </li>
         <li v-on:click="togglePublic" v-if="players.length > 4">
           Select Roles
         </li>
         <li v-on:click="randomizeSeatings" v-if="players.length > 2">
-          Randomize Seatings
+          <em>R</em>andomize Seatings
         </li>
       </ul>
     </div>
@@ -87,6 +87,33 @@ export default {
           .sort((a, b) => a[0] - b[0])
           .map(a => a[1]);
       }
+    },
+    keyup({ key }) {
+      switch (key) {
+        case "g":
+          this.togglePublic();
+          break;
+        case "a":
+          this.addPlayer();
+          break;
+        case "r":
+          this.randomizeSeatings();
+          break;
+      }
+    }
+  },
+  mounted() {
+    if (localStorage.players) {
+      this.players = JSON.parse(localStorage.players);
+    }
+  },
+  watch: {
+    players: {
+      handler(newPlayers) {
+        console.log("new player", newPlayers);
+        localStorage.players = JSON.stringify(newPlayers);
+      },
+      deep: true
     }
   }
 };
@@ -117,6 +144,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
   margin: 0;
+  overflow: hidden;
 }
 
 * {
@@ -156,6 +184,11 @@ body {
       cursor: pointer;
       &:hover {
         background-color: red;
+      }
+      em {
+        text-decoration: underline;
+        font-style: normal;
+        font-weight: bold;
       }
     }
   }

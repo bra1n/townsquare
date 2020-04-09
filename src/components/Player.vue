@@ -5,7 +5,7 @@
       :class="{
         dead: player.hasDied,
         'no-vote': player.hasVoted,
-        traveller: player.role.team === 'traveller'
+        traveller: player.role && player.role.team === 'traveller'
       }"
     >
       <div class="shroud" @click="toggleStatus()"></div>
