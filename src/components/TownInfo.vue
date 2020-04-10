@@ -25,11 +25,11 @@
         class="demon"
         v-bind:icon="teams.demons > 1 ? 'user-friends' : 'user'"
       />
-      <template v-if="teams.travellers">
-        {{ teams.travellers }}
+      <template v-if="teams.travelers">
+        {{ teams.travelers }}
         <font-awesome-icon
-          class="traveller"
-          v-bind:icon="teams.travellers > 1 ? 'user-friends' : 'user'"
+          class="traveler"
+          v-bind:icon="teams.travelers > 1 ? 'user-friends' : 'user'"
         />
       </template>
     </li>
@@ -52,14 +52,14 @@ export default {
   },
   computed: {
     teams: function() {
-      const nontravellers = this.players.filter(
-        player => player.role.team !== "traveller"
+      const nontravelers = this.players.filter(
+        player => player.role.team !== "traveler"
       ).length;
       const alive = this.players.filter(player => player.hasDied !== true)
         .length;
       return {
-        ...gameJSON[nontravellers - 5],
-        travellers: this.players.length - nontravellers,
+        ...gameJSON[nontravelers - 5],
+        travelers: this.players.length - nontravelers,
         alive,
         votes:
           alive +
@@ -126,28 +126,19 @@ export default {
     .demon {
       color: $demon;
     }
-    .traveller {
-      color: $traveller;
+    .traveler {
+      color: $traveler;
     }
   }
 
   li.edition {
     width: 220px;
     height: 200px;
-    background: 0 center no-repeat;
+    background-position: 0 center;
+    background-repeat: no-repeat;
     background-size: 100% auto;
     position: absolute;
     top: -50px;
-
-    &.edition-TB {
-      background-image: url("../assets/edition-tb.png");
-    }
-    &.edition-BMR {
-      background-image: url("../assets/edition-bmr.png");
-    }
-    &.edition-SNV {
-      background-image: url("../assets/edition-snv.png");
-    }
   }
 }
 </style>

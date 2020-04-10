@@ -50,6 +50,20 @@ export default {
     margin: 0;
     text-align: center;
   }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    overflow: hidden;
+    justify-content: center;
+    font-size: 75%;
+    line-height: 100%;
+  }
 }
 
 .modal-fade-enter,

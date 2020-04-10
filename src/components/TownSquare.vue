@@ -211,107 +211,89 @@ export default {
 }
 
 /***** Role token modal ******/
-ul.tokens {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-  align-items: center;
-  overflow: hidden;
-  justify-content: center;
-  font-size: 75%;
-  line-height: 100%;
+ul.tokens .token {
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+  background: url("../assets/token.png") center center;
+  background-size: 100%;
+  text-align: center;
+  color: black;
+  margin: 5px;
+  font-weight: 600;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+    1px 1px 0 #fff, 0 0 5px rgba(0, 0, 0, 0.75);
+  padding-top: 85px;
+  font-family: "Papyrus", serif;
+  border: 3px solid black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: transform 500ms ease;
 
-  .token {
-    border-radius: 50%;
-    height: 120px;
-    width: 120px;
-    background: url("../assets/token.png") center center;
+  &.townsfolk {
+    box-shadow: 0 0 10px $townsfolk, 0 0 10px #004cff;
+  }
+  &.outsider {
+    box-shadow: 0 0 10px $outsider, 0 0 10px $outsider;
+  }
+  &.minion {
+    box-shadow: 0 0 10px $minion, 0 0 10px $minion;
+  }
+  &.demon {
+    box-shadow: 0 0 10px $demon, 0 0 10px $demon;
+  }
+  &.traveler {
+    box-shadow: 0 0 10px $traveler, 0 0 10px $traveler;
+  }
+
+  &:before {
+    content: " ";
     background-size: 100%;
-    text-align: center;
-    color: black;
-    margin: 5px;
-    font-weight: 600;
-    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
-      1px 1px 0 #fff, 0 0 5px rgba(0, 0, 0, 0.75);
-    padding-top: 85px;
-    font-family: "Papyrus", serif;
-    border: 3px solid black;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    cursor: pointer;
-    transition: transform 500ms ease;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
 
-    &.townsfolk {
-      box-shadow: 0 0 10px $townsfolk, 0 0 10px #004cff;
-    }
-    &.outsider {
-      box-shadow: 0 0 10px $outsider, 0 0 10px $outsider;
-    }
-    &.minion {
-      box-shadow: 0 0 10px $minion, 0 0 10px $minion;
-    }
-    &.demon {
-      box-shadow: 0 0 10px $demon, 0 0 10px $demon;
-    }
-    &.traveller {
-      box-shadow: 0 0 10px $traveller, 0 0 10px $traveller;
-    }
-
-    &:before {
-      content: " ";
-      background-size: 100%;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-    }
-
-    &:hover {
-      transform: scale(1.2);
-    }
+  &:hover {
+    transform: scale(1.2);
   }
 }
 
 /***** Reminder token modal ******/
-ul.reminders {
-  @extend .tokens;
+ul.reminders .reminder {
+  background: url("../assets/reminder.png") center center;
+  background-size: 100%;
+  width: 100px;
+  height: 100px;
+  color: black;
+  font-size: 65%;
+  font-weight: bold;
+  display: block;
+  margin: 5px;
+  text-align: center;
+  border-radius: 50%;
+  border: 3px solid black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  padding-top: 65px;
+  transition: transform 500ms ease;
 
-  .reminder {
-    background: url("../assets/reminder.png") center center;
+  &:before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
     background-size: 100%;
-    width: 100px;
-    height: 100px;
-    color: black;
-    font-size: 65%;
-    font-weight: bold;
-    display: block;
-    margin: 5px;
-    text-align: center;
-    border-radius: 50%;
-    border: 3px solid black;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    cursor: pointer;
-    padding-top: 65px;
-    transition: transform 500ms ease;
+    background-position: center 0;
+    background-repeat: no-repeat;
+  }
 
-    &:before {
-      content: " ";
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-size: 100%;
-      background-position: center 0;
-      background-repeat: no-repeat;
-    }
-
-    &:hover {
-      transform: scale(1.2);
-    }
+  &:hover {
+    transform: scale(1.2);
   }
 }
 </style>

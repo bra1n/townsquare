@@ -5,7 +5,7 @@
       :class="{
         dead: player.hasDied,
         'no-vote': player.hasVoted,
-        traveller: player.role && player.role.team === 'traveller'
+        traveler: player.role && player.role.team === 'traveler'
       }"
     >
       <div class="shroud" @click="toggleStatus()"></div>
@@ -168,7 +168,7 @@ export default {
   }
 
   &.dead {
-    &.traveller {
+    &.traveler {
       filter: grayscale(100%);
     }
 

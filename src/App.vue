@@ -6,6 +6,20 @@
       :players="players"
       :roles="roles"
     ></TownSquare>
+    <Modal v-show="showEditionModal" @close="showEditionModal = false">
+      <h2>Select an edition:</h2>
+      <ul class="editions">
+        <li
+          v-for="edition in editions"
+          class="edition"
+          v-bind:class="['edition-' + edition.id]"
+          v-bind:key="edition.id"
+          @click="setEdition(edition.id)"
+        >
+          {{ edition.name }}
+        </li>
+      </ul>
+    </Modal>
     <div class="controls">
       <font-awesome-icon icon="cogs" @click="isControlOpen = !isControlOpen" />
       <ul v-if="isControlOpen">
@@ -13,14 +27,14 @@
         <li @click="addPlayer" v-if="players.length < 20">
           <em>A</em>dd Player
         </li>
-        <li @click="togglePublic" v-if="players.length > 4">
-          Select Roles
-        </li>
         <li @click="randomizeSeatings" v-if="players.length > 2">
           <em>R</em>andomize Seatings
         </li>
         <li @click="clearPlayers" v-if="players.length">
           Clear Players
+        </li>
+        <li @click="showEditionModal = true" v-if="players.length > 4">
+          Select Edition
         </li>
       </ul>
     </div>
@@ -30,30 +44,27 @@
 <script>
 import TownSquare from "./components/TownSquare";
 import TownInfo from "./components/TownInfo";
+import Modal from "./components/Modal";
 import rolesJSON from "./roles";
-
-const getRolesByEdition = (edition = "TB") =>
-  new Map(
-    rolesJSON
-      .filter(r => r.edition === edition)
-      .sort((a, b) => b.team.localeCompare(a.team))
-      .map(role => [role.id, role])
-  );
-
-console.log(getRolesByEdition());
+import editions from "./editions";
 
 export default {
   components: {
     TownSquare,
-    TownInfo
+    TownInfo,
+    Modal
   },
-  data: () => ({
-    isPublic: true,
-    isControlOpen: false,
-    players: [],
-    roles: getRolesByEdition(),
-    edition: "TB"
-  }),
+  data: function() {
+    return {
+      editions,
+      isPublic: true,
+      isControlOpen: false,
+      players: [],
+      roles: this.getRolesByEdition(),
+      edition: "tb",
+      showEditionModal: false
+    };
+  },
   methods: {
     togglePublic() {
       this.isPublic = !this.isPublic;
@@ -92,12 +103,30 @@ export default {
           this.randomizeSeatings();
           break;
       }
+    },
+    getRolesByEdition(edition = "tb") {
+      const selectedEdition = editions.find(({ id }) => id === edition);
+      return new Map(
+        rolesJSON
+          .filter(
+            r => r.edition === edition || selectedEdition.roles.includes(r.id)
+          )
+          .sort((a, b) => b.team.localeCompare(a.team))
+          .map(role => [role.id, role])
+      );
+    },
+    setEdition(edition) {
+      this.edition = edition;
+      this.showEditionModal = false;
     }
   },
   mounted() {
+    if (localStorage.isPublic !== undefined) {
+      this.isPublic = JSON.parse(localStorage.isPublic);
+    }
     if (localStorage.edition) {
       this.edition = localStorage.edition;
-      this.roles = getRolesByEdition(this.edition);
+      this.roles = this.getRolesByEdition(this.edition);
     }
     if (localStorage.players) {
       this.players = JSON.parse(localStorage.players).map(player => ({
@@ -120,12 +149,18 @@ export default {
     },
     edition(newEdition) {
       localStorage.edition = newEdition;
+      this.roles = this.getRolesByEdition(newEdition);
+    },
+    isPublic(newIsPublic) {
+      localStorage.isPublic = JSON.stringify(newIsPublic);
     }
   }
 };
 </script>
 
 <style lang="scss">
+@import "vars";
+
 @font-face {
   font-family: "Papyrus";
   src: url("assets/fonts/papyrus.eot"); /* IE9*/
@@ -198,5 +233,26 @@ body {
       }
     }
   }
+}
+
+// Editions
+@each $img in $editions {
+  .edition-#{$img} {
+    background-image: url("./assets/edition-#{$img}.png");
+  }
+}
+
+ul.editions .edition {
+  text-align: center;
+  padding-top: 100px;
+  background-position: center center;
+  background-size: cover;
+  width: 200px;
+  margin: 5px;
+  font-size: 120%;
+  font-weight: bold;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000, 0 0 5px rgba(0, 0, 0, 0.75);
+  cursor: pointer;
 }
 </style>
