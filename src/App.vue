@@ -49,7 +49,7 @@ export default {
     isControlOpen: false,
     players: [],
     roles,
-    set: "BMR"
+    set: "TB"
   }),
   methods: {
     togglePublic() {

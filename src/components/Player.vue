@@ -102,29 +102,42 @@ export default {
   padding-top: $token + 6px;
 
   .shroud {
-    content: " ";
-    background: url("../assets/shroud.png") center -10px no-repeat;
-    background-size: auto 100%;
+    top: 0;
+    left: 0;
     position: absolute;
-    margin-left: -2/6 * $token;
-    width: 2/3 * $token;
+    width: 100%;
     height: 2/3 * $token;
-    left: 50%;
-    top: -30px;
     cursor: pointer;
-    opacity: 0;
-    transform: perspective(400px) scale(1.5);
+    transform: rotateX(0deg);
     transform-origin: top center;
-    transition: all 200ms ease-in-out;
+    transition: transform 200ms ease-in-out;
     z-index: 2;
-    &:hover {
+
+    &:before {
+      content: " ";
+      background: url("../assets/shroud.png") center -10px no-repeat;
+      background-size: auto 100%;
+      position: absolute;
+      margin-left: -2/6 * $token;
+      width: 2/3 * $token;
+      height: 2/3 * $token;
+      left: 50%;
+      top: -30px;
+      opacity: 0;
+      transform: perspective(400px) scale(1.5);
+      transform-origin: top center;
+      transition: all 200ms ease-in-out;
+      pointer-events: none;
+    }
+
+    &:hover:before {
       opacity: 0.5;
       top: -10px;
       transform: scale(1);
     }
   }
 
-  &.dead .shroud {
+  &.dead .shroud:before {
     opacity: 1;
     top: 0;
     transform: perspective(400px) scale(1);
@@ -135,32 +148,23 @@ export default {
 }
 
 /****** Life token *******/
-.player .life {
-  border-radius: 50%;
-  height: $token + 6px;
-  width: $token + 6px;
-  background: url("../assets/life.png") center center;
-  background-size: 100%;
-  border: 3px solid black;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  transition: transform 200ms ease-in-out;
-  transform: perspective(400px) rotateY(180deg);
-  backface-visibility: hidden;
-  position: absolute;
-  left: 50%;
-  top: 0;
-  margin-left: ($token + 6) / -2;
-}
-
-#townsquare.public .player {
-  .shroud {
-    transform: perspective(400px) rotateX(90deg);
-    pointer-events: none;
-  }
-
+.player {
   .life {
-    transform: perspective(400px) rotateY(0deg);
+    border-radius: 50%;
+    height: $token + 6px;
+    width: $token + 6px;
+    background: url("../assets/life.png") center center;
+    background-size: 100%;
+    border: 3px solid black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: transform 200ms ease-in-out;
+    transform: perspective(400px) rotateY(180deg);
+    backface-visibility: hidden;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    margin-left: ($token + 6) / -2;
   }
 
   &.dead {
@@ -187,6 +191,17 @@ export default {
         pointer-events: none;
       }
     }
+  }
+}
+
+#townsquare.public .player {
+  .shroud {
+    transform: perspective(400px) rotateX(90deg);
+    pointer-events: none;
+  }
+
+  .life {
+    transform: perspective(400px) rotateY(0deg);
   }
 }
 

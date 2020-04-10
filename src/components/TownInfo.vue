@@ -84,7 +84,7 @@ export default {
   height: 20%;
   margin-left: -10%;
   margin-top: -5%;
-  padding: 100px 0 0;
+  padding: 50px 0 0;
   align-items: center;
   align-content: center;
   justify-content: center;

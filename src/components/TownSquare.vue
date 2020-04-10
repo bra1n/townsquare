@@ -188,8 +188,9 @@ export default {
         transform: rotate($rot * -1deg);
       }
       .life,
-      .token {
-        transition-delay: $i * 50ms;
+      .token,
+      .shroud {
+        transition-delay: ($i - 1) * 50ms;
       }
     }
     $rot: $rot + $angle;
