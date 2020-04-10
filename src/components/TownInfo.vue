@@ -140,13 +140,13 @@ export default {
     top: -50px;
 
     &.edition-TB {
-      background-image: url("../assets/set-tb.png");
+      background-image: url("../assets/edition-tb.png");
     }
     &.edition-BMR {
-      background-image: url("../assets/set-bmr.png");
+      background-image: url("../assets/edition-bmr.png");
     }
     &.edition-SNV {
-      background-image: url("../assets/set-snv.png");
+      background-image: url("../assets/edition-snv.png");
     }
   }
 }

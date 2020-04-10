@@ -98,7 +98,6 @@ export default {
     if (localStorage.edition) {
       this.edition = localStorage.edition;
       this.roles = getRolesByEdition(this.edition);
-      console.log('edition set');
     }
     if (localStorage.players) {
       this.players = JSON.parse(localStorage.players).map(player => ({
@@ -121,7 +120,6 @@ export default {
     },
     edition(newEdition) {
       localStorage.edition = newEdition;
-      console.log('edition saved');
     }
   }
 };
