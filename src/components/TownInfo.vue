@@ -1,5 +1,6 @@
 <template>
   <ul class="info">
+    <li class="set" v-bind:class="['set-' + set]"></li>
     <li v-if="players.length < 5">Please add more players!</li>
     <li>
       {{ players.length }} <font-awesome-icon class="players" icon="users" />
@@ -43,6 +44,10 @@ export default {
     players: {
       type: Array,
       required: true
+    },
+    set: {
+      type: String,
+      required: true
     }
   },
   computed: {
@@ -79,7 +84,7 @@ export default {
   height: 20%;
   margin-left: -10%;
   margin-top: -5%;
-  padding: 0;
+  padding: 100px 0 0;
   align-items: center;
   align-content: center;
   justify-content: center;
@@ -123,6 +128,25 @@ export default {
     }
     .traveller {
       color: $traveller;
+    }
+  }
+
+  li.set {
+    width: 220px;
+    height: 200px;
+    background: 0 center no-repeat;
+    background-size: 100% auto;
+    position: absolute;
+    top: -50px;
+
+    &.set-TB {
+      background-image: url("../assets/set-tb.png");
+    }
+    &.set-BMR {
+      background-image: url("../assets/set-bmr.png");
+    }
+    &.set-SNV {
+      background-image: url("../assets/set-snv.png");
     }
   }
 }

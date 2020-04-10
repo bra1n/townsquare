@@ -1,6 +1,6 @@
 <template>
   <div id="app" @keyup="keyup" tabindex="-1">
-    <TownInfo :players="players"></TownInfo>
+    <TownInfo :players="players" :set="set"></TownInfo>
     <TownSquare
       :is-public="isPublic"
       :players="players"
@@ -9,15 +9,18 @@
     <div class="controls">
       <font-awesome-icon icon="cogs" @click="isControlOpen = !isControlOpen" />
       <ul v-if="isControlOpen">
-        <li v-on:click="togglePublic">Toggle <em>G</em>rimoire</li>
-        <li v-on:click="addPlayer" v-if="players.length < 20">
+        <li @click="togglePublic">Toggle <em>G</em>rimoire</li>
+        <li @click="addPlayer" v-if="players.length < 20">
           <em>A</em>dd Player
         </li>
-        <li v-on:click="togglePublic" v-if="players.length > 4">
+        <li @click="togglePublic" v-if="players.length > 4">
           Select Roles
         </li>
-        <li v-on:click="randomizeSeatings" v-if="players.length > 2">
+        <li @click="randomizeSeatings" v-if="players.length > 2">
           <em>R</em>andomize Seatings
+        </li>
+        <li @click="clearPlayers" v-if="players.length">
+          Clear Players
         </li>
       </ul>
     </div>
@@ -44,24 +47,9 @@ export default {
   data: () => ({
     isPublic: true,
     isControlOpen: false,
-    players: [
-      // {
-      //   name: "Steffen",
-      //   role: roles.get("baron"),
-      //   reminders: [{ role: "imp", name: "Die" }]
-      // },
-      // { name: "Tino", role: roles.get("beggar"), reminders: [] },
-      // { name: "Basti", role: roles.get("chef"), reminders: [] },
-      // { name: "Bernd", role: roles.get("ravenkeeper"), reminders: [] },
-      // { name: "Tim", role: roles.get("drunk"), reminders: [] },
-      // { name: "Yann", role: roles.get("librarian"), reminders: [] },
-      // { name: "Marie", role: roles.get("empath"), reminders: [] },
-      // { name: "Bogdan", role: roles.get("scarletwoman"), reminders: [] },
-      // { name: "Sean", role: roles.get("recluse"), reminders: [] },
-      // { name: "Petra", role: roles.get("undertaker"), reminders: [] }
-    ],
+    players: [],
     roles,
-    set: "TB"
+    set: "BMR"
   }),
   methods: {
     togglePublic() {
@@ -86,6 +74,9 @@ export default {
           .map(a => a[1]);
       }
     },
+    clearPlayers() {
+      this.players = [];
+    },
     keyup({ key }) {
       switch (key) {
         case "g":
@@ -102,16 +93,29 @@ export default {
   },
   mounted() {
     if (localStorage.players) {
-      this.players = JSON.parse(localStorage.players);
+      this.players = JSON.parse(localStorage.players).map(player => ({
+        ...player,
+        role: roles.get(player.role) || {}
+      }));
+    }
+    if (localStorage.set) {
+      this.set = localStorage.set;
     }
   },
   watch: {
     players: {
       handler(newPlayers) {
-        console.log("new player", newPlayers);
-        localStorage.players = JSON.stringify(newPlayers);
+        localStorage.players = JSON.stringify(
+          newPlayers.map(player => ({
+            ...player,
+            role: player.role.id || {}
+          }))
+        );
       },
       deep: true
+    },
+    set(newSet) {
+      localStorage.set = newSet;
     }
   }
 };
