@@ -112,6 +112,7 @@ export default {
     transform-origin: top center;
     transition: transform 200ms ease-in-out;
     z-index: 2;
+    filter: drop-shadow(0 0 5px rgba(0,0,0,0.8));
 
     &:before {
       content: " ";
