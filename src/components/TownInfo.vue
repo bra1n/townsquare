@@ -1,6 +1,6 @@
 <template>
   <ul class="info">
-    <li class="set" v-bind:class="['set-' + set]"></li>
+    <li class="edition" v-bind:class="['edition-' + edition]"></li>
     <li v-if="players.length < 5">Please add more players!</li>
     <li>
       {{ players.length }} <font-awesome-icon class="players" icon="users" />
@@ -45,7 +45,7 @@ export default {
       type: Array,
       required: true
     },
-    set: {
+    edition: {
       type: String,
       required: true
     }
@@ -131,7 +131,7 @@ export default {
     }
   }
 
-  li.set {
+  li.edition {
     width: 220px;
     height: 200px;
     background: 0 center no-repeat;
@@ -139,13 +139,13 @@ export default {
     position: absolute;
     top: -50px;
 
-    &.set-TB {
+    &.edition-TB {
       background-image: url("../assets/set-tb.png");
     }
-    &.set-BMR {
+    &.edition-BMR {
       background-image: url("../assets/set-bmr.png");
     }
-    &.set-SNV {
+    &.edition-SNV {
       background-image: url("../assets/set-snv.png");
     }
   }

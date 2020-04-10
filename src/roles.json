@@ -2,7 +2,7 @@
   {
     "id": "washerwoman",
     "name": "Washerwoman",
-    "set": "TB",
+    "edition": "TB",
     "team": "townsfolk",
     "firstNight": true,
     "otherNight": false,
@@ -16,7 +16,7 @@
   {
     "id": "librarian",
     "name": "Librarian",
-    "set": "TB",
+    "edition": "TB",
     "team": "townsfolk",
     "firstNight": true,
     "otherNight": false,
@@ -30,7 +30,7 @@
   {
     "id": "investigator",
     "name": "Investigator",
-    "set": "TB",
+    "edition": "TB",
     "team": "townsfolk",
     "firstNight": true,
     "otherNight": false,
@@ -44,7 +44,7 @@
   {
     "id": "chef",
     "name": "Chef",
-    "set": "TB",
+    "edition": "TB",
     "team": "townsfolk",
     "firstNight": true,
     "otherNight": false,
@@ -55,7 +55,7 @@
   {
     "id": "empath",
     "name": "Empath",
-    "set": "TB",
+    "edition": "TB",
     "team": "townsfolk",
     "firstNight": true,
     "otherNight": true,
@@ -66,7 +66,7 @@
   {
     "id": "fortuneteller",
     "name": "Fortune Teller",
-    "set": "TB",
+    "edition": "TB",
     "team": "townsfolk",
     "firstNight": true,
     "otherNight": true,
@@ -79,7 +79,7 @@
   {
     "id": "undertaker",
     "name": "Undertaker",
-    "set": "TB",
+    "edition": "TB",
     "team": "townsfolk",
     "firstNight": false,
     "otherNight": true,
@@ -92,7 +92,7 @@
   {
     "id": "monk",
     "name": "Monk",
-    "set": "TB",
+    "edition": "TB",
     "team": "townsfolk",
     "firstNight": false,
     "otherNight": true,
@@ -105,7 +105,7 @@
   {
     "id": "ravenkeeper",
     "name": "Ravenkeeper",
-    "set": "TB",
+    "edition": "TB",
     "team": "townsfolk",
     "firstNight": false,
     "otherNight": true,
@@ -116,7 +116,7 @@
   {
     "id": "mayor",
     "name": "Mayor",
-    "set": "TB",
+    "edition": "TB",
     "team": "townsfolk",
     "firstNight": false,
     "otherNight": false,
@@ -127,7 +127,7 @@
   {
     "id": "slayer",
     "name": "Slayer",
-    "set": "TB",
+    "edition": "TB",
     "team": "townsfolk",
     "firstNight": false,
     "otherNight": false,
@@ -140,7 +140,7 @@
   {
     "id": "soldier",
     "name": "Soldier",
-    "set": "TB",
+    "edition": "TB",
     "team": "townsfolk",
     "firstNight": false,
     "otherNight": false,
@@ -151,7 +151,7 @@
   {
     "id": "virgin",
     "name": "Virgin",
-    "set": "TB",
+    "edition": "TB",
     "team": "townsfolk",
     "firstNight": false,
     "otherNight": false,
@@ -164,7 +164,7 @@
   {
     "id": "butler",
     "name": "Butler",
-    "set": "TB",
+    "edition": "TB",
     "team": "outsider",
     "firstNight": true,
     "otherNight": true,
@@ -177,7 +177,7 @@
   {
     "id": "drunk",
     "name": "Drunk",
-    "set": "TB",
+    "edition": "TB",
     "team": "outsider",
     "firstNight": false,
     "otherNight": false,
@@ -190,7 +190,7 @@
   {
     "id": "recluse",
     "name": "Recluse",
-    "set": "TB",
+    "edition": "TB",
     "team": "outsider",
     "firstNight": false,
     "otherNight": false,
@@ -201,7 +201,7 @@
   {
     "id": "saint",
     "name": "Saint",
-    "set": "TB",
+    "edition": "TB",
     "team": "outsider",
     "firstNight": false,
     "otherNight": false,
@@ -212,7 +212,7 @@
   {
     "id": "baron",
     "name": "Baron",
-    "set": "TB",
+    "edition": "TB",
     "team": "minion",
     "firstNight": false,
     "otherNight": false,
@@ -223,7 +223,7 @@
   {
     "id": "poisoner",
     "name": "Poisoner",
-    "set": "TB",
+    "edition": "TB",
     "team": "minion",
     "firstNight": true,
     "otherNight": true,
@@ -236,7 +236,7 @@
   {
     "id": "spy",
     "name": "Spy",
-    "set": "TB",
+    "edition": "TB",
     "team": "minion",
     "firstNight": true,
     "otherNight": true,
@@ -247,7 +247,7 @@
   {
     "id": "scarletwoman",
     "name": "Scarlet Woman",
-    "set": "TB",
+    "edition": "TB",
     "team": "minion",
     "firstNight": false,
     "otherNight": true,
@@ -260,7 +260,7 @@
   {
     "id": "imp",
     "name": "Imp",
-    "set": "TB",
+    "edition": "TB",
     "team": "demon",
     "firstNight": false,
     "otherNight": true,
@@ -272,7 +272,7 @@
   },
   {
     "id": "grandmother",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Grandchild"],
@@ -283,7 +283,7 @@
   },
   {
     "id": "sailor",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Drunk"],
@@ -294,7 +294,7 @@
   },
   {
     "id": "chambermaid",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": true,
     "otherNight": true,
     "reminders": [],
@@ -305,7 +305,7 @@
   },
   {
     "id": "exorcist",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Chosen"],
@@ -316,7 +316,7 @@
   },
   {
     "id": "innkeeper",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Protected", "Drunk"],
@@ -327,7 +327,7 @@
   },
   {
     "id": "gambler",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Die"],
@@ -338,7 +338,7 @@
   },
   {
     "id": "gossip",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Die"],
@@ -349,7 +349,7 @@
   },
   {
     "id": "courtier",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Drunk 1", "Drunk 2", "Drunk 3", "Used"],
@@ -360,7 +360,7 @@
   },
   {
     "id": "professor",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Alive", "Used"],
@@ -371,7 +371,7 @@
   },
   {
     "id": "minstrel",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Everyone drunk"],
@@ -382,7 +382,7 @@
   },
   {
     "id": "tealady",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": false,
     "reminders": ["Protected"],
@@ -393,7 +393,7 @@
   },
   {
     "id": "pacifist",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": false,
     "reminders": [],
@@ -404,7 +404,7 @@
   },
   {
     "id": "fool",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": false,
     "reminders": ["Used"],
@@ -415,7 +415,7 @@
   },
   {
     "id": "tinker",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Die"],
@@ -426,7 +426,7 @@
   },
   {
     "id": "moonchild",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Die"],
@@ -437,7 +437,7 @@
   },
   {
     "id": "goon",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Drunk"],
@@ -448,7 +448,7 @@
   },
   {
     "id": "lunatic",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Attack 1", "Attack 2", "Attack 3", "Decoy"],
@@ -459,7 +459,7 @@
   },
   {
     "id": "godfather",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Died today", "Die"],
@@ -470,7 +470,7 @@
   },
   {
     "id": "devilsadvocate",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Survives execution"],
@@ -481,7 +481,7 @@
   },
   {
     "id": "assassin",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Die", "Used"],
@@ -492,7 +492,7 @@
   },
   {
     "id": "mastermind",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": false,
     "reminders": [],
@@ -503,7 +503,7 @@
   },
   {
     "id": "po",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Die 1", "Die 2", "Die 3", "Attack x3"],
@@ -514,7 +514,7 @@
   },
   {
     "id": "zombuul",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["No death today", "Die"],
@@ -525,7 +525,7 @@
   },
   {
     "id": "pukka",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Poisoned", "Die"],
@@ -536,7 +536,7 @@
   },
   {
     "id": "shabaloth",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Die 1", "Die 2", "Alive"],
@@ -547,7 +547,7 @@
   },
   {
     "id": "clockmaker",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": true,
     "otherNight": false,
     "reminders": [],
@@ -558,7 +558,7 @@
   },
   {
     "id": "dreamer",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": true,
     "otherNight": true,
     "reminders": [],
@@ -569,7 +569,7 @@
   },
   {
     "id": "snakecharmer",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Poisoned"],
@@ -580,7 +580,7 @@
   },
   {
     "id": "mathematician",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Abnormal effect"],
@@ -591,7 +591,7 @@
   },
   {
     "id": "flowergirl",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Demon did vote", "Demon did not vote"],
@@ -602,7 +602,7 @@
   },
   {
     "id": "towncrier",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["No Minion nominated", "Minion nominated"],
@@ -613,7 +613,7 @@
   },
   {
     "id": "oracle",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": true,
     "reminders": [],
@@ -624,7 +624,7 @@
   },
   {
     "id": "savant",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": false,
     "reminders": [],
@@ -635,7 +635,7 @@
   },
   {
     "id": "seamstress",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Used"],
@@ -646,7 +646,7 @@
   },
   {
     "id": "philosopher",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Used", "Drunk"],
@@ -657,7 +657,7 @@
   },
   {
     "id": "artist",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": false,
     "reminders": ["Used"],
@@ -668,7 +668,7 @@
   },
   {
     "id": "juggler",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Correct"],
@@ -679,7 +679,7 @@
   },
   {
     "id": "sage",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": true,
     "reminders": [],
@@ -690,7 +690,7 @@
   },
   {
     "id": "mutant",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": false,
     "reminders": [],
@@ -701,7 +701,7 @@
   },
   {
     "id": "sweetheart",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Drunk"],
@@ -712,7 +712,7 @@
   },
   {
     "id": "barber",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Swap"],
@@ -723,7 +723,7 @@
   },
   {
     "id": "klutz",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": false,
     "reminders": [],
@@ -734,7 +734,7 @@
   },
   {
     "id": "eviltwin",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": true,
     "otherNight": false,
     "reminders": ["Twin"],
@@ -745,7 +745,7 @@
   },
   {
     "id": "witch",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Cursed"],
@@ -756,7 +756,7 @@
   },
   {
     "id": "cerenovus",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Mad"],
@@ -767,7 +767,7 @@
   },
   {
     "id": "pithag",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": true,
     "reminders": [],
@@ -778,7 +778,7 @@
   },
   {
     "id": "fanggu",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Die"],
@@ -789,7 +789,7 @@
   },
   {
     "id": "vigormortis",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Die", "Poisoned", "Ability active"],
@@ -800,7 +800,7 @@
   },
   {
     "id": "nodashii",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Die", "Poisoned"],
@@ -811,7 +811,7 @@
   },
   {
     "id": "vortox",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Die"],
@@ -822,7 +822,7 @@
   },
   {
     "id": "scapegoat",
-    "set": "TB",
+    "edition": "TB",
     "firstNight": false,
     "otherNight": false,
     "reminders": [],
@@ -833,7 +833,7 @@
   },
   {
     "id": "gunslinger",
-    "set": "TB",
+    "edition": "TB",
     "firstNight": false,
     "otherNight": false,
     "reminders": [],
@@ -844,7 +844,7 @@
   },
   {
     "id": "beggar",
-    "set": "TB",
+    "edition": "TB",
     "firstNight": false,
     "otherNight": false,
     "reminders": [],
@@ -855,7 +855,7 @@
   },
   {
     "id": "bureaucrat",
-    "set": "TB",
+    "edition": "TB",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Vote x3"],
@@ -866,7 +866,7 @@
   },
   {
     "id": "thief",
-    "set": "TB",
+    "edition": "TB",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Negative vote"],
@@ -877,7 +877,7 @@
   },
   {
     "id": "apprentice",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": true,
     "otherNight": false,
     "reminders": ["Apprentice ability"],
@@ -888,7 +888,7 @@
   },
   {
     "id": "matron",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": false,
     "reminders": [],
@@ -899,7 +899,7 @@
   },
   {
     "id": "voudon",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": false,
     "reminders": [],
@@ -910,7 +910,7 @@
   },
   {
     "id": "judge",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": false,
     "reminders": ["Used"],
@@ -921,7 +921,7 @@
   },
   {
     "id": "bishop",
-    "set": "BMR",
+    "edition": "BMR",
     "firstNight": false,
     "otherNight": false,
     "reminders": ["Nominate Good", "Nominate Evil"],
@@ -932,7 +932,7 @@
   },
   {
     "id": "butcher",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": false,
     "reminders": [],
@@ -943,7 +943,7 @@
   },
   {
     "id": "bonecollector",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Used", "Ability active"],
@@ -954,7 +954,7 @@
   },
   {
     "id": "harlot",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": true,
     "reminders": ["Die"],
@@ -965,7 +965,7 @@
   },
   {
     "id": "barista",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": true,
     "otherNight": true,
     "reminders": ["Ability x2", "Healthy & Sober"],
@@ -976,7 +976,7 @@
   },
   {
     "id": "deviant",
-    "set": "SNV",
+    "edition": "SNV",
     "firstNight": false,
     "otherNight": false,
     "reminders": [],

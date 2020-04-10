@@ -1,6 +1,6 @@
 <template>
   <div id="app" @keyup="keyup" tabindex="-1">
-    <TownInfo :players="players" :set="set"></TownInfo>
+    <TownInfo :players="players" :edition="edition"></TownInfo>
     <TownSquare
       :is-public="isPublic"
       :players="players"
@@ -32,12 +32,15 @@ import TownSquare from "./components/TownSquare";
 import TownInfo from "./components/TownInfo";
 import rolesJSON from "./roles";
 
-const roles = new Map(
-  rolesJSON
-    .filter(r => r.set === (window.location.hash.substr(1) || "TB"))
-    .sort((a, b) => b.team.localeCompare(a.team))
-    .map(role => [role.id, role])
-);
+const getRolesByEdition = (edition = "TB") =>
+  new Map(
+    rolesJSON
+      .filter(r => r.edition === edition)
+      .sort((a, b) => b.team.localeCompare(a.team))
+      .map(role => [role.id, role])
+  );
+
+console.log(getRolesByEdition());
 
 export default {
   components: {
@@ -48,8 +51,8 @@ export default {
     isPublic: true,
     isControlOpen: false,
     players: [],
-    roles,
-    set: "TB"
+    roles: getRolesByEdition(),
+    edition: "TB"
   }),
   methods: {
     togglePublic() {
@@ -92,14 +95,16 @@ export default {
     }
   },
   mounted() {
+    if (localStorage.edition) {
+      this.edition = localStorage.edition;
+      this.roles = getRolesByEdition(this.edition);
+      console.log('edition set');
+    }
     if (localStorage.players) {
       this.players = JSON.parse(localStorage.players).map(player => ({
         ...player,
-        role: roles.get(player.role) || {}
+        role: this.roles.get(player.role) || {}
       }));
-    }
-    if (localStorage.set) {
-      this.set = localStorage.set;
     }
   },
   watch: {
@@ -114,8 +119,9 @@ export default {
       },
       deep: true
     },
-    set(newSet) {
-      localStorage.set = newSet;
+    edition(newEdition) {
+      localStorage.edition = newEdition;
+      console.log('edition saved');
     }
   }
 };
