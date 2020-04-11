@@ -49,10 +49,10 @@
         <li @click="clearRoles" v-if="players.length">
           Clear Roles
         </li>
-        <li @click="isEditionModalOpen = true" v-if="players.length > 4">
+        <li @click="showEditionModal" v-if="players.length > 4">
           Select Edition
         </li>
-        <li @click="isRoleModalOpen = true" v-if="players.length > 4">
+        <li @click="showRoleModal" v-if="players.length > 4">
           Select Roles
         </li>
       </ul>
@@ -103,6 +103,8 @@ export default {
       }
     },
     randomizeSeatings() {
+      this.isPublic = false;
+      this.isControlOpen = false;
       if (confirm("Are you sure you want to randomize seatings?")) {
         this.players = this.players
           .map(a => [Math.random(), a])
@@ -111,11 +113,13 @@ export default {
       }
     },
     clearPlayers() {
+      this.isControlOpen = false;
       if (confirm("Are you sure you want to remove all players?")) {
         this.players = [];
       }
     },
     clearRoles() {
+      this.isControlOpen = false;
       if (confirm("Are you sure you want to remove all player roles?")) {
         this.players.forEach(player => {
           player.role = {};
@@ -134,9 +138,19 @@ export default {
           .map(role => [role.id, role])
       );
     },
+    showEditionModal() {
+      this.isEditionModalOpen = true;
+      this.isPublic = false;
+      this.isControlOpen = false;
+    },
     setEdition(edition) {
       this.edition = edition;
       this.isEditionModalOpen = false;
+    },
+    showRoleModal() {
+      this.isRoleModalOpen = true;
+      this.isPublic = false;
+      this.isControlOpen = false;
     },
     keyup({ key }) {
       switch (key) {
