@@ -307,7 +307,7 @@ export default {
   padding: 5px 10px;
   top: 20px;
   right: 100%;
-  width: 200px;
+  width: 250px;
   z-index: 25;
   font-size: 80%;
   background: rgba(0, 0, 0, 0.7);
