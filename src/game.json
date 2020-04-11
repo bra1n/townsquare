@@ -1,13 +1,13 @@
 [
-  {"townsfolk": 3, "outsiders": 0, "minions": 1, "demons": 1},
-  {"townsfolk": 3, "outsiders": 1, "minions": 1, "demons": 1},
-  {"townsfolk": 5, "outsiders": 0, "minions": 1, "demons": 1},
-  {"townsfolk": 5, "outsiders": 1, "minions": 1, "demons": 1},
-  {"townsfolk": 5, "outsiders": 2, "minions": 1, "demons": 1},
-  {"townsfolk": 7, "outsiders": 0, "minions": 2, "demons": 1},
-  {"townsfolk": 7, "outsiders": 1, "minions": 2, "demons": 1},
-  {"townsfolk": 7, "outsiders": 2, "minions": 2, "demons": 1},
-  {"townsfolk": 9, "outsiders": 0, "minions": 3, "demons": 1},
-  {"townsfolk": 9, "outsiders": 1, "minions": 3, "demons": 1},
-  {"townsfolk": 9, "outsiders": 2, "minions": 3, "demons": 1}
+  {"townsfolk": 3, "outsider": 0, "minion": 1, "demon": 1},
+  {"townsfolk": 3, "outsider": 1, "minion": 1, "demon": 1},
+  {"townsfolk": 5, "outsider": 0, "minion": 1, "demon": 1},
+  {"townsfolk": 5, "outsider": 1, "minion": 1, "demon": 1},
+  {"townsfolk": 5, "outsider": 2, "minion": 1, "demon": 1},
+  {"townsfolk": 7, "outsider": 0, "minion": 2, "demon": 1},
+  {"townsfolk": 7, "outsider": 1, "minion": 2, "demon": 1},
+  {"townsfolk": 7, "outsider": 2, "minion": 2, "demon": 1},
+  {"townsfolk": 9, "outsider": 0, "minion": 3, "demon": 1},
+  {"townsfolk": 9, "outsider": 1, "minion": 3, "demon": 1},
+  {"townsfolk": 9, "outsider": 2, "minion": 3, "demon": 1}
 ]

@@ -1,35 +1,35 @@
 <template>
   <ul class="info">
     <li class="edition" v-bind:class="['edition-' + edition]"></li>
-    <li v-if="players.length < 5">Please add more players!</li>
+    <li v-if="players.length - teams.traveler < 5">Please add more players!</li>
     <li>
       {{ players.length }} <font-awesome-icon class="players" icon="users" />
       {{ teams.alive }} <font-awesome-icon class="alive" icon="heartbeat" />
       {{ teams.votes }} <font-awesome-icon class="votes" icon="vote-yea" />
     </li>
-    <li v-if="players.length >= 5">
+    <li v-if="players.length - teams.traveler >= 5">
       {{ teams.townsfolk }}
       <font-awesome-icon class="townsfolk" icon="user-friends" />
-      {{ teams.outsiders }}
+      {{ teams.outsider }}
       <font-awesome-icon
         class="outsider"
-        v-bind:icon="teams.outsiders > 1 ? 'user-friends' : 'user'"
+        v-bind:icon="teams.outsider > 1 ? 'user-friends' : 'user'"
       />
-      {{ teams.minions }}
+      {{ teams.minion }}
       <font-awesome-icon
         class="minion"
-        v-bind:icon="teams.minions > 1 ? 'user-friends' : 'user'"
+        v-bind:icon="teams.minion > 1 ? 'user-friends' : 'user'"
       />
-      {{ teams.demons }}
+      {{ teams.demon }}
       <font-awesome-icon
         class="demon"
-        v-bind:icon="teams.demons > 1 ? 'user-friends' : 'user'"
+        v-bind:icon="teams.demon > 1 ? 'user-friends' : 'user'"
       />
-      <template v-if="teams.travelers">
-        {{ teams.travelers }}
+      <template v-if="teams.traveler">
+        {{ teams.traveler }}
         <font-awesome-icon
           class="traveler"
-          v-bind:icon="teams.travelers > 1 ? 'user-friends' : 'user'"
+          v-bind:icon="teams.traveler > 1 ? 'user-friends' : 'user'"
         />
       </template>
     </li>
@@ -59,7 +59,7 @@ export default {
         .length;
       return {
         ...gameJSON[nontravelers - 5],
-        travelers: this.players.length - nontravelers,
+        traveler: this.players.length - nontravelers,
         alive,
         votes:
           alive +

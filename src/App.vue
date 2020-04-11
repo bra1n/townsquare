@@ -6,7 +6,12 @@
       :players="players"
       :roles="roles"
     ></TownSquare>
-    <Modal v-show="showEditionModal" @close="showEditionModal = false">
+
+    <Modal
+      class="editions"
+      v-show="isEditionModalOpen"
+      @close="isEditionModalOpen = false"
+    >
       <h2>Select an edition:</h2>
       <ul class="editions">
         <li
@@ -20,6 +25,14 @@
         </li>
       </ul>
     </Modal>
+
+    <RoleSelectionModal
+      :players="players"
+      :roles="roles"
+      :is-open="isRoleModalOpen"
+      @close="isRoleModalOpen = false"
+    ></RoleSelectionModal>
+
     <div class="controls">
       <font-awesome-icon icon="cogs" @click="isControlOpen = !isControlOpen" />
       <ul v-if="isControlOpen">
@@ -33,8 +46,14 @@
         <li @click="clearPlayers" v-if="players.length">
           Clear Players
         </li>
-        <li @click="showEditionModal = true" v-if="players.length > 4">
+        <li @click="clearRoles" v-if="players.length">
+          Clear Roles
+        </li>
+        <li @click="isEditionModalOpen = true" v-if="players.length > 4">
           Select Edition
+        </li>
+        <li @click="isRoleModalOpen = true" v-if="players.length > 4">
+          Select Roles
         </li>
       </ul>
     </div>
@@ -45,24 +64,27 @@
 import TownSquare from "./components/TownSquare";
 import TownInfo from "./components/TownInfo";
 import Modal from "./components/Modal";
+import RoleSelectionModal from "./components/RoleSelectionModal";
 import rolesJSON from "./roles";
-import editions from "./editions";
+import editionJSON from "./editions";
 
 export default {
   components: {
     TownSquare,
     TownInfo,
-    Modal
+    Modal,
+    RoleSelectionModal
   },
   data: function() {
     return {
-      editions,
+      editions: editionJSON,
       isPublic: true,
       isControlOpen: false,
+      isEditionModalOpen: false,
+      isRoleModalOpen: false,
       players: [],
       roles: this.getRolesByEdition(),
-      edition: "tb",
-      showEditionModal: false
+      edition: "tb"
     };
   },
   methods: {
@@ -89,7 +111,32 @@ export default {
       }
     },
     clearPlayers() {
-      this.players = [];
+      if (confirm("Are you sure you want to remove all players?")) {
+        this.players = [];
+      }
+    },
+    clearRoles() {
+      if (confirm("Are you sure you want to remove all player roles?")) {
+        this.players.forEach(player => {
+          player.role = {};
+          player.reminders = [];
+        });
+      }
+    },
+    getRolesByEdition(edition = "tb") {
+      const selectedEdition = editionJSON.find(({ id }) => id === edition);
+      return new Map(
+        rolesJSON
+          .filter(
+            r => r.edition === edition || selectedEdition.roles.includes(r.id)
+          )
+          .sort((a, b) => b.team.localeCompare(a.team))
+          .map(role => [role.id, role])
+      );
+    },
+    setEdition(edition) {
+      this.edition = edition;
+      this.isEditionModalOpen = false;
     },
     keyup({ key }) {
       switch (key) {
@@ -103,21 +150,6 @@ export default {
           this.randomizeSeatings();
           break;
       }
-    },
-    getRolesByEdition(edition = "tb") {
-      const selectedEdition = editions.find(({ id }) => id === edition);
-      return new Map(
-        rolesJSON
-          .filter(
-            r => r.edition === edition || selectedEdition.roles.includes(r.id)
-          )
-          .sort((a, b) => b.team.localeCompare(a.team))
-          .map(role => [role.id, role])
-      );
-    },
-    setEdition(edition) {
-      this.edition = edition;
-      this.showEditionModal = false;
     }
   },
   mounted() {

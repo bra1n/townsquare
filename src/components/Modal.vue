@@ -1,12 +1,3 @@
-<script>
-export default {
-  methods: {
-    close() {
-      this.$emit("close");
-    }
-  }
-};
-</script>
 <template>
   <transition name="modal-fade">
     <div class="modal-backdrop" @click="close">
@@ -22,6 +13,17 @@ export default {
     </div>
   </transition>
 </template>
+
+<script>
+export default {
+  methods: {
+    close() {
+      this.$emit("close");
+    }
+  }
+};
+</script>
+
 <style lang="scss">
 .modal-backdrop {
   position: fixed;
