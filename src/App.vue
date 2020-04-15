@@ -5,6 +5,7 @@
       :is-public="isPublic"
       :players="players"
       :roles="roles"
+      :zoom="zoom"
     ></TownSquare>
 
     <Modal
@@ -37,6 +38,12 @@
       <font-awesome-icon icon="cogs" @click="isControlOpen = !isControlOpen" />
       <ul v-if="isControlOpen">
         <li @click="togglePublic">Toggle <em>G</em>rimoire</li>
+        <li>
+          Size
+          <font-awesome-icon @click="zoom -= 0.1" icon="search-minus" />
+          {{ Math.round(zoom * 100) }}%
+          <font-awesome-icon @click="zoom += 0.1" icon="search-plus" />
+        </li>
         <li @click="addPlayer" v-if="players.length < 20">
           <em>A</em>dd Player
         </li>
@@ -84,7 +91,8 @@ export default {
       isRoleModalOpen: false,
       players: [],
       roles: this.getRolesByEdition(),
-      edition: "tb"
+      edition: "tb",
+      zoom: 1
     };
   },
   methods: {

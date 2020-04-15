@@ -1,5 +1,5 @@
 <template>
-  <div id="townsquare" class="square" v-bind:class="{ public: isPublic }">
+  <div id="townsquare" class="square" v-bind:class="{ public: isPublic }" v-bind:style="{ zoom: zoom }">
     <ul class="circle" v-bind:class="['size-' + players.length]">
       <Player
         v-for="(player, index) in players"
@@ -63,6 +63,10 @@ export default {
     },
     roles: {
       type: Map,
+      required: true
+    },
+    zoom: {
+      type: Number,
       required: true
     }
   },

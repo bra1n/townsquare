@@ -169,10 +169,6 @@ export default {
   }
 
   &.dead {
-    &.traveler {
-      filter: grayscale(100%);
-    }
-
     &.no-vote .life:after {
       display: none;
     }
@@ -192,6 +188,10 @@ export default {
         pointer-events: none;
       }
     }
+  }
+
+  &.traveler .life {
+    filter: grayscale(100%);
   }
 }
 

@@ -8,7 +8,9 @@ import {
   faUserFriends,
   faUser,
   faTimesCircle,
-  faCogs
+  faCogs,
+  faSearchMinus,
+  faSearchPlus
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -19,7 +21,9 @@ library.add(
   faUserFriends,
   faUser,
   faTimesCircle,
-  faCogs
+  faCogs,
+  faSearchMinus,
+  faSearchPlus
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

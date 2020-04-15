@@ -61,8 +61,10 @@ export default {
   },
   computed: {
     nontravelerPlayers: function() {
-      return this.players.filter(({ role }) => role && role.team !== "traveler")
-        .length;
+      return Math.min(
+        this.players.filter(({ role }) => role && role.team !== "traveler").length,
+        15
+      );
     },
     selectedRoles: function() {
       return Object.values(this.roleSelection)

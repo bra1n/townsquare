@@ -52,9 +52,10 @@ export default {
   },
   computed: {
     teams: function() {
-      const nontravelers = this.players.filter(
-        player => player.role.team !== "traveler"
-      ).length;
+      const nontravelers = Math.min(
+        this.players.filter(player => player.role.team !== "traveler").length,
+        15
+      );
       const alive = this.players.filter(player => player.hasDied !== true)
         .length;
       return {
