@@ -10,16 +10,7 @@
     >
       <div class="shroud" @click="toggleStatus()"></div>
       <div class="life" @click="toggleStatus()"></div>
-      <div class="token" @click="changeRole()" :class="[player.role.id]">
-        <span class="leaf-left" v-if="player.role.firstNight"></span>
-        <span class="leaf-right" v-if="player.role.otherNight"></span>
-        <span
-          v-if="player.role.reminders && player.role.reminders.length"
-          v-bind:class="['leaf-top' + player.role.reminders.length]"
-        ></span>
-        <span class="leaf-orange" v-if="player.role.setup"></span>
-        <div>{{ player.role.name }}</div>
-      </div>
+      <Token :role="player.role" @set-role="setRole" />
       <div class="ability" v-if="player.role.ability">
         {{ player.role.ability }}
       </div>
@@ -46,7 +37,12 @@
 </template>
 
 <script>
+import Token from "./Token";
+
 export default {
+  components: {
+    Token
+  },
   props: {
     player: {
       type: Object,
@@ -79,7 +75,7 @@ export default {
         this.$set(this.player, "hasDied", !this.player.hasDied);
       }
     },
-    changeRole() {
+    setRole() {
       this.$emit("set-role", this.player);
     },
     changeName() {
@@ -207,76 +203,19 @@ export default {
 }
 
 /***** Role token ******/
-.circle .token {
-  border-radius: 50%;
-  height: $token + 6px;
-  width: $token + 6px;
-  background: url("../assets/token.png") center center;
-  background-size: 100%;
-  text-align: center;
-  color: black;
-  font-weight: 600;
-  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
-    1px 1px 0 #fff, 0 0 5px rgba(0, 0, 0, 0.75);
-  padding-top: $token * 0.7;
-  font-family: "Papyrus", serif;
-  border: 3px solid black;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  transition: transform 200ms ease-in-out;
-  transform: perspective(400px) rotateY(0deg);
-  backface-visibility: hidden;
+.player .token {
   position: absolute;
   left: 50%;
   top: 0;
   margin-left: ($token + 6) / -2;
-
-  &:before {
-    content: " ";
-    background-size: 100%;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-  }
-
-  span {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-size: 100%;
-    left: 0;
-    top: 0;
-    pointer-events: none;
-    &.leaf-left {
-      background-image: url("../assets/leaf-left.png");
-    }
-    &.leaf-orange {
-      background-image: url("../assets/leaf-orange.png");
-    }
-    &.leaf-right {
-      background-image: url("../assets/leaf-right.png");
-    }
-    &.leaf-top1 {
-      background-image: url("../assets/leaf-top1.png");
-    }
-    &.leaf-top2 {
-      background-image: url("../assets/leaf-top2.png");
-    }
-    &.leaf-top3 {
-      background-image: url("../assets/leaf-top3.png");
-    }
-    &.leaf-top4 {
-      background-image: url("../assets/leaf-top4.png");
-    }
-    &.leaf-top5 {
-      background-image: url("../assets/leaf-top5.png");
-    }
-  }
+  height: $token + 6px;
+  width: $token + 6px;
+  transition: transform 200ms ease-in-out;
+  transform: perspective(400px) rotateY(0deg);
+  backface-visibility: hidden;
 }
 
-#townsquare.public .token {
+#townsquare.public .circle .token {
   transform: perspective(400px) rotateY(-180deg);
 }
 

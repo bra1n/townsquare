@@ -310,4 +310,41 @@ ul.editions .edition {
     1px 1px 0 #000, 0 0 5px rgba(0, 0, 0, 0.75);
   cursor: pointer;
 }
+
+// Buttons
+.button {
+  padding: 0;
+  border: solid 0.125em transparent;
+  border-radius: 15px;
+  box-shadow: inset 0 1px 1px #9c9c9c, 0 0 10px #000;
+  background: radial-gradient(
+        at 0 -15%,
+        rgba(#fff, 0.07) 70%,
+        rgba(#fff, 0) 71%
+      )
+      0 0/ 80% 90% no-repeat content-box,
+    linear-gradient(#4e4e4e, #040404) content-box,
+    linear-gradient(#292929, #010101) border-box;
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+  line-height: 40px;
+  margin: 5px auto;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 200ms;
+  &:hover {
+    color: red;
+  }
+  &:disabled {
+    color: gray;
+  }
+  &:before,
+  &:after {
+    content: " ";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+  }
+}
 </style>

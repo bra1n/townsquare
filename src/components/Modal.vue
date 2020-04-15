@@ -8,6 +8,7 @@
         aria-describedby="modalDescription"
         @click.stop=""
       >
+        <font-awesome-icon @click="close" class="close" icon="times-circle" />
         <slot></slot>
       </div>
     </div>
@@ -65,6 +66,16 @@ export default {
     justify-content: center;
     font-size: 75%;
     line-height: 100%;
+  }
+  > .close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+    z-index: 5;
+    &:hover {
+      color: red;
+    }
   }
 }
 

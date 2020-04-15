@@ -12,31 +12,32 @@
       </li>
       <li
         v-for="role in teamRoles"
-        class="token"
-        v-bind:class="[role.id, role.team, role.selected ? 'selected' : '']"
+        v-bind:class="[role.team, role.selected ? 'selected' : '']"
         v-bind:key="role.id"
         @click="role.selected = !role.selected"
       >
-        {{ role.name }}
+        <Token :role="role" />
       </li>
     </ul>
-    <button
+    <div class="button"
       @click="assignRoles()"
       v-bind:disabled="selectedRoles > nontravelerPlayers || !selectedRoles"
     >
       Assign {{ selectedRoles }} roles randomly
-    </button>
+    </div>
   </Modal>
 </template>
 
 <script>
 import Modal from "./Modal";
 import gameJSON from "./../game";
+import Token from "./Token";
 
 const randomElement = arr => arr[Math.floor(Math.random() * arr.length)];
 
 export default {
   components: {
+    Token,
     Modal
   },
   props: {
@@ -62,7 +63,8 @@ export default {
   computed: {
     nontravelerPlayers: function() {
       return Math.min(
-        this.players.filter(({ role }) => role && role.team !== "traveler").length,
+        this.players.filter(({ role }) => role && role.team !== "traveler")
+          .length,
         15
       );
     },
@@ -129,12 +131,25 @@ export default {
 @import "../vars.scss";
 
 .roles .modal ul.tokens {
-  padding-left: 20px;
+  padding-left: 55px;
+  li {
+    opacity: 0.5;
+    transition: all 250ms;
+    &.selected {
+      opacity: 1;
+    }
+  }
   .count {
+    opacity: 1;
     position: absolute;
     left: 0;
+    top: 40px;
     font-weight: bold;
-    padding: 5px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 100%;
+    width: 50px;
+    height: 50px;
     &.townsfolk {
       color: $townsfolk;
     }
@@ -146,12 +161,6 @@ export default {
     }
     &.demon {
       color: $demon;
-    }
-  }
-  .token {
-    opacity: 0.5;
-    &.selected {
-      opacity: 1;
     }
   }
 }

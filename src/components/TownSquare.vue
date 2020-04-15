@@ -1,5 +1,10 @@
 <template>
-  <div id="townsquare" class="square" v-bind:class="{ public: isPublic }" v-bind:style="{ zoom: zoom }">
+  <div
+    id="townsquare"
+    class="square"
+    v-bind:class="{ public: isPublic }"
+    v-bind:style="{ zoom: zoom }"
+  >
     <ul class="circle" v-bind:class="['size-' + players.length]">
       <Player
         v-for="(player, index) in players"
@@ -12,7 +17,7 @@
         @remove-player="removePlayer"
       ></Player>
     </ul>
-    <Modal v-show="availableReminders.length" @close="closeModal">
+    <Modal v-show="availableReminders.length && selectedPlayer" @close="closeModal">
       <h2>Choose a reminder token:</h2>
       <ul class="reminders">
         <li
@@ -26,17 +31,16 @@
         </li>
       </ul>
     </Modal>
-    <Modal v-show="availableRoles.length" @close="closeModal">
+    <Modal v-show="availableRoles.length && selectedPlayer" @close="closeModal">
       <h2>Choose a new role:</h2>
       <ul class="tokens">
         <li
           v-for="role in availableRoles"
-          class="token"
-          v-bind:class="[role.id, role.team]"
+          v-bind:class="[role.team]"
           v-bind:key="role.id"
           @click="setRole(role)"
         >
-          {{ role.name }}
+          <Token :role="role" />
         </li>
       </ul>
     </Modal>
@@ -46,9 +50,11 @@
 <script>
 import Player from "./Player";
 import Modal from "./Modal";
+import Token from "./Token";
 
 export default {
   components: {
+    Token,
     Modal,
     Player
   },
@@ -79,8 +85,9 @@ export default {
   },
   methods: {
     openReminderModal(player) {
-      this.selectedPlayer = player;
+      this.availableRoles = [];
       this.availableReminders = [];
+      this.selectedPlayer = player;
       this.roles.forEach(role => {
         if (this.players.some(p => p.role.id === role.id)) {
           this.availableReminders = [
@@ -93,10 +100,11 @@ export default {
       this.availableReminders.push({ role: "evil", name: "Evil" });
     },
     openRoleModal(player) {
-      this.selectedPlayer = player;
       this.availableRoles = [];
+      this.availableReminders = [];
+      this.selectedPlayer = player;
       this.roles.forEach(role => {
-        if (role.id !== player.role) {
+        if (role.id !== player.role.id) {
           this.availableRoles.push(role);
         }
       });
@@ -112,8 +120,6 @@ export default {
     },
     closeModal() {
       this.selectedPlayer = false;
-      this.availableReminders = [];
-      this.availableRoles = [];
     },
     removePlayer(player) {
       if (confirm(`Do you really want to remove ${player.name}?`)) {
@@ -215,23 +221,11 @@ export default {
 }
 
 /***** Role token modal ******/
-ul.tokens .token {
+ul.tokens li {
   border-radius: 50%;
   height: 120px;
   width: 120px;
-  background: url("../assets/token.png") center center;
-  background-size: 100%;
-  text-align: center;
-  color: black;
   margin: 5px;
-  font-weight: 600;
-  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
-    1px 1px 0 #fff, 0 0 5px rgba(0, 0, 0, 0.75);
-  padding-top: 85px;
-  font-family: "Papyrus", serif;
-  border: 3px solid black;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
   transition: transform 500ms ease;
 
   &.townsfolk {
@@ -249,17 +243,6 @@ ul.tokens .token {
   &.traveler {
     box-shadow: 0 0 10px $traveler, 0 0 10px $traveler;
   }
-
-  &:before {
-    content: " ";
-    background-size: 100%;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-  }
-
   &:hover {
     transform: scale(1.2);
   }
