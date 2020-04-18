@@ -188,7 +188,7 @@ export default {
         .ability {
           right: 110%;
           left: auto;
-          &:after {
+          &:before {
             border-right-color: transparent;
             border-left-color: black;
             right: auto;

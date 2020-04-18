@@ -240,7 +240,7 @@ export default {
   display: none;
 }
 .circle .player:hover .ability {
-  display: block;
+  opacity: 1;
 }
 
 /***** Reminder token *****/

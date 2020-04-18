@@ -111,6 +111,7 @@ export default {
   }
 
   .ability {
+    display: flex;
     position: absolute;
     padding: 5px 10px;
     top: 20px;
@@ -118,26 +119,31 @@ export default {
     width: 250px;
     z-index: 25;
     font-size: 80%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     border: 3px solid black;
     text-align: left;
-    display: none;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
 
-    &:after {
+    &:before {
       content: " ";
       border: 10px solid transparent;
-      position: absolute;
-      right: 100%;
       width: 0;
       height: 0;
       border-right-color: black;
-      top: 10px;
-      margin: 0 2px;
+      position: absolute;
+      margin-right: 2px;
+      right: 100%;
     }
   }
   &:hover .ability {
-    display: block;
+    opacity: 1;
   }
 }
 </style>
