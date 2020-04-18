@@ -44,7 +44,6 @@ export default {
   padding: 10px 20px;
   border-radius: 10px;
   box-shadow: 2px 2px 20px 1px #000;
-  overflow-x: auto;
   display: flex;
   flex-direction: column;
   max-width: 60%;
@@ -62,7 +61,6 @@ export default {
     flex-wrap: wrap;
     align-content: center;
     align-items: center;
-    overflow: hidden;
     justify-content: center;
     font-size: 75%;
     line-height: 100%;

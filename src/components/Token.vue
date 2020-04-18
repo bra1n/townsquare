@@ -7,7 +7,10 @@
       v-bind:class="['leaf-top' + role.reminders.length]"
     ></span>
     <span class="leaf-orange" v-if="role.setup"></span>
-    <div>{{ role.name }}</div>
+    <div class="name">{{ role.name }}</div>
+    <div class="ability" v-if="role.ability">
+      {{ role.ability }}
+    </div>
   </div>
 </template>
 
@@ -39,11 +42,6 @@ export default {
   background: url("../assets/token.png") center center;
   background-size: 100%;
   text-align: center;
-  color: black;
-  font-weight: 600;
-  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
-    1px 1px 0 #fff, 0 0 5px rgba(0, 0, 0, 0.75);
-  font-family: "Papyrus", serif;
   border: 3px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   cursor: pointer;
@@ -56,13 +54,6 @@ export default {
     height: 100%;
     left: 0;
     top: 0;
-  }
-
-  div {
-    position: absolute;
-    top: 73%;
-    width: 100%;
-    line-height: 100%;
   }
 
   span {
@@ -105,6 +96,48 @@ export default {
     &.leaf-top5 {
       background-image: url("../assets/leaf-top5.png");
     }
+  }
+
+  .name {
+    color: black;
+    font-weight: 600;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+    1px 1px 0 #fff, 0 0 5px rgba(0, 0, 0, 0.75);
+    font-family: "Papyrus", serif;
+    position: absolute;
+    top: 73%;
+    width: 100%;
+    line-height: 100%;
+  }
+
+  .ability {
+    position: absolute;
+    padding: 5px 10px;
+    top: 20px;
+    left: 110%;
+    width: 250px;
+    z-index: 25;
+    font-size: 80%;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    border: 3px solid black;
+    text-align: left;
+    display: none;
+
+    &:after {
+      content: " ";
+      border: 10px solid transparent;
+      position: absolute;
+      right: 100%;
+      width: 0;
+      height: 0;
+      border-right-color: black;
+      top: 10px;
+      margin: 0 2px;
+    }
+  }
+  &:hover .ability {
+    display: block;
   }
 }
 </style>

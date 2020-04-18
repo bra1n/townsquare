@@ -11,9 +11,7 @@
       <div class="shroud" @click="toggleStatus()"></div>
       <div class="life" @click="toggleStatus()"></div>
       <Token :role="player.role" @set-role="setRole" />
-      <div class="ability" v-if="player.role.ability">
-        {{ player.role.ability }}
-      </div>
+
       <div class="name" @click="changeName">
         {{ player.name }}
         <span class="remove" @click.stop="$emit('remove-player', player)">
@@ -220,7 +218,7 @@ export default {
 }
 
 /***** Player name *****/
-.name {
+.player > .name {
   font-size: 120%;
   line-height: 120%;
   filter: drop-shadow(0 0 1px rgba(0, 0, 0, 1))
@@ -241,33 +239,7 @@ export default {
 #townsquare.public .ability {
   display: none;
 }
-.circle .ability {
-  position: absolute;
-  padding: 5px 10px;
-  top: 20px;
-  right: 100%;
-  width: 250px;
-  z-index: 25;
-  font-size: 80%;
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 10px;
-  border: 3px solid black;
-  text-align: left;
-  display: none;
-  &:after {
-    content: " ";
-    border: 10px solid transparent;
-    position: absolute;
-    left: 100%;
-    width: 0;
-    height: 0;
-    border-left-color: black;
-    top: 20px;
-    margin: 0 2px;
-  }
-}
-
-.player:hover .ability {
+.circle .player:hover .ability {
   display: block;
 }
 

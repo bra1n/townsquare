@@ -138,7 +138,9 @@ export default {
     &:before {
       background-image: url("../assets/icons/#{$img}.png");
     }
-    font-size: $fontsize;
+    .name {
+      font-size: $fontsize;
+    }
   }
 
   .reminder.#{$img}:before {
@@ -181,18 +183,18 @@ export default {
       transform: rotate($rot * 1deg);
       @if $i - 1 <= $item-count / 2 {
         z-index: $item-count - $i + 1;
-        .ability {
-          left: 100%;
-          right: auto;
-          &:after {
-            border-left-color: transparent;
-            border-right-color: black;
-            left: auto;
-            right: 100%;
-          }
-        }
       } @else {
         z-index: $i - 1;
+        .ability {
+          right: 110%;
+          left: auto;
+          &:after {
+            border-right-color: transparent;
+            border-left-color: black;
+            right: auto;
+            left: 100%;
+          }
+        }
       }
       > * {
         transform: rotate($rot * -1deg);
@@ -245,6 +247,7 @@ ul.tokens li {
   }
   &:hover {
     transform: scale(1.2);
+    z-index: 10;
   }
 }
 

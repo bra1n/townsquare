@@ -19,11 +19,19 @@
         <Token :role="role" />
       </li>
     </ul>
-    <div class="button"
-      @click="assignRoles()"
-      v-bind:disabled="selectedRoles > nontravelerPlayers || !selectedRoles"
-    >
-      Assign {{ selectedRoles }} roles randomly
+    <div class="button-group">
+      <div
+        class="button"
+        @click="assignRoles"
+        v-bind:class="{
+          disabled: selectedRoles > nontravelerPlayers || !selectedRoles
+        }"
+      >
+        Assign {{ selectedRoles }} roles randomly
+      </div>
+      <div class="button" @click="selectRandomRoles">
+        Randomize roles
+      </div>
     </div>
   </Modal>
 </template>
@@ -78,7 +86,7 @@ export default {
     close() {
       this.$emit("close");
     },
-    showRoleSelectionModal() {
+    selectRandomRoles() {
       this.roleSelection = {};
       this.roles.forEach(role => {
         if (!this.roleSelection[role.team]) {
@@ -102,26 +110,26 @@ export default {
       });
     },
     assignRoles() {
-      // generate list of selected roles and randomize it
-      const roles = Object.values(this.roleSelection)
-        .map(roles => roles.filter(role => role.selected))
-        .reduce((a, b) => [...a, ...b], [])
-        .map(a => [Math.random(), a])
-        .sort((a, b) => a[0] - b[0])
-        .map(a => a[1]);
-      this.players.forEach(player => {
-        if (player.role.team !== "traveler" && roles.length) {
-          player.role = roles.pop();
-        }
-      });
-      this.close();
+      if (this.selectedRoles <= this.nontravelerPlayers && this.selectedRoles) {
+        // generate list of selected roles and randomize it
+        const roles = Object.values(this.roleSelection)
+          .map(roles => roles.filter(role => role.selected))
+          .reduce((a, b) => [...a, ...b], [])
+          .map(a => [Math.random(), a])
+          .sort((a, b) => a[0] - b[0])
+          .map(a => a[1]);
+        this.players.forEach(player => {
+          if (player.role.team !== "traveler" && roles.length) {
+            player.role = roles.pop();
+          }
+        });
+        this.close();
+      }
     }
   },
-  watch: {
-    isOpen(newIsOpen) {
-      if (newIsOpen) {
-        this.showRoleSelectionModal();
-      }
+  mounted: function() {
+    if (!Object.keys(this.roleSelection).length) {
+      this.selectRandomRoles();
     }
   }
 };

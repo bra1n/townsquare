@@ -312,6 +312,24 @@ ul.editions .edition {
 }
 
 // Buttons
+.button-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  .button {
+    margin: 5px 0;
+    border-radius: 0;
+    &:first-child {
+      border-top-left-radius: 15px;
+      border-bottom-left-radius: 15px;
+    }
+    &:last-child {
+      border-top-right-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
+  }
+}
 .button {
   padding: 0;
   border: solid 0.125em transparent;
@@ -336,8 +354,9 @@ ul.editions .edition {
   &:hover {
     color: red;
   }
-  &:disabled {
+  &.disabled {
     color: gray;
+    cursor: default;
   }
   &:before,
   &:after {
