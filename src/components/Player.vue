@@ -227,10 +227,14 @@ export default {
   span {
     display: none;
   }
-  &:hover span {
-    display: inline-block;
-    &:hover {
-      color: red;
+  &:hover {
+    color: red;
+    span {
+      display: inline-block;
+      color: white;
+      &:hover {
+        color: red;
+      }
     }
   }
 }

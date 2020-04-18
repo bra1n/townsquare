@@ -19,6 +19,10 @@
         <Token :role="role" />
       </li>
     </ul>
+    <div class="warning" v-if="hasSelectedSetupRoles">
+      Warning: there are roles selected that modify the game setup! The
+      randomizer does not account for these roles.
+    </div>
     <div class="button-group">
       <div
         class="button"
@@ -80,6 +84,11 @@ export default {
       return Object.values(this.roleSelection)
         .map(roles => roles.filter(role => role.selected).length)
         .reduce((a, b) => a + b, 0);
+    },
+    hasSelectedSetupRoles: function() {
+      return Object.values(this.roleSelection).some(roles =>
+        roles.some(role => role.selected && role.setup)
+      );
     }
   },
   methods: {
@@ -176,5 +185,11 @@ export default {
       color: $demon;
     }
   }
+}
+
+.roles .modal .warning {
+  color: red;
+  text-align: center;
+  margin: auto;
 }
 </style>

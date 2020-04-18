@@ -99,7 +99,9 @@ export default {
       selectedPlayer: false,
       availableReminders: [],
       availableRoles: [],
-      bluffs: Array(3).fill({}).map(() => ({ role: {} }))
+      bluffs: Array(3)
+        .fill({})
+        .map(() => ({ role: {} }))
     };
   },
   methods: {
