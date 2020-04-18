@@ -1,6 +1,6 @@
 <template>
   <Modal class="roles" v-show="isOpen" @close="close()">
-    <h2>Select the roles for {{ nontravelerPlayers }} players:</h2>
+    <h3>Select the roles for {{ nontravelerPlayers }} players:</h3>
     <ul
       class="tokens"
       v-for="(teamRoles, team) in roleSelection"
@@ -129,6 +129,11 @@ export default {
   },
   mounted: function() {
     if (!Object.keys(this.roleSelection).length) {
+      this.selectRandomRoles();
+    }
+  },
+  watch: {
+    roles() {
       this.selectRandomRoles();
     }
   }

@@ -98,18 +98,6 @@ export default {
     }
   }
 
-  .name {
-    color: black;
-    font-weight: 600;
-    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
-    1px 1px 0 #fff, 0 0 5px rgba(0, 0, 0, 0.75);
-    font-family: "Papyrus", serif;
-    position: absolute;
-    top: 73%;
-    width: 100%;
-    line-height: 100%;
-  }
-
   .ability {
     display: flex;
     position: absolute;
@@ -122,6 +110,7 @@ export default {
     background: rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     border: 3px solid black;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
     text-align: left;
     justify-items: center;
     align-content: center;
@@ -129,7 +118,6 @@ export default {
     pointer-events: none;
     opacity: 0;
     transition: opacity 200ms ease-in-out;
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
 
     &:before {
       content: " ";
@@ -141,6 +129,18 @@ export default {
       margin-right: 2px;
       right: 100%;
     }
+  }
+
+  .name {
+    color: black;
+    font-weight: 600;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+      1px 1px 0 #fff, 0 0 5px rgba(0, 0, 0, 0.75);
+    font-family: "Papyrus", serif;
+    position: absolute;
+    top: 73%;
+    width: 100%;
+    line-height: 100%;
   }
   &:hover .ability {
     opacity: 1;

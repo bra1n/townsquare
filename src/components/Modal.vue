@@ -48,11 +48,6 @@ export default {
   flex-direction: column;
   max-width: 60%;
 
-  h2 {
-    margin: 0;
-    text-align: center;
-  }
-
   ul {
     list-style-type: none;
     margin: 0;

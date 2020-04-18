@@ -13,7 +13,7 @@
       v-show="isEditionModalOpen"
       @close="isEditionModalOpen = false"
     >
-      <h2>Select an edition:</h2>
+      <h3>Select an edition:</h3>
       <ul class="editions">
         <li
           v-for="edition in editions"
@@ -245,6 +245,17 @@ body {
 * {
   box-sizing: border-box;
   position: relative;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0;
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 #app {

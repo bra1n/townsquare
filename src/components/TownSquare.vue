@@ -17,8 +17,26 @@
         @remove-player="removePlayer"
       ></Player>
     </ul>
-    <Modal v-show="availableReminders.length && selectedPlayer" @close="closeModal">
-      <h2>Choose a reminder token:</h2>
+    <div class="bluffs" v-if="players.length > 6">
+      <h3>Demon bluffs</h3>
+      <ul>
+        <li @click="openRoleModal(bluffs[0])">
+          <Token :role="bluffs[0].role"></Token>
+        </li>
+        <li @click="openRoleModal(bluffs[1])">
+          <Token :role="bluffs[1].role"></Token>
+        </li>
+        <li @click="openRoleModal(bluffs[2])">
+          <Token :role="bluffs[2].role"></Token>
+        </li>
+      </ul>
+    </div>
+
+    <Modal
+      v-show="availableReminders.length && selectedPlayer"
+      @close="closeModal"
+    >
+      <h3>Choose a reminder token:</h3>
       <ul class="reminders">
         <li
           v-for="reminder in availableReminders"
@@ -32,7 +50,7 @@
       </ul>
     </Modal>
     <Modal v-show="availableRoles.length && selectedPlayer" @close="closeModal">
-      <h2>Choose a new role:</h2>
+      <h3>Choose a new role:</h3>
       <ul class="tokens">
         <li
           v-for="role in availableRoles"
@@ -80,7 +98,8 @@ export default {
     return {
       selectedPlayer: false,
       availableReminders: [],
-      availableRoles: []
+      availableRoles: [],
+      bluffs: Array(3).fill({}).map(() => ({ role: {} }))
     };
   },
   methods: {
@@ -104,7 +123,7 @@ export default {
       this.availableReminders = [];
       this.selectedPlayer = player;
       this.roles.forEach(role => {
-        if (role.id !== player.role.id) {
+        if (player.role && role.id !== player.role.id) {
           this.availableRoles.push(role);
         }
       });
@@ -222,6 +241,36 @@ export default {
   padding: 20px;
 }
 
+/***** Demon bluffs *******/
+.bluffs {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  border: 3px solid black;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+  transform-origin: bottom left;
+  transform: scale(1);
+  opacity: 1;
+  transition: all 200ms ease-in-out;
+  h3 {
+    margin-top: 5px;
+  }
+  li {
+    width: 120px;
+    height: 120px;
+    margin: 0 5px;
+    display: inline-block;
+    font-size: 18px;
+  }
+}
+
+#townsquare.public .bluffs {
+  opacity: 0;
+  transform: scale(0.1);
+}
+
 /***** Role token modal ******/
 ul.tokens li {
   border-radius: 50%;
@@ -267,7 +316,8 @@ ul.reminders .reminder {
   border: 3px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   cursor: pointer;
-  padding-top: 65px;
+  padding: 65px 9px 0;
+  line-height: 100%;
   transition: transform 500ms ease;
 
   &:before {

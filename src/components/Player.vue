@@ -106,7 +106,7 @@ export default {
     transform-origin: top center;
     transition: transform 200ms ease-in-out;
     z-index: 2;
-    filter: drop-shadow(0 0 5px rgba(0,0,0,0.8));
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.8));
 
     &:before {
       content: " ";
@@ -137,7 +137,7 @@ export default {
     top: 0;
     transform: perspective(400px) scale(1);
   }
-  &.dead .name {
+  &.dead > .name {
     opacity: 0.5;
   }
 }
@@ -250,12 +250,12 @@ export default {
   width: $token / 2;
   height: $token / 2;
   color: black;
-  font-size: 50%;
+  font-size: 45%;
   font-weight: bold;
   display: block;
   margin: 5px ($token / -4) 0;
   text-align: center;
-  padding-top: $token * 0.3 + 2px;
+  padding: ($token * 0.3 + 2px) 5px 0;
   border-radius: 50%;
   line-height: 90%;
   border: 3px solid black;
