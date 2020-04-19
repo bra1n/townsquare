@@ -1,6 +1,7 @@
 <template>
   <li>
     <div
+      ref="player"
       class="player"
       :class="{
         dead: player.hasDied,
@@ -13,7 +14,12 @@
       <Token :role="player.role" @set-role="setRole" />
 
       <div class="name" @click="changeName">
-        {{ player.name }}
+        <span class="screenshot" @click.stop="takeScreenshot">
+          <font-awesome-icon icon="camera" />
+        </span>
+        <span class="name">
+          {{ player.name }}
+        </span>
         <span class="remove" @click.stop="$emit('remove-player', player)">
           <font-awesome-icon icon="times-circle" />
         </span>
@@ -59,6 +65,10 @@ export default {
     return {};
   },
   methods: {
+    takeScreenshot() {
+      const { width, height, x, y } = this.$refs.player.getBoundingClientRect();
+      this.$emit("screenshot", { width, height, x, y });
+    },
     toggleStatus() {
       if (this.isPublic) {
         if (!this.player.hasDied) {
@@ -224,8 +234,11 @@ export default {
   filter: drop-shadow(0 0 1px rgba(0, 0, 0, 1))
     drop-shadow(0 0 1px rgba(0, 0, 0, 1)) drop-shadow(0 0 1px rgba(0, 0, 0, 1));
   cursor: pointer;
-  span {
+  white-space: nowrap;
+  span.screenshot,
+  span.remove {
     display: none;
+    margin: 0 10px;
   }
   &:hover {
     color: red;

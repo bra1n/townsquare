@@ -15,10 +15,12 @@
         @add-reminder="openReminderModal"
         @set-role="openRoleModal"
         @remove-player="removePlayer"
+        @screenshot="$emit('screenshot', $event)"
       ></Player>
     </ul>
-    <div class="bluffs" v-if="players.length > 6">
+    <div class="bluffs" v-if="players.length > 6" ref="bluffs">
       <h3>Demon bluffs</h3>
+      <font-awesome-icon icon="camera" @click.stop="takeScreenshot" />
       <ul>
         <li @click="openRoleModal(bluffs[0])">
           <Token :role="bluffs[0].role"></Token>
@@ -105,6 +107,10 @@ export default {
     };
   },
   methods: {
+    takeScreenshot() {
+      const { width, height, x, y } = this.$refs.bluffs.getBoundingClientRect();
+      this.$emit("screenshot", { width, height, x, y });
+    },
     openReminderModal(player) {
       this.availableRoles = [];
       this.availableReminders = [];
@@ -189,8 +195,8 @@ export default {
     }
 
     > * {
-      margin-left: -100px;
-      width: 200px;
+      margin-left: -78px;
+      width: 156px;
     }
   }
 }
@@ -256,6 +262,15 @@ export default {
   transform: scale(1);
   opacity: 1;
   transition: all 200ms ease-in-out;
+  > svg {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    &:hover {
+      color: red;
+    }
+  }
   h3 {
     margin-top: 5px;
   }

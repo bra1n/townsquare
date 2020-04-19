@@ -7,12 +7,4 @@ It is supposed to aid storytellers and allow them to quickly set up and capture 
 
 [You can try it online!](https://bra1n.github.io/townsquare)
 
-**Todo:**
-- add night sheet data to roles.json
-- add night sheet view to Grimoire
-- add global reminder space
-- add LICENSE and finish README (shortcuts)
-- (maybe) switch to vectorized SVG token icons
-- allow using custom scripts
-
 WORK IN PROGRESS

@@ -6,6 +6,7 @@
       :players="players"
       :roles="roles"
       :zoom="zoom"
+      @screenshot="takeScreenshot"
     ></TownSquare>
 
     <Modal
@@ -34,7 +35,17 @@
       @close="isRoleModalOpen = false"
     ></RoleSelectionModal>
 
+    <Screenshot
+      ref="screenshot"
+      @success="isScreenshotSuccess = true"
+    ></Screenshot>
+
     <div class="controls">
+      <font-awesome-icon
+        icon="camera"
+        @click="takeScreenshot()"
+        v-bind:class="{ success: isScreenshotSuccess }"
+      />
       <font-awesome-icon icon="cogs" @click="isControlOpen = !isControlOpen" />
       <ul v-if="isControlOpen">
         <li @click="togglePublic">Toggle <em>G</em>rimoire</li>
@@ -74,9 +85,11 @@ import Modal from "./components/Modal";
 import RoleSelectionModal from "./components/RoleSelectionModal";
 import rolesJSON from "./roles";
 import editionJSON from "./editions";
+import Screenshot from "./components/Screenshot";
 
 export default {
   components: {
+    Screenshot,
     TownSquare,
     TownInfo,
     Modal,
@@ -89,6 +102,7 @@ export default {
       isControlOpen: false,
       isEditionModalOpen: false,
       isRoleModalOpen: false,
+      isScreenshotSuccess: false,
       players: [],
       roles: this.getRolesByEdition(),
       edition: "tb",
@@ -96,6 +110,11 @@ export default {
     };
   },
   methods: {
+    takeScreenshot(dimensions = {}) {
+      this.isControlOpen = false;
+      this.isScreenshotSuccess = false;
+      this.$refs.screenshot.capture(dimensions);
+    },
     togglePublic() {
       this.isPublic = !this.isPublic;
       this.isControlOpen = false;
@@ -266,6 +285,16 @@ ul {
   height: 100%;
 }
 
+// success animation
+@keyframes greenToWhite {
+  from {
+    color: green;
+  }
+  to {
+    color: white;
+  }
+}
+
 // Controls
 .controls {
   position: absolute;
@@ -275,6 +304,11 @@ ul {
   padding: 10px;
   svg {
     cursor: pointer;
+    margin-left: 10px;
+    &.success {
+      animation: greenToWhite 1s normal forwards;
+      animation-iteration-count: 1;
+    }
   }
   ul {
     display: flex;
