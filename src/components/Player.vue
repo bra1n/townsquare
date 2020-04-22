@@ -59,6 +59,10 @@ export default {
     isPublic: {
       type: Boolean,
       required: true
+    },
+    zoom: {
+      type: Number,
+      required: true
     }
   },
   data() {
@@ -67,7 +71,12 @@ export default {
   methods: {
     takeScreenshot() {
       const { width, height, x, y } = this.$refs.player.getBoundingClientRect();
-      this.$emit("screenshot", { width, height, x, y });
+      this.$emit("screenshot", {
+        width: width * this.zoom,
+        height: height * this.zoom,
+        x: x * this.zoom,
+        y: y * this.zoom
+      });
     },
     toggleStatus() {
       if (this.isPublic) {
@@ -147,9 +156,6 @@ export default {
     top: 0;
     transform: perspective(400px) scale(1);
   }
-  &.dead > .name {
-    opacity: 0.5;
-  }
 }
 
 /****** Life token *******/
@@ -213,9 +219,8 @@ export default {
 /***** Role token ******/
 .player .token {
   position: absolute;
-  left: 50%;
+  left: 0;
   top: 0;
-  margin-left: ($token + 6) / -2;
   height: $token + 6px;
   width: $token + 6px;
   transition: transform 200ms ease-in-out;
@@ -235,21 +240,39 @@ export default {
     drop-shadow(0 0 1px rgba(0, 0, 0, 1)) drop-shadow(0 0 1px rgba(0, 0, 0, 1));
   cursor: pointer;
   white-space: nowrap;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
   span.screenshot,
   span.remove {
     display: none;
-    margin: 0 10px;
+    margin: 0 5px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    #app.screenshot & {
+      display: none;
+    }
+  }
+  span.name {
+    flex-shrink: 1;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   &:hover {
     color: red;
     span {
-      display: inline-block;
+      display: block;
       color: white;
       &:hover {
         color: red;
       }
     }
   }
+}
+
+.player.dead > .name {
+  opacity: 0.5;
 }
 
 /***** Ability text *****/

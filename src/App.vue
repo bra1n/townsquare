@@ -1,5 +1,10 @@
 <template>
-  <div id="app" @keyup="keyup" tabindex="-1">
+  <div
+    id="app"
+    @keyup="keyup"
+    tabindex="-1"
+    v-bind:class="{ screenshot: isScreenshot }"
+  >
     <TownInfo :players="players" :edition="edition"></TownInfo>
     <TownSquare
       :is-public="isPublic"
@@ -37,7 +42,8 @@
 
     <Screenshot
       ref="screenshot"
-      @success="isScreenshotSuccess = true"
+      @success="onScreenshot(true)"
+      @error="onScreenshot(false)"
     ></Screenshot>
 
     <div class="controls">
@@ -103,6 +109,7 @@ export default {
       isEditionModalOpen: false,
       isRoleModalOpen: false,
       isScreenshotSuccess: false,
+      isScreenshot: false,
       players: [],
       roles: this.getRolesByEdition(),
       edition: "tb",
@@ -113,7 +120,12 @@ export default {
     takeScreenshot(dimensions = {}) {
       this.isControlOpen = false;
       this.isScreenshotSuccess = false;
+      this.isScreenshot = true;
       this.$refs.screenshot.capture(dimensions);
+    },
+    onScreenshot(success = false) {
+      this.isScreenshotSuccess = success;
+      this.isScreenshot = false;
     },
     togglePublic() {
       this.isPublic = !this.isPublic;

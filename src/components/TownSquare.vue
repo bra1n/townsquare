@@ -12,6 +12,7 @@
         :player="player"
         :roles="roles"
         :is-public="isPublic"
+        :zoom="zoom"
         @add-reminder="openReminderModal"
         @set-role="openRoleModal"
         @remove-player="removePlayer"
@@ -231,6 +232,19 @@ export default {
       .shroud {
         transition-delay: ($i - 1) * 50ms;
       }
+
+      // move reminders closer to the sides of the circle
+      $q: $item-count / 4;
+      $x: $i - 1;
+      @if $x < $q or ($x >= $item-count / 2 and $x < $q * 3) {
+        .player {
+          margin-bottom: -10px + 20px * (1 - ($x % $q / $q));
+        }
+      } @else {
+        .player {
+          margin-bottom: -10px + 20px * ($x % $q / $q);
+        }
+      }
     }
     $rot: $rot + $angle;
   }
@@ -262,6 +276,11 @@ export default {
   transform: scale(1);
   opacity: 1;
   transition: all 200ms ease-in-out;
+
+  #townsquare.public & {
+    opacity: 0;
+    transform: scale(0.1);
+  }
   > svg {
     position: absolute;
     top: 10px;
@@ -269,6 +288,9 @@ export default {
     cursor: pointer;
     &:hover {
       color: red;
+    }
+    #app.screenshot & {
+      display: none;
     }
   }
   h3 {
@@ -282,12 +304,6 @@ export default {
     font-size: 18px;
   }
 }
-
-#townsquare.public .bluffs {
-  opacity: 0;
-  transform: scale(0.1);
-}
-
 /***** Role token modal ******/
 ul.tokens li {
   border-radius: 50%;
