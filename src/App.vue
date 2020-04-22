@@ -236,8 +236,14 @@ export default {
         firstNight.sort();
         otherNight.sort();
         newPlayers.forEach(player => {
-          player.firstNight = Math.max(firstNight.indexOf(player.role.firstNight), 0);
-          player.otherNight = Math.max(otherNight.indexOf(player.role.otherNight), 0);
+          player.firstNight = Math.max(
+            firstNight.indexOf(player.role.firstNight),
+            0
+          );
+          player.otherNight = Math.max(
+            otherNight.indexOf(player.role.otherNight),
+            0
+          );
         });
         localStorage.players = JSON.stringify(
           newPlayers.map(player => ({
