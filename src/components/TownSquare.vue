@@ -213,8 +213,9 @@ export default {
         z-index: $item-count - $i + 1;
       } @else {
         z-index: $i - 1;
-        .ability {
-          right: 110%;
+        .ability,
+        .night span {
+          right: 120%;
           left: auto;
           &:before {
             border-right-color: transparent;
@@ -229,7 +230,8 @@ export default {
       }
       .life,
       .token,
-      .shroud {
+      .shroud,
+      .night {
         transition-delay: ($i - 1) * 50ms;
       }
 

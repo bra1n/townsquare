@@ -52,7 +52,7 @@
         @click="takeScreenshot()"
         v-bind:class="{ success: isScreenshotSuccess }"
       />
-      <font-awesome-icon icon="cogs" @click="isControlOpen = !isControlOpen" />
+      <font-awesome-icon icon="cog" @click="isControlOpen = !isControlOpen" />
       <ul v-if="isControlOpen">
         <li @click="togglePublic">Toggle <em>G</em>rimoire</li>
         <li>
@@ -223,6 +223,22 @@ export default {
   watch: {
     players: {
       handler(newPlayers) {
+        const firstNight = [0];
+        const otherNight = [0];
+        newPlayers.forEach(({ role }) => {
+          if (role.firstNight && !firstNight.includes(role.firstNight)) {
+            firstNight.push(role.firstNight);
+          }
+          if (role.otherNight && !otherNight.includes(role.otherNight)) {
+            otherNight.push(role.otherNight);
+          }
+        });
+        firstNight.sort();
+        otherNight.sort();
+        newPlayers.forEach(player => {
+          player.firstNight = Math.max(firstNight.indexOf(player.role.firstNight), 0);
+          player.otherNight = Math.max(otherNight.indexOf(player.role.otherNight), 0);
+        });
         localStorage.players = JSON.stringify(
           newPlayers.map(player => ({
             ...player,

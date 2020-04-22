@@ -45,6 +45,8 @@ export default {
   border: 3px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   cursor: pointer;
+  display: flex;
+  align-items: center;
 
   &:before {
     content: " ";
@@ -102,8 +104,7 @@ export default {
     display: flex;
     position: absolute;
     padding: 5px 10px;
-    top: 20px;
-    left: 110%;
+    left: 120%;
     width: 250px;
     z-index: 25;
     font-size: 80%;

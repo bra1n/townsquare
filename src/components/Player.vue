@@ -11,6 +11,16 @@
     >
       <div class="shroud" @click="toggleStatus()"></div>
       <div class="life" @click="toggleStatus()"></div>
+
+      <div class="night first" v-if="player.firstNight">
+        <em>{{ player.firstNight }}.</em>
+        <span>{{ player.role.firstNightReminder }}</span>
+      </div>
+      <div class="night other" v-if="player.otherNight">
+        <em>{{ player.otherNight }}.</em>
+        <span>{{ player.role.otherNightReminder }}</span>
+      </div>
+
       <Token :role="player.role" @set-role="setRole" />
 
       <div class="name" @click="changeName">
@@ -281,6 +291,68 @@ export default {
 }
 .circle .player:hover .ability {
   opacity: 1;
+}
+
+/**** Night reminders ****/
+.player .night {
+  position: absolute;
+  top: 40%;
+  width: 100%;
+  z-index: 2;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 200ms;
+
+  #townsquare.public & {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &:hover ~ .token .ability {
+    opacity: 0;
+  }
+
+  &.first em {
+    left: -15px;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(147, 0, 0, 1) 100%
+    );
+  }
+
+  &.other em {
+    right: -15px;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(7, 0, 147, 1) 100%
+    );
+  }
+
+  em {
+    font-style: normal;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 37px;
+    top: -20px;
+    border-radius: 50%;
+    border: 3px solid black;
+    filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5));
+    font-weight: bold;
+    opacity: 1;
+    transition: opacity 200ms;
+  }
+
+  #app.screenshot & {
+    display: none;
+  }
+}
+
+.player.dead .night em {
+  opacity: 0;
 }
 
 /***** Reminder token *****/

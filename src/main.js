@@ -8,7 +8,7 @@ import {
   faUserFriends,
   faUser,
   faTimesCircle,
-  faCogs,
+  faCog,
   faSearchMinus,
   faSearchPlus,
   faCamera
@@ -22,7 +22,7 @@ library.add(
   faUserFriends,
   faUser,
   faTimesCircle,
-  faCogs,
+  faCog,
   faSearchMinus,
   faSearchPlus,
   faCamera
