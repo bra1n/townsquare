@@ -318,9 +318,9 @@
     "id": "grandmother",
     "edition": "bmr",
     "firstNight": 22,
-    "firstNightReminder": "",
+    "firstNightReminder": "Show the marked character token. Point to the marked player.",
     "otherNight": 31,
-    "otherNightReminder": "",
+    "otherNightReminder": "If the Grandmother’s grandchild was killed by the Demon tonight: • The Grandmother dies.",
     "reminders": [
       "Grandchild"
     ],
@@ -333,9 +333,9 @@
     "id": "sailor",
     "edition": "bmr",
     "firstNight": 3,
-    "firstNightReminder": "",
+    "firstNightReminder": "The Sailor points to a living player. Either the Sailor, or the chosen player, is drunk.",
     "otherNight": 2,
-    "otherNightReminder": "",
+    "otherNightReminder": "The previously drunk player is no longer drunk. The Sailor points to a living player. Either the Sailor, or the chosen player, is drunk.",
     "reminders": [
       "Drunk"
     ],
@@ -348,9 +348,9 @@
     "id": "chambermaid",
     "edition": "bmr",
     "firstNight": 28,
-    "firstNightReminder": "",
+    "firstNightReminder": "The Chambermaid points to two players. Show the number signal (0, 1, 2, …) for how many of those players wake tonight for their ability.",
     "otherNight": 49,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Chambermaid points to two players. Show the number signal (0, 1, 2) for how many of those players wake tonight for their ability.",
     "reminders": [],
     "setup": false,
     "name": "Chambermaid",
@@ -363,7 +363,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 16,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Exorcist points to a player, different from the previous night. If that player is the Demon: • Wake the Demon. Show the Exorcist token. Point to the Exorcist. • The Demon does not act tonight.",
     "reminders": [
       "Chosen"
     ],
@@ -378,7 +378,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 5,
-    "otherNightReminder": "",
+    "otherNightReminder": "The previously protected and drunk players lose those markers. The Innkeeper points to two players. Those players are protected. One is drunk.",
     "reminders": [
       "Protected",
       "Drunk"
@@ -394,7 +394,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 14,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Gambler points to a player, and a character on their sheet. If incorrect, the Gambler dies.",
     "reminders": [
       "Die"
     ],
@@ -409,7 +409,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 28,
-    "otherNightReminder": "",
+    "otherNightReminder": "If the Gossip’s public statement was true: • Choose a player not protected from dying tonight. That player dies.",
     "reminders": [
       "Die"
     ],
@@ -422,9 +422,9 @@
     "id": "courtier",
     "edition": "bmr",
     "firstNight": 7,
-    "firstNightReminder": "",
+    "firstNightReminder": "The Courier either shows a “no” head signal, or points to a character on the sheet. If the Courtier used their ability : If that character is in play, that player is drunk.",
     "otherNight": 6,
-    "otherNightReminder": "",
+    "otherNightReminder": "Reduce the remaining number of days the marked player is poisoned. If the Courtier has not yet used their ability: • The Courier either shows a “no” head signal, or points to a character on the sheet. • If the Courtier used their ability : If that character is in play, that player is drunk.",
     "reminders": [
       "Drunk 1",
       "Drunk 2",
@@ -442,7 +442,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 34,
-    "otherNightReminder": "",
+    "otherNightReminder": "If the Professor has not used their ability: • The Professor either shows the “no” head signal, or points to a player. • If that player is a Townsfolk, they are now alive.",
     "reminders": [
       "Alive",
       "Used"
@@ -458,7 +458,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 1,
-    "otherNightReminder": "",
+    "otherNightReminder": "Remove the “Everyone drunk” marker. If a Minion died today: All players but the Minstrel are drunk. Place the “Everyone drunk” marker.",
     "reminders": [
       "Everyone drunk"
     ],
@@ -516,7 +516,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 29,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Tinker might die.",
     "reminders": [
       "Die"
     ],
@@ -531,7 +531,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 30,
-    "otherNightReminder": "",
+    "otherNightReminder": "If the Moonchild used their ability to target a player today: • If that player is good, they die.",
     "reminders": [
       "Die"
     ],
@@ -544,9 +544,9 @@
     "id": "goon",
     "edition": "bmr",
     "firstNight": 29,
-    "firstNightReminder": "",
+    "firstNightReminder": "If a player used their character ability to choose the Goon: • The Goon becomes that player’s alignment. • Show the “You are” card. Show the hand signal (thumb-up “good”, thumb-down “evil”) for the Goon’s current alignment.",
     "otherNight": 50,
-    "otherNightReminder": "",
+    "otherNightReminder": "If a player used their character ability to choose the Goon: • The Goon becomes that player’s alignment. • Show the “You are” card, then the hand signal (thumb-up “good”, thumb-down “evil”) for the Goon’s current alignment.",
     "reminders": [
       "Drunk"
     ],
@@ -559,9 +559,9 @@
     "id": "lunatic",
     "edition": "bmr",
     "firstNight": 1,
-    "firstNightReminder": "",
+    "firstNightReminder": "If this game has 7 or more players: • Show the “These are your minions” card. Point to arbitrary players, in number equal to the number of Minions in play. • Show the “These characters are not in play” card. Show 3 character tokens of arbitrary Good characters. Wake the Demon. Show the “You are” card. Show the Demon’s character token. Show the Lunatic token. Point to the Lunatic player. If the token received by the Lunatic is a Demon that would wake tonight: • Allow the Lunatic to do the Demon actions. Place their “attack” markers. • If the Lunatic selected players: Wake the Demon. Show the “attack” marker, then point to each marked player. Remove any Lunatic “attack” markers.",
     "otherNight": 15,
-    "otherNightReminder": "",
+    "otherNightReminder": "Allow the Lunatic to do the actions of the Demon. Place their “attack” markers. If the Lunatic selected players: Wake the Demon. Show the “attack” marker, then point to each marked player. Remove any Lunatic “attack” markers.",
     "reminders": [
       "Attack 1",
       "Attack 2",
@@ -577,9 +577,9 @@
     "id": "godfather",
     "edition": "bmr",
     "firstNight": 9,
-    "firstNightReminder": "",
+    "firstNightReminder": "Show each of the Outsider tokens in play.",
     "otherNight": 32,
-    "otherNightReminder": "",
+    "otherNightReminder": "If an Outsider died today: • The Godfather points to a player. That player dies.",
     "reminders": [
       "Died today",
       "Die"
@@ -610,7 +610,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 26,
-    "otherNightReminder": "",
+    "otherNightReminder": "If the Assassin has not yet used their ability: • The Assassin either shows the “no” head signal, or points to a player. That player dies.",
     "reminders": [
       "Die",
       "Used"
@@ -639,7 +639,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 21,
-    "otherNightReminder": "",
+    "otherNightReminder": "If the Po chose no-one the previous night : The Po points to three players . Otherwise: The Po either shows the “no” head signal , or points to a player . The marked players (if any) die.",
     "reminders": [
       "Die 1",
       "Die 2",
@@ -657,7 +657,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 19,
-    "otherNightReminder": "",
+    "otherNightReminder": "If no-one died during the day: • The Zombuul points to a player. That player dies.",
     "reminders": [
       "No death today",
       "Die"
@@ -671,9 +671,9 @@
     "id": "pukka",
     "edition": "bmr",
     "firstNight": 14,
-    "firstNightReminder": "",
+    "firstNightReminder": "The Pukka points to a player. That player is poisoned.",
     "otherNight": 17,
-    "otherNightReminder": "",
+    "otherNightReminder": "The poisoned player dies. The Pukka points to a player. That player is poisoned.",
     "reminders": [
       "Poisoned",
       "Die"
@@ -689,7 +689,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 20,
-    "otherNightReminder": "",
+    "otherNightReminder": "One player that the Shabaloth chose the previous night might come alive. The Shabaloth points to two players. Those players die.",
     "reminders": [
       "Die 1",
       "Die 2",
