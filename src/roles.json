@@ -704,7 +704,7 @@
     "id": "clockmaker",
     "edition": "snv",
     "firstNight": 23,
-    "firstNightReminder": "",
+    "firstNightReminder": "Show the hand signal for the number (1, 2, 3, etc.) of places from Demon to closest Minion.",
     "otherNight": 0,
     "otherNightReminder": "",
     "reminders": [],
@@ -717,9 +717,9 @@
     "id": "dreamer",
     "edition": "snv",
     "firstNight": 24,
-    "firstNightReminder": "",
+    "firstNightReminder": "The Dreamer points to a player. Show two character tokens, one of which is that player’s character, the other of which is of opposite alignment to that character.",
     "otherNight": 41,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Dreamer points to a player. Show 1 good and 1 evil character token; one of these is correct.",
     "reminders": [],
     "setup": false,
     "name": "Dreamer",
@@ -730,9 +730,9 @@
     "id": "snakecharmer",
     "edition": "snv",
     "firstNight": 8,
-    "firstNightReminder": "",
+    "firstNightReminder": "The Snake Charmer points to a player. If that player is the Demon: • Swap the Snake Charmer and Demon character tokens. • Wake the new Demon. Show the “You are” card, then the thumb-down “evil” sign. Show the “You are” card, then the Demon token. • The new Snake Charmer is poisoned . Wake the new Snake Charmer. Show the “You are” card, then the thumb-up “good” sign. Show the “You are” card, then the Snake Charmer token.",
     "otherNight": 7,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Snake Charmer points to a player. If that player is the Demon: • Swap the Snake Charmer and Demon character tokens. Wake the new Demon. Show the “You are” card, then the thumb-down “evil” sign. Show the “You are” card, then the Demon token. • The new Snake Charmer is poisoned . Wake the new Snake Charmer. Show the “You are” card, then the thumb-up “good” sign. Show the “You are” card, then the Snake Charmer token.",
     "reminders": [
       "Poisoned"
     ],
@@ -745,9 +745,9 @@
     "id": "mathematician",
     "edition": "snv",
     "firstNight": 27,
-    "firstNightReminder": "",
+    "firstNightReminder": "Show the hand signal for the number (0, 1, 2, etc.) of “Abnormal Effect” markers. Remove markers",
     "otherNight": 48,
-    "otherNightReminder": "",
+    "otherNightReminder": "Show the hand signal for the number (0, 1, 2, etc.) of “Abnormal Effect” markers. Remove markers.",
     "reminders": [
       "Abnormal effect"
     ],
@@ -760,9 +760,9 @@
     "id": "flowergirl",
     "edition": "snv",
     "firstNight": 0,
-    "firstNightReminder": "",
+    "firstNightReminder": "Place the “Demon did not vote” marker.",
     "otherNight": 43,
-    "otherNightReminder": "",
+    "otherNightReminder": "Show the head signal (nod “yes”, shake “no”) for whether the Demon voted today. Place the “Demon did not vote” marker (remove “Demon voted”, if any).",
     "reminders": [
       "Demon did vote",
       "Demon did not vote"
@@ -776,9 +776,9 @@
     "id": "towncrier",
     "edition": "snv",
     "firstNight": 0,
-    "firstNightReminder": "",
+    "firstNightReminder": "Place the “Minions did not nominate” marker.",
     "otherNight": 44,
-    "otherNightReminder": "",
+    "otherNightReminder": "Show the head signal (nod “yes”, shake “no”) for whether any Minion nominated today. Place the “Minions did not nominate” marker (remove “Minion nominated”, if any).",
     "reminders": [
       "No Minion nominated",
       "Minion nominated"
@@ -794,7 +794,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 45,
-    "otherNightReminder": "",
+    "otherNightReminder": "Show the hand signal for the number (0, 1, 2, etc.) of dead evil players.",
     "reminders": [],
     "setup": false,
     "name": "Oracle",
@@ -818,9 +818,9 @@
     "id": "seamstress",
     "edition": "snv",
     "firstNight": 25,
-    "firstNightReminder": "",
+    "firstNightReminder": "The Seamstress either shows a “no” head signal, or points to two other players. If the Seamstress chose two players , nod “yes” or shake “no” for whether they are of same alignment.",
     "otherNight": 42,
-    "otherNightReminder": "",
+    "otherNightReminder": "If the Seamstress has not yet used their ability: • The Seamstress either shows a “no” head signal, or points to two other players. • If the Seamstress chose players , nod “yes” or shake “no” for whether they are of same alignment.",
     "reminders": [
       "Used"
     ],
@@ -833,9 +833,9 @@
     "id": "philosopher",
     "edition": "snv",
     "firstNight": 2,
-    "firstNightReminder": "",
+    "firstNightReminder": "The Philosopher either shows a “no” head signal, or points to a good character on their sheet. If they chose a character: Swap the out-of-play character token with the Philosopher token. Or, if the character is in play, that player is drunk and the Philosopher is now that character .",
     "otherNight": 1.5,
-    "otherNightReminder": "",
+    "otherNightReminder": "If the Philosopher has not yet used their ability: • The Philosopher either shows a “no” head signal, or points to a good character on their sheet. • If they chose a character: Swap the out-of-play character token with the Philosopher token. Or, if the character is in play, that player is drunk and the Philosopher is now that character .",
     "reminders": [
       "Used",
       "Drunk"
@@ -866,7 +866,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 46,
-    "otherNightReminder": "",
+    "otherNightReminder": "If today was the Juggler’s first day: • Show the hand signal for the number (0, 1, 2, etc.) of “Correct” markers. Remove markers.",
     "reminders": [
       "Correct"
     ],
@@ -881,7 +881,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 36,
-    "otherNightReminder": "",
+    "otherNightReminder": "If the Sage was killed by a Demon: • Point to two players, one of which is that Demon.",
     "reminders": [],
     "setup": false,
     "name": "Sage",
@@ -922,7 +922,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 27,
-    "otherNightReminder": "",
+    "otherNightReminder": "If the Barber died today : • Wake the Demon. Show the “This character selected you” card, then Barber token. • The Demon either shows a “no” head signal, or points to 2 players. If they chose players: ◦ Swap the character tokens. Wake each player. Show “You are”, then their character token.",
     "reminders": [
       "Swap"
     ],
@@ -948,7 +948,7 @@
     "id": "eviltwin",
     "edition": "snv",
     "firstNight": 11,
-    "firstNightReminder": "",
+    "firstNightReminder": "Wake the Evil Twin and their twin. Confirm that they have acknowledged each other. Point to the Evil Twin. Show their Evil Twin token to the twin player. Point to the twin. Show their character token to the Evil Twin player.",
     "otherNight": 0,
     "otherNightReminder": "",
     "reminders": [
@@ -963,9 +963,9 @@
     "id": "witch",
     "edition": "snv",
     "firstNight": 12,
-    "firstNightReminder": "",
+    "firstNightReminder": "The Witch points to a player. That player is cursed for the next day.",
     "otherNight": 10,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Witch points to a player. That player is cursed for the next day.",
     "reminders": [
       "Cursed"
     ],
@@ -978,9 +978,9 @@
     "id": "cerenovus",
     "edition": "snv",
     "firstNight": 13,
-    "firstNightReminder": "",
+    "firstNightReminder": "The Cerenovus points to a player, then to a character on their sheet. That player should “be mad about” being that character. Wake that player. Show the “This character selected you” card, then the Cerenovus token. Show the “mad about being” marker, then that character token.",
     "otherNight": 11,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Cerenovus points to a player, then to a character on their sheet. That player should “be mad about” being that character. . Wake that player. Show the “This character selected you” card, then the Cerenovus token. Show the “mad about being” marker, then that character token.",
     "reminders": [
       "Mad"
     ],
@@ -1008,7 +1008,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 22,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Fang Gu points to a player. That player dies . Or, if that player was an Outsider: • The Fang Gu dies instead of the chosen player. The chosen player is now an evil Fang Gu. • Wake the new Fang Gu. Show the “You are” card, then the Fang Gu token. Show the “You are” card, then the thumb-down “evil” hand sign.",
     "reminders": [
       "Die"
     ],
@@ -1023,7 +1023,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 25,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Vigormortis points to a player. That player dies. If a Minion, they keep their ability and one of their Townsfolk neighbours is poisoned .",
     "reminders": [
       "Die",
       "Poisoned",
@@ -1040,7 +1040,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 23,
-    "otherNightReminder": "",
+    "otherNightReminder": "The No Dashii points to a player. That player dies.",
     "reminders": [
       "Die",
       "Poisoned"
@@ -1056,7 +1056,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 24,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Vortox points to a player. That player dies.",
     "reminders": [
       "Die"
     ],
