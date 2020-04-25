@@ -14,11 +14,15 @@
 
       <div class="night first" v-if="player.firstNight">
         <em>{{ player.firstNight }}.</em>
-        <span>{{ player.role.firstNightReminder | handleEmojis }}</span>
+        <span v-if="player.role.firstNightReminder">{{
+          player.role.firstNightReminder | handleEmojis
+        }}</span>
       </div>
       <div class="night other" v-if="player.otherNight">
         <em>{{ player.otherNight }}.</em>
-        <span>{{ player.role.otherNightReminder | handleEmojis }}</span>
+        <span v-if="player.role.otherNightReminder">{{
+          player.role.otherNightReminder | handleEmojis
+        }}</span>
       </div>
 
       <Token :role="player.role" @set-role="setRole" />
