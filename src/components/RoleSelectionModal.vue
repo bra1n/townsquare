@@ -1,5 +1,10 @@
 <template>
-  <Modal class="roles" v-show="isOpen" @close="close()">
+  <Modal
+    class="roles"
+    v-show="isOpen"
+    @close="close()"
+    v-if="nontravelerPlayers >= 5"
+  >
     <h3>Select the roles for {{ nontravelerPlayers }} players:</h3>
     <ul
       class="tokens"

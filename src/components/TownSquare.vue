@@ -12,7 +12,6 @@
         :player="player"
         :roles="roles"
         :is-public="isPublic"
-        :zoom="zoom"
         @add-reminder="openReminderModal"
         @set-role="openRoleModal"
         @remove-player="removePlayer"

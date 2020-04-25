@@ -121,7 +121,7 @@ export default {
       this.isControlOpen = false;
       this.isScreenshotSuccess = false;
       this.isScreenshot = true;
-      this.$refs.screenshot.capture(dimensions);
+      this.$refs.screenshot.capture(dimensions, this.zoom);
     },
     onScreenshot(success = false) {
       this.isScreenshotSuccess = success;

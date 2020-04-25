@@ -69,10 +69,6 @@ export default {
     isPublic: {
       type: Boolean,
       required: true
-    },
-    zoom: {
-      type: Number,
-      required: true
     }
   },
   data() {
@@ -81,12 +77,7 @@ export default {
   methods: {
     takeScreenshot() {
       const { width, height, x, y } = this.$refs.player.getBoundingClientRect();
-      this.$emit("screenshot", {
-        width: width * this.zoom,
-        height: height * this.zoom,
-        x: x * this.zoom,
-        y: y * this.zoom
-      });
+      this.$emit("screenshot", { width, height, x, y });
     },
     toggleStatus() {
       if (this.isPublic) {
