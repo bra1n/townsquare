@@ -142,7 +142,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "ability": "If only 3 players live & no execution occurs, your team wins. If you die at night, another player might die instead."
+    "ability": "If only 3 players live and no execution occurs, your team wins. If you die at night, another player might die instead."
   },
   {
     "id": "slayer",
@@ -327,7 +327,7 @@
     "setup": false,
     "name": "Grandmother",
     "team": "townsfolk",
-    "ability": "You start knowing a good player & character. If the Demon kills them, you die too."
+    "ability": "You start knowing a good player and character. If the Demon kills them, you die too."
   },
   {
     "id": "sailor",
@@ -370,7 +370,7 @@
     "setup": false,
     "name": "Exorcist",
     "team": "townsfolk",
-    "ability": "Each night*, choose a player (not the same as last night): the Demon, if chosen, learns who you are & does not act tonight."
+    "ability": "Each night*, choose a player (not the same as last night): the Demon, if chosen, learns who you are and does not act tonight."
   },
   {
     "id": "innkeeper",
@@ -401,7 +401,7 @@
     "setup": false,
     "name": "Gambler",
     "team": "townsfolk",
-    "ability": "Each night*, choose a player & guess their character: if you guess wrong, you die."
+    "ability": "Each night*, choose a player and guess their character: if you guess wrong, you die."
   },
   {
     "id": "gossip",
@@ -434,7 +434,7 @@
     "setup": false,
     "name": "Courtier",
     "team": "townsfolk",
-    "ability": "Once per game, at night, choose a character: they are drunk for 3 nights & 3 days."
+    "ability": "Once per game, at night, choose a character: they are drunk for 3 nights and 3 days."
   },
   {
     "id": "professor",
@@ -559,7 +559,7 @@
     "id": "lunatic",
     "edition": "bmr",
     "firstNight": 1,
-    "firstNightReminder": "If this game has 7 or more players: • Show the “These are your minions” card. Point to arbitrary players, in number equal to the number of Minions in play. • Show the “These characters are not in play” card. Show 3 character tokens of arbitrary Good characters. Wake the Demon. Show the “You are” card. Show the Demon’s character token. Show the Lunatic token. Point to the Lunatic player. If the token received by the Lunatic is a Demon that would wake tonight: • Allow the Lunatic to do the Demon actions. Place their “attack” markers. • If the Lunatic selected players: Wake the Demon. Show the “attack” marker, then point to each marked player. Remove any Lunatic “attack” markers.",
+    "firstNightReminder": "Show the Lunatic a number of arbitrary “Minion“, players equal to the number of Minions in play. Show 3 character tokens of arbitrary Good characters. (if 7 or more players) If the token received by the Lunatic is a Demon that would wake tonight: • Allow the Lunatic to do the Demon actions. Place their “attack” markers. Wake the Demon. Show the Demon’s real character token. Show them the Lunatic player. • If the Lunatic attacked players: Show the real demon each marked player. Remove any Lunatic “attack” markers.",
     "otherNight": 15,
     "otherNightReminder": "Allow the Lunatic to do the actions of the Demon. Place their “attack” markers. If the Lunatic selected players: Wake the Demon. Show the “attack” marker, then point to each marked player. Remove any Lunatic “attack” markers.",
     "reminders": [
@@ -571,7 +571,7 @@
     "setup": false,
     "name": "Lunatic",
     "team": "outsider",
-    "ability": "You think you are a Demon, but your abilities malfunction. The Demon knows who you are & who you attack."
+    "ability": "You think you are a Demon, but your abilities malfunction. The Demon knows who you are and who you attack."
   },
   {
     "id": "godfather",
@@ -593,9 +593,9 @@
     "id": "devilsadvocate",
     "edition": "bmr",
     "firstNight": 10,
-    "firstNightReminder": "",
+    "firstNightReminder": "The Devil’s Advocate points to a living player. That player survives execution tomorrow.",
     "otherNight": 9,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Devil’s Advocate points to a living player, different from the previous night. That player survives execution tomorrow.",
     "reminders": [
       "Survives execution"
     ],
@@ -724,7 +724,7 @@
     "setup": false,
     "name": "Dreamer",
     "team": "townsfolk",
-    "ability": "Each night, choose a player (not yourself): you learn 1 good & 1 evil character, 1 of which is correct."
+    "ability": "Each night, choose a player (not yourself): you learn 1 good and 1 evil character, 1 of which is correct."
   },
   {
     "id": "snakecharmer",
@@ -739,7 +739,7 @@
     "setup": false,
     "name": "Snake Charmer",
     "team": "townsfolk",
-    "ability": "Each night, choose an alive player: a chosen Demon swaps characters & alignments with you & is then poisoned."
+    "ability": "Each night, choose an alive player: a chosen Demon swaps characters and alignments with you and is then poisoned."
   },
   {
     "id": "mathematician",
@@ -812,7 +812,7 @@
     "setup": false,
     "name": "Savant",
     "team": "townsfolk",
-    "ability": "Each day, you may visit the Storyteller to learn 2 things in private: 1 is true & 1 is false."
+    "ability": "Each day, you may visit the Storyteller to learn 2 things in private: 1 is true and 1 is false."
   },
   {
     "id": "seamstress",
@@ -957,7 +957,7 @@
     "setup": false,
     "name": "Evil Twin",
     "team": "minion",
-    "ability": "You & an opposing player know each other. If the good player is executed, evil wins. Good can't win if you both live."
+    "ability": "You and an opposing player know each other. If the good player is executed, evil wins. Good can't win if you both live."
   },
   {
     "id": "witch",
@@ -987,7 +987,7 @@
     "setup": false,
     "name": "Cerenovus",
     "team": "minion",
-    "ability": "Each night, choose a player & a good character: they are \"mad\" they are this character tomorrow, or might be executed."
+    "ability": "Each night, choose a player and a good character: they are \"mad\" they are this character tomorrow, or might be executed."
   },
   {
     "id": "pithag",
@@ -1000,7 +1000,7 @@
     "setup": false,
     "name": "Pit Hag",
     "team": "minion",
-    "ability": "Each night*, choose a player & a character they become (if not-in-play). If a Demon is made, deaths tonight are arbitrary."
+    "ability": "Each night*, choose a player and a character they become (if not-in-play). If a Demon is made, deaths tonight are arbitrary."
   },
   {
     "id": "fanggu",
@@ -1015,7 +1015,7 @@
     "setup": true,
     "name": "Fang Gu",
     "team": "demon",
-    "ability": "Each night*, choose a player: they die. The 1st Outsider chosen becomes an evil Fang Gu & you die instead. [+1 Outsider]"
+    "ability": "Each night*, choose a player: they die. The 1st Outsider chosen becomes an evil Fang Gu and you die instead. [+1 Outsider]"
   },
   {
     "id": "vigormortis",
@@ -1032,7 +1032,7 @@
     "setup": true,
     "name": "Vigormortis",
     "team": "demon",
-    "ability": "Each night*, choose a player: they die. Minions you kill keep their ability & poison 1 Townsfolk neighbor. [-1 Outsider]."
+    "ability": "Each night*, choose a player: they die. Minions you kill keep their ability and poison 1 Townsfolk neighbor. [-1 Outsider]."
   },
   {
     "id": "nodashii",
@@ -1173,7 +1173,7 @@
     "setup": false,
     "name": "Voudon",
     "team": "traveler",
-    "ability": "Only you & the dead can vote. They don't need a vote token to do so. A 50% majority is not required."
+    "ability": "Only you and the dead can vote. They don't need a vote token to do so. A 50% majority is not required."
   },
   {
     "id": "judge",
@@ -1259,12 +1259,12 @@
     "otherNightReminder": "",
     "reminders": [
       "Ability x2",
-      "Healthy & Sober"
+      "Healthy and Sober"
     ],
     "setup": false,
     "name": "Barista",
     "team": "traveler",
-    "ability": "Each night, until dusk, 1) a player becomes sober, healthy & gets true info, or 2) their ability works twice. They learn which."
+    "ability": "Each night, until dusk, 1) a player becomes sober, healthy and gets true info, or 2) their ability works twice. They learn which."
   },
   {
     "id": "deviant",
@@ -1367,7 +1367,7 @@
     "setup": false,
     "name": "Widow",
     "team": "minion",
-    "ability": "On your 1st night, look at the Grimoire & choose a player: they are poisoned. 1 good player knows a Widow is in play."
+    "ability": "On your 1st night, look at the Grimoire and choose a player: they are poisoned. 1 good player knows a Widow is in play."
   },
   {
     "id": "leviathan",
