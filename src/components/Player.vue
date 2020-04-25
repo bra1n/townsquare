@@ -14,11 +14,11 @@
 
       <div class="night first" v-if="player.firstNight">
         <em>{{ player.firstNight }}.</em>
-        <span>{{ player.role.firstNightReminder }}</span>
+        <span>{{ player.role.firstNightReminder | handleEmojis }}</span>
       </div>
       <div class="night other" v-if="player.otherNight">
         <em>{{ player.otherNight }}.</em>
-        <span>{{ player.role.otherNightReminder }}</span>
+        <span>{{ player.role.otherNightReminder | handleEmojis }}</span>
       </div>
 
       <Token :role="player.role" @set-role="setRole" />
@@ -73,6 +73,9 @@ export default {
   },
   data() {
     return {};
+  },
+  filters: {
+    handleEmojis: text => text.replace(/:([^: ]+?):/g, "").replace(/ •/g, "\n•")
   },
   methods: {
     takeScreenshot() {
@@ -161,6 +164,7 @@ export default {
 
 /****** Life token *******/
 .player {
+  z-index: 2;
   .life {
     border-radius: 50%;
     height: $token + 6px;
@@ -287,12 +291,16 @@ export default {
 /**** Night reminders ****/
 .player .night {
   position: absolute;
-  top: 40%;
+  height: 100%;
   width: 100%;
   z-index: 2;
   cursor: pointer;
   opacity: 1;
   transition: opacity 200ms;
+  display: flex;
+  top: -16px;
+  align-items: center;
+  pointer-events: none;
 
   #townsquare.public & {
     opacity: 0;
@@ -303,22 +311,71 @@ export default {
     opacity: 0;
   }
 
-  &.first em {
-    left: -15px;
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(147, 0, 0, 1) 100%
-    );
+  span {
+    display: flex;
+    position: absolute;
+    padding: 5px 10px 5px 30px;
+    width: 350px;
+    z-index: 25;
+    font-size: 70%;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    border: 3px solid black;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+    text-align: left;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+
+    &:before {
+      transform: rotate(-90deg);
+      transform-origin: center top;
+      left: -98px;
+      top: 50%;
+      font-size: 100%;
+      position: absolute;
+      font-weight: bold;
+      text-align: center;
+      width: 200px;
+    }
+
+    &:after {
+      content: " ";
+      border: 10px solid transparent;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
   }
 
-  &.other em {
-    right: -15px;
+  &.first span {
+    right: 120%;
     background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(7, 0, 147, 1) 100%
+      to right,
+      $townsfolk 0%,
+      rgba(0, 0, 0, 0.5) 20%
     );
+    &:before {
+      content: "First Night";
+    }
+    &:after {
+      border-left-color: $townsfolk;
+      margin-left: 3px;
+      left: 100%;
+    }
+  }
+
+  &.other span {
+    left: 120%;
+    background: linear-gradient(to right, $demon 0%, rgba(0, 0, 0, 0.5) 20%);
+    &:before {
+      content: "Other Nights";
+    }
+    &:after {
+      right: 100%;
+      margin-right: 3px;
+      border-right-color: $demon;
+    }
   }
 
   em {
@@ -328,13 +385,27 @@ export default {
     height: 40px;
     text-align: center;
     line-height: 37px;
-    top: -20px;
     border-radius: 50%;
     border: 3px solid black;
     filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5));
     font-weight: bold;
     opacity: 1;
+    pointer-events: all;
     transition: opacity 200ms;
+  }
+
+  &.first em {
+    left: -15px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, $townsfolk 100%);
+  }
+
+  &.other em {
+    right: -15px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, $demon 100%);
+  }
+
+  em:hover + span {
+    opacity: 1;
   }
 
   #app.screenshot & {

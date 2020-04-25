@@ -5,7 +5,7 @@
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 15,
-    "firstNightReminder": "",
+    "firstNightReminder": ":eye: Show the character token of a Townsfolk in play. Point to two players, one of which is that character. :eye-slash:",
     "otherNight": 0,
     "otherNightReminder": "",
     "reminders": [
@@ -21,7 +21,7 @@
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 16,
-    "firstNightReminder": "",
+    "firstNightReminder": ":eye: Show the character token of a Outsider in play. Point to two players, one of which is that character. :eye-slash:",
     "otherNight": 0,
     "otherNightReminder": "",
     "reminders": [
@@ -37,7 +37,7 @@
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 17,
-    "firstNightReminder": "",
+    "firstNightReminder": ":eye: Show the character token of a Minion in play. Point to two players, one of which is that character. :eye-slash:",
     "otherNight": 0,
     "otherNightReminder": "",
     "reminders": [
@@ -53,7 +53,7 @@
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 18,
-    "firstNightReminder": "",
+    "firstNightReminder": ":eye: Show the finger signal (0, 1, 2, …) for the number of pairs of neighbouring evil players. :eye-slash:",
     "otherNight": 0,
     "otherNightReminder": "",
     "reminders": [],
@@ -66,9 +66,9 @@
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 19,
-    "firstNightReminder": "",
+    "firstNightReminder": ":eye: Show the finger signal (0, 1, 2) for the number of evil alive neighbours of the Empath. :eye-slash:",
     "otherNight": 37,
-    "otherNightReminder": "",
+    "otherNightReminder": ":eye: Show the finger signal (0, 1, 2) for the number of evil neighbours. :eye-slash:",
     "reminders": [],
     "setup": false,
     "ability": "Each night, you learn how many of your 2 alive neighbours are evil."
@@ -79,9 +79,9 @@
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 20,
-    "firstNightReminder": "",
+    "firstNightReminder": ":eye: The Fortune Teller points to two players. Give the head signal (nod yes, shake no) for whether one of those players is the Demon. :eye-slash:",
     "otherNight": 38,
-    "otherNightReminder": "",
+    "otherNightReminder": ":eye: The Fortune Teller points to two players. Show the head signal (nod “yes”, shake “no”) for whether one of those players is the Demon. :eye-slash:",
     "reminders": [
       "Decoy"
     ],
@@ -96,7 +96,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 40,
-    "otherNightReminder": "",
+    "otherNightReminder": ":question-circle: If a player was executed today: :eye: Show that player’s character token. :eye-slash:",
     "reminders": [
       "Executed"
     ],
@@ -111,7 +111,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 8,
-    "otherNightReminder": "",
+    "otherNightReminder": "The previously protected player is no longer protected. :plus-circle: :eye: The Monk points to a player not themself. :eye-slash: Mark that player “Protected”. :plus-circle:",
     "reminders": [
       "Protected"
     ],
@@ -126,7 +126,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 35,
-    "otherNightReminder": "",
+    "otherNightReminder": ":question-circle: If the Ravenkeeper died tonight: :eye: The Ravenkeeper points to a player. Show that player’s character token. :eye-slash:",
     "reminders": [],
     "setup": false,
     "ability": "If you die at night, you are woken to choose a player: you learn their character."
@@ -193,9 +193,9 @@
     "edition": "tb",
     "team": "outsider",
     "firstNight": 21,
-    "firstNightReminder": "",
+    "firstNightReminder": ":eye: The Butler points to a player. :eye-slash: Mark that player as “Master”. :plus-circle:",
     "otherNight": 39,
-    "otherNightReminder": "",
+    "otherNightReminder": ":eye: The Butler points to a player. :eye-slash: Mark that player as “Master”. :plus-circle:",
     "reminders": [
       "Master"
     ],
@@ -262,9 +262,9 @@
     "edition": "tb",
     "team": "minion",
     "firstNight": 4,
-    "firstNightReminder": "",
+    "firstNightReminder": ":eye: The Poisoner points to a player. :eye-slash: That player is poisoned. :plus-circle:",
     "otherNight": 3,
-    "otherNightReminder": "",
+    "otherNightReminder": "The previously poisoned player is no longer poisoned. :plus-circle: :eye: The Poisoner points to a player. :eye-slash: That player is poisoned. :plus-circle:",
     "reminders": [
       "Poisoned"
     ],
@@ -277,9 +277,9 @@
     "edition": "tb",
     "team": "minion",
     "firstNight": 26,
-    "firstNightReminder": "",
+    "firstNightReminder": ":eye: Show the Grimoire to the Spy for as long as they need. :eye-slash:",
     "otherNight": 47,
-    "otherNightReminder": "",
+    "otherNightReminder": ":eye: Show the Grimoire to the Spy for as long as they need. :eye-slash:",
     "reminders": [],
     "setup": false,
     "ability": "Each night, you see the Grimoire. You might register as good and as a Townsfolk or Outsider, even if dead."
@@ -292,7 +292,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 13,
-    "otherNightReminder": "",
+    "otherNightReminder": ":question-circle: If the Scarlet Woman became the Demon today: :eye: Show the “You are” card, then the demon token. :eye-slash:",
     "reminders": [
       "Demon"
     ],
@@ -307,7 +307,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 18,
-    "otherNightReminder": "",
+    "otherNightReminder": ":eye: The Imp points to a player. :eye-slash: That player dies. :plus-circle: If the Imp chose themself: • Replace the character of 1 alive minion with a spare Imp token. :plus-circle: • :eye: Wake the new Imp. Show the “You are” card, then the Imp token. :eye-slash:",
     "reminders": [
       "Die"
     ],

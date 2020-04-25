@@ -233,8 +233,8 @@ export default {
             otherNight.push(role.otherNight);
           }
         });
-        firstNight.sort();
-        otherNight.sort();
+        firstNight.sort((a, b) => a - b);
+        otherNight.sort((a, b) => a - b);
         newPlayers.forEach(player => {
           player.firstNight = Math.max(
             firstNight.indexOf(player.role.firstNight),

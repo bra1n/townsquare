@@ -212,8 +212,7 @@ export default {
         z-index: $item-count - $i + 1;
       } @else {
         z-index: $i - 1;
-        .ability,
-        .night span {
+        .ability {
           right: 120%;
           left: auto;
           &:before {
