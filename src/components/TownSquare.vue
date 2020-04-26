@@ -47,6 +47,14 @@
           v-bind:key="reminder.role + ' ' + reminder.name"
           @click="addReminder(reminder)"
         >
+          <span
+            class="icon"
+            v-bind:style="{
+              backgroundImage: `url(${require('../assets/icons/' +
+                reminder.role +
+                '.png')})`
+            }"
+          ></span>
           {{ reminder.name }}
         </li>
       </ul>
@@ -159,21 +167,6 @@ export default {
 
 <style lang="scss">
 @import "../vars.scss";
-
-@each $img, $fontsize in $roles {
-  .token.#{$img} {
-    &:before {
-      background-image: url("../assets/icons/#{$img}.png");
-    }
-    .name {
-      font-size: $fontsize;
-    }
-  }
-
-  .reminder.#{$img}:before {
-    background-image: url("../assets/icons/#{$img}.png");
-  }
-}
 
 .circle {
   padding: 0;
@@ -353,8 +346,7 @@ ul.reminders .reminder {
   line-height: 100%;
   transition: transform 500ms ease;
 
-  &:before {
-    content: " ";
+  .icon {
     position: absolute;
     left: 0;
     top: 0;

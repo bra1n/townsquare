@@ -47,10 +47,20 @@
         v-bind:class="[reminder.role]"
         @click="removeReminder(reminder)"
       >
+        <span
+          class="icon"
+          v-bind:style="{
+            backgroundImage: `url(${require('../assets/icons/' +
+              reminder.role +
+              '.png')})`
+          }"
+        ></span>
         {{ reminder.name }}
       </div>
     </template>
-    <div class="reminder add" @click="$emit('add-reminder', player)"></div>
+    <div class="reminder add" @click="$emit('add-reminder', player)">
+      <span class="icon"></span>
+    </div>
   </li>
 </template>
 
@@ -441,7 +451,7 @@ export default {
   transition: all 200ms;
   cursor: pointer;
 
-  &:before,
+  .icon,
   &:after {
     content: " ";
     position: absolute;

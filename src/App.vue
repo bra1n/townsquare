@@ -373,9 +373,23 @@ ul {
 }
 
 // Editions
-@each $img in $editions {
+@each $img, $skipIcons in $editions {
   .edition-#{$img} {
-    background-image: url("./assets/edition-#{$img}.png");
+    background-image: url("./assets/editions/#{$img}.png");
+  }
+  @if $skipIcons != true {
+    .edition-#{$img}.townsfolk {
+      background-image: url("./assets/editions/#{$img}-townsfolk.png");
+    }
+    .edition-#{$img}.outsider {
+      background-image: url("./assets/editions/#{$img}-outsider.png");
+    }
+    .edition-#{$img}.minion {
+      background-image: url("./assets/editions/#{$img}-minion.png");
+    }
+    .edition-#{$img}.demon {
+      background-image: url("./assets/editions/#{$img}-demon.png");
+    }
   }
 }
 

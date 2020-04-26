@@ -1,5 +1,14 @@
 <template>
   <div class="token" @click="setRole" :class="[role.id]">
+    <span
+      class="icon"
+      v-if="role.id"
+      v-bind:style="{
+        backgroundImage: `url(${require('../assets/icons/' +
+          role.id +
+          '.png')})`
+      }"
+    ></span>
     <span class="leaf-left" v-if="role.firstNight"></span>
     <span class="leaf-right" v-if="role.otherNight"></span>
     <span
@@ -7,7 +16,28 @@
       v-bind:class="['leaf-top' + role.reminders.length]"
     ></span>
     <span class="leaf-orange" v-if="role.setup"></span>
-    <div class="name">{{ role.name }}</div>
+    <svg viewBox="0 0 150 150" class="name">
+      <path
+        d="M 13 75 C 13 160, 138 160, 138 75"
+        id="curve"
+        fill="transparent"
+      />
+      <text
+        width="150"
+        x="66.6%"
+        text-anchor="middle"
+        class="label"
+        v-bind:font-size="role.name | nameToFontSize"
+      >
+        <textPath xlink:href="#curve">
+          {{ role.name }}
+        </textPath>
+      </text>
+    </svg>
+    <div
+      class="edition"
+      v-bind:class="[`edition-${role.edition}`, role.team]"
+    ></div>
     <div class="ability" v-if="role.ability">
       {{ role.ability }}
     </div>
@@ -25,6 +55,9 @@ export default {
   },
   data() {
     return {};
+  },
+  filters: {
+    nameToFontSize: name => (name && name.length > 10 ? "20px" : "24px")
   },
   methods: {
     setRole() {
@@ -47,15 +80,14 @@ export default {
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
 
-  &:before {
-    content: " ";
+  .icon {
     background-size: 100%;
     position: absolute;
     width: 100%;
     height: 100%;
-    left: 0;
-    top: 0;
+    margin-top: 3%;
   }
 
   span {
@@ -63,8 +95,6 @@ export default {
     width: 100%;
     height: 100%;
     background-size: 100%;
-    left: 0;
-    top: 0;
     pointer-events: none;
 
     &.leaf-left {
@@ -98,6 +128,31 @@ export default {
     &.leaf-top5 {
       background-image: url("../assets/leaf-top5.png");
     }
+  }
+
+  .name {
+    width: 100%;
+    height: 100%;
+    .label {
+      fill: black;
+      stroke: white;
+      stroke-width: 2px;
+      paint-order: stroke;
+      font-family: "Papyrus", serif;
+      font-weight: bold;
+      text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+      letter-spacing: 1px;
+    }
+  }
+
+  .edition {
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+    width: 30px;
+    height: 30px;
+    background-size: 100%;
+    display: none;
   }
 
   .ability {
@@ -136,17 +191,6 @@ export default {
     }
   }
 
-  .name {
-    color: black;
-    font-weight: 600;
-    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
-      1px 1px 0 #fff, 0 0 5px rgba(0, 0, 0, 0.75);
-    font-family: "Papyrus", serif;
-    position: absolute;
-    top: 73%;
-    width: 100%;
-    line-height: 100%;
-  }
   &:hover .ability {
     opacity: 1;
   }
