@@ -52,34 +52,36 @@
         @click="takeScreenshot()"
         v-bind:class="{ success: isScreenshotSuccess }"
       />
-      <font-awesome-icon icon="cog" @click="isControlOpen = !isControlOpen" />
-      <ul v-if="isControlOpen">
-        <li @click="togglePublic">Toggle <em>G</em>rimoire</li>
-        <li>
-          Size
-          <font-awesome-icon @click="zoom -= 0.1" icon="search-minus" />
-          {{ Math.round(zoom * 100) }}%
-          <font-awesome-icon @click="zoom += 0.1" icon="search-plus" />
-        </li>
-        <li @click="addPlayer" v-if="players.length < 20">
-          <em>A</em>dd Player
-        </li>
-        <li @click="randomizeSeatings" v-if="players.length > 2">
-          <em>R</em>andomize Seatings
-        </li>
-        <li @click="clearPlayers" v-if="players.length">
-          Clear Players
-        </li>
-        <li @click="clearRoles" v-if="players.length">
-          Clear Roles
-        </li>
-        <li @click="showEditionModal" v-if="players.length > 4">
-          Select Edition
-        </li>
-        <li @click="showRoleModal" v-if="players.length > 4">
-          Select Roles
-        </li>
-      </ul>
+      <div class="menu" v-bind:class="{ open: isControlOpen }">
+        <font-awesome-icon icon="cog" @click="isControlOpen = !isControlOpen" />
+        <ul>
+          <li @click="togglePublic">Toggle <em>G</em>rimoire</li>
+          <li>
+            Size
+            <font-awesome-icon @click="zoom -= 0.1" icon="search-minus" />
+            {{ Math.round(zoom * 100) }}%
+            <font-awesome-icon @click="zoom += 0.1" icon="search-plus" />
+          </li>
+          <li @click="addPlayer" v-if="players.length < 20">
+            <em>A</em>dd Player
+          </li>
+          <li @click="randomizeSeatings" v-if="players.length > 2">
+            <em>R</em>andomize Seatings
+          </li>
+          <li @click="clearPlayers" v-if="players.length">
+            Clear Players
+          </li>
+          <li @click="clearRoles" v-if="players.length">
+            Clear Roles
+          </li>
+          <li @click="showEditionModal" v-if="players.length > 4">
+            Select Edition
+          </li>
+          <li @click="showRoleModal" v-if="players.length > 4">
+            Select Roles
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -129,7 +131,7 @@ export default {
     },
     togglePublic() {
       this.isPublic = !this.isPublic;
-      this.isControlOpen = false;
+      this.isControlOpen = !this.isPublic;
     },
     addPlayer() {
       const name = prompt("Player name");
@@ -332,41 +334,75 @@ ul {
 // Controls
 .controls {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 3px;
+  top: 3px;
   text-align: right;
-  padding: 10px;
   svg {
     cursor: pointer;
-    margin-left: 10px;
     &.success {
       animation: greenToWhite 1s normal forwards;
       animation-iteration-count: 1;
     }
   }
-  ul {
-    display: flex;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    flex-direction: column;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 10px black;
-    li {
-      padding: 5px 10px;
-      color: white;
-      text-align: center;
-      background: rgba(0, 0, 0, 0.7);
-      margin-bottom: 1px;
-      cursor: pointer;
-      &:hover {
-        background-color: red;
-      }
-      em {
-        text-decoration: underline;
-        font-style: normal;
-        font-weight: bold;
+
+  .fa-camera {
+    position: absolute;
+    right: 50px;
+    top: 10px;
+  }
+
+  .menu {
+    transform-origin: 91% 5.5%;
+    transition: transform 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    transform: rotate(-90deg);
+
+    &.open {
+      transform: rotate(0deg);
+    }
+
+    > svg {
+      background: rgba(0, 0, 0, 0.5);
+      border: 3px solid black;
+      width: 40px;
+      height: 50px;
+      margin-bottom: -8px;
+      border-bottom: 0;
+      border-radius: 10px 10px 0 0;
+      padding: 5px 5px 15px;
+    }
+
+    ul {
+      display: flex;
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 0 10px black;
+      border: 3px solid black;
+      border-radius: 10px 0 10px 10px;
+
+      li {
+        padding: 5px 10px;
+        color: white;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.7);
+        margin-bottom: 1px;
+        cursor: pointer;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        &:hover {
+          background-color: red;
+        }
+
+        em {
+          text-decoration: underline;
+          font-style: normal;
+          font-weight: bold;
+        }
       }
     }
   }
