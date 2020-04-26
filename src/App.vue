@@ -120,7 +120,6 @@ export default {
   },
   methods: {
     takeScreenshot(dimensions = {}) {
-      this.isControlOpen = false;
       this.isScreenshotSuccess = false;
       this.isScreenshot = true;
       this.$refs.screenshot.capture(dimensions, this.zoom);
@@ -337,6 +336,11 @@ ul {
   right: 3px;
   top: 3px;
   text-align: right;
+
+  #app.screenshot & {
+    display: none;
+  }
+
   svg {
     cursor: pointer;
     &.success {
@@ -349,6 +353,7 @@ ul {
     position: absolute;
     right: 50px;
     top: 10px;
+    z-index: 5;
   }
 
   .menu {
