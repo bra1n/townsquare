@@ -12,6 +12,7 @@
         :player="player"
         :roles="roles"
         :is-public="isPublic"
+        :is-night-order="isNightOrder"
         @add-reminder="openReminderModal"
         @set-role="openRoleModal"
         @remove-player="removePlayer"
@@ -88,6 +89,10 @@ export default {
   },
   props: {
     isPublic: {
+      type: Boolean,
+      required: true
+    },
+    isNightOrder: {
       type: Boolean,
       required: true
     },

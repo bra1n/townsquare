@@ -4,10 +4,12 @@
     @keyup="keyup"
     tabindex="-1"
     v-bind:class="{ screenshot: isScreenshot }"
+    v-bind:style="{ backgroundImage: background ? `url('${background}')` : '' }"
   >
     <TownInfo :players="players" :edition="edition"></TownInfo>
     <TownSquare
       :is-public="isPublic"
+      :is-night-order="isNightOrder"
       :players="players"
       :roles="roles"
       :zoom="zoom"
@@ -55,30 +57,65 @@
       <div class="menu" v-bind:class="{ open: isControlOpen }">
         <font-awesome-icon icon="cog" @click="isControlOpen = !isControlOpen" />
         <ul>
-          <li @click="togglePublic">Toggle <em>G</em>rimoire</li>
+          <!-- Grimoire -->
+          <li class="headline">
+            <font-awesome-icon icon="book-open" />
+            Grimoire
+          </li>
+          <li @click="togglePublic">
+            <em>[G]</em>
+            <template v-if="!isPublic">Hide</template>
+            <template v-if="isPublic">Show</template>
+          </li>
+          <li @click="toggleNightOrder">
+            <em
+              ><font-awesome-icon
+                :icon="['fas', isNightOrder ? 'check-square' : 'square']"
+            /></em>
+            Night order
+          </li>
           <li>
-            Size
-            <font-awesome-icon @click="zoom -= 0.1" icon="search-minus" />
-            {{ Math.round(zoom * 100) }}%
-            <font-awesome-icon @click="zoom += 0.1" icon="search-plus" />
+            <em>
+              <font-awesome-icon @click="zoom -= 0.1" icon="search-minus" />
+              {{ Math.round(zoom * 100) }}%
+              <font-awesome-icon @click="zoom += 0.1" icon="search-plus" />
+            </em>
+            Zoom
+          </li>
+          <li @click="setBackground">
+            Background image
+          </li>
+
+          <!-- Users -->
+          <li class="headline">
+            <font-awesome-icon icon="users" />
+            Players
           </li>
           <li @click="addPlayer" v-if="players.length < 20">
-            <em>A</em>dd Player
+            <em>[A]</em> Add
           </li>
           <li @click="randomizeSeatings" v-if="players.length > 2">
-            <em>R</em>andomize Seatings
+            <em>[R]</em> Randomize
           </li>
           <li @click="clearPlayers" v-if="players.length">
-            Clear Players
+            Remove all
           </li>
-          <li @click="clearRoles" v-if="players.length">
-            Clear Roles
+
+          <!-- Characters -->
+          <li class="headline">
+            <font-awesome-icon icon="theater-masks" />
+            Characters
           </li>
-          <li @click="showEditionModal" v-if="players.length > 4">
+          <li @click="showEditionModal">
+            <em>[E]</em>
             Select Edition
           </li>
           <li @click="showRoleModal" v-if="players.length > 4">
-            Select Roles
+            <em>[C]</em>
+            Choose & Assign
+          </li>
+          <li @click="clearRoles" v-if="players.length">
+            Remove all
           </li>
         </ul>
       </div>
@@ -105,7 +142,9 @@ export default {
   },
   data: function() {
     return {
+      background: "",
       editions: editionJSON,
+      isNightOrder: true,
       isPublic: true,
       isControlOpen: false,
       isEditionModalOpen: false,
@@ -131,6 +170,12 @@ export default {
     togglePublic() {
       this.isPublic = !this.isPublic;
       this.isControlOpen = !this.isPublic;
+    },
+    toggleNightOrder() {
+      this.isNightOrder = !this.isNightOrder;
+    },
+    setBackground() {
+      this.background = prompt("Enter custom background URL");
     },
     addPlayer() {
       const name = prompt("Player name");
@@ -163,6 +208,7 @@ export default {
       if (confirm("Are you sure you want to remove all player roles?")) {
         this.players.forEach(player => {
           player.role = {};
+          player.hasDied = false;
           player.reminders = [];
         });
       }
@@ -203,10 +249,19 @@ export default {
         case "r":
           this.randomizeSeatings();
           break;
+        case "e":
+          this.showEditionModal();
+          break;
+        case "c":
+          this.showRoleModal();
+          break;
       }
     }
   },
   mounted() {
+    if (localStorage.background !== undefined) {
+      this.background = JSON.parse(localStorage.background);
+    }
     if (localStorage.isPublic !== undefined) {
       this.isPublic = JSON.parse(localStorage.isPublic);
     }
@@ -261,6 +316,13 @@ export default {
     },
     isPublic(newIsPublic) {
       localStorage.isPublic = JSON.stringify(newIsPublic);
+    },
+    background(newBackground) {
+      if (newBackground) {
+        localStorage.background = JSON.stringify(newBackground);
+      } else {
+        localStorage.removeItem("background");
+      }
     }
   }
 };
@@ -318,6 +380,8 @@ ul {
 
 #app {
   height: 100%;
+  background-position: center center;
+  background-size: cover;
 }
 
 // success animation
@@ -343,6 +407,7 @@ ul {
 
   svg {
     cursor: pointer;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 1));
     &.success {
       animation: greenToWhite 1s normal forwards;
       animation-iteration-count: 1;
@@ -357,7 +422,7 @@ ul {
   }
 
   .menu {
-    transform-origin: 91% 5.5%;
+    transform-origin: 189px 22px;
     transition: transform 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
     transform: rotate(-90deg);
 
@@ -388,26 +453,40 @@ ul {
       border-radius: 10px 0 10px 10px;
 
       li {
-        padding: 5px 10px;
+        padding: 2px 10px;
         color: white;
-        text-align: center;
+        text-align: left;
         background: rgba(0, 0, 0, 0.7);
-        margin-bottom: 1px;
-        cursor: pointer;
 
         &:last-child {
           margin-bottom: 0;
         }
 
-        &:hover {
-          background-color: red;
+        &:not(.headline):hover {
+          cursor: pointer;
+          color: red;
         }
 
         em {
-          text-decoration: underline;
+          float: right;
           font-style: normal;
-          font-weight: bold;
+          margin-left: 10px;
+          font-size: 80%;
+          line-height: 31px;
         }
+      }
+
+      .headline {
+        padding: 5px 10px;
+        text-align: center;
+        font-weight: bold;
+        background: linear-gradient(
+          to right,
+          $demon 0%,
+          rgba(0, 0, 0, 0.5) 20%,
+          rgba(0, 0, 0, 0.5) 80%,
+          $townsfolk 100%
+        );
       }
     }
   }

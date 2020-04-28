@@ -12,13 +12,13 @@
       <div class="shroud" @click="toggleStatus()"></div>
       <div class="life" @click="toggleStatus()"></div>
 
-      <div class="night first" v-if="player.firstNight">
+      <div class="night first" v-if="player.firstNight && isNightOrder">
         <em>{{ player.firstNight }}.</em>
         <span v-if="player.role.firstNightReminder">{{
           player.role.firstNightReminder | handleEmojis
         }}</span>
       </div>
-      <div class="night other" v-if="player.otherNight">
+      <div class="night other" v-if="player.otherNight && isNightOrder">
         <em>{{ player.otherNight }}.</em>
         <span v-if="player.role.otherNightReminder">{{
           player.role.otherNightReminder | handleEmojis
@@ -81,6 +81,10 @@ export default {
       required: true
     },
     isPublic: {
+      type: Boolean,
+      required: true
+    },
+    isNightOrder: {
       type: Boolean,
       required: true
     }
@@ -255,13 +259,16 @@ export default {
 .player > .name {
   font-size: 120%;
   line-height: 120%;
-  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 1))
-    drop-shadow(0 0 1px rgba(0, 0, 0, 1)) drop-shadow(0 0 1px rgba(0, 0, 0, 1));
   cursor: pointer;
   white-space: nowrap;
   width: 100%;
   display: flex;
   justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  border: 3px solid black;
+  border-radius: 10px;
+  top: 5px;
+  box-shadow: 0 0 5px black;
 
   span.screenshot,
   span.remove {
