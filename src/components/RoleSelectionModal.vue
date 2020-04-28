@@ -41,7 +41,7 @@
       </div>
       <div class="button" @click="selectRandomRoles">
         <font-awesome-icon icon="random" />
-        Shuffle roles
+        Shuffle characters
       </div>
     </div>
   </Modal>
