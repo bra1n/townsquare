@@ -6,7 +6,23 @@
     v-bind:class="{ screenshot: isScreenshot }"
     v-bind:style="{ backgroundImage: background ? `url('${background}')` : '' }"
   >
-    <TownInfo :players="players" :edition="edition"></TownInfo>
+    <div class="intro" v-if="!players.length">
+      <img src="/static/apple-icon.png" alt="">
+      Welcome to the (inofficial)
+      <b> Virtual Blood on the Clocktower Town Square</b>!<br />
+      Please add more players through the
+      <span class="button" @click="isControlOpen = !isControlOpen">
+        <font-awesome-icon icon="cog" /> Menu
+      </span>
+      on the top right or by pressing <b>[A]</b>.<br />
+      This project is free and open source and can be found on
+      <a href="https://github.com/bra1n/townsquare" target="_blank">GitHub</a>.
+    </div>
+    <TownInfo
+      :players="players"
+      :edition="edition"
+      v-if="players.length"
+    ></TownInfo>
     <TownSquare
       :is-public="isPublic"
       :is-night-order="isNightOrder"
@@ -62,19 +78,19 @@
             <font-awesome-icon icon="book-open" />
             Grimoire
           </li>
-          <li @click="togglePublic">
+          <li @click="togglePublic" v-if="players.length">
             <em>[G]</em>
             <template v-if="!isPublic">Hide</template>
             <template v-if="isPublic">Show</template>
           </li>
-          <li @click="toggleNightOrder">
+          <li @click="toggleNightOrder" v-if="players.length">
             <em
               ><font-awesome-icon
                 :icon="['fas', isNightOrder ? 'check-square' : 'square']"
             /></em>
             Night order
           </li>
-          <li>
+          <li v-if="players.length">
             <em>
               <font-awesome-icon @click="zoom -= 0.1" icon="search-minus" />
               {{ Math.round(zoom * 100) }}%
@@ -363,6 +379,13 @@ body {
   position: relative;
 }
 
+a {
+  color: $townsfolk;
+  &:hover {
+    color: $demon;
+  }
+}
+
 h1,
 h2,
 h3,
@@ -382,6 +405,10 @@ ul {
   height: 100%;
   background-position: center center;
   background-size: cover;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 }
 
 // success animation
@@ -391,6 +418,29 @@ ul {
   }
   to {
     color: white;
+  }
+}
+
+// Intro
+.intro {
+  text-align: center;
+  width: 50%;
+  font-size: 120%;
+  position: absolute;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 3px solid black;
+  border-radius: 10px;
+  z-index: 3;
+  img {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -96px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px black;
+    border: 3px solid black;
   }
 }
 
@@ -422,7 +472,8 @@ ul {
   }
 
   .menu {
-    transform-origin: 189px 22px;
+    width: 210px;
+    transform-origin: 190px 22px;
     transition: transform 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
     transform: rotate(-90deg);
 

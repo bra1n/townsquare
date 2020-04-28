@@ -1,7 +1,9 @@
 <template>
   <ul class="info">
     <li class="edition" v-bind:class="['edition-' + edition]"></li>
-    <li v-if="players.length - teams.traveler < 5">Please add more players!</li>
+    <li v-if="players.length - teams.traveler < 5">
+      Please add more players!
+    </li>
     <li>
       {{ players.length }} <font-awesome-icon class="players" icon="users" />
       {{ teams.alive }} <font-awesome-icon class="alive" icon="heartbeat" />
