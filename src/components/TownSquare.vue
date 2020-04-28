@@ -61,7 +61,7 @@
       </ul>
     </Modal>
     <Modal v-show="availableRoles.length && selectedPlayer" @close="closeModal">
-      <h3>Choose a new role:</h3>
+      <h3>Choose a new character:</h3>
       <ul class="tokens">
         <li
           v-for="role in availableRoles"

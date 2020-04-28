@@ -135,6 +135,7 @@ export default {
 .circle .player {
   margin-bottom: 10px;
   padding-top: $token + 6px;
+  padding-bottom: 5px;
 
   .shroud {
     top: 0;
@@ -273,13 +274,19 @@ export default {
   span.screenshot,
   span.remove {
     display: none;
-    margin: 0 5px;
-    flex-shrink: 0;
-    flex-grow: 0;
+    position: absolute;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
     #app.screenshot & {
       display: none;
     }
   }
+  span.screenshot {
+    right: 100%;
+  }
+  span.remove {
+    left: 100%;
+  }
+
   span.name {
     flex-shrink: 1;
     text-overflow: ellipsis;
