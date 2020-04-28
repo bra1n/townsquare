@@ -7,7 +7,7 @@
     v-bind:style="{ backgroundImage: background ? `url('${background}')` : '' }"
   >
     <div class="intro" v-if="!players.length">
-      <img src="/static/apple-icon.png" alt="">
+      <img src="static/apple-icon.png" alt="" />
       Welcome to the (inofficial)
       <b> Virtual Blood on the Clocktower Town Square</b>!<br />
       Please add more players through the
