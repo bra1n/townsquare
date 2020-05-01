@@ -8,7 +8,7 @@
   >
     <div class="intro" v-if="!players.length">
       <img src="static/apple-icon.png" alt="" />
-      Welcome to the (inofficial)
+      Welcome to the (unofficial)
       <b> Virtual Blood on the Clocktower Town Square</b>!<br />
       Please add more players through the
       <span class="button" @click="isControlOpen = !isControlOpen">
