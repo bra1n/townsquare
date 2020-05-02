@@ -1,4 +1,5 @@
 module.exports = store => {
+  // initialize data
   if (localStorage.background !== undefined) {
     store.commit("setBackground", localStorage.background);
   }
@@ -8,7 +9,17 @@ module.exports = store => {
   if (localStorage.edition !== undefined) {
     store.commit("setEdition", localStorage.edition);
   }
+  if (localStorage.players) {
+    store.commit(
+      "players/setPlayers",
+      JSON.parse(localStorage.players).map(player => ({
+        ...player,
+        role: store.state.roles.get(player.role) || {}
+      }))
+    );
+  }
 
+  // listen to mutations
   store.subscribe(({ type, payload }, state) => {
     switch (type) {
       case "toggleGrimoire":
@@ -27,6 +38,19 @@ module.exports = store => {
         break;
       case "setEdition":
         localStorage.setItem("edition", payload);
+        break;
+      case "addPlayer":
+      case "updatePlayer":
+      case "removePlayer":
+        localStorage.setItem(
+          "players",
+          JSON.stringify(
+            state.players.players.map(player => ({
+              ...player,
+              role: player.role.id || {}
+            }))
+          )
+        );
         break;
     }
     console.log(type, payload);

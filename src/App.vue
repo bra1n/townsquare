@@ -37,11 +37,12 @@ export default {
     TownInfo,
     RoleSelectionModal
   },
-  computed: mapState(["grimoire"]),
+  computed: mapState({
+    grimoire: state => state.grimoire,
+    players: state => state.players.players
+  }),
   data: function() {
-    return {
-      players: []
-    };
+    return {};
   },
   methods: {
     takeScreenshot(dimensions) {
@@ -67,49 +68,6 @@ export default {
         case "Escape":
           this.$store.commit("toggleMenu");
       }
-    }
-  },
-  mounted() {
-    if (localStorage.players) {
-      this.players = JSON.parse(localStorage.players).map(player => ({
-        ...player,
-        role: this.$store.state.roles.get(player.role) || {}
-      }));
-    }
-  },
-  watch: {
-    players: {
-      handler(newPlayers) {
-        const firstNight = [0];
-        const otherNight = [0];
-        newPlayers.forEach(({ role }) => {
-          if (role.firstNight && !firstNight.includes(role.firstNight)) {
-            firstNight.push(role.firstNight);
-          }
-          if (role.otherNight && !otherNight.includes(role.otherNight)) {
-            otherNight.push(role.otherNight);
-          }
-        });
-        firstNight.sort((a, b) => a - b);
-        otherNight.sort((a, b) => a - b);
-        newPlayers.forEach(player => {
-          player.firstNight = Math.max(
-            firstNight.indexOf(player.role.firstNight),
-            0
-          );
-          player.otherNight = Math.max(
-            otherNight.indexOf(player.role.otherNight),
-            0
-          );
-        });
-        localStorage.players = JSON.stringify(
-          newPlayers.map(player => ({
-            ...player,
-            role: player.role.id || {}
-          }))
-        );
-      },
-      deep: true
     }
   }
 };

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import persistence from "./persistence";
+import players from "./modules/players";
 import editionJSON from "../editions.json";
 import rolesJSON from "../roles.json";
 
@@ -20,6 +21,9 @@ const getRolesByEdition = (edition = "tb") => {
 };
 
 export default new Vuex.Store({
+  modules: {
+    players
+  },
   state: {
     grimoire: {
       isNightOrder: true,
@@ -35,8 +39,7 @@ export default new Vuex.Store({
       roles: false
     },
     edition: "tb",
-    roles: getRolesByEdition(),
-    players: []
+    roles: getRolesByEdition()
   },
   mutations: {
     toggleMenu({ grimoire }) {
