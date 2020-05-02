@@ -22,6 +22,7 @@ export default new Vuex.Store({
     grimoire: {
       isNightOrder: true,
       isPublic: true,
+      isMenuOpen: false,
       isScreenshot: false,
       isScreenshotSuccess: false,
       zoom: 1,
@@ -36,12 +37,15 @@ export default new Vuex.Store({
     players: []
   },
   mutations: {
+    toggleMenu({ grimoire }) {
+      grimoire.isMenuOpen = !grimoire.isMenuOpen;
+    },
     toggleGrimoire({ grimoire }) {
       grimoire.isPublic = !grimoire.isPublic;
       grimoire.isControlOpen = !grimoire.isPublic;
     },
-    showGrimoire({ grimoire }) {
-      grimoire.isPublic = false;
+    showGrimoire({ grimoire }, isPublic = false) {
+      grimoire.isPublic = isPublic;
     },
     toggleNightOrder({ grimoire }) {
       grimoire.isNightOrder = !grimoire.isNightOrder;

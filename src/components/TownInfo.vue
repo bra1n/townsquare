@@ -40,15 +40,12 @@
 
 <script>
 import gameJSON from "./../game";
+import { mapState } from "vuex";
 
 export default {
   props: {
     players: {
       type: Array,
-      required: true
-    },
-    edition: {
-      type: String,
       required: true
     }
   },
@@ -70,13 +67,35 @@ export default {
             player => player.hasDied === true && player.hasVoted !== true
           ).length
       };
-    }
+    },
+    ...mapState(["edition"])
   }
 };
 </script>
 
 <style lang="scss">
 @import "../vars.scss";
+
+// Editions
+@each $img, $skipIcons in $editions {
+  .edition-#{$img} {
+    background-image: url("../assets/editions/#{$img}.png");
+  }
+  @if $skipIcons != true {
+    .edition-#{$img}.townsfolk {
+      background-image: url("../assets/editions/#{$img}-townsfolk.png");
+    }
+    .edition-#{$img}.outsider {
+      background-image: url("../assets/editions/#{$img}-outsider.png");
+    }
+    .edition-#{$img}.minion {
+      background-image: url("../assets/editions/#{$img}-minion.png");
+    }
+    .edition-#{$img}.demon {
+      background-image: url("../assets/editions/#{$img}-demon.png");
+    }
+  }
+}
 
 .info {
   position: absolute;

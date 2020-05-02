@@ -6,8 +6,8 @@
       @click="takeScreenshot()"
       v-bind:class="{ success: grimoire.isScreenshotSuccess }"
     />
-    <div class="menu" v-bind:class="{ open: isMenuOpen }">
-      <font-awesome-icon icon="cog" @click="isMenuOpen = !isMenuOpen" />
+    <div class="menu" v-bind:class="{ open: grimoire.isMenuOpen }">
+      <font-awesome-icon icon="cog" @click="toggleMenu" />
       <ul>
         <!-- Grimoire -->
         <li class="headline">
@@ -82,9 +82,7 @@ export default {
   },
   props: ["players"],
   data: function() {
-    return {
-      isMenuOpen: false
-    };
+    return {};
   },
   computed: mapState(["grimoire"]),
   methods: {
@@ -133,6 +131,7 @@ export default {
     },
     ...mapMutations([
       "toggleGrimoire",
+      "toggleMenu",
       "toggleNightOrder",
       "updateScreenshot",
       "updateZoom",
@@ -144,6 +143,16 @@ export default {
 
 <style scoped lang="scss">
 @import "../vars.scss";
+
+// success animation
+@keyframes greenToWhite {
+  from {
+    color: green;
+  }
+  to {
+    color: white;
+  }
+}
 
 // Controls
 #controls {

@@ -2,17 +2,14 @@
   <div
     id="townsquare"
     class="square"
-    v-bind:class="{ public: isPublic }"
-    v-bind:style="{ zoom: zoom }"
+    v-bind:class="{ public: grimoire.isPublic }"
+    v-bind:style="{ zoom: grimoire.zoom }"
   >
     <ul class="circle" v-bind:class="['size-' + players.length]">
       <Player
         v-for="(player, index) in players"
         :key="index"
         :player="player"
-        :roles="roles"
-        :is-public="isPublic"
-        :is-night-order="isNightOrder"
         @add-reminder="openReminderModal"
         @set-role="openRoleModal"
         @remove-player="removePlayer"
@@ -60,6 +57,7 @@
         </li>
       </ul>
     </Modal>
+
     <Modal v-show="availableRoles.length && selectedPlayer" @close="closeModal">
       <h3>Choose a new character:</h3>
       <ul class="tokens">
@@ -80,6 +78,7 @@
 import Player from "./Player";
 import Modal from "./Modal";
 import Token from "./Token";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -88,27 +87,12 @@ export default {
     Player
   },
   props: {
-    isPublic: {
-      type: Boolean,
-      required: true
-    },
-    isNightOrder: {
-      type: Boolean,
-      required: true
-    },
     players: {
       type: Array,
       required: true
-    },
-    roles: {
-      type: Map,
-      required: true
-    },
-    zoom: {
-      type: Number,
-      required: true
     }
   },
+  computed: mapState(["grimoire"]),
   data() {
     return {
       selectedPlayer: false,
@@ -128,7 +112,7 @@ export default {
       this.availableRoles = [];
       this.availableReminders = [];
       this.selectedPlayer = player;
-      this.roles.forEach(role => {
+      this.$store.state.roles.forEach(role => {
         if (this.players.some(p => p.role.id === role.id)) {
           this.availableReminders = [
             ...this.availableReminders,
@@ -143,7 +127,7 @@ export default {
       this.availableRoles = [];
       this.availableReminders = [];
       this.selectedPlayer = player;
-      this.roles.forEach(role => {
+      this.$store.state.roles.forEach(role => {
         if (player.role && role.id !== player.role.id) {
           this.availableRoles.push(role);
         }

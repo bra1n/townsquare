@@ -12,13 +12,19 @@
       <div class="shroud" @click="toggleStatus()"></div>
       <div class="life" @click="toggleStatus()"></div>
 
-      <div class="night first" v-if="player.firstNight && isNightOrder">
+      <div
+        class="night first"
+        v-if="player.firstNight && grimoire.isNightOrder"
+      >
         <em>{{ player.firstNight }}.</em>
         <span v-if="player.role.firstNightReminder">{{
           player.role.firstNightReminder | handleEmojis
         }}</span>
       </div>
-      <div class="night other" v-if="player.otherNight && isNightOrder">
+      <div
+        class="night other"
+        v-if="player.otherNight && grimoire.isNightOrder"
+      >
         <em>{{ player.otherNight }}.</em>
         <span v-if="player.role.otherNightReminder">{{
           player.role.otherNightReminder | handleEmojis
@@ -66,6 +72,7 @@
 
 <script>
 import Token from "./Token";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -75,20 +82,9 @@ export default {
     player: {
       type: Object,
       required: true
-    },
-    roles: {
-      type: Map,
-      required: true
-    },
-    isPublic: {
-      type: Boolean,
-      required: true
-    },
-    isNightOrder: {
-      type: Boolean,
-      required: true
     }
   },
+  computed: mapState(["grimoire"]),
   data() {
     return {};
   },
@@ -101,7 +97,7 @@ export default {
       this.$emit("screenshot", { width, height, x, y });
     },
     toggleStatus() {
-      if (this.isPublic) {
+      if (this.$store.state.grimoire.isPublic) {
         if (!this.player.hasDied) {
           this.$set(this.player, "hasDied", true);
         } else if (this.player.hasVoted) {

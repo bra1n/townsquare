@@ -10,32 +10,9 @@
         : ''
     }"
   >
-    <div class="intro" v-if="!players.length">
-      <img src="static/apple-icon.png" alt="" />
-      Welcome to the (unofficial)
-      <b> Virtual Blood on the Clocktower Town Square</b>!<br />
-      Please add more players through the
-      <span class="button">
-        <font-awesome-icon icon="cog" /> Menu
-      </span>
-      on the top right or by pressing <b>[A]</b>.<br />
-      This project is free and open source and can be found on
-      <a href="https://github.com/bra1n/townsquare" target="_blank">GitHub</a>.
-    </div>
-    <TownInfo
-      :players="players"
-      :edition="edition"
-      v-if="players.length"
-    ></TownInfo>
-    <TownSquare
-      :is-public="grimoire.isPublic"
-      :is-night-order="grimoire.isNightOrder"
-      :players="players"
-      :roles="roles"
-      :zoom="grimoire.zoom"
-      @screenshot="takeScreenshot"
-    ></TownSquare>
-
+    <Intro v-if="!players.length"></Intro>
+    <TownInfo :players="players" v-if="players.length"></TownInfo>
+    <TownSquare :players="players" @screenshot="takeScreenshot"></TownSquare>
     <Menu ref="menu" :players="players"></Menu>
     <EditionSelectionModal :players="players"></EditionSelectionModal>
     <RoleSelectionModal :players="players"></RoleSelectionModal>
@@ -49,16 +26,18 @@ import TownInfo from "./components/TownInfo";
 import Menu from "./components/Menu";
 import RoleSelectionModal from "./components/RoleSelectionModal";
 import EditionSelectionModal from "./components/EditionSelectionModal";
+import Intro from "./components/Intro";
 
 export default {
   components: {
+    Intro,
     EditionSelectionModal,
     Menu,
     TownSquare,
     TownInfo,
     RoleSelectionModal
   },
-  computed: mapState(["grimoire", "edition", "roles"]),
+  computed: mapState(["grimoire"]),
   data: function() {
     return {
       players: []
@@ -85,15 +64,17 @@ export default {
         case "c":
           this.$store.commit("toggleModal", "roles");
           break;
+        case "Escape":
+          this.$store.commit("toggleMenu");
       }
     }
   },
   mounted() {
     if (localStorage.background !== undefined) {
-      this.background = JSON.parse(localStorage.background);
+      this.$store.commit("setBackground", JSON.parse(localStorage.background));
     }
     if (localStorage.isPublic !== undefined) {
-      this.isPublic = JSON.parse(localStorage.isPublic);
+      this.$store.commit("showGrimoire", JSON.parse(localStorage.isPublic));
     }
     if (localStorage.edition) {
       this.$store.commit("setEdition", localStorage.edition);
@@ -101,7 +82,7 @@ export default {
     if (localStorage.players) {
       this.players = JSON.parse(localStorage.players).map(player => ({
         ...player,
-        role: this.roles.get(player.role) || {}
+        role: this.$store.state.roles.get(player.role) || {}
       }));
     }
   },
@@ -221,39 +202,6 @@ ul {
   align-items: center;
   align-content: center;
   justify-content: center;
-}
-
-// success animation
-@keyframes greenToWhite {
-  from {
-    color: green;
-  }
-  to {
-    color: white;
-  }
-}
-
-// Intro
-.intro {
-  text-align: center;
-  width: 50%;
-  font-size: 120%;
-  position: absolute;
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.5);
-  border: 3px solid black;
-  border-radius: 10px;
-  z-index: 3;
-  img {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -96px;
-    margin-bottom: 20px;
-    border-radius: 50%;
-    box-shadow: 0 0 10px black;
-    border: 3px solid black;
-  }
 }
 
 // Buttons
