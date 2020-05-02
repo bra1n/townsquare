@@ -1,0 +1,73 @@
+import Vue from "vue";
+import Vuex from "vuex";
+import editionJSON from "../editions.json";
+import rolesJSON from "../roles.json";
+
+Vue.use(Vuex);
+
+const getRolesByEdition = (edition = "tb") => {
+  const selectedEdition = editionJSON.find(({ id }) => id === edition);
+  return new Map(
+    rolesJSON
+      .filter(
+        r => r.edition === edition || selectedEdition.roles.includes(r.id)
+      )
+      .sort((a, b) => b.team.localeCompare(a.team))
+      .map(role => [role.id, role])
+  );
+};
+
+export default new Vuex.Store({
+  state: {
+    grimoire: {
+      isNightOrder: true,
+      isPublic: true,
+      isScreenshot: false,
+      isScreenshotSuccess: false,
+      zoom: 1,
+      background: ""
+    },
+    modals: {
+      edition: false,
+      roles: false
+    },
+    edition: "tb",
+    roles: getRolesByEdition(),
+    players: []
+  },
+  mutations: {
+    toggleGrimoire({ grimoire }) {
+      grimoire.isPublic = !grimoire.isPublic;
+      grimoire.isControlOpen = !grimoire.isPublic;
+    },
+    showGrimoire({ grimoire }) {
+      grimoire.isPublic = false;
+    },
+    toggleNightOrder({ grimoire }) {
+      grimoire.isNightOrder = !grimoire.isNightOrder;
+    },
+    updateZoom({ grimoire }, by = 0) {
+      grimoire.zoom += by;
+    },
+    setBackground({ grimoire }, background) {
+      grimoire.background = background;
+    },
+    toggleModal({ modals }, name) {
+      modals[name] = !modals[name];
+    },
+    updateScreenshot({ grimoire }, status) {
+      if (status !== true && status !== false) {
+        grimoire.isScreenshotSuccess = false;
+        grimoire.isScreenshot = true;
+      } else {
+        grimoire.isScreenshotSuccess = status;
+        grimoire.isScreenshot = false;
+      }
+    },
+    setEdition(state, edition) {
+      state.edition = edition;
+      state.modals.edition = false;
+      state.roles = getRolesByEdition(edition);
+    }
+  }
+});

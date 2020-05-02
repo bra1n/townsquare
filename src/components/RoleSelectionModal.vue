@@ -1,8 +1,8 @@
 <template>
   <Modal
     class="roles"
-    v-show="isOpen"
-    @close="close()"
+    v-show="modals.roles"
+    @close="toggleModal('roles')"
     v-if="nontravelerPlayers >= 5"
   >
     <h3>Select the characters for {{ nontravelerPlayers }} players:</h3>
@@ -51,6 +51,7 @@
 import Modal from "./Modal";
 import gameJSON from "./../game";
 import Token from "./Token";
+import { mapMutations, mapState } from "vuex";
 
 const randomElement = arr => arr[Math.floor(Math.random() * arr.length)];
 
@@ -62,14 +63,6 @@ export default {
   props: {
     players: {
       type: Array,
-      required: true
-    },
-    roles: {
-      type: Map,
-      required: true
-    },
-    isOpen: {
-      type: Boolean,
       required: true
     }
   },
@@ -96,12 +89,10 @@ export default {
       return Object.values(this.roleSelection).some(roles =>
         roles.some(role => role.selected && role.setup)
       );
-    }
+    },
+    ...mapState(["roles", "modals"])
   },
   methods: {
-    close() {
-      this.$emit("close");
-    },
     selectRandomRoles() {
       this.roleSelection = {};
       this.roles.forEach(role => {
@@ -141,7 +132,8 @@ export default {
         });
         this.close();
       }
-    }
+    },
+    ...mapMutations(["toggleModal"])
   },
   mounted: function() {
     if (!Object.keys(this.roleSelection).length) {

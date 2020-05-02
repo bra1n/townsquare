@@ -13,9 +13,10 @@ export default {
     };
   },
   methods: {
-    async capture({ x = 0, y = 0, width = 0, height = 0 }, zoom = 1) {
+    async capture({ x = 0, y = 0, width = 0, height = 0 }) {
       const canvas = this.$refs.canvas;
       const video = this.$refs.video;
+      const zoom = this.$store.state.grimoire.zoom;
       // start capturing
       if (!this.stream || !this.stream.active) {
         alert(
@@ -30,7 +31,7 @@ export default {
             audio: false
           });
         } catch (err) {
-          this.$emit("error", err);
+          this.$store.commit("updateScreenshot", false);
         }
       }
       // get screenshot
@@ -57,9 +58,9 @@ export default {
               // eslint-disable-next-line no-undef
               const item = new ClipboardItem({ "image/png": blob });
               navigator.clipboard.write([item]);
-              this.$emit("success");
+              this.$store.commit("updateScreenshot", true);
             } catch (err) {
-              this.$emit("error", err);
+              this.$store.commit("updateScreenshot", false);
             }
           });
         }, 100);
