@@ -1,12 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import persistence from "./persistence";
 import editionJSON from "../editions.json";
 import rolesJSON from "../roles.json";
 
 Vue.use(Vuex);
 
 const getRolesByEdition = (edition = "tb") => {
-  const selectedEdition = editionJSON.find(({ id }) => id === edition);
+  const selectedEdition =
+    editionJSON.find(({ id }) => id === edition) || editionJSON[0];
   return new Map(
     rolesJSON
       .filter(
@@ -73,5 +75,6 @@ export default new Vuex.Store({
       state.modals.edition = false;
       state.roles = getRolesByEdition(edition);
     }
-  }
+  },
+  plugins: [persistence]
 });

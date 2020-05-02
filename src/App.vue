@@ -70,15 +70,6 @@ export default {
     }
   },
   mounted() {
-    if (localStorage.background !== undefined) {
-      this.$store.commit("setBackground", JSON.parse(localStorage.background));
-    }
-    if (localStorage.isPublic !== undefined) {
-      this.$store.commit("showGrimoire", JSON.parse(localStorage.isPublic));
-    }
-    if (localStorage.edition) {
-      this.$store.commit("setEdition", localStorage.edition);
-    }
     if (localStorage.players) {
       this.players = JSON.parse(localStorage.players).map(player => ({
         ...player,
@@ -119,19 +110,6 @@ export default {
         );
       },
       deep: true
-    },
-    edition(newEdition) {
-      localStorage.edition = newEdition;
-    },
-    isPublic(newIsPublic) {
-      localStorage.isPublic = JSON.stringify(newIsPublic);
-    },
-    background(newBackground) {
-      if (newBackground) {
-        localStorage.background = JSON.stringify(newBackground);
-      } else {
-        localStorage.removeItem("background");
-      }
     }
   }
 };
