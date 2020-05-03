@@ -1,7 +1,25 @@
+const NEWPLAYER = {
+  role: {},
+  reminders: [],
+  hasVoted: false,
+  hasDied: false,
+  firstNight: 0,
+  otherNight: 0
+};
+
 const state = () => ({
   players: []
 });
-const getters = {};
+
+const getters = {
+  nonTravelers({ players }) {
+    const nonTravelers = players.filter(
+      player => player.role.team !== "traveler"
+    );
+    return Math.min(nonTravelers.length, 15);
+  }
+};
+
 const actions = {
   // recalculate night order for all players
   updateNightOrder({ state, commit }) {
@@ -23,26 +41,44 @@ const actions = {
       if (player.firstNight !== first || player.otherNight !== other) {
         player.firstNight = first;
         player.otherNight = other;
-        commit("updatePlayer", index, player);
+        commit("update", { index, player });
+        console.log("updated night order for player", player.name);
       }
     });
+  },
+  randomize({ state, commit }) {
+    const players = state.players
+      .map(a => [Math.random(), a])
+      .sort((a, b) => a[0] - b[0])
+      .map(a => a[1]);
+    commit("set", players);
+  },
+  clearRoles({ state, commit }) {
+    const players = state.players.map(({ name }) => ({
+      name,
+      ...NEWPLAYER
+    }));
+    commit("set", players);
   }
 };
+
 const mutations = {
-  setPlayers(state, players = []) {
+  clear(state) {
+    state.players = [];
+  },
+  set(state, players = []) {
     state.players = players;
   },
-  updatePlayer(state, index, player) {
+  update(state, { index, player }) {
     state.players[index] = player;
   },
-  addPlayer(state, name) {
+  add(state, name) {
     state.players.push({
       name,
-      role: {},
-      reminders: []
+      ...NEWPLAYER
     });
   },
-  removePlayer(state, index) {
+  remove(state, index) {
     state.players.splice(index, 1);
   }
 };

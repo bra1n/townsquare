@@ -7,16 +7,27 @@ module.exports = store => {
     store.commit("showGrimoire", JSON.parse(localStorage.isPublic));
   }
   if (localStorage.edition !== undefined) {
+    // this will initialize state.roles!
     store.commit("setEdition", localStorage.edition);
+  }
+  if (localStorage.bluffs !== undefined) {
+    JSON.parse(localStorage.bluffs).forEach((role, index) => {
+      store.commit("setBluff", {
+        index,
+        role: store.state.roles.get(role) || {}
+      });
+    });
   }
   if (localStorage.players) {
     store.commit(
-      "players/setPlayers",
+      "players/set",
       JSON.parse(localStorage.players).map(player => ({
         ...player,
         role: store.state.roles.get(player.role) || {}
       }))
     );
+    // recalculate night order
+    store.dispatch("players/updateNightOrder");
   }
 
   // listen to mutations
@@ -39,20 +50,35 @@ module.exports = store => {
       case "setEdition":
         localStorage.setItem("edition", payload);
         break;
-      case "addPlayer":
-      case "updatePlayer":
-      case "removePlayer":
+      case "setBluff":
         localStorage.setItem(
-          "players",
-          JSON.stringify(
-            state.players.players.map(player => ({
-              ...player,
-              role: player.role.id || {}
-            }))
-          )
+          "bluffs",
+          JSON.stringify(state.grimoire.bluffs.map(({ id }) => id))
         );
         break;
+      case "players/add":
+      case "players/update":
+      case "players/remove":
+      case "players/clear":
+      case "players/set":
+        if (state.players.players.length) {
+          localStorage.setItem(
+            "players",
+            JSON.stringify(
+              state.players.players.map(player => ({
+                ...player,
+                // simplify the stored data
+                role: player.role.id || {},
+                firstNight: undefined,
+                otherNight: undefined
+              }))
+            )
+          );
+        } else {
+          localStorage.removeItem("players");
+        }
+        break;
     }
-    console.log(type, payload);
+    console.log("persistance", type, payload);
   });
 };

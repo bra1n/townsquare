@@ -50,7 +50,7 @@ export default {
   props: {
     role: {
       type: Object,
-      required: true
+      default: () => ({})
     }
   },
   data() {

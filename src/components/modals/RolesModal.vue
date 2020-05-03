@@ -3,9 +3,9 @@
     class="roles"
     v-show="modals.roles"
     @close="toggleModal('roles')"
-    v-if="nontravelerPlayers >= 5"
+    v-if="nonTravelers >= 5"
   >
-    <h3>Select the characters for {{ nontravelerPlayers }} players:</h3>
+    <h3>Select the characters for {{ nonTravelers }} players:</h3>
     <ul
       class="tokens"
       v-for="(teamRoles, team) in roleSelection"
@@ -13,7 +13,7 @@
     >
       <li class="count" v-bind:class="[team]">
         {{ teamRoles.filter(role => role.selected).length }} /
-        {{ game[nontravelerPlayers - 5][team] }}
+        {{ game[nonTravelers - 5][team] }}
       </li>
       <li
         v-for="role in teamRoles"
@@ -33,7 +33,7 @@
         class="button"
         @click="assignRoles"
         v-bind:class="{
-          disabled: selectedRoles > nontravelerPlayers || !selectedRoles
+          disabled: selectedRoles > nonTravelers || !selectedRoles
         }"
       >
         <font-awesome-icon icon="people-arrows" />
@@ -49,9 +49,9 @@
 
 <script>
 import Modal from "./Modal";
-import gameJSON from "./../game";
-import Token from "./Token";
-import { mapMutations, mapState } from "vuex";
+import gameJSON from "./../../game";
+import Token from "./../Token";
+import { mapGetters, mapMutations, mapState } from "vuex";
 
 const randomElement = arr => arr[Math.floor(Math.random() * arr.length)];
 
@@ -60,12 +60,6 @@ export default {
     Token,
     Modal
   },
-  props: {
-    players: {
-      type: Array,
-      required: true
-    }
-  },
   data: function() {
     return {
       roleSelection: {},
@@ -73,13 +67,6 @@ export default {
     };
   },
   computed: {
-    nontravelerPlayers: function() {
-      return Math.min(
-        this.players.filter(({ role }) => role && role.team !== "traveler")
-          .length,
-        15
-      );
-    },
     selectedRoles: function() {
       return Object.values(this.roleSelection)
         .map(roles => roles.filter(role => role.selected).length)
@@ -90,7 +77,9 @@ export default {
         roles.some(role => role.selected && role.setup)
       );
     },
-    ...mapState(["roles", "modals"])
+    ...mapState(["roles", "modals"]),
+    ...mapState("players", ["players"]),
+    ...mapGetters({ nonTravelers: "players/nonTravelers" })
   },
   methods: {
     selectRandomRoles() {
@@ -103,7 +92,7 @@ export default {
         this.$set(role, "selected", false);
       });
       delete this.roleSelection["traveler"];
-      const playerCount = Math.max(5, this.nontravelerPlayers);
+      const playerCount = Math.max(5, this.nonTravelers);
       const composition = this.game[playerCount - 5];
       Object.keys(composition).forEach(team => {
         for (let x = 0; x < composition[team]; x++) {
@@ -117,7 +106,7 @@ export default {
       });
     },
     assignRoles() {
-      if (this.selectedRoles <= this.nontravelerPlayers && this.selectedRoles) {
+      if (this.selectedRoles <= this.nonTravelers && this.selectedRoles) {
         // generate list of selected roles and randomize it
         const roles = Object.values(this.roleSelection)
           .map(roles => roles.filter(role => role.selected))
@@ -125,12 +114,14 @@ export default {
           .map(a => [Math.random(), a])
           .sort((a, b) => a[0] - b[0])
           .map(a => a[1]);
-        this.players.forEach(player => {
+        this.players.forEach((player, index) => {
           if (player.role.team !== "traveler" && roles.length) {
             player.role = roles.pop();
+            this.$store.commit("players/update", { index, player });
           }
         });
-        this.close();
+        this.$store.dispatch("players/updateNightOrder");
+        this.$store.commit("toggleModal", "roles");
       }
     },
     ...mapMutations(["toggleModal"])
@@ -148,16 +139,39 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import "../vars.scss";
+<style lang="scss" scoped>
+@import "../../vars.scss";
 
-.roles .modal ul.tokens {
+ul.tokens {
   padding-left: 55px;
   li {
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+    margin: 5px;
     opacity: 0.5;
     transition: all 250ms;
     &.selected {
       opacity: 1;
+    }
+    &.townsfolk {
+      box-shadow: 0 0 10px $townsfolk, 0 0 10px #004cff;
+    }
+    &.outsider {
+      box-shadow: 0 0 10px $outsider, 0 0 10px $outsider;
+    }
+    &.minion {
+      box-shadow: 0 0 10px $minion, 0 0 10px $minion;
+    }
+    &.demon {
+      box-shadow: 0 0 10px $demon, 0 0 10px $demon;
+    }
+    &.traveler {
+      box-shadow: 0 0 10px $traveler, 0 0 10px $traveler;
+    }
+    &:hover {
+      transform: scale(1.2);
+      z-index: 10;
     }
   }
   .count {

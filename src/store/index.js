@@ -32,11 +32,14 @@ export default new Vuex.Store({
       isScreenshot: false,
       isScreenshotSuccess: false,
       zoom: 1,
-      background: ""
+      background: "",
+      bluffs: []
     },
     modals: {
       edition: false,
-      roles: false
+      roles: false,
+      role: false,
+      reminder: false
     },
     edition: "tb",
     roles: getRolesByEdition()
@@ -60,6 +63,9 @@ export default new Vuex.Store({
     },
     setBackground({ grimoire }, background) {
       grimoire.background = background;
+    },
+    setBluff({ grimoire }, { index, role }) {
+      grimoire.bluffs.splice(index, 1, role);
     },
     toggleModal({ modals }, name) {
       modals[name] = !modals[name];

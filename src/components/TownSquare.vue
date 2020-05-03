@@ -10,97 +10,54 @@
         v-for="(player, index) in players"
         :key="index"
         :player="player"
-        @add-reminder="openReminderModal"
-        @set-role="openRoleModal"
-        @remove-player="removePlayer"
+        @add-reminder="openReminderModal(index)"
+        @set-role="openRoleModal(index)"
+        @remove-player="removePlayer(index)"
         @screenshot="$emit('screenshot', $event)"
       ></Player>
     </ul>
+
     <div class="bluffs" v-if="players.length > 6" ref="bluffs">
       <h3>Demon bluffs</h3>
       <font-awesome-icon icon="camera" @click.stop="takeScreenshot" />
       <ul>
-        <li @click="openRoleModal(bluffs[0])">
-          <Token :role="bluffs[0].role"></Token>
-        </li>
-        <li @click="openRoleModal(bluffs[1])">
-          <Token :role="bluffs[1].role"></Token>
-        </li>
-        <li @click="openRoleModal(bluffs[2])">
-          <Token :role="bluffs[2].role"></Token>
+        <li
+          v-for="index in bluffs"
+          :key="index"
+          @click="openRoleModal(index * -1)"
+        >
+          <Token :role="grimoire.bluffs[index - 1]"></Token>
         </li>
       </ul>
     </div>
 
-    <Modal
-      v-show="availableReminders.length && selectedPlayer"
-      @close="closeModal"
-    >
-      <h3>Choose a reminder token:</h3>
-      <ul class="reminders">
-        <li
-          v-for="reminder in availableReminders"
-          class="reminder"
-          v-bind:class="[reminder.role]"
-          v-bind:key="reminder.role + ' ' + reminder.name"
-          @click="addReminder(reminder)"
-        >
-          <span
-            class="icon"
-            v-bind:style="{
-              backgroundImage: `url(${require('../assets/icons/' +
-                reminder.role +
-                '.png')})`
-            }"
-          ></span>
-          {{ reminder.name }}
-        </li>
-      </ul>
-    </Modal>
-
-    <Modal v-show="availableRoles.length && selectedPlayer" @close="closeModal">
-      <h3>Choose a new character:</h3>
-      <ul class="tokens">
-        <li
-          v-for="role in availableRoles"
-          v-bind:class="[role.team]"
-          v-bind:key="role.id"
-          @click="setRole(role)"
-        >
-          <Token :role="role" />
-        </li>
-      </ul>
-    </Modal>
+    <ReminderModal :player-index="selectedPlayer"></ReminderModal>
+    <RoleModal :player-index="selectedPlayer"></RoleModal>
   </div>
 </template>
 
 <script>
-import Player from "./Player";
-import Modal from "./Modal";
-import Token from "./Token";
 import { mapState } from "vuex";
+import Player from "./Player";
+import Token from "./Token";
+import ReminderModal from "./modals/ReminderModal";
+import RoleModal from "./modals/RoleModal";
 
 export default {
   components: {
+    Player,
     Token,
-    Modal,
-    Player
+    RoleModal,
+    ReminderModal
   },
-  props: {
-    players: {
-      type: Array,
-      required: true
-    }
+  computed: {
+    ...mapState(["grimoire", "roles"]),
+    ...mapState("players", ["players"])
   },
-  computed: mapState(["grimoire"]),
   data() {
     return {
-      selectedPlayer: false,
-      availableReminders: [],
-      availableRoles: [],
-      bluffs: Array(3)
-        .fill({})
-        .map(() => ({ role: {} }))
+      selectedPlayer: 0,
+      bluffs: 3
     };
   },
   methods: {
@@ -108,46 +65,22 @@ export default {
       const { width, height, x, y } = this.$refs.bluffs.getBoundingClientRect();
       this.$emit("screenshot", { width, height, x, y });
     },
-    openReminderModal(player) {
-      this.availableRoles = [];
-      this.availableReminders = [];
-      this.selectedPlayer = player;
-      this.$store.state.roles.forEach(role => {
-        if (this.players.some(p => p.role.id === role.id)) {
-          this.availableReminders = [
-            ...this.availableReminders,
-            ...role.reminders.map(name => ({ role: role.id, name }))
-          ];
-        }
-      });
-      this.availableReminders.push({ role: "good", name: "Good" });
-      this.availableReminders.push({ role: "evil", name: "Evil" });
+    openReminderModal(playerIndex) {
+      this.selectedPlayer = playerIndex;
+      this.$store.commit("toggleModal", "reminder");
     },
-    openRoleModal(player) {
-      this.availableRoles = [];
-      this.availableReminders = [];
-      this.selectedPlayer = player;
-      this.$store.state.roles.forEach(role => {
-        if (player.role && role.id !== player.role.id) {
-          this.availableRoles.push(role);
-        }
-      });
-      this.availableRoles.push({});
+    openRoleModal(playerIndex) {
+      this.selectedPlayer = playerIndex;
+      this.$store.commit("toggleModal", "role");
     },
-    addReminder(reminder) {
-      this.selectedPlayer.reminders.push(reminder);
-      this.closeModal();
-    },
-    setRole(role) {
-      this.selectedPlayer.role = role;
-      this.closeModal();
-    },
-    closeModal() {
-      this.selectedPlayer = false;
-    },
-    removePlayer(player) {
-      if (confirm(`Do you really want to remove ${player.name}?`)) {
-        this.players.splice(this.players.indexOf(player), 1);
+    removePlayer(playerIndex) {
+      if (
+        confirm(
+          `Do you really want to remove ${this.players[playerIndex].name}?`
+        )
+      ) {
+        this.$store.commit("players/remove", playerIndex);
+        this.$store.dispatch("players/updateNightOrder");
       }
     }
   }
@@ -155,8 +88,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../vars.scss";
-
 .circle {
   padding: 0;
   width: 100%;
@@ -284,70 +215,6 @@ export default {
     margin: 0 5px;
     display: inline-block;
     font-size: 18px;
-  }
-}
-/***** Role token modal ******/
-ul.tokens li {
-  border-radius: 50%;
-  height: 120px;
-  width: 120px;
-  margin: 5px;
-  transition: transform 500ms ease;
-
-  &.townsfolk {
-    box-shadow: 0 0 10px $townsfolk, 0 0 10px #004cff;
-  }
-  &.outsider {
-    box-shadow: 0 0 10px $outsider, 0 0 10px $outsider;
-  }
-  &.minion {
-    box-shadow: 0 0 10px $minion, 0 0 10px $minion;
-  }
-  &.demon {
-    box-shadow: 0 0 10px $demon, 0 0 10px $demon;
-  }
-  &.traveler {
-    box-shadow: 0 0 10px $traveler, 0 0 10px $traveler;
-  }
-  &:hover {
-    transform: scale(1.2);
-    z-index: 10;
-  }
-}
-
-/***** Reminder token modal ******/
-ul.reminders .reminder {
-  background: url("../assets/reminder.png") center center;
-  background-size: 100%;
-  width: 100px;
-  height: 100px;
-  color: black;
-  font-size: 65%;
-  font-weight: bold;
-  display: block;
-  margin: 5px;
-  text-align: center;
-  border-radius: 50%;
-  border: 3px solid black;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  padding: 65px 9px 0;
-  line-height: 100%;
-  transition: transform 500ms ease;
-
-  .icon {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-size: 100%;
-    background-position: center 0;
-    background-repeat: no-repeat;
-  }
-
-  &:hover {
-    transform: scale(1.2);
   }
 }
 </style>

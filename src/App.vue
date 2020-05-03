@@ -11,11 +11,11 @@
     }"
   >
     <Intro v-if="!players.length"></Intro>
-    <TownInfo :players="players" v-if="players.length"></TownInfo>
-    <TownSquare :players="players" @screenshot="takeScreenshot"></TownSquare>
-    <Menu ref="menu" :players="players"></Menu>
-    <EditionSelectionModal :players="players"></EditionSelectionModal>
-    <RoleSelectionModal :players="players"></RoleSelectionModal>
+    <TownInfo v-if="players.length"></TownInfo>
+    <TownSquare @screenshot="takeScreenshot"></TownSquare>
+    <Menu ref="menu"></Menu>
+    <EditionModal></EditionModal>
+    <RolesModal></RolesModal>
   </div>
 </template>
 
@@ -24,26 +24,23 @@ import { mapState } from "vuex";
 import TownSquare from "./components/TownSquare";
 import TownInfo from "./components/TownInfo";
 import Menu from "./components/Menu";
-import RoleSelectionModal from "./components/RoleSelectionModal";
-import EditionSelectionModal from "./components/EditionSelectionModal";
+import RolesModal from "./components/modals/RolesModal";
+import EditionModal from "./components/modals/EditionModal";
 import Intro from "./components/Intro";
 
 export default {
   components: {
     Intro,
-    EditionSelectionModal,
-    Menu,
-    TownSquare,
     TownInfo,
-    RoleSelectionModal
+    TownSquare,
+    Menu,
+    EditionModal,
+    RolesModal
   },
   computed: mapState({
     grimoire: state => state.grimoire,
     players: state => state.players.players
   }),
-  data: function() {
-    return {};
-  },
   methods: {
     takeScreenshot(dimensions) {
       this.$refs.menu.takeScreenshot(dimensions);

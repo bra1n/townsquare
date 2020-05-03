@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import editionJSON from "../editions";
+import editionJSON from "../../editions";
 import { mapMutations, mapState } from "vuex";
 import Modal from "./Modal";
 
@@ -39,25 +39,25 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../vars";
+@import "../../vars";
 
 // Editions
 @each $img, $skipIcons in $editions {
   .edition-#{$img} {
-    background-image: url("../assets/editions/#{$img}.png");
+    background-image: url("../../assets/editions/#{$img}.png");
   }
   @if $skipIcons != true {
     .edition-#{$img}.townsfolk {
-      background-image: url("../assets/editions/#{$img}-townsfolk.png");
+      background-image: url("../../assets/editions/#{$img}-townsfolk.png");
     }
     .edition-#{$img}.outsider {
-      background-image: url("../assets/editions/#{$img}-outsider.png");
+      background-image: url("../../assets/editions/#{$img}-outsider.png");
     }
     .edition-#{$img}.minion {
-      background-image: url("../assets/editions/#{$img}-minion.png");
+      background-image: url("../../assets/editions/#{$img}-minion.png");
     }
     .edition-#{$img}.demon {
-      background-image: url("../assets/editions/#{$img}-demon.png");
+      background-image: url("../../assets/editions/#{$img}-demon.png");
     }
   }
 }

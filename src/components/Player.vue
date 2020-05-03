@@ -31,7 +31,7 @@
         }}</span>
       </div>
 
-      <Token :role="player.role" @set-role="setRole" />
+      <Token :role="player.role" @set-role="$emit('set-role')" />
 
       <div class="name" @click="changeName">
         <span class="screenshot" @click.stop="takeScreenshot">
@@ -40,7 +40,7 @@
         <span class="name">
           {{ player.name }}
         </span>
-        <span class="remove" @click.stop="$emit('remove-player', player)">
+        <span class="remove" @click.stop="$emit('remove-player')">
           <font-awesome-icon icon="times-circle" />
         </span>
       </div>
@@ -64,7 +64,7 @@
         {{ reminder.name }}
       </div>
     </template>
-    <div class="reminder add" @click="$emit('add-reminder', player)">
+    <div class="reminder add" @click="$emit('add-reminder')">
       <span class="icon"></span>
     </div>
   </li>
@@ -97,7 +97,7 @@ export default {
       this.$emit("screenshot", { width, height, x, y });
     },
     toggleStatus() {
-      if (this.$store.state.grimoire.isPublic) {
+      if (this.grimoire.isPublic) {
         if (!this.player.hasDied) {
           this.$set(this.player, "hasDied", true);
         } else if (this.player.hasVoted) {
@@ -109,9 +109,6 @@ export default {
       } else {
         this.$set(this.player, "hasDied", !this.player.hasDied);
       }
-    },
-    setRole() {
-      this.$emit("set-role", this.player);
     },
     changeName() {
       const name = prompt("Player name", this.player.name);

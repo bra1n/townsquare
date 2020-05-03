@@ -43,32 +43,26 @@ import gameJSON from "./../game";
 import { mapState } from "vuex";
 
 export default {
-  props: {
-    players: {
-      type: Array,
-      required: true
-    }
-  },
   computed: {
     teams: function() {
-      const nontravelers = Math.min(
-        this.players.filter(player => player.role.team !== "traveler").length,
-        15
-      );
-      const alive = this.players.filter(player => player.hasDied !== true)
-        .length;
+      const { players } = this.$store.state.players;
+      const nonTravelers = this.$store.getters["players/nonTravelers"];
+      const alive = players.filter(player => player.hasDied !== true).length;
       return {
-        ...gameJSON[nontravelers - 5],
-        traveler: this.players.length - nontravelers,
+        ...gameJSON[nonTravelers - 5],
+        traveler: players.length - nonTravelers,
         alive,
         votes:
           alive +
-          this.players.filter(
+          players.filter(
             player => player.hasDied === true && player.hasVoted !== true
           ).length
       };
     },
-    ...mapState(["edition"])
+    ...mapState({
+      edition: state => state.edition,
+      players: state => state.players.players
+    })
   }
 };
 </script>

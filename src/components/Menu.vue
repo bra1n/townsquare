@@ -80,11 +80,10 @@ export default {
   components: {
     Screenshot
   },
-  props: ["players"],
-  data: function() {
-    return {};
-  },
-  computed: mapState(["grimoire"]),
+  computed: mapState({
+    grimoire: state => state.grimoire,
+    players: state => state.players.players
+  }),
   methods: {
     takeScreenshot(dimensions = {}) {
       this.$store.commit("updateScreenshot");
@@ -99,34 +98,23 @@ export default {
     addPlayer() {
       const name = prompt("Player name");
       if (name) {
-        this.players.push({
-          name,
-          role: {},
-          reminders: []
-        });
+        this.$store.commit("players/add", name);
       }
     },
     randomizeSeatings() {
       if (confirm("Are you sure you want to randomize seatings?")) {
-        this.players = this.players
-          .map(a => [Math.random(), a])
-          .sort((a, b) => a[0] - b[0])
-          .map(a => a[1]);
+        this.$store.dispatch("players/randomize");
       }
     },
     clearPlayers() {
       if (confirm("Are you sure you want to remove all players?")) {
-        this.players = [];
+        this.$store.commit("players/clear");
       }
     },
     clearRoles() {
       this.$store.commit("showGrimoire");
       if (confirm("Are you sure you want to remove all player roles?")) {
-        this.players.forEach(player => {
-          player.role = {};
-          player.hasDied = false;
-          player.reminders = [];
-        });
+        this.$store.dispatch("players/clearRoles");
       }
     },
     ...mapMutations([
