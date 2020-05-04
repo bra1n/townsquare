@@ -114,13 +114,16 @@ export default {
           .map(a => [Math.random(), a])
           .sort((a, b) => a[0] - b[0])
           .map(a => a[1]);
-        this.players.forEach((player, index) => {
+        this.players.forEach(player => {
           if (player.role.team !== "traveler" && roles.length) {
-            player.role = roles.pop();
-            this.$store.commit("players/update", { index, player });
+            const value = roles.pop();
+            this.$store.commit("players/update", {
+              player,
+              property: "role",
+              value
+            });
           }
         });
-        this.$store.dispatch("players/updateNightOrder");
         this.$store.commit("toggleModal", "roles");
       }
     },

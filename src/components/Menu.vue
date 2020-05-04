@@ -232,10 +232,10 @@ export default {
       font-weight: bold;
       background: linear-gradient(
         to right,
-        $demon 0%,
+        $townsfolk 0%,
         rgba(0, 0, 0, 0.5) 20%,
         rgba(0, 0, 0, 0.5) 80%,
-        $townsfolk 100%
+        $demon 100%
       );
     }
   }

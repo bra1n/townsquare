@@ -26,8 +26,6 @@ module.exports = store => {
         role: store.state.roles.get(player.role) || {}
       }))
     );
-    // recalculate night order
-    store.dispatch("players/updateNightOrder");
   }
 
   // listen to mutations
@@ -68,9 +66,7 @@ module.exports = store => {
               state.players.players.map(player => ({
                 ...player,
                 // simplify the stored data
-                role: player.role.id || {},
-                firstNight: undefined,
-                otherNight: undefined
+                role: player.role.id || {}
               }))
             )
           );
@@ -79,6 +75,5 @@ module.exports = store => {
         }
         break;
     }
-    console.log("persistance", type, payload);
   });
 };

@@ -3,7 +3,7 @@
     v-show="modals.role && availableRoles.length"
     @close="toggleModal('role')"
   >
-    <h3>Choose a new character: {{playerIndex}}</h3>
+    <h3>Choose a new character: {{ playerIndex }}</h3>
     <ul class="tokens">
       <li
         v-for="role in availableRoles"
@@ -56,12 +56,11 @@ export default {
       } else {
         // assign to player
         const player = this.$store.state.players.players[this.playerIndex];
-        player.role = role;
         this.$store.commit("players/update", {
-          index: this.playerIndex,
-          player
+          player,
+          property: "role",
+          value: role
         });
-        this.$store.dispatch("players/updateNightOrder");
       }
       this.$store.commit("toggleModal", "role");
     },

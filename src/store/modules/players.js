@@ -2,9 +2,7 @@ const NEWPLAYER = {
   role: {},
   reminders: [],
   hasVoted: false,
-  hasDied: false,
-  firstNight: 0,
-  otherNight: 0
+  hasDied: false
 };
 
 const state = () => ({
@@ -17,15 +15,12 @@ const getters = {
       player => player.role.team !== "traveler"
     );
     return Math.min(nonTravelers.length, 15);
-  }
-};
-
-const actions = {
-  // recalculate night order for all players
-  updateNightOrder({ state, commit }) {
+  },
+  // calculate a Map of player => night order
+  nightOrder({ players }) {
     const firstNight = [0];
     const otherNight = [0];
-    state.players.forEach(({ role }) => {
+    players.forEach(({ role }) => {
       if (role.firstNight && !firstNight.includes(role.firstNight)) {
         firstNight.push(role.firstNight);
       }
@@ -35,17 +30,17 @@ const actions = {
     });
     firstNight.sort((a, b) => a - b);
     otherNight.sort((a, b) => a - b);
-    state.players.forEach((player, index) => {
+    const nightOrder = new Map();
+    players.forEach(player => {
       const first = Math.max(firstNight.indexOf(player.role.firstNight), 0);
       const other = Math.max(otherNight.indexOf(player.role.otherNight), 0);
-      if (player.firstNight !== first || player.otherNight !== other) {
-        player.firstNight = first;
-        player.otherNight = other;
-        commit("update", { index, player });
-        console.log("updated night order for player", player.name);
-      }
+      nightOrder.set(player, { first, other });
     });
-  },
+    return nightOrder;
+  }
+};
+
+const actions = {
   randomize({ state, commit }) {
     const players = state.players
       .map(a => [Math.random(), a])
@@ -69,8 +64,11 @@ const mutations = {
   set(state, players = []) {
     state.players = players;
   },
-  update(state, { index, player }) {
-    state.players[index] = player;
+  update(state, { player, property, value }) {
+    const index = state.players.indexOf(player);
+    if (index >= 0) {
+      state.players[index][property] = value;
+    }
   },
   add(state, name) {
     state.players.push({

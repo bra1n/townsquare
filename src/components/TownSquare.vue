@@ -80,7 +80,6 @@ export default {
         )
       ) {
         this.$store.commit("players/remove", playerIndex);
-        this.$store.dispatch("players/updateNightOrder");
       }
     }
   }

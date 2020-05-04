@@ -14,18 +14,18 @@
 
       <div
         class="night first"
-        v-if="player.firstNight && grimoire.isNightOrder"
+        v-if="nightOrder.get(player).first && grimoire.isNightOrder"
       >
-        <em>{{ player.firstNight }}.</em>
+        <em>{{ nightOrder.get(player).first }}.</em>
         <span v-if="player.role.firstNightReminder">{{
           player.role.firstNightReminder | handleEmojis
         }}</span>
       </div>
       <div
         class="night other"
-        v-if="player.otherNight && grimoire.isNightOrder"
+        v-if="nightOrder.get(player).other && grimoire.isNightOrder"
       >
-        <em>{{ player.otherNight }}.</em>
+        <em>{{ nightOrder.get(player).other }}.</em>
         <span v-if="player.role.otherNightReminder">{{
           player.role.otherNightReminder | handleEmojis
         }}</span>
@@ -72,7 +72,7 @@
 
 <script>
 import Token from "./Token";
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   components: {
@@ -84,7 +84,10 @@ export default {
       required: true
     }
   },
-  computed: mapState(["grimoire"]),
+  computed: {
+    ...mapState(["grimoire"]),
+    ...mapGetters({ nightOrder: "players/nightOrder" })
+  },
   data() {
     return {};
   },
@@ -99,23 +102,32 @@ export default {
     toggleStatus() {
       if (this.grimoire.isPublic) {
         if (!this.player.hasDied) {
-          this.$set(this.player, "hasDied", true);
+          this.updatePlayer("hasDied", true);
         } else if (this.player.hasVoted) {
-          this.$set(this.player, "hasVoted", false);
-          this.$set(this.player, "hasDied", false);
+          this.updatePlayer("hasVoted", false);
+          this.updatePlayer("hasDied", false);
         } else {
-          this.$set(this.player, "hasVoted", true);
+          this.updatePlayer("hasVoted", true);
         }
       } else {
-        this.$set(this.player, "hasDied", !this.player.hasDied);
+        this.updatePlayer("hasDied", !this.player.hasDied);
       }
     },
     changeName() {
-      const name = prompt("Player name", this.player.name);
-      this.player.name = name || this.player.name;
+      const name = prompt("Player name", this.player.name) || this.player.name;
+      this.updatePlayer("name", name);
     },
     removeReminder(reminder) {
-      this.player.reminders.splice(this.player.reminders.indexOf(reminder), 1);
+      const reminders = [...this.player.reminders];
+      reminders.splice(this.player.reminders.indexOf(reminder), 1);
+      this.updatePlayer("reminders", reminders);
+    },
+    updatePlayer(property, value) {
+      this.$store.commit("players/update", {
+        player: this.player,
+        property,
+        value
+      });
     }
   }
 };

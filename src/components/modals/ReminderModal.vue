@@ -56,8 +56,12 @@ export default {
   methods: {
     addReminder(reminder) {
       const player = this.$store.state.players.players[this.playerIndex];
-      player.reminders.push(reminder);
-      this.$store.commit("players/update", { index: this.playerIndex, player });
+      const value = [...player.reminders, reminder];
+      this.$store.commit("players/update", {
+        player,
+        property: "reminders",
+        value
+      });
       this.$store.commit("toggleModal", "reminder");
     },
     ...mapMutations(["toggleModal"])
