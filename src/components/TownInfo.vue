@@ -128,7 +128,7 @@ export default {
       color: #ff4a50;
     }
     .votes {
-      color: #1cfff2;
+      color: #fff;
     }
     .townsfolk {
       color: $townsfolk;

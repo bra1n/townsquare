@@ -33,6 +33,14 @@
 
       <Token :role="player.role" @set-role="$emit('set-role')" />
 
+      <font-awesome-icon
+        icon="vote-yea"
+        class="vote"
+        v-if="player.hasDied && !player.hasVoted"
+        @click="updatePlayer('hasVoted', true)"
+        title="Ghost vote"
+      />
+
       <div class="name" @click="changeName">
         <span class="screenshot" @click.stop="takeScreenshot">
           <font-awesome-icon icon="camera" />
@@ -111,6 +119,7 @@ export default {
         }
       } else {
         this.updatePlayer("hasDied", !this.player.hasDied);
+        this.updatePlayer("hasVoted", false);
       }
     },
     changeName() {
@@ -269,6 +278,20 @@ export default {
 
 #townsquare.public .circle .token {
   transform: perspective(400px) rotateY(-180deg);
+}
+
+/****** Vote icon ********/
+.player .vote {
+  position: absolute;
+  right: 2px;
+  bottom: 45px;
+  color: #fff;
+  filter: drop-shadow(0 0 3px black);
+  cursor: pointer;
+
+  #townsquare.public & {
+    display: none;
+  }
 }
 
 /***** Player name *****/
