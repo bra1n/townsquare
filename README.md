@@ -12,6 +12,7 @@ WORK IN PROGRESS
 ## Acknowledgements and Copyrights
 
 * [Blood on the Clocktower](https://bloodontheclocktower.com/) images, names and abilities by [The Pandemonium Institute](https://www.thepandemoniuminstitute.com/)
+* Night reminders and other auxiliary text written by [Ben Finney](http://bignose.whitetree.org/projects/botc/diy/)
 * Iconography by [Font Awesome](https://fontawesome.com/)
 * Background image by [Ryan Maloney](https://www.artstation.com/maloney94)
 * Webfonts by [Google Fonts](https://fonts.google.com/) and [Online Web Fonts](https://www.onlinewebfonts.com/)
