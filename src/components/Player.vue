@@ -243,6 +243,16 @@ export default {
   .life {
     transform: perspective(400px) rotateY(0deg);
   }
+
+  &.traveler:not(.dead) .token {
+    transform: perspective(400px) scale(0.8);
+    pointer-events: none;
+    transition-delay: 0s;
+  }
+
+  &.traveler.dead .token {
+    transition-delay: 0s;
+  }
 }
 
 /***** Role token ******/
