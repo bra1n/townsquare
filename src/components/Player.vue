@@ -288,9 +288,11 @@ export default {
   color: #fff;
   filter: drop-shadow(0 0 3px black);
   cursor: pointer;
+  transition: opacity 250ms;
 
   #townsquare.public & {
-    display: none;
+    opacity: 0;
+    pointer-events: none;
   }
 }
 
