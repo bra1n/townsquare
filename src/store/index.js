@@ -48,12 +48,15 @@ export default new Vuex.Store({
     toggleMenu({ grimoire }) {
       grimoire.isMenuOpen = !grimoire.isMenuOpen;
     },
-    toggleGrimoire({ grimoire }) {
-      grimoire.isPublic = !grimoire.isPublic;
-      grimoire.isControlOpen = !grimoire.isPublic;
-    },
-    showGrimoire({ grimoire }, isPublic = false) {
-      grimoire.isPublic = isPublic;
+    toggleGrimoire({ grimoire }, isPublic) {
+      if (isPublic === true || isPublic === false) {
+        grimoire.isPublic = isPublic;
+      } else {
+        grimoire.isPublic = !grimoire.isPublic;
+      }
+      document.title = `Blood on the Clocktower ${
+        grimoire.isPublic ? "Town Square" : "Grimoire"
+      }`;
     },
     toggleNightOrder({ grimoire }) {
       grimoire.isNightOrder = !grimoire.isNightOrder;

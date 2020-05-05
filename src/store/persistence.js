@@ -4,7 +4,7 @@ module.exports = store => {
     store.commit("setBackground", localStorage.background);
   }
   if (localStorage.isPublic !== undefined) {
-    store.commit("showGrimoire", JSON.parse(localStorage.isPublic));
+    store.commit("toggleGrimoire", JSON.parse(localStorage.isPublic));
   }
   if (localStorage.edition !== undefined) {
     // this will initialize state.roles!
