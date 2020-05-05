@@ -1108,9 +1108,9 @@
     "id": "bureaucrat",
     "edition": "tb",
     "firstNight": 1,
-    "firstNightReminder": "",
+    "firstNightReminder": "The Bureaucrat points to a player. Put the Bureaucrat's “Vote x3” reminder by the chosen player's character token.",
     "otherNight": 1,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Bureaucrat points to a player. Put the Bureaucrat's “Vote x3” reminder by the chosen player's character token.",
     "reminders": [
       "Vote x3"
     ],
@@ -1123,9 +1123,9 @@
     "id": "thief",
     "edition": "tb",
     "firstNight": 1,
-    "firstNightReminder": "",
+    "firstNightReminder": "The Thief points to a player. Put the Thief's “Negative vote” reminder by the chosen player's character token.",
     "otherNight": 1,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Thief points to a player. Put the Thief's “Negative vote” reminder by the chosen player's character token.",
     "reminders": [
       "Negative vote"
     ],
@@ -1138,7 +1138,7 @@
     "id": "apprentice",
     "edition": "bmr",
     "firstNight": 1,
-    "firstNightReminder": "",
+    "firstNightReminder": "Show the Apprentice the \"You are\" info token, then a Townsfolk or Minion token. In the Grimoire, replace the Apprentice token with that character token, and put the Apprentice's \"Apprentice ability\" reminder by that character token.",
     "otherNight": 0,
     "otherNightReminder": "",
     "reminders": [
@@ -1225,10 +1225,10 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 1,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Bone Collector either shake their head no or point at any dead player. If they pointed at any dead player, put the Bone Collector's \"Has Ability\" reminder by the chosen player's character token. (They may need to be woken tonight to use it.)",
     "reminders": [
       "Used",
-      "Ability active"
+      "Has Ability"
     ],
     "setup": false,
     "name": "Bone Collector",
@@ -1241,7 +1241,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 1,
-    "otherNightReminder": "",
+    "otherNightReminder": "The Harlot points at any player. Then, put the Harlot to sleep. Wake the chosen player, show them the \"This character selected you\" token, then the Harlot token. That player either nods their head yes or shakes their head no. If they nodded their head yes, wake the Harlot and show them the chosen player's character token. Then, you may decide that both players die.",
     "reminders": [
       "Die"
     ],
@@ -1254,12 +1254,12 @@
     "id": "barista",
     "edition": "snv",
     "firstNight": 1,
-    "firstNightReminder": "",
+    "firstNightReminder": "Each night, put the Barista's \"Sober and Healthy\" reminder or their \"Acts Twice\" reminder by any character token. Wake that character’s player and show them the “This player selected you” info token, then the Barista token, then one finger (to show they are sober and healthy) or two fingers (to show they act twice).",
     "otherNight": 1,
-    "otherNightReminder": "",
+    "otherNightReminder": "Each night, put the Barista's \"Sober and Healthy\" reminder or their \"Acts Twice\" reminder by any character token. Wake that character’s player and show them the “This player selected you” info token, then the Barista token, then one finger (to show they are sober and healthy) or two fingers (to show they act twice).",
     "reminders": [
-      "Ability x2",
-      "Healthy and Sober"
+      "Acts Twice",
+      "Sober and Healthy"
     ],
     "setup": false,
     "name": "Barista",
@@ -1283,9 +1283,9 @@
     "id": "balloonist",
     "edition": "",
     "firstNight": 24,
-    "firstNightReminder": "",
+    "firstNightReminder": "Choose a character type. Point to a player whose character is of that type. Place the Balloonist's \"Seen\" reminder next to that character.",
     "otherNight": 44,
-    "otherNightReminder": "",
+    "otherNightReminder": "Choose a character type you have not chosen yet. Point to a player whose character is of that type, if there are any. Place the Balloonist's \"Seen\" reminder next to that character.",
     "reminders": [
       "Seen"
     ],
@@ -1297,10 +1297,10 @@
   {
     "id": "amnesiac",
     "edition": "",
-    "firstNight": 0,
-    "firstNightReminder": "",
-    "otherNight": 0,
-    "otherNightReminder": "",
+    "firstNight": 20,
+    "firstNightReminder": "Decide the Amnesiac's entire ability. If the Amnesiac's ability causes them to wake tonight: Wake the Amnesiac and run their ability.",
+    "otherNight": 20,
+    "otherNightReminder": "If the Amnesiac's ability causes them to wake tonight: Wake the Amnesiac and run their ability.",
     "reminders": [],
     "setup": false,
     "name": "Amnesiac",
@@ -1312,7 +1312,7 @@
     "edition": "",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 43,
+    "otherNight": 0,
     "otherNightReminder": "",
     "reminders": [
       "Ability gained",
@@ -1357,7 +1357,7 @@
     "id": "widow",
     "edition": "",
     "firstNight": 26,
-    "firstNightReminder": "",
+    "firstNightReminder": "Show the Grimoire to the Widow for as long as they need. The Widow points to a player. That player is poisoned. Wake a good player. Show the “These characters are in play” card, then the Widow character token.",
     "otherNight": 0,
     "otherNightReminder": "",
     "reminders": [
@@ -1372,10 +1372,10 @@
   {
     "id": "leviathan",
     "edition": "",
-    "firstNight": 0,
-    "firstNightReminder": "",
-    "otherNight": 0,
-    "otherNightReminder": "",
+    "firstNight": 100,
+    "firstNightReminder": "Place the Leviathan “Day 1” marker. Announce “The Leviathan is in play; this is Day 1.”.",
+    "otherNight": 100,
+    "otherNightReminder": "Place the next Leviathan “Day n” marker, where “n” is the day number. Announce “The Leviathan is in play; this is Day n.”.",
     "reminders": [
       "Good executed",
       "Day 1",
