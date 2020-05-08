@@ -37,6 +37,16 @@
         <li @click="setBackground">
           Background image
         </li>
+        <li @click="hostSession" v-if="!grimoire.sessionId">
+          Host Live Session
+        </li>
+        <li @click="joinSession" v-if="!grimoire.sessionId">
+          Join Live Session
+        </li>
+        <li @click="leaveSession" v-if="grimoire.sessionId">
+          <em>{{ grimoire.sessionId.substr(2) }}</em>
+          Leave Session
+        </li>
 
         <!-- Users -->
         <li class="headline">
@@ -80,10 +90,10 @@ export default {
   components: {
     Screenshot
   },
-  computed: mapState({
-    grimoire: state => state.grimoire,
-    players: state => state.players.players
-  }),
+  computed: {
+    ...mapState(["grimoire"]),
+    ...mapState("players", ["players"])
+  },
   methods: {
     takeScreenshot(dimensions = {}) {
       this.$store.commit("updateScreenshot");
@@ -94,6 +104,28 @@ export default {
         "setBackground",
         prompt("Enter custom background URL")
       );
+    },
+    hostSession() {
+      const sessionId = prompt(
+        "Enter a code for your session",
+        Math.random()
+          .toString(36)
+          .substring(2, 7)
+      );
+      if (sessionId) {
+        this.$store.commit("setSessionId", "h:" + sessionId.substr(0, 5));
+      }
+    },
+    joinSession() {
+      const sessionId = prompt(
+        "Enter the code of the session you want to join"
+      );
+      if (sessionId) {
+        this.$store.commit("setSessionId", "j:" + sessionId.substr(0, 5));
+      }
+    },
+    leaveSession() {
+      this.$store.commit("setSessionId", "");
     },
     addPlayer() {
       const name = prompt("Player name");

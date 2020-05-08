@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import persistence from "./persistence";
+import session from "./session";
 import players from "./modules/players";
 import editionJSON from "../editions.json";
 import rolesJSON from "../roles.json";
@@ -33,7 +34,8 @@ export default new Vuex.Store({
       isScreenshotSuccess: false,
       zoom: 1,
       background: "",
-      bluffs: []
+      bluffs: [],
+      sessionId: ""
     },
     modals: {
       edition: false,
@@ -67,6 +69,9 @@ export default new Vuex.Store({
     setBackground({ grimoire }, background) {
       grimoire.background = background;
     },
+    setSessionId({ grimoire }, sessionId) {
+      grimoire.sessionId = sessionId;
+    },
     setBluff({ grimoire }, { index, role }) {
       grimoire.bluffs.splice(index, 1, role);
     },
@@ -88,5 +93,5 @@ export default new Vuex.Store({
       state.roles = getRolesByEdition(edition);
     }
   },
-  plugins: [persistence]
+  plugins: [persistence, session]
 });
