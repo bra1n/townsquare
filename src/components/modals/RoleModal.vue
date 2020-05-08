@@ -3,7 +3,7 @@
     v-show="modals.role && availableRoles.length"
     @close="toggleModal('role')"
   >
-    <h3>Choose a new character for {{ playerIndex >= 0 ? players[playerIndex].name : "Bluff" }}</h3>
+    <h3>Choose a new character for {{ playerIndex >= 0 ? players[playerIndex].name : "bluffing" }}</h3>
     <ul class="tokens">
       <li
         v-for="role in availableRoles"
