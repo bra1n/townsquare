@@ -57,9 +57,11 @@ export default {
           this.$refs.menu.randomizeSeatings();
           break;
         case "e":
+          if (this.grimoire.isSpectator) return;
           this.$store.commit("toggleModal", "edition");
           break;
         case "c":
+          if (this.grimoire.isSpectator) return;
           this.$store.commit("toggleModal", "roles");
           break;
         case "Escape":

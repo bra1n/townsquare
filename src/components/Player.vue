@@ -4,8 +4,8 @@
       ref="player"
       class="player"
       :class="{
-        dead: player.hasDied,
-        'no-vote': player.hasVoted,
+        dead: player.isDead,
+        'no-vote': player.isVoteless,
         traveler: player.role && player.role.team === 'traveler'
       }"
     >
@@ -36,8 +36,8 @@
       <font-awesome-icon
         icon="vote-yea"
         class="vote"
-        v-if="player.hasDied && !player.hasVoted"
-        @click="updatePlayer('hasVoted', true)"
+        v-if="player.isDead && !player.isVoteless"
+        @click="updatePlayer('isVoteless', true)"
         title="Ghost vote"
       />
 
@@ -109,20 +109,23 @@ export default {
     },
     toggleStatus() {
       if (this.grimoire.isPublic) {
-        if (!this.player.hasDied) {
-          this.updatePlayer("hasDied", true);
-        } else if (this.player.hasVoted) {
-          this.updatePlayer("hasVoted", false);
-          this.updatePlayer("hasDied", false);
+        if (!this.player.isDead) {
+          this.updatePlayer("isDead", true);
+        } else if (this.player.isVoteless) {
+          this.updatePlayer("isVoteless", false);
+          this.updatePlayer("isDead", false);
         } else {
-          this.updatePlayer("hasVoted", true);
+          this.updatePlayer("isVoteless", true);
         }
       } else {
-        this.updatePlayer("hasDied", !this.player.hasDied);
-        this.updatePlayer("hasVoted", false);
+        this.updatePlayer("isDead", !this.player.isDead);
+        if (this.player.isVoteless) {
+          this.updatePlayer("isVoteless", false);
+        }
       }
     },
     changeName() {
+      if (this.grimoire.isSpectator) return;
       const name = prompt("Player name", this.player.name) || this.player.name;
       this.updatePlayer("name", name);
     },
@@ -132,6 +135,7 @@ export default {
       this.updatePlayer("reminders", reminders);
     },
     updatePlayer(property, value) {
+      if (this.grimoire.isSpectator && property !== "reminders") return;
       this.$store.commit("players/update", {
         player: this.player,
         property,
@@ -181,7 +185,7 @@ export default {
       pointer-events: none;
     }
 
-    &:hover:before {
+    #townsquare:not(.spectator) &:hover:before {
       opacity: 0.5;
       top: -10px;
       transform: scale(1);
@@ -332,7 +336,7 @@ export default {
     text-overflow: ellipsis;
     overflow: hidden;
   }
-  &:hover {
+  #townsquare:not(.spectator) &:hover {
     color: red;
     span {
       display: block;

@@ -43,40 +43,46 @@
         <li @click="joinSession" v-if="!grimoire.sessionId">
           Join Live Session
         </li>
+        <li class="headline" v-if="grimoire.sessionId">
+          <font-awesome-icon icon="broadcast-tower" />
+          {{ grimoire.isSpectator ? "Spectating" : "Hosting" }}
+        </li>
         <li @click="leaveSession" v-if="grimoire.sessionId">
-          <em>{{ grimoire.sessionId.substr(2) }}</em>
+          <em>{{ grimoire.sessionId }}</em>
           Leave Session
         </li>
 
-        <!-- Users -->
-        <li class="headline">
-          <font-awesome-icon icon="users" />
-          Players
-        </li>
-        <li @click="addPlayer" v-if="players.length < 20"><em>[A]</em> Add</li>
-        <li @click="randomizeSeatings" v-if="players.length > 2">
-          <em>[R]</em> Randomize
-        </li>
-        <li @click="clearPlayers" v-if="players.length">
-          Remove all
-        </li>
+        <template v-if="!grimoire.isSpectator">
+          <!-- Users -->
+          <li class="headline">
+            <font-awesome-icon icon="users" />
+            Players
+          </li>
+          <li @click="addPlayer" v-if="players.length < 20"><em>[A]</em> Add</li>
+          <li @click="randomizeSeatings" v-if="players.length > 2">
+            <em>[R]</em> Randomize
+          </li>
+          <li @click="clearPlayers" v-if="players.length">
+            Remove all
+          </li>
 
-        <!-- Characters -->
-        <li class="headline">
-          <font-awesome-icon icon="theater-masks" />
-          Characters
-        </li>
-        <li @click="toggleModal('edition')">
-          <em>[E]</em>
-          Select Edition
-        </li>
-        <li @click="toggleModal('roles')" v-if="players.length > 4">
-          <em>[C]</em>
-          Choose & Assign
-        </li>
-        <li @click="clearRoles" v-if="players.length">
-          Remove all
-        </li>
+          <!-- Characters -->
+          <li class="headline">
+            <font-awesome-icon icon="theater-masks" />
+            Characters
+          </li>
+          <li @click="toggleModal('edition')">
+            <em>[E]</em>
+            Select Edition
+          </li>
+          <li @click="toggleModal('roles')" v-if="players.length > 4">
+            <em>[C]</em>
+            Choose & Assign
+          </li>
+          <li @click="clearRoles" v-if="players.length">
+            Remove all
+          </li>
+        </template>
       </ul>
     </div>
   </div>
@@ -113,7 +119,8 @@ export default {
           .substring(2, 7)
       );
       if (sessionId) {
-        this.$store.commit("setSessionId", "h:" + sessionId.substr(0, 5));
+        this.$store.commit("setSpectator", false);
+        this.$store.commit("setSessionId", sessionId.substr(0, 5));
       }
     },
     joinSession() {
@@ -121,29 +128,35 @@ export default {
         "Enter the code of the session you want to join"
       );
       if (sessionId) {
-        this.$store.commit("setSessionId", "j:" + sessionId.substr(0, 5));
+        this.$store.commit("setSpectator", true);
+        this.$store.commit("setSessionId", sessionId.substr(0, 5));
       }
     },
     leaveSession() {
+      this.$store.commit("setSpectator", false);
       this.$store.commit("setSessionId", "");
     },
     addPlayer() {
+      if (this.grimoire.isSpectator) return;
       const name = prompt("Player name");
       if (name) {
         this.$store.commit("players/add", name);
       }
     },
     randomizeSeatings() {
+      if (this.grimoire.isSpectator) return;
       if (confirm("Are you sure you want to randomize seatings?")) {
         this.$store.dispatch("players/randomize");
       }
     },
     clearPlayers() {
+      if (this.grimoire.isSpectator) return;
       if (confirm("Are you sure you want to remove all players?")) {
         this.$store.commit("players/clear");
       }
     },
     clearRoles() {
+      if (this.grimoire.isSpectator) return;
       this.$store.commit("showGrimoire");
       if (confirm("Are you sure you want to remove all player roles?")) {
         this.$store.dispatch("players/clearRoles");

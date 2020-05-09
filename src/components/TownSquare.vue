@@ -2,7 +2,10 @@
   <div
     id="townsquare"
     class="square"
-    v-bind:class="{ public: grimoire.isPublic }"
+    v-bind:class="{
+      public: grimoire.isPublic,
+      spectator: grimoire.isSpectator
+    }"
     v-bind:style="{ zoom: grimoire.zoom }"
   >
     <ul class="circle" v-bind:class="['size-' + players.length]">
@@ -70,10 +73,13 @@ export default {
       this.$store.commit("toggleModal", "reminder");
     },
     openRoleModal(playerIndex) {
+      const player = this.players[playerIndex];
+      if (this.grimoire.isSpectator && player.role.team === "traveler") return;
       this.selectedPlayer = playerIndex;
       this.$store.commit("toggleModal", "role");
     },
     removePlayer(playerIndex) {
+      if (this.grimoire.isSpectator) return;
       if (
         confirm(
           `Do you really want to remove ${this.players[playerIndex].name}?`

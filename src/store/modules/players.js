@@ -1,8 +1,8 @@
 const NEWPLAYER = {
   role: {},
   reminders: [],
-  hasVoted: false,
-  hasDied: false
+  isVoteless: false,
+  isDead: false
 };
 
 const state = () => ({

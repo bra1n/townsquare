@@ -47,7 +47,7 @@ export default {
     teams: function() {
       const { players } = this.$store.state.players;
       const nonTravelers = this.$store.getters["players/nonTravelers"];
-      const alive = players.filter(player => player.hasDied !== true).length;
+      const alive = players.filter(player => player.isDead !== true).length;
       return {
         ...gameJSON[nonTravelers - 5],
         traveler: players.length - nonTravelers,
@@ -55,7 +55,7 @@ export default {
         votes:
           alive +
           players.filter(
-            player => player.hasDied === true && player.hasVoted !== true
+            player => player.isDead === true && player.isVoteless !== true
           ).length
       };
     },
