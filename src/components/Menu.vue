@@ -58,7 +58,9 @@
             <font-awesome-icon icon="users" />
             Players
           </li>
-          <li @click="addPlayer" v-if="players.length < 20"><em>[A]</em> Add</li>
+          <li @click="addPlayer" v-if="players.length < 20">
+            <em>[A]</em> Add
+          </li>
           <li @click="randomizeSeatings" v-if="players.length > 2">
             <em>[R]</em> Randomize
           </li>
