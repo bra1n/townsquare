@@ -45,7 +45,7 @@
         </li>
         <li class="headline" v-if="grimoire.sessionId">
           <font-awesome-icon icon="broadcast-tower" />
-          {{ grimoire.isSpectator ? "Spectating" : "Hosting" }}
+          {{ grimoire.isSpectator ? "Playing" : "Hosting" }}
         </li>
         <li @click="leaveSession" v-if="grimoire.sessionId">
           <em>{{ grimoire.sessionId }}</em>
@@ -116,9 +116,7 @@ export default {
     hostSession() {
       const sessionId = prompt(
         "Enter a code for your session",
-        Math.random()
-          .toString(36)
-          .substring(2, 7)
+        Math.round(Math.random() * 10000)
       );
       if (sessionId) {
         this.$store.commit("setSpectator", false);

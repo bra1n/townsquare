@@ -54,7 +54,12 @@ class LiveSession {
    * @private
    */
   _handleMessage({ data }) {
-    const [command, params] = JSON.parse(data);
+    let command, params;
+    try {
+      [command, params] = JSON.parse(data);
+    } catch (err) {
+      console.log("unsupported socket message", data);
+    }
     switch (command) {
       case "req":
         if (params === "gs") {
