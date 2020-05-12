@@ -244,6 +244,8 @@ export default {
   > svg {
     cursor: pointer;
     z-index: 5;
+    margin-top: 10px;
+    margin-left: 10px;
   }
 
   > .fa-broadcast-tower {

@@ -12,6 +12,7 @@ import {
   faTheaterMasks,
   faTimesCircle,
   faUser,
+  faUserEdit,
   faUserFriends,
   faUsers,
   faVoteYea,
@@ -20,7 +21,9 @@ import {
   faRandom,
   faPeopleArrows,
   faBroadcastTower,
-  faCopy
+  faCopy,
+  faExchangeAlt,
+  faHandPointRight
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -34,6 +37,7 @@ library.add(
   faTheaterMasks,
   faTimesCircle,
   faUser,
+  faUserEdit,
   faUserFriends,
   faUsers,
   faVoteYea,
@@ -42,7 +46,9 @@ library.add(
   faRandom,
   faPeopleArrows,
   faBroadcastTower,
-  faCopy
+  faCopy,
+  faExchangeAlt,
+  faHandPointRight
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

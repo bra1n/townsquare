@@ -16,7 +16,12 @@
         @add-reminder="openReminderModal(index)"
         @set-role="openRoleModal(index)"
         @remove-player="removePlayer(index)"
+        @swap-seats="swapSeats(index, $event)"
         @screenshot="$emit('screenshot', $event)"
+        v-bind:class="{
+          'swap-from': swapFrom === index,
+          swap: swapFrom > -1
+        }"
       ></Player>
     </ul>
 
@@ -60,7 +65,8 @@ export default {
   data() {
     return {
       selectedPlayer: 0,
-      bluffs: 3
+      bluffs: 3,
+      swapFrom: -1
     };
   },
   methods: {
@@ -87,6 +93,19 @@ export default {
       ) {
         this.$store.commit("players/remove", playerIndex);
       }
+    },
+    swapSeats(from, to) {
+      if (to === undefined) {
+        this.swapFrom = from;
+      } else if (to === false) {
+        this.swapFrom = -1;
+      } else {
+        this.$store.commit("players/swap", [
+          this.swapFrom,
+          this.players.indexOf(to)
+        ]);
+        this.swapFrom = -1;
+      }
     }
   }
 };
@@ -100,7 +119,7 @@ export default {
   list-style: none;
   margin: 0;
 
-  li {
+  > li {
     position: absolute;
     top: 0;
     left: 50%;
@@ -169,7 +188,7 @@ export default {
 }
 
 @for $i from 1 through 20 {
-  .circle.size-#{$i} li {
+  .circle.size-#{$i} > li {
     @include on-circle($item-count: $i);
   }
 }

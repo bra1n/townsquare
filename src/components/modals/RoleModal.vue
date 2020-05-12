@@ -5,7 +5,11 @@
   >
     <h3>
       Choose a new character for
-      {{ playerIndex >= 0 ? players[playerIndex].name : "bluffing" }}
+      {{
+        playerIndex >= 0 && players.length
+          ? players[playerIndex].name
+          : "bluffing"
+      }}
     </h3>
     <ul class="tokens">
       <li

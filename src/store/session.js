@@ -254,6 +254,7 @@ module.exports = store => {
         }
         break;
       case "players/set":
+      case "players/swap":
       case "players/clear":
       case "players/remove":
       case "players/add":
