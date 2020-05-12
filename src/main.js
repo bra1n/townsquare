@@ -19,7 +19,8 @@ import {
   faSquare,
   faRandom,
   faPeopleArrows,
-  faBroadcastTower
+  faBroadcastTower,
+  faCopy
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -40,7 +41,8 @@ library.add(
   faSquare,
   faRandom,
   faPeopleArrows,
-  faBroadcastTower
+  faBroadcastTower,
+  faCopy
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

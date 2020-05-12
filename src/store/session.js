@@ -79,7 +79,7 @@ class LiveSession {
    * @param channel
    */
   connect(channel) {
-    this.isSpectator = this.store.state.grimoire.isSpectator;
+    this.isSpectator = this.store.state.session.isSpectator;
     this._open(channel);
   }
 
@@ -249,6 +249,7 @@ module.exports = store => {
         if (payload) {
           session.connect(payload);
         } else {
+          window.location.hash = "";
           session.disconnect();
         }
         break;
@@ -264,4 +265,11 @@ module.exports = store => {
         break;
     }
   });
+
+  // check for session Id in hash
+  const [command, param] = window.location.hash.substr(1).split("/");
+  if (command === "play") {
+    store.commit("setSpectator", true);
+    store.commit("setSessionId", param);
+  }
 };

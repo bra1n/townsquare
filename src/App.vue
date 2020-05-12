@@ -37,10 +37,10 @@ export default {
     EditionModal,
     RolesModal
   },
-  computed: mapState({
-    grimoire: state => state.grimoire,
-    players: state => state.players.players
-  }),
+  computed: {
+    ...mapState(["grimoire", "session"]),
+    ...mapState("players", ["players"])
+  },
   methods: {
     takeScreenshot(dimensions) {
       this.$refs.menu.takeScreenshot(dimensions);
@@ -57,11 +57,11 @@ export default {
           this.$refs.menu.randomizeSeatings();
           break;
         case "e":
-          if (this.grimoire.isSpectator) return;
+          if (this.session.isSpectator) return;
           this.$store.commit("toggleModal", "edition");
           break;
         case "c":
-          if (this.grimoire.isSpectator) return;
+          if (this.session.isSpectator) return;
           this.$store.commit("toggleModal", "roles");
           break;
         case "Escape":

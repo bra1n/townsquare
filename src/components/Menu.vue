@@ -2,8 +2,16 @@
   <div id="controls">
     <Screenshot ref="screenshot"></Screenshot>
     <font-awesome-icon
+      @click="leaveSession"
+      icon="broadcast-tower"
+      v-if="session.sessionId"
+      v-bind:class="{ spectator: session.isSpectator }"
+      title="You're currently in a live game!"
+    />
+    <font-awesome-icon
       icon="camera"
       @click="takeScreenshot()"
+      title="Take a screenshot"
       v-bind:class="{ success: grimoire.isScreenshotSuccess }"
     />
     <div class="menu" v-bind:class="{ open: grimoire.isMenuOpen }">
@@ -37,22 +45,26 @@
         <li @click="setBackground">
           Background image
         </li>
-        <li @click="hostSession" v-if="!grimoire.sessionId">
+        <li @click="hostSession" v-if="!session.sessionId">
           Host Live Session
         </li>
-        <li @click="joinSession" v-if="!grimoire.sessionId">
+        <li @click="joinSession" v-if="!session.sessionId">
           Join Live Session
         </li>
-        <li class="headline" v-if="grimoire.sessionId">
+        <li class="headline" v-if="session.sessionId">
           <font-awesome-icon icon="broadcast-tower" />
-          {{ grimoire.isSpectator ? "Playing" : "Hosting" }}
+          {{ session.isSpectator ? "Playing" : "Hosting" }}
         </li>
-        <li @click="leaveSession" v-if="grimoire.sessionId">
-          <em>{{ grimoire.sessionId }}</em>
+        <li v-if="session.sessionId" @click="copySessionUrl">
+          <em><font-awesome-icon icon="copy"/></em>
+          Copy player link
+        </li>
+        <li @click="leaveSession" v-if="session.sessionId">
+          <em>{{ session.sessionId }}</em>
           Leave Session
         </li>
 
-        <template v-if="!grimoire.isSpectator">
+        <template v-if="!session.isSpectator">
           <!-- Users -->
           <li class="headline">
             <font-awesome-icon icon="users" />
@@ -99,7 +111,7 @@ export default {
     Screenshot
   },
   computed: {
-    ...mapState(["grimoire"]),
+    ...mapState(["grimoire", "session"]),
     ...mapState("players", ["players"])
   },
   methods: {
@@ -115,49 +127,70 @@ export default {
     },
     hostSession() {
       const sessionId = prompt(
-        "Enter a code for your session",
+        "Enter a channel number for your session",
         Math.round(Math.random() * 10000)
       );
       if (sessionId) {
         this.$store.commit("setSpectator", false);
-        this.$store.commit("setSessionId", sessionId.substr(0, 5));
+        this.$store.commit(
+          "setSessionId",
+          sessionId.replace(/[^0-9]/g, "").substr(0, 5)
+        );
+        this.copySessionUrl();
       }
+    },
+    copySessionUrl() {
+      // check for clipboard permissions
+      navigator.permissions
+        .query({ name: "clipboard-write" })
+        .then(({ state }) => {
+          if (state === "granted" || state === "prompt") {
+            const url = window.location.href.split("#")[0];
+            const link = url + "#play/" + this.session.sessionId;
+            navigator.clipboard.writeText(link);
+          }
+        });
     },
     joinSession() {
       const sessionId = prompt(
-        "Enter the code of the session you want to join"
+        "Enter the channel number of the session you want to join"
       );
       if (sessionId) {
         this.$store.commit("setSpectator", true);
-        this.$store.commit("setSessionId", sessionId.substr(0, 5));
+        this.$store.commit(
+          "setSessionId",
+          sessionId.replace(/[^0-9]/g, "").substr(0, 5)
+        );
       }
     },
     leaveSession() {
-      this.$store.commit("setSpectator", false);
-      this.$store.commit("setSessionId", "");
+      if (confirm("Are you sure you want to leave the active live game?")) {
+        this.$store.commit("setSpectator", false);
+        this.$store.commit("setSessionId", "");
+      }
     },
     addPlayer() {
-      if (this.grimoire.isSpectator) return;
+      if (this.session.isSpectator) return;
       const name = prompt("Player name");
       if (name) {
         this.$store.commit("players/add", name);
       }
     },
     randomizeSeatings() {
-      if (this.grimoire.isSpectator) return;
+      if (this.session.isSpectator) return;
       if (confirm("Are you sure you want to randomize seatings?")) {
         this.$store.dispatch("players/randomize");
       }
     },
     clearPlayers() {
-      if (this.grimoire.isSpectator) return;
+      if (this.session.isSpectator) return;
       if (confirm("Are you sure you want to remove all players?")) {
         this.$store.commit("players/clear");
         this.$store.commit("setBluff");
       }
     },
     clearRoles() {
-      if (this.grimoire.isSpectator) return;
+      if (this.session.isSpectator) return;
       if (confirm("Are you sure you want to remove all player roles?")) {
         this.$store.dispatch("players/clearRoles");
         this.$store.commit("setBluff");
@@ -194,13 +227,13 @@ export default {
   right: 3px;
   top: 3px;
   text-align: right;
+  padding-right: 50px;
 
   #app.screenshot & {
     display: none;
   }
 
   svg {
-    cursor: pointer;
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 1));
     &.success {
       animation: greenToWhite 1s normal forwards;
@@ -208,11 +241,16 @@ export default {
     }
   }
 
-  .fa-camera {
-    position: absolute;
-    right: 50px;
-    top: 10px;
+  > svg {
+    cursor: pointer;
     z-index: 5;
+  }
+
+  > .fa-broadcast-tower {
+    color: $demon;
+    &.spectator {
+      color: $townsfolk;
+    }
   }
 }
 
@@ -221,12 +259,16 @@ export default {
   transform-origin: 190px 22px;
   transition: transform 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
   transform: rotate(-90deg);
+  position: absolute;
+  right: 0;
+  top: 0;
 
   &.open {
     transform: rotate(0deg);
   }
 
   > svg {
+    cursor: pointer;
     background: rgba(0, 0, 0, 0.5);
     border: 3px solid black;
     width: 40px;

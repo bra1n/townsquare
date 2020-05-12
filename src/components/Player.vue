@@ -93,7 +93,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["grimoire"]),
+    ...mapState(["grimoire", "session"]),
     ...mapGetters({ nightOrder: "players/nightOrder" })
   },
   data() {
@@ -125,7 +125,7 @@ export default {
       }
     },
     changeName() {
-      if (this.grimoire.isSpectator) return;
+      if (this.session.isSpectator) return;
       const name = prompt("Player name", this.player.name) || this.player.name;
       this.updatePlayer("name", name);
     },
@@ -135,7 +135,7 @@ export default {
       this.updatePlayer("reminders", reminders);
     },
     updatePlayer(property, value) {
-      if (this.grimoire.isSpectator && property !== "reminders") return;
+      if (this.session.isSpectator && property !== "reminders") return;
       this.$store.commit("players/update", {
         player: this.player,
         property,

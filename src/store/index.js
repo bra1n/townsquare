@@ -34,7 +34,7 @@ export default new Vuex.Store({
       isScreenshotSuccess: false,
       zoom: 1,
       background: "",
-      bluffs: [],
+      bluffs: []
     },
     session: {
       sessionId: "",
@@ -72,11 +72,11 @@ export default new Vuex.Store({
     setBackground({ grimoire }, background) {
       grimoire.background = background;
     },
-    setSessionId({ grimoire }, sessionId) {
-      grimoire.sessionId = sessionId;
+    setSessionId({ session }, sessionId) {
+      session.sessionId = sessionId;
     },
-    setSpectator({ grimoire }, spectator) {
-      grimoire.isSpectator = spectator;
+    setSpectator({ session }, spectator) {
+      session.isSpectator = spectator;
     },
     setBluff({ grimoire }, { index, role } = {}) {
       if (index !== undefined) {

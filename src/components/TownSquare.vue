@@ -4,7 +4,7 @@
     class="square"
     v-bind:class="{
       public: grimoire.isPublic,
-      spectator: grimoire.isSpectator
+      spectator: session.isSpectator
     }"
     v-bind:style="{ zoom: grimoire.zoom }"
   >
@@ -54,7 +54,7 @@ export default {
     ReminderModal
   },
   computed: {
-    ...mapState(["grimoire", "roles"]),
+    ...mapState(["grimoire", "roles", "session"]),
     ...mapState("players", ["players"])
   },
   data() {
@@ -74,12 +74,12 @@ export default {
     },
     openRoleModal(playerIndex) {
       const player = this.players[playerIndex];
-      if (this.grimoire.isSpectator && player.role.team === "traveler") return;
+      if (this.session.isSpectator && player.role.team === "traveler") return;
       this.selectedPlayer = playerIndex;
       this.$store.commit("toggleModal", "role");
     },
     removePlayer(playerIndex) {
-      if (this.grimoire.isSpectator) return;
+      if (this.session.isSpectator) return;
       if (
         confirm(
           `Do you really want to remove ${this.players[playerIndex].name}?`
