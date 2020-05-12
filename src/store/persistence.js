@@ -27,12 +27,16 @@ module.exports = store => {
       }))
     );
   }
+  if (localStorage.getItem("session")) {
+    const [spectator, sessionId] = JSON.parse(localStorage.getItem("session"));
+    store.commit("setSpectator", spectator);
+    store.commit("setSessionId", sessionId);
+  }
 
   // listen to mutations
   store.subscribe(({ type, payload }, state) => {
     switch (type) {
       case "toggleGrimoire":
-      case "showGrimoire":
         localStorage.setItem(
           "isPublic",
           JSON.stringify(state.grimoire.isPublic)
@@ -54,11 +58,22 @@ module.exports = store => {
           JSON.stringify(state.grimoire.bluffs.map(({ id }) => id))
         );
         break;
+      case "setSessionId":
+        if (payload) {
+          localStorage.setItem(
+            "session",
+            JSON.stringify([state.session.isSpectator, payload])
+          );
+        } else {
+          localStorage.removeItem("session");
+        }
+        break;
       case "players/add":
       case "players/update":
       case "players/remove":
       case "players/clear":
       case "players/set":
+      case "players/swap":
         if (state.players.players.length) {
           localStorage.setItem(
             "players",

@@ -149,8 +149,7 @@ ul.tokens {
   padding-left: 55px;
   li {
     border-radius: 50%;
-    height: 120px;
-    width: 120px;
+    width: 6vw;
     margin: 5px;
     opacity: 0.5;
     transition: all 250ms;
@@ -181,7 +180,6 @@ ul.tokens {
     opacity: 1;
     position: absolute;
     left: 0;
-    top: 40px;
     font-weight: bold;
     line-height: 50px;
     text-align: center;

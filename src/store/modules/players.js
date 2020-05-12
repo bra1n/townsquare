@@ -1,8 +1,8 @@
 const NEWPLAYER = {
   role: {},
   reminders: [],
-  hasVoted: false,
-  hasDied: false
+  isVoteless: false,
+  isDead: false
 };
 
 const state = () => ({
@@ -78,6 +78,12 @@ const mutations = {
   },
   remove(state, index) {
     state.players.splice(index, 1);
+  },
+  swap(state, [from, to]) {
+    [state.players[from], state.players[to]] = [
+      state.players[to],
+      state.players[from]
+    ];
   }
 };
 

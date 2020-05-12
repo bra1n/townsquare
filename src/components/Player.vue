@@ -4,8 +4,8 @@
       ref="player"
       class="player"
       :class="{
-        dead: player.hasDied,
-        'no-vote': player.hasVoted,
+        dead: player.isDead,
+        'no-vote': player.isVoteless,
         traveler: player.role && player.role.team === 'traveler'
       }"
     >
@@ -34,25 +34,60 @@
       <Token :role="player.role" @set-role="$emit('set-role')" />
 
       <font-awesome-icon
+        icon="times-circle"
+        class="cancel"
+        title="Cancel"
+        @click="doSwap(true)"
+      />
+      <font-awesome-icon
+        icon="exchange-alt"
+        class="swap"
+        @click="doSwap()"
+        title="Swap seats with this player"
+      />
+
+      <font-awesome-icon
         icon="vote-yea"
         class="vote"
-        v-if="player.hasDied && !player.hasVoted"
-        @click="updatePlayer('hasVoted', true)"
+        v-if="player.isDead && !player.isVoteless"
+        @click="updatePlayer('isVoteless', true)"
         title="Ghost vote"
       />
 
-      <div class="name" @click="changeName">
-        <span class="screenshot" @click.stop="takeScreenshot">
-          <font-awesome-icon icon="camera" />
-        </span>
-        <span class="name">
-          {{ player.name }}
-        </span>
-        <span class="remove" @click.stop="$emit('remove-player')">
-          <font-awesome-icon icon="times-circle" />
-        </span>
+      <div
+        class="name"
+        @click="isMenuOpen = !isMenuOpen"
+        v-bind:class="{ active: isMenuOpen }"
+      >
+        {{ player.name }}
       </div>
+
+      <transition name="fold">
+        <ul class="menu" v-if="isMenuOpen && !session.isSpectator">
+          <li @click="changeName">
+            <font-awesome-icon icon="user-edit" />
+            Rename
+          </li>
+          <!--<li @click="nomination">
+            <font-awesome-icon icon="hand-point-right" />
+            Nomination
+          </li>-->
+          <li @click="initSwap">
+            <font-awesome-icon icon="exchange-alt" />
+            Swap seats
+          </li>
+          <li @click="takeScreenshot">
+            <font-awesome-icon icon="camera" />
+            Screenshot
+          </li>
+          <li @click="$emit('remove-player')">
+            <font-awesome-icon icon="times-circle" />
+            Remove
+          </li>
+        </ul>
+      </transition>
     </div>
+
     <template v-if="player.reminders">
       <div
         class="reminder"
@@ -93,11 +128,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(["grimoire"]),
+    ...mapState(["grimoire", "session"]),
     ...mapGetters({ nightOrder: "players/nightOrder" })
   },
   data() {
-    return {};
+    return {
+      isMenuOpen: false,
+      isSwap: false
+    };
   },
   filters: {
     handleEmojis: text => text.replace(/:([^: ]+?):/g, "").replace(/ •/g, "\n•")
@@ -106,25 +144,30 @@ export default {
     takeScreenshot() {
       const { width, height, x, y } = this.$refs.player.getBoundingClientRect();
       this.$emit("screenshot", { width, height, x, y });
+      this.isMenuOpen = false;
     },
     toggleStatus() {
       if (this.grimoire.isPublic) {
-        if (!this.player.hasDied) {
-          this.updatePlayer("hasDied", true);
-        } else if (this.player.hasVoted) {
-          this.updatePlayer("hasVoted", false);
-          this.updatePlayer("hasDied", false);
+        if (!this.player.isDead) {
+          this.updatePlayer("isDead", true);
+        } else if (this.player.isVoteless) {
+          this.updatePlayer("isVoteless", false);
+          this.updatePlayer("isDead", false);
         } else {
-          this.updatePlayer("hasVoted", true);
+          this.updatePlayer("isVoteless", true);
         }
       } else {
-        this.updatePlayer("hasDied", !this.player.hasDied);
-        this.updatePlayer("hasVoted", false);
+        this.updatePlayer("isDead", !this.player.isDead);
+        if (this.player.isVoteless) {
+          this.updatePlayer("isVoteless", false);
+        }
       }
     },
     changeName() {
+      if (this.session.isSpectator) return;
       const name = prompt("Player name", this.player.name) || this.player.name;
       this.updatePlayer("name", name);
+      this.isMenuOpen = false;
     },
     removeReminder(reminder) {
       const reminders = [...this.player.reminders];
@@ -132,11 +175,19 @@ export default {
       this.updatePlayer("reminders", reminders);
     },
     updatePlayer(property, value) {
+      if (this.session.isSpectator && property !== "reminders") return;
       this.$store.commit("players/update", {
         player: this.player,
         property,
         value
       });
+    },
+    initSwap() {
+      this.isMenuOpen = false;
+      this.$emit("swap-seats");
+    },
+    doSwap(cancel) {
+      this.$emit("swap-seats", cancel ? false : this.player);
     }
   }
 };
@@ -144,6 +195,17 @@ export default {
 
 <style lang="scss">
 @import "../vars.scss";
+
+.fold-enter-active,
+.fold-leave-active {
+  transition: transform 250ms ease-in-out;
+  transform-origin: left center;
+  transform: perspective(200px);
+}
+.fold-enter,
+.fold-leave-to {
+  transform: perspective(200px) rotateY(90deg);
+}
 
 /***** Player token *****/
 .circle .player {
@@ -181,7 +243,7 @@ export default {
       pointer-events: none;
     }
 
-    &:hover:before {
+    #townsquare:not(.spectator) &:hover:before {
       opacity: 0.5;
       top: -10px;
       transform: scale(1);
@@ -280,6 +342,40 @@ export default {
   transform: perspective(400px) rotateY(-180deg);
 }
 
+/****** Player choice icons *******/
+.player > svg {
+  position: absolute;
+  filter: drop-shadow(0 0 3px black);
+  z-index: 2;
+  cursor: pointer;
+  &.swap,
+  &.cancel {
+    top: 9%;
+    left: 20%;
+    width: 60%;
+    height: 60%;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 250ms;
+    transform: scale(0.2);
+    &:hover {
+      color: red;
+    }
+  }
+}
+
+li.swap-from .player > svg.cancel {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: all;
+}
+
+li.swap:not(.swap-from) .player > svg.swap {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: all;
+}
+
 /****** Vote icon ********/
 .player .vote {
   position: absolute;
@@ -310,37 +406,12 @@ export default {
   border-radius: 10px;
   top: 5px;
   box-shadow: 0 0 5px black;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
-  span.screenshot,
-  span.remove {
-    display: none;
-    position: absolute;
-    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
-    #app.screenshot & {
-      display: none;
-    }
-  }
-  span.screenshot {
-    right: 100%;
-  }
-  span.remove {
-    left: 100%;
-  }
-
-  span.name {
-    flex-shrink: 1;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-  &:hover {
+  #townsquare:not(.spectator) &:hover,
+  &.active {
     color: red;
-    span {
-      display: block;
-      color: white;
-      &:hover {
-        color: red;
-      }
-    }
   }
 }
 
@@ -348,11 +419,47 @@ export default {
   opacity: 0.5;
 }
 
+/***** Player menu *****/
+.player > .menu {
+  position: absolute;
+  left: 100%;
+  bottom: 0;
+  text-align: left;
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0 5px;
+  border-radius: 5px;
+  border: 3px solid black;
+  margin-left: 15px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+  &:before {
+    content: " ";
+    width: 0;
+    height: 0;
+    position: absolute;
+    border: 10px solid transparent;
+    border-right-color: black;
+    right: 100%;
+    bottom: 7px;
+    margin-right: 2px;
+  }
+
+  li:hover {
+    color: red;
+  }
+  svg {
+    margin-right: 2px;
+  }
+}
+
 /***** Ability text *****/
 #townsquare.public .ability {
   display: none;
 }
-.circle .player:hover .ability {
+.circle .player .shroud:hover ~ .token .ability,
+.circle .player .token:hover .ability {
   opacity: 1;
 }
 
@@ -366,7 +473,7 @@ export default {
   opacity: 1;
   transition: opacity 200ms;
   display: flex;
-  top: -16px;
+  top: -20px;
   align-items: center;
   pointer-events: none;
 
