@@ -399,8 +399,6 @@ li.swap:not(.swap-from) .player > svg.swap {
   cursor: pointer;
   white-space: nowrap;
   width: 100%;
-  display: flex;
-  justify-content: center;
   background: rgba(0, 0, 0, 0.5);
   border: 3px solid black;
   border-radius: 10px;
@@ -408,6 +406,7 @@ li.swap:not(.swap-from) .player > svg.swap {
   box-shadow: 0 0 5px black;
   text-overflow: ellipsis;
   overflow: hidden;
+  padding: 0 4px;
 
   #townsquare:not(.spectator) &:hover,
   &.active {
@@ -427,12 +426,12 @@ li.swap:not(.swap-from) .player > svg.swap {
   text-align: left;
   white-space: nowrap;
   background: rgba(0, 0, 0, 0.5);
-  padding: 0 5px;
-  border-radius: 5px;
-  border: 3px solid black;
+  padding: 2px 5px;
+  border-radius: 10px;
+  border: 3px solid #000;
   margin-left: 15px;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 
   &:before {
     content: " ";
