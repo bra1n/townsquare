@@ -32,7 +32,6 @@ module.exports = store => {
   store.subscribe(({ type, payload }, state) => {
     switch (type) {
       case "toggleGrimoire":
-      case "showGrimoire":
         localStorage.setItem(
           "isPublic",
           JSON.stringify(state.grimoire.isPublic)

@@ -35,6 +35,8 @@ export default new Vuex.Store({
       zoom: 1,
       background: "",
       bluffs: [],
+    },
+    session: {
       sessionId: "",
       isSpectator: false
     },
@@ -76,8 +78,12 @@ export default new Vuex.Store({
     setSpectator({ grimoire }, spectator) {
       grimoire.isSpectator = spectator;
     },
-    setBluff({ grimoire }, { index, role }) {
-      grimoire.bluffs.splice(index, 1, role);
+    setBluff({ grimoire }, { index, role } = {}) {
+      if (index !== undefined) {
+        grimoire.bluffs.splice(index, 1, role);
+      } else {
+        grimoire.bluffs = [];
+      }
     },
     toggleModal({ modals }, name) {
       modals[name] = !modals[name];

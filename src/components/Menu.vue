@@ -153,13 +153,14 @@ export default {
       if (this.grimoire.isSpectator) return;
       if (confirm("Are you sure you want to remove all players?")) {
         this.$store.commit("players/clear");
+        this.$store.commit("setBluff");
       }
     },
     clearRoles() {
       if (this.grimoire.isSpectator) return;
-      this.$store.commit("showGrimoire");
       if (confirm("Are you sure you want to remove all player roles?")) {
         this.$store.dispatch("players/clearRoles");
+        this.$store.commit("setBluff");
       }
     },
     ...mapMutations([
