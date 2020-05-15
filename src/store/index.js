@@ -86,6 +86,7 @@ export default new Vuex.Store({
       }
     },
     toggleModal({ modals }, name) {
+      console.log("toggle", name);
       modals[name] = !modals[name];
     },
     updateScreenshot({ grimoire }, status) {
@@ -97,10 +98,20 @@ export default new Vuex.Store({
         grimoire.isScreenshot = false;
       }
     },
+    setRoles(state, roles) {
+      state.roles = new Map(
+        rolesJSON
+          .filter(r => roles.includes(r.id))
+          .sort((a, b) => b.team.localeCompare(a.team))
+          .map(role => [role.id, role])
+      );
+    },
     setEdition(state, edition) {
       state.edition = edition;
       state.modals.edition = false;
-      state.roles = getRolesByEdition(edition);
+      if (edition !== "custom") {
+        state.roles = getRolesByEdition(edition);
+      }
     }
   },
   plugins: [persistence, session]

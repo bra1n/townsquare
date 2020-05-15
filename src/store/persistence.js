@@ -10,6 +10,9 @@ module.exports = store => {
     // this will initialize state.roles!
     store.commit("setEdition", localStorage.edition);
   }
+  if (localStorage.roles !== undefined) {
+    store.commit("setRoles", JSON.parse(localStorage.roles));
+  }
   if (localStorage.bluffs !== undefined) {
     JSON.parse(localStorage.bluffs).forEach((role, index) => {
       store.commit("setBluff", {
@@ -50,7 +53,19 @@ module.exports = store => {
         }
         break;
       case "setEdition":
-        localStorage.setItem("edition", payload);
+        if (payload === "custom") {
+          localStorage.removeItem("edition");
+        } else {
+          localStorage.setItem("edition", payload);
+          localStorage.removeItem("roles");
+        }
+        break;
+      case "setRoles":
+        if (!payload.length) {
+          localStorage.removeItem("roles");
+        } else {
+          localStorage.setItem("roles", JSON.stringify(payload));
+        }
         break;
       case "setBluff":
         localStorage.setItem(

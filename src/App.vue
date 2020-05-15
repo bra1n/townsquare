@@ -86,6 +86,12 @@ export default {
       url("assets/fonts/papyrus.svg#PapyrusW01") format("svg"); /* iOS 4.1- */
 }
 
+@font-face {
+  font-family: PiratesBay;
+  src: url("assets/fonts/piratesbay.ttf");
+  font-display: swap;
+}
+
 html,
 body {
   font-size: 1.2em;
@@ -121,6 +127,9 @@ h4,
 h5 {
   margin: 0;
   text-align: center;
+  font-family: PiratesBay, sans-serif;
+  letter-spacing: 1px;
+  font-weight: normal;
 }
 
 ul {

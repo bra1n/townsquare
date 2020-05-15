@@ -23,7 +23,10 @@ import {
   faBroadcastTower,
   faCopy,
   faExchangeAlt,
-  faHandPointRight
+  faHandPointRight,
+  faFileUpload,
+  faLink,
+  faUndo
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -48,7 +51,10 @@ library.add(
   faBroadcastTower,
   faCopy,
   faExchangeAlt,
-  faHandPointRight
+  faHandPointRight,
+  faFileUpload,
+  faLink,
+  faUndo
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

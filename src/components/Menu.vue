@@ -317,9 +317,10 @@ export default {
     }
 
     .headline {
+      font-family: PiratesBay, sans-serif;
+      letter-spacing: 1px;
       padding: 5px 10px;
       text-align: center;
-      font-weight: bold;
       background: linear-gradient(
         to right,
         $townsfolk 0%,

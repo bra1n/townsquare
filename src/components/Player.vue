@@ -243,6 +243,10 @@ export default {
       pointer-events: none;
     }
 
+    #townsquare.spectator & {
+      pointer-events: none;
+    }
+
     #townsquare:not(.spectator) &:hover:before {
       opacity: 0.5;
       top: -10px;
