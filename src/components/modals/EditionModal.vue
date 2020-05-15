@@ -17,12 +17,12 @@
           {{ edition.name }}
         </li>
         <li class="edition edition-custom" @click="isCustom = true">
-          Custom Edition
+          Custom Script
         </li>
       </ul>
     </div>
     <div class="custom" v-else>
-      <h3>Select a custom edition</h3>
+      <h3>Upload a custom script</h3>
       To play with a custom script, you need to select the characters you want
       to play with in the official
       <a href="https://bloodontheclocktower.com/script-tool/" target="_blank"
