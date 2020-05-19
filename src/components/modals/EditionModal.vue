@@ -82,6 +82,10 @@ export default {
         [
           "Race To The Bottom",
           "https://gist.githubusercontent.com/bra1n/63e1354cb3dc9d4032bcd0623dc48888/raw/5be4df8386ec61e3a98c32be77f8cac3f8414379/custom-script.json"
+        ],
+        [
+          "Frankenstein's Mayor by Ted",
+          "https://gist.githubusercontent.com/bra1n/32c52b422cc01b934a4291eeb81dbcee/raw/3ca5a043c41141ac40667dc15097deb327263268/Frankensteins_Mayor_by_Ted.json"
         ]
       ]
     };
@@ -116,7 +120,7 @@ export default {
     },
     parseScript(script) {
       if (!script || !script.length) return;
-      const roles = script.map(({ id }) => id);
+      const roles = script.map(({ id }) => id.replace(/[^a-z]/g, ""));
       this.$store.commit("setRoles", roles);
       this.$store.commit("setEdition", "custom");
       this.isCustom = false;
