@@ -37,13 +37,19 @@
         icon="times-circle"
         class="cancel"
         title="Cancel"
-        @click="doSwap(true)"
+        @click="cancel()"
       />
       <font-awesome-icon
         icon="exchange-alt"
         class="swap"
-        @click="doSwap()"
+        @click="swapPlayer(player)"
         title="Swap seats with this player"
+      />
+      <font-awesome-icon
+        icon="redo-alt"
+        class="move"
+        @click="movePlayer(player)"
+        title="Move player to this seat"
       />
 
       <font-awesome-icon
@@ -65,14 +71,17 @@
       <transition name="fold">
         <ul class="menu" v-if="isMenuOpen && !session.isSpectator">
           <li @click="changeName">
-            <font-awesome-icon icon="user-edit" />
-            Rename
+            <font-awesome-icon icon="user-edit" />Rename
           </li>
           <!--<li @click="nomination">
             <font-awesome-icon icon="hand-point-right" />
             Nomination
           </li>-->
-          <li @click="initSwap">
+          <li @click="movePlayer()">
+            <font-awesome-icon icon="redo-alt" />
+            Move player
+          </li>
+          <li @click="swapPlayer()">
             <font-awesome-icon icon="exchange-alt" />
             Swap seats
           </li>
@@ -182,12 +191,16 @@ export default {
         value
       });
     },
-    initSwap() {
+    swapPlayer(player) {
       this.isMenuOpen = false;
-      this.$emit("swap-seats");
+      this.$emit("swap-player", player);
     },
-    doSwap(cancel) {
-      this.$emit("swap-seats", cancel ? false : this.player);
+    movePlayer(player) {
+      this.isMenuOpen = false;
+      this.$emit("move-player", player);
+    },
+    cancel() {
+      this.$emit("cancel");
     }
   }
 };
@@ -353,6 +366,7 @@ export default {
   z-index: 2;
   cursor: pointer;
   &.swap,
+  &.move,
   &.cancel {
     top: 9%;
     left: 20%;
@@ -368,13 +382,14 @@ export default {
   }
 }
 
-li.swap-from .player > svg.cancel {
+li.from .player > svg.cancel {
   opacity: 1;
   transform: scale(1);
   pointer-events: all;
 }
 
-li.swap:not(.swap-from) .player > svg.swap {
+li.swap:not(.from) .player > svg.swap,
+li.move:not(.from) .player > svg.move {
   opacity: 1;
   transform: scale(1);
   pointer-events: all;

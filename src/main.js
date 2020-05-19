@@ -2,63 +2,38 @@ import Vue from "vue";
 import App from "./App";
 import store from "./store";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faBookOpen,
-  faCamera,
-  faCog,
-  faHeartbeat,
-  faSearchMinus,
-  faSearchPlus,
-  faTheaterMasks,
-  faTimesCircle,
-  faUser,
-  faUserEdit,
-  faUserFriends,
-  faUsers,
-  faVoteYea,
-  faCheckSquare,
-  faSquare,
-  faRandom,
-  faPeopleArrows,
-  faBroadcastTower,
-  faCopy,
-  faExchangeAlt,
-  faHandPointRight,
-  faFileUpload,
-  faLink,
-  faUndo
-} from "@fortawesome/free-solid-svg-icons";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(
-  faBookOpen,
-  faCamera,
-  faCog,
-  faHeartbeat,
-  faSearchMinus,
-  faSearchPlus,
-  faTheaterMasks,
-  faTimesCircle,
-  faUser,
-  faUserEdit,
-  faUserFriends,
-  faUsers,
-  faVoteYea,
-  faCheckSquare,
-  faSquare,
-  faRandom,
-  faPeopleArrows,
-  faBroadcastTower,
-  faCopy,
-  faExchangeAlt,
-  faHandPointRight,
-  faFileUpload,
-  faLink,
-  faUndo
-);
-
+const faIcons = [
+  "BookOpen",
+  "BroadcastTower",
+  "Camera",
+  "CheckSquare",
+  "Cog",
+  "Copy",
+  "ExchangeAlt",
+  "FileUpload",
+  "HandPointRight",
+  "Heartbeat",
+  "Link",
+  "PeopleArrows",
+  "Random",
+  "RedoAlt",
+  "SearchMinus",
+  "SearchPlus",
+  "Square",
+  "TheaterMasks",
+  "TimesCircle",
+  "Undo",
+  "User",
+  "UserEdit",
+  "UserFriends",
+  "Users",
+  "VoteYea"
+];
+library.add(...faIcons.map(i => fas["fa" + i]));
 Vue.component("font-awesome-icon", FontAwesomeIcon);
-
 Vue.config.productionTip = false;
 
 new Vue({

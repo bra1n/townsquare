@@ -106,7 +106,7 @@ export default {
       }
     },
     promptURL() {
-      const url = prompt("Enter URL to a custom-script.JSON");
+      const url = prompt("Enter URL to a custom-script.json file");
       if (url) {
         this.handleURL(url);
       }

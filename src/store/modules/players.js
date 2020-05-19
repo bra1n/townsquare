@@ -84,6 +84,9 @@ const mutations = {
       state.players[to],
       state.players[from]
     ];
+  },
+  move(state, [from, to]) {
+    state.players.splice(to, 0, state.players.splice(from, 1)[0]);
   }
 };
 
