@@ -89,6 +89,7 @@ module.exports = store => {
       case "players/clear":
       case "players/set":
       case "players/swap":
+      case "players/move":
         if (state.players.players.length) {
           localStorage.setItem(
             "players",
