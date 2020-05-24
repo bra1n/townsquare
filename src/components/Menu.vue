@@ -1,16 +1,16 @@
 <template>
   <div id="controls">
     <Screenshot ref="screenshot"></Screenshot>
-    <span class="session">
-      <font-awesome-icon
-        @click="leaveSession"
-        icon="broadcast-tower"
-        v-if="session.sessionId"
-        :class="{ spectator: session.isSpectator }"
-        :title="
-          `You're currently in a live game with ${session.playerCount} other players!`
-        "
-      />
+    <span
+      class="session"
+      :class="{ spectator: session.isSpectator }"
+      v-if="session.sessionId"
+      @click="leaveSession"
+      :title="
+        `You're currently in a live game with ${session.playerCount} other players!`
+      "
+    >
+      <font-awesome-icon icon="broadcast-tower" />
       {{ session.playerCount }}
     </span>
     <span class="camera">
@@ -127,10 +127,11 @@ export default {
       this.$refs.screenshot.capture(dimensions);
     },
     setBackground() {
-      this.$store.commit(
-        "setBackground",
-        prompt("Enter custom background URL")
-      );
+      const background = prompt("Enter custom background URL");
+      if (background || background === "") {
+        this.$store.commit("setBackground", background);
+      }
+
     },
     hostSession() {
       const sessionId = prompt(
@@ -248,19 +249,18 @@ export default {
     }
   }
 
-  > span > svg {
+  > span {
+    display: inline-block;
     cursor: pointer;
     z-index: 5;
-    margin-top: 10px;
+    margin-top: 7px;
     margin-left: 10px;
   }
 
   .session {
-    .fa-broadcast-tower {
-      color: $demon;
-      &.spectator {
-        color: $townsfolk;
-      }
+    color: $demon;
+    &.spectator {
+      color: $townsfolk;
     }
   }
 }
