@@ -46,7 +46,7 @@ export default {
       this.$refs.menu.takeScreenshot(dimensions);
     },
     keyup({ key }) {
-      switch (key) {
+      switch (key.toLocaleLowerCase()) {
         case "g":
           this.$store.commit("toggleGrimoire");
           break;
