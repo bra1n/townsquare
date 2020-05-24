@@ -131,7 +131,6 @@ export default {
       if (background || background === "") {
         this.$store.commit("setBackground", background);
       }
-
     },
     hostSession() {
       const sessionId = prompt(
