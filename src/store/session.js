@@ -110,6 +110,7 @@ class LiveSession {
    * @param channel
    */
   connect(channel) {
+    this._store.commit("setPlayerCount", 0);
     this._isSpectator = this._store.state.session.isSpectator;
     this._open(channel);
   }
@@ -118,6 +119,7 @@ class LiveSession {
    * Close the current session, if any.
    */
   disconnect() {
+    this._store.commit("setPlayerCount", 0);
     if (this._socket) {
       this._send("bye", this._playerId);
       this._socket.close();
