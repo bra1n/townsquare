@@ -1,11 +1,22 @@
 class LiveSession {
   constructor(store) {
-    this.wss = "wss://connect.websocket.in/v3/";
-    this.key = "zXzDomOphNQ94tWXrHfT8E8gkxjUMSXOQt0ypZetKoFsIUiEBegqWNAlExyd";
-    this.socket = null;
-    this.isSpectator = true;
-    this.gamestate = [];
-    this.store = store;
+    this._wss = "wss://connect.websocket.in/v3/";
+    this._key = "zXzDomOphNQ94tWXrHfT8E8gkxjUMSXOQt0ypZetKoFsIUiEBegqWNAlExyd";
+    this._socket = null;
+    this._isSpectator = true;
+    this._gamestate = [];
+    this._store = store;
+    this._pingInterval = 30 * 1000; // 30 seconds between pings
+    this._pingTimer = null;
+    this._players = {}; // map of players connected to a session
+    this._playerId = Math.random()
+      .toString(36)
+      .substr(2);
+
+    // reconnect to previous session
+    if (this._store.state.session.sessionId) {
+      this.connect(this._store.state.session.sessionId);
+    }
   }
 
   /**
@@ -15,12 +26,14 @@ class LiveSession {
    */
   _open(channel) {
     this.disconnect();
-    this.socket = new WebSocket(this.wss + channel + "?apiKey=" + this.key);
-    this.socket.addEventListener("message", this._handleMessage.bind(this));
-    this.socket.onopen = this._onOpen.bind(this);
-    this.socket.onclose = () => {
-      this.socket = null;
-      this.store.commit("setSessionId", "");
+    this._socket = new WebSocket(this._wss + channel + "?apiKey=" + this._key);
+    this._socket.addEventListener("message", this._handleMessage.bind(this));
+    this._socket.onopen = this._onOpen.bind(this);
+    this._socket.onclose = () => {
+      this._socket = null;
+      this._store.commit("setSessionId", "");
+      clearInterval(this._pingTimer);
+      this._pingTimer = null;
     };
   }
 
@@ -31,8 +44,8 @@ class LiveSession {
    * @private
    */
   _send(command, params) {
-    if (this.socket) {
-      this.socket.send(JSON.stringify([command, params]));
+    if (this._socket && this._socket.readyState === 1) {
+      this._socket.send(JSON.stringify([command, params]));
     }
   }
 
@@ -41,11 +54,22 @@ class LiveSession {
    * @private
    */
   _onOpen() {
-    if (this.isSpectator) {
+    if (this._isSpectator) {
       this._send("req", "gs");
     } else {
       this.sendGamestate();
     }
+    this._ping();
+  }
+
+  /**
+   * Send a ping message with player ID and ST flag.
+   * @private
+   */
+  _ping() {
+    this._send("ping", [this._isSpectator, this._playerId]);
+    clearTimeout(this._pingTimer);
+    this._pingTimer = setTimeout(this._ping.bind(this), this._pingInterval);
   }
 
   /**
@@ -71,6 +95,13 @@ class LiveSession {
         break;
       case "player":
         this._updatePlayer(params);
+        break;
+      case "ping":
+        this._handlePing(params);
+        break;
+      case "bye":
+        this._handleBye(params);
+        break;
     }
   }
 
@@ -79,7 +110,7 @@ class LiveSession {
    * @param channel
    */
   connect(channel) {
-    this.isSpectator = this.store.state.session.isSpectator;
+    this._isSpectator = this._store.state.session.isSpectator;
     this._open(channel);
   }
 
@@ -87,9 +118,10 @@ class LiveSession {
    * Close the current session, if any.
    */
   disconnect() {
-    if (this.socket) {
-      this.socket.close();
-      this.socket = null;
+    if (this._socket) {
+      this._send("bye", this._playerId);
+      this._socket.close();
+      this._socket = null;
     }
   }
 
@@ -97,8 +129,8 @@ class LiveSession {
    * Publish the current gamestate.
    */
   sendGamestate() {
-    if (this.isSpectator) return;
-    this.gamestate = this.store.state.players.players.map(player => ({
+    if (this._isSpectator) return;
+    this._gamestate = this._store.state.players.players.map(player => ({
       name: player.name,
       isDead: player.isDead,
       isVoteless: player.isVoteless,
@@ -113,8 +145,8 @@ class LiveSession {
         : {})
     }));
     this._send("gs", {
-      gamestate: this.gamestate,
-      edition: this.store.state.edition
+      gamestate: this._gamestate,
+      edition: this._store.state.edition
     });
   }
 
@@ -125,16 +157,16 @@ class LiveSession {
    * @private
    */
   _updateGamestate({ gamestate, edition }) {
-    this.store.commit("setEdition", edition);
-    const players = this.store.state.players.players;
+    this._store.commit("setEdition", edition);
+    const players = this._store.state.players.players;
     // adjust number of players
     if (players.length < gamestate.length) {
       for (let x = players.length; x < gamestate.length; x++) {
-        this.store.commit("players/add", gamestate[x].name);
+        this._store.commit("players/add", gamestate[x].name);
       }
     } else if (players.length > gamestate.length) {
       for (let x = players.length; x > gamestate.length; x--) {
-        this.store.commit("players/remove", x - 1);
+        this._store.commit("players/remove", x - 1);
       }
     }
     // update status for each player
@@ -142,34 +174,34 @@ class LiveSession {
       const player = players[x];
       const { name, isDead, isVoteless, role } = state;
       if (player.name !== name) {
-        this.store.commit("players/update", {
+        this._store.commit("players/update", {
           player,
           property: "name",
           value: name
         });
       }
       if (player.isDead !== isDead) {
-        this.store.commit("players/update", {
+        this._store.commit("players/update", {
           player,
           property: "isDead",
           value: isDead
         });
       }
       if (player.isVoteless !== isVoteless) {
-        this.store.commit("players/update", {
+        this._store.commit("players/update", {
           player,
           property: "isVoteless",
           value: isVoteless
         });
       }
       if (role && player.role.id !== role.id) {
-        this.store.commit("players/update", {
+        this._store.commit("players/update", {
           player,
           property: "role",
           value: role
         });
       } else if (!role && player.role.team === "traveler") {
-        this.store.commit("players/update", {
+        this._store.commit("players/update", {
           player,
           property: "role",
           value: {}
@@ -185,12 +217,12 @@ class LiveSession {
    * @param value
    */
   sendPlayer({ player, property, value }) {
-    if (this.isSpectator || property === "reminders") return;
-    const index = this.store.state.players.players.indexOf(player);
+    if (this._isSpectator || property === "reminders") return;
+    const index = this._store.state.players.players.indexOf(player);
     if (property === "role") {
       if (value.team && value.team === "traveler") {
         // update local gamestate to remember this player as a traveler
-        this.gamestate[index].role = {
+        this._gamestate[index].role = {
           id: player.role.id,
           team: "traveler",
           name: player.role.name
@@ -198,10 +230,10 @@ class LiveSession {
         this._send("player", {
           index,
           property,
-          value: this.gamestate[index].role
+          value: this._gamestate[index].role
         });
-      } else if (this.gamestate[index].role) {
-        delete this.gamestate[index].role;
+      } else if (this._gamestate[index].role) {
+        delete this._gamestate[index].role;
         this._send("player", { index, property, value: {} });
       }
     } else {
@@ -217,7 +249,7 @@ class LiveSession {
    * @private
    */
   _updatePlayer({ index, property, value }) {
-    const player = this.store.state.players.players[index];
+    const player = this._store.state.players.players[index];
     if (!player) return;
     // special case where a player stops being a traveler
     if (
@@ -226,15 +258,46 @@ class LiveSession {
       player.role.team === "traveler"
     ) {
       // reset to an unknown role
-      this.store.commit("players/update", {
+      this._store.commit("players/update", {
         player,
         property: "role",
         value: {}
       });
     } else {
       // just update the player otherwise
-      this.store.commit("players/update", { player, property, value });
+      this._store.commit("players/update", { player, property, value });
     }
+  }
+
+  /**
+   * Handle a ping message by another player / storyteller
+   * @param isSpectator
+   * @param playerId
+   * @private
+   */
+  _handlePing([isSpectator, playerId]) {
+    const now = new Date().getTime();
+    this._players[playerId] = now;
+    // remove players that haven't sent a ping in twice the timespan
+    for (let player in this._players) {
+      if (now - this._players[player] > this._pingTimer * 2) {
+        delete this._players[player];
+      }
+    }
+    this._store.commit("setPlayerCount", Object.keys(this._players).length);
+    if (!this._isSpectator && !isSpectator) {
+      alert("Another storyteller joined the session!");
+    }
+  }
+
+  /**
+   * Handle a player leaving the sessions
+   * @param playerId
+   * @private
+   */
+  _handleBye(playerId) {
+    delete this._players[playerId];
+    this._store.commit("setPlayerCount", Object.keys(this._players).length);
   }
 }
 

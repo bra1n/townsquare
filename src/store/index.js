@@ -38,7 +38,8 @@ export default new Vuex.Store({
     },
     session: {
       sessionId: "",
-      isSpectator: false
+      isSpectator: false,
+      playerCount: 0
     },
     modals: {
       edition: false,
@@ -77,6 +78,9 @@ export default new Vuex.Store({
     },
     setSpectator({ session }, spectator) {
       session.isSpectator = spectator;
+    },
+    setPlayerCount({ session }, playerCount) {
+      session.playerCount = playerCount;
     },
     setBluff({ grimoire }, { index, role } = {}) {
       if (index !== undefined) {

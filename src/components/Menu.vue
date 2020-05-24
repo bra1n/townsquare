@@ -1,19 +1,26 @@
 <template>
   <div id="controls">
     <Screenshot ref="screenshot"></Screenshot>
-    <font-awesome-icon
-      @click="leaveSession"
-      icon="broadcast-tower"
-      v-if="session.sessionId"
-      v-bind:class="{ spectator: session.isSpectator }"
-      title="You're currently in a live game!"
-    />
-    <font-awesome-icon
-      icon="camera"
-      @click="takeScreenshot()"
-      title="Take a screenshot"
-      v-bind:class="{ success: grimoire.isScreenshotSuccess }"
-    />
+    <span class="session">
+      <font-awesome-icon
+        @click="leaveSession"
+        icon="broadcast-tower"
+        v-if="session.sessionId"
+        :class="{ spectator: session.isSpectator }"
+        :title="
+          `You're currently in a live game with ${session.playerCount} other players!`
+        "
+      />
+      {{ session.playerCount }}
+    </span>
+    <span class="camera">
+      <font-awesome-icon
+        icon="camera"
+        @click="takeScreenshot()"
+        title="Take a screenshot"
+        :class="{ success: grimoire.isScreenshotSuccess }"
+      />
+    </span>
     <div class="menu" v-bind:class="{ open: grimoire.isMenuOpen }">
       <font-awesome-icon icon="cog" @click="toggleMenu" />
       <ul>
@@ -241,17 +248,19 @@ export default {
     }
   }
 
-  > svg {
+  > span > svg {
     cursor: pointer;
     z-index: 5;
     margin-top: 10px;
     margin-left: 10px;
   }
 
-  > .fa-broadcast-tower {
-    color: $demon;
-    &.spectator {
-      color: $townsfolk;
+  .session {
+    .fa-broadcast-tower {
+      color: $demon;
+      &.spectator {
+        color: $townsfolk;
+      }
     }
   }
 }
