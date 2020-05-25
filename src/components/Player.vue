@@ -623,7 +623,7 @@ li.move:not(.from) .player > svg.move {
   display: block;
   margin: 5px ($token / -4) 0;
   text-align: center;
-  padding: ($token * 0.3 + 2px) 5px 0;
+  padding: ($token * 0.3 + 5px) 5px 0;
   border-radius: 50%;
   line-height: 90%;
   border: 3px solid black;
