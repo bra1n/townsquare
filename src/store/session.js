@@ -282,7 +282,7 @@ class LiveSession {
     this._players[playerId] = now;
     // remove players that haven't sent a ping in twice the timespan
     for (let player in this._players) {
-      if (now - this._players[player] > this._pingTimer * 2) {
+      if (now - this._players[player] > this._pingInterval * 2) {
         delete this._players[player];
       }
     }
