@@ -93,7 +93,7 @@ ul.reminders .reminder {
   border: 3px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   cursor: pointer;
-  padding: 65px 9px 0;
+  padding: 70px 9px 0;
   line-height: 100%;
   transition: transform 500ms ease;
 
