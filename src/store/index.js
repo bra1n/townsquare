@@ -90,7 +90,6 @@ export default new Vuex.Store({
       }
     },
     toggleModal({ modals }, name) {
-      console.log("toggle", name);
       modals[name] = !modals[name];
     },
     updateScreenshot({ grimoire }, status) {

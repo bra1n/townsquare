@@ -659,6 +659,19 @@ li.move:not(.from) .player > svg.move {
     }
   }
 
+  &.custom {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    font-size: 70%;
+    word-break: break-word;
+    .icon {
+      display: none;
+    }
+  }
+
   &:hover:before {
     opacity: 0;
   }
