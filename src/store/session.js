@@ -1,7 +1,7 @@
 class LiveSession {
   constructor(store) {
-    this._wss = "wss://connect.websocket.in/v3/";
-    this._key = "zXzDomOphNQ94tWXrHfT8E8gkxjUMSXOQt0ypZetKoFsIUiEBegqWNAlExyd";
+    // this._wss = "ws://localhost:8081/";
+    this._wss = "wss://baumgart.biz:8080/";
     this._socket = null;
     this._isSpectator = true;
     this._gamestate = [];
@@ -9,10 +9,6 @@ class LiveSession {
     this._pingInterval = 30 * 1000; // 30 seconds between pings
     this._pingTimer = null;
     this._players = {}; // map of players connected to a session
-    this._playerId = Math.random()
-      .toString(36)
-      .substr(2);
-
     // reconnect to previous session
     if (this._store.state.session.sessionId) {
       this.connect(this._store.state.session.sessionId);
@@ -26,7 +22,7 @@ class LiveSession {
    */
   _open(channel) {
     this.disconnect();
-    this._socket = new WebSocket(this._wss + channel + "?apiKey=" + this._key);
+    this._socket = new WebSocket(this._wss + channel);
     this._socket.addEventListener("message", this._handleMessage.bind(this));
     this._socket.onopen = this._onOpen.bind(this);
     this._socket.onclose = () => {
@@ -67,7 +63,8 @@ class LiveSession {
    * @private
    */
   _ping() {
-    this._send("ping", [this._isSpectator, this._playerId]);
+    this._send("ping", [this._isSpectator, this._store.state.session.playerId]);
+    this._handlePing();
     clearTimeout(this._pingTimer);
     this._pingTimer = setTimeout(this._ping.bind(this), this._pingInterval);
   }
@@ -107,9 +104,18 @@ class LiveSession {
 
   /**
    * Connect to a new live session, either as host or spectator.
+   * Set a unique playerId if there isn't one yet.
    * @param channel
    */
   connect(channel) {
+    if (!this._store.state.session.playerId) {
+      this._store.commit(
+        "setPlayerId",
+        Math.random()
+          .toString(36)
+          .substr(2)
+      );
+    }
     this._store.commit("setPlayerCount", 0);
     this._isSpectator = this._store.state.session.isSpectator;
     this._open(channel);
@@ -121,7 +127,7 @@ class LiveSession {
   disconnect() {
     this._store.commit("setPlayerCount", 0);
     if (this._socket) {
-      this._send("bye", this._playerId);
+      this._send("bye", this._store.state.session.playerId);
       this._socket.close();
       this._socket = null;
     }
@@ -159,6 +165,7 @@ class LiveSession {
    * @private
    */
   _updateGamestate({ gamestate, edition }) {
+    if (!this._isSpectator) return;
     this._store.commit("setEdition", edition);
     const players = this._store.state.players.players;
     // adjust number of players
@@ -277,9 +284,14 @@ class LiveSession {
    * @param playerId
    * @private
    */
-  _handlePing([isSpectator, playerId]) {
+  _handlePing([isSpectator, playerId] = []) {
     const now = new Date().getTime();
-    this._players[playerId] = now;
+    if (playerId) {
+      this._players[playerId] = now;
+      if (!this._isSpectator && !isSpectator) {
+        alert("Another storyteller joined the session!");
+      }
+    }
     // remove players that haven't sent a ping in twice the timespan
     for (let player in this._players) {
       if (now - this._players[player] > this._pingInterval * 2) {
@@ -287,9 +299,6 @@ class LiveSession {
       }
     }
     this._store.commit("setPlayerCount", Object.keys(this._players).length);
-    if (!this._isSpectator && !isSpectator) {
-      alert("Another storyteller joined the session!");
-    }
   }
 
   /**
