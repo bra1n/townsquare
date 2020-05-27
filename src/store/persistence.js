@@ -30,6 +30,10 @@ module.exports = store => {
       }))
     );
   }
+  /**** Session related data *****/
+  if (localStorage.getItem("playerId")) {
+    store.commit("setPlayerId", localStorage.getItem("playerId"));
+  }
   if (localStorage.getItem("session")) {
     const [spectator, sessionId] = JSON.parse(localStorage.getItem("session"));
     store.commit("setSpectator", spectator);
@@ -73,16 +77,6 @@ module.exports = store => {
           JSON.stringify(state.grimoire.bluffs.map(({ id }) => id))
         );
         break;
-      case "setSessionId":
-        if (payload) {
-          localStorage.setItem(
-            "session",
-            JSON.stringify([state.session.isSpectator, payload])
-          );
-        } else {
-          localStorage.removeItem("session");
-        }
-        break;
       case "players/add":
       case "players/update":
       case "players/remove":
@@ -103,6 +97,23 @@ module.exports = store => {
           );
         } else {
           localStorage.removeItem("players");
+        }
+        break;
+      case "setSessionId":
+        if (payload) {
+          localStorage.setItem(
+            "session",
+            JSON.stringify([state.session.isSpectator, payload])
+          );
+        } else {
+          localStorage.removeItem("session");
+        }
+        break;
+      case "setPlayerId":
+        if (payload) {
+          localStorage.setItem("playerId", payload);
+        } else {
+          localStorage.removeItem("setPlayerId");
         }
         break;
     }

@@ -39,7 +39,8 @@ export default new Vuex.Store({
     session: {
       sessionId: "",
       isSpectator: false,
-      playerCount: 0
+      playerCount: 0,
+      playerId: ""
     },
     modals: {
       reference: false,
@@ -76,6 +77,9 @@ export default new Vuex.Store({
     },
     setSessionId({ session }, sessionId) {
       session.sessionId = sessionId;
+    },
+    setPlayerId({ session }, playerId) {
+      session.playerId = playerId;
     },
     setSpectator({ session }, spectator) {
       session.isSpectator = spectator;
