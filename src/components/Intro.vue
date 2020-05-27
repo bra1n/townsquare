@@ -1,12 +1,12 @@
 <template>
-  <div class="intro" >
+  <div class="intro">
     <img src="static/apple-icon.png" alt="" />
     Welcome to the (unofficial)
     <b> Virtual Blood on the Clocktower Town Square</b>!<br />
     Please add more players through the
-    <span class="button">
-        <font-awesome-icon icon="cog" @click="toggleMenu" /> Menu
-      </span>
+    <span class="button" @click="toggleMenu">
+      <font-awesome-icon icon="cog" /> Menu
+    </span>
     on the top right or by pressing <b>[A]</b>.<br />
     This project is free and open source and can be found on
     <a href="https://github.com/bra1n/townsquare" target="_blank">GitHub</a>.

@@ -48,6 +48,11 @@ export default {
   flex-direction: column;
   max-width: 60%;
 
+  .characters & {
+    max-height: 80%;
+    overflow-y: auto;
+  }
+
   ul {
     list-style-type: none;
     margin: 0;

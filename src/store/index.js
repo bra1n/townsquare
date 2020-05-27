@@ -38,9 +38,11 @@ export default new Vuex.Store({
     },
     session: {
       sessionId: "",
-      isSpectator: false
+      isSpectator: false,
+      playerCount: 0
     },
     modals: {
+      reference: false,
       edition: false,
       roles: false,
       role: false,
@@ -78,6 +80,9 @@ export default new Vuex.Store({
     setSpectator({ session }, spectator) {
       session.isSpectator = spectator;
     },
+    setPlayerCount({ session }, playerCount) {
+      session.playerCount = playerCount;
+    },
     setBluff({ grimoire }, { index, role } = {}) {
       if (index !== undefined) {
         grimoire.bluffs.splice(index, 1, role);
@@ -87,6 +92,12 @@ export default new Vuex.Store({
     },
     toggleModal({ modals }, name) {
       modals[name] = !modals[name];
+      if (modals[name]) {
+        for (let modal in modals) {
+          if (modal === name) continue;
+          modals[modal] = false;
+        }
+      }
     },
     updateScreenshot({ grimoire }, status) {
       if (status !== true && status !== false) {
@@ -97,10 +108,20 @@ export default new Vuex.Store({
         grimoire.isScreenshot = false;
       }
     },
+    setRoles(state, roles) {
+      state.roles = new Map(
+        rolesJSON
+          .filter(r => roles.includes(r.id))
+          .sort((a, b) => b.team.localeCompare(a.team))
+          .map(role => [role.id, role])
+      );
+    },
     setEdition(state, edition) {
       state.edition = edition;
       state.modals.edition = false;
-      state.roles = getRolesByEdition(edition);
+      if (edition !== "custom") {
+        state.roles = getRolesByEdition(edition);
+      }
     }
   },
   plugins: [persistence, session]

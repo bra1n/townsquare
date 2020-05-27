@@ -9,13 +9,13 @@
       <li
         v-for="reminder in availableReminders"
         class="reminder"
-        v-bind:class="[reminder.role]"
-        v-bind:key="reminder.role + ' ' + reminder.name"
+        :class="[reminder.role]"
+        :key="reminder.role + ' ' + reminder.name"
         @click="addReminder(reminder)"
       >
         <span
           class="icon"
-          v-bind:style="{
+          :style="{
             backgroundImage: `url(${require('../../assets/icons/' +
               reminder.role +
               '.png')})`
@@ -48,6 +48,7 @@ export default {
       });
       reminders.push({ role: "good", name: "Good" });
       reminders.push({ role: "evil", name: "Evil" });
+      reminders.push({ role: "custom", name: "Custom note" });
       return reminders;
     },
     ...mapState(["modals"]),
@@ -56,7 +57,14 @@ export default {
   methods: {
     addReminder(reminder) {
       const player = this.$store.state.players.players[this.playerIndex];
-      const value = [...player.reminders, reminder];
+      let value;
+      if (reminder.role === "custom") {
+        const name = prompt("Add a custom reminder note");
+        if (!name) return;
+        value = [...player.reminders, { role: "custom", name }];
+      } else {
+        value = [...player.reminders, reminder];
+      }
       this.$store.commit("players/update", {
         player,
         property: "reminders",
@@ -85,7 +93,7 @@ ul.reminders .reminder {
   border: 3px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   cursor: pointer;
-  padding: 65px 9px 0;
+  padding: 70px 9px 0;
   line-height: 100%;
   transition: transform 500ms ease;
 

@@ -1,19 +1,26 @@
 <template>
   <div id="controls">
     <Screenshot ref="screenshot"></Screenshot>
-    <font-awesome-icon
-      @click="leaveSession"
-      icon="broadcast-tower"
+    <span
+      class="session"
+      :class="{ spectator: session.isSpectator }"
       v-if="session.sessionId"
-      v-bind:class="{ spectator: session.isSpectator }"
-      title="You're currently in a live game!"
-    />
-    <font-awesome-icon
-      icon="camera"
-      @click="takeScreenshot()"
-      title="Take a screenshot"
-      v-bind:class="{ success: grimoire.isScreenshotSuccess }"
-    />
+      @click="leaveSession"
+      :title="
+        `You're currently in a live game with ${session.playerCount} other players!`
+      "
+    >
+      <font-awesome-icon icon="broadcast-tower" />
+      {{ session.playerCount }}
+    </span>
+    <span class="camera">
+      <font-awesome-icon
+        icon="camera"
+        @click="takeScreenshot()"
+        title="Take a screenshot"
+        :class="{ success: grimoire.isScreenshotSuccess }"
+      />
+    </span>
     <div class="menu" v-bind:class="{ open: grimoire.isMenuOpen }">
       <font-awesome-icon icon="cog" @click="toggleMenu" />
       <ul>
@@ -79,12 +86,18 @@
           <li @click="clearPlayers" v-if="players.length">
             Remove all
           </li>
+        </template>
 
-          <!-- Characters -->
-          <li class="headline">
-            <font-awesome-icon icon="theater-masks" />
-            Characters
-          </li>
+        <!-- Characters -->
+        <li class="headline">
+          <font-awesome-icon icon="theater-masks" />
+          Characters
+        </li>
+        <li @click="toggleModal('reference')">
+          <em>[R]</em>
+          Reference Sheet
+        </li>
+        <template v-if="!session.isSpectator">
           <li @click="toggleModal('edition')">
             <em>[E]</em>
             Select Edition
@@ -120,10 +133,10 @@ export default {
       this.$refs.screenshot.capture(dimensions);
     },
     setBackground() {
-      this.$store.commit(
-        "setBackground",
-        prompt("Enter custom background URL")
-      );
+      const background = prompt("Enter custom background URL");
+      if (background || background === "") {
+        this.$store.commit("setBackground", background);
+      }
     },
     hostSession() {
       const sessionId = prompt(
@@ -241,14 +254,15 @@ export default {
     }
   }
 
-  > svg {
+  > span {
+    display: inline-block;
     cursor: pointer;
     z-index: 5;
-    margin-top: 10px;
+    margin-top: 7px;
     margin-left: 10px;
   }
 
-  > .fa-broadcast-tower {
+  .session {
     color: $demon;
     &.spectator {
       color: $townsfolk;
@@ -317,9 +331,10 @@ export default {
     }
 
     .headline {
+      font-family: PiratesBay, sans-serif;
+      letter-spacing: 1px;
       padding: 5px 10px;
       text-align: center;
-      font-weight: bold;
       background: linear-gradient(
         to right,
         $townsfolk 0%,

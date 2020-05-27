@@ -49,7 +49,7 @@ export default {
       availableRoles.push({});
       return availableRoles;
     },
-    ...mapState(["modals", "roles"]),
+    ...mapState(["modals", "roles", "session"]),
     ...mapState("players", ["players"])
   },
   methods: {
@@ -61,6 +61,7 @@ export default {
           role
         });
       } else {
+        if (this.session.isSpectator && role.team === "traveler") return;
         // assign to player
         const player = this.$store.state.players.players[this.playerIndex];
         this.$store.commit("players/update", {
@@ -104,5 +105,9 @@ ul.tokens li {
     transform: scale(1.2);
     z-index: 10;
   }
+}
+
+#townsquare.spectator ul.tokens li.traveler {
+  display: none;
 }
 </style>

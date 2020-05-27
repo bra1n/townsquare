@@ -16,11 +16,15 @@
         @add-reminder="openReminderModal(index)"
         @set-role="openRoleModal(index)"
         @remove-player="removePlayer(index)"
-        @swap-seats="swapSeats(index, $event)"
+        @cancel="cancel(index)"
+        @swap-player="swapPlayer(index, $event)"
+        @move-player="movePlayer(index, $event)"
         @screenshot="$emit('screenshot', $event)"
         v-bind:class="{
-          'swap-from': swapFrom === index,
-          swap: swapFrom > -1
+          from: Math.max(swap, move, nominate) === index,
+          swap: swap > -1,
+          move: move > -1,
+          nominate: nominate > -1
         }"
       ></Player>
     </ul>
@@ -66,7 +70,9 @@ export default {
     return {
       selectedPlayer: 0,
       bluffs: 3,
-      swapFrom: -1
+      swap: -1,
+      move: -1,
+      nominate: -1
     };
   },
   methods: {
@@ -80,7 +86,8 @@ export default {
     },
     openRoleModal(playerIndex) {
       const player = this.players[playerIndex];
-      if (this.session.isSpectator && player.role.team === "traveler") return;
+      if (this.session.isSpectator && player && player.role.team === "traveler")
+        return;
       this.selectedPlayer = playerIndex;
       this.$store.commit("toggleModal", "role");
     },
@@ -94,18 +101,34 @@ export default {
         this.$store.commit("players/remove", playerIndex);
       }
     },
-    swapSeats(from, to) {
+    swapPlayer(from, to) {
       if (to === undefined) {
-        this.swapFrom = from;
-      } else if (to === false) {
-        this.swapFrom = -1;
+        this.cancel();
+        this.swap = from;
       } else {
         this.$store.commit("players/swap", [
-          this.swapFrom,
+          this.swap,
           this.players.indexOf(to)
         ]);
-        this.swapFrom = -1;
+        this.cancel();
       }
+    },
+    movePlayer(from, to) {
+      if (to === undefined) {
+        this.cancel();
+        this.move = from;
+      } else {
+        this.$store.commit("players/move", [
+          this.move,
+          this.players.indexOf(to)
+        ]);
+        this.cancel();
+      }
+    },
+    cancel() {
+      this.move = -1;
+      this.swap = -1;
+      this.nominate = -1;
     }
   }
 };
