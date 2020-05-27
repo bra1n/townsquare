@@ -42,6 +42,7 @@ export default new Vuex.Store({
       playerCount: 0
     },
     modals: {
+      reference: false,
       edition: false,
       roles: false,
       role: false,
@@ -91,6 +92,12 @@ export default new Vuex.Store({
     },
     toggleModal({ modals }, name) {
       modals[name] = !modals[name];
+      if (modals[name]) {
+        for (let modal in modals) {
+          if (modal === name) continue;
+          modals[modal] = false;
+        }
+      }
     },
     updateScreenshot({ grimoire }, status) {
       if (status !== true && status !== false) {

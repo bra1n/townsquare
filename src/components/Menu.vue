@@ -86,12 +86,18 @@
           <li @click="clearPlayers" v-if="players.length">
             Remove all
           </li>
+        </template>
 
-          <!-- Characters -->
-          <li class="headline">
-            <font-awesome-icon icon="theater-masks" />
-            Characters
-          </li>
+        <!-- Characters -->
+        <li class="headline">
+          <font-awesome-icon icon="theater-masks" />
+          Characters
+        </li>
+        <li @click="toggleModal('reference')">
+          <em>[R]</em>
+          Reference Sheet
+        </li>
+        <template v-if="!session.isSpectator">
           <li @click="toggleModal('edition')">
             <em>[E]</em>
             Select Edition

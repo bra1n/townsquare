@@ -14,8 +14,9 @@
     <TownInfo v-if="players.length"></TownInfo>
     <TownSquare @screenshot="takeScreenshot"></TownSquare>
     <Menu ref="menu"></Menu>
-    <EditionModal></EditionModal>
-    <RolesModal></RolesModal>
+    <EditionModal />
+    <RolesModal />
+    <ReferenceModal />
   </div>
 </template>
 
@@ -27,9 +28,11 @@ import Menu from "./components/Menu";
 import RolesModal from "./components/modals/RolesModal";
 import EditionModal from "./components/modals/EditionModal";
 import Intro from "./components/Intro";
+import ReferenceModal from "./components/modals/ReferenceModal";
 
 export default {
   components: {
+    ReferenceModal,
     Intro,
     TownInfo,
     TownSquare,
@@ -54,7 +57,7 @@ export default {
           this.$refs.menu.addPlayer();
           break;
         case "r":
-          this.$refs.menu.randomizeSeatings();
+          this.$store.commit("toggleModal", "reference");
           break;
         case "e":
           if (this.session.isSpectator) return;
