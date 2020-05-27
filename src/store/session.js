@@ -64,6 +64,7 @@ class LiveSession {
    */
   _ping() {
     this._send("ping", [this._isSpectator, this._store.state.session.playerId]);
+    this._handlePing();
     clearTimeout(this._pingTimer);
     this._pingTimer = setTimeout(this._ping.bind(this), this._pingInterval);
   }
@@ -283,9 +284,14 @@ class LiveSession {
    * @param playerId
    * @private
    */
-  _handlePing([isSpectator, playerId]) {
+  _handlePing([isSpectator, playerId] = []) {
     const now = new Date().getTime();
-    this._players[playerId] = now;
+    if (playerId) {
+      this._players[playerId] = now;
+      if (!this._isSpectator && !isSpectator) {
+        alert("Another storyteller joined the session!");
+      }
+    }
     // remove players that haven't sent a ping in twice the timespan
     for (let player in this._players) {
       if (now - this._players[player] > this._pingInterval * 2) {
@@ -293,9 +299,6 @@ class LiveSession {
       }
     }
     this._store.commit("setPlayerCount", Object.keys(this._players).length);
-    if (!this._isSpectator && !isSpectator) {
-      alert("Another storyteller joined the session!");
-    }
   }
 
   /**
