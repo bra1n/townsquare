@@ -1,4 +1,6 @@
 const NEWPLAYER = {
+  name: "",
+  id: "",
   role: {},
   reminders: [],
   isVoteless: false,
@@ -60,9 +62,9 @@ const actions = {
       });
     } else {
       players = state.players.map(({ name, id }) => ({
+        ...NEWPLAYER,
         name,
-        id,
-        ...NEWPLAYER
+        id
       }));
     }
     commit("set", players);
@@ -84,8 +86,8 @@ const mutations = {
   },
   add(state, name) {
     state.players.push({
-      name,
-      ...NEWPLAYER
+      ...NEWPLAYER,
+      name
     });
   },
   remove(state, index) {

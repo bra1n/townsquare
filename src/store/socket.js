@@ -93,6 +93,9 @@ class LiveSession {
       case "player":
         this._updatePlayer(params);
         break;
+      case "claim":
+        this._updateSeat(params);
+        break;
       case "ping":
         this._handlePing(params);
         break;
@@ -304,6 +307,40 @@ class LiveSession {
       Object.keys(this._players).length
     );
   }
+
+  /**
+   * Claim a seat, needs to be confirmed by the Storyteller.
+   * @param seat either -1 or the index of the seat claimed
+   */
+  claimSeat(seat) {
+    if (!this._isSpectator) return;
+    if (this._store.state.players.players.length > seat) {
+      this._send("claim", [seat, this._store.state.session.playerId]);
+    }
+  }
+
+  /**
+   * Update a player id associated with that seat.
+   * @param index seat index or -1
+   * @param value playerId to add / remove
+   * @private
+   */
+  _updateSeat([index, value]) {
+    const property = "id";
+    // remove previous seat
+    const player = this._store.state.players.players.find(
+      ({ id }) => id === value
+    );
+    if (player) {
+      this._store.commit("players/update", { player, property, value: "" });
+    }
+    // add playerId to new seat
+    if (index >= 0) {
+      const player = this._store.state.players.players[index];
+      if (!player) return;
+      this._store.commit("players/update", { player, property, value });
+    }
+  }
 }
 
 module.exports = store => {
@@ -320,6 +357,9 @@ module.exports = store => {
           window.location.hash = "";
           session.disconnect();
         }
+        break;
+      case "session/claimSeat":
+        session.claimSeat(payload);
         break;
       case "players/set":
       case "players/swap":

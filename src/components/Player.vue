@@ -3,11 +3,14 @@
     <div
       ref="player"
       class="player"
-      :class="{
-        dead: player.isDead,
-        'no-vote': player.isVoteless,
-        traveler: player.role && player.role.team === 'traveler'
-      }"
+      :class="[
+        {
+          dead: player.isDead,
+          'no-vote': player.isVoteless,
+          you: player.id === session.playerId
+        },
+        player.role.team
+      ]"
     >
       <div class="shroud" @click="toggleStatus()"></div>
       <div class="life" @click="toggleStatus()"></div>
@@ -31,8 +34,12 @@
         }}</span>
       </div>
 
-      <Token :role="player.role" @set-role="$emit('set-role')" />
+      <Token
+        :role="player.role"
+        @set-role="$emit('trigger', ['openRoleModal'])"
+      />
 
+      <!-- Overlay icons -->
       <font-awesome-icon
         icon="times-circle"
         class="cancel"
@@ -52,6 +59,10 @@
         title="Move player to this seat"
       />
 
+      <!-- Claimed seat icon -->
+      <font-awesome-icon icon="chair" v-if="player.id" class="seat" />
+
+      <!-- Ghost vote icon -->
       <font-awesome-icon
         icon="vote-yea"
         class="vote"
@@ -90,13 +101,17 @@
               <font-awesome-icon icon="camera" />
               Screenshot
             </li>
-            <li @click="$emit('remove-player')">
+            <li @click="$emit('trigger', ['removePlayer'])">
               <font-awesome-icon icon="times-circle" />
               Remove
             </li>
           </template>
           <li @click="claimSeat" v-if="session.isSpectator">
-            <font-awesome-icon icon="chair" /> Claim seat
+            <font-awesome-icon icon="chair" />
+            <template v-if="player.id !== session.playerId">
+              Claim seat
+            </template>
+            <template v-else> Vacate seat </template>
           </li>
         </ul>
       </transition>
@@ -121,7 +136,7 @@
         {{ reminder.name }}
       </div>
     </template>
-    <div class="reminder add" @click="$emit('add-reminder')">
+    <div class="reminder add" @click="$emit('trigger', ['openReminderModal'])">
       <span class="icon"></span>
     </div>
   </li>
@@ -198,14 +213,18 @@ export default {
     },
     swapPlayer(player) {
       this.isMenuOpen = false;
-      this.$emit("swap-player", player);
+      this.$emit("trigger", ["swapPlayer", player]);
     },
     movePlayer(player) {
       this.isMenuOpen = false;
-      this.$emit("move-player", player);
+      this.$emit("trigger", ["movePlayer", player]);
     },
     cancel() {
-      this.$emit("cancel");
+      this.$emit("trigger", ["cancel"]);
+    },
+    claimSeat() {
+      this.isMenuOpen = false;
+      this.$emit("trigger", ["claimSeat"]);
     }
   }
 };
@@ -407,13 +426,56 @@ li.move:not(.from) .player > svg.move {
   bottom: 45px;
   color: #fff;
   filter: drop-shadow(0 0 3px black);
-  cursor: pointer;
   transition: opacity 250ms;
 
   #townsquare.public & {
     opacity: 0;
     pointer-events: none;
   }
+}
+
+@mixin glow($name, $color) {
+  @keyframes #{$name}-glow {
+    0% {
+      box-shadow: 0 0 rgba($color, 1);
+      border-color: $color;
+    }
+    50% {
+      border-color: black;
+    }
+    100% {
+      box-shadow: 0 0 20px 16px transparent;
+      border-color: $color;
+    }
+  }
+
+  .player.you.#{$name} .token {
+    animation: #{$name}-glow 2s ease-in-out infinite;
+  }
+}
+
+@include glow("townsfolk", $townsfolk);
+@include glow("outsider", $outsider);
+@include glow("demon", $demon);
+@include glow("minion", $minion);
+@include glow("traveler", $traveler);
+
+.player.you .token {
+  animation: townsfolk-glow 2s ease-in-out infinite;
+}
+
+/****** Seat icon ********/
+.player .seat {
+  position: absolute;
+  left: 2px;
+  bottom: 45px;
+  color: #fff;
+  filter: drop-shadow(0 0 3px black);
+  cursor: default;
+}
+
+.player.you .seat {
+  color: $townsfolk;
 }
 
 /***** Player name *****/

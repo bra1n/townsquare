@@ -13,13 +13,8 @@
         v-for="(player, index) in players"
         :key="index"
         :player="player"
-        @add-reminder="openReminderModal(index)"
-        @set-role="openRoleModal(index)"
-        @remove-player="removePlayer(index)"
-        @cancel="cancel(index)"
-        @swap-player="swapPlayer(index, $event)"
-        @move-player="movePlayer(index, $event)"
         @screenshot="$emit('screenshot', $event)"
+        @trigger="handleTrigger(index, $event)"
         v-bind:class="{
           from: Math.max(swap, move, nominate) === index,
           swap: swap > -1,
@@ -79,6 +74,19 @@ export default {
     takeScreenshot() {
       const { width, height, x, y } = this.$refs.bluffs.getBoundingClientRect();
       this.$emit("screenshot", { width, height, x, y });
+    },
+    handleTrigger(playerIndex, [method, params]) {
+      if (typeof this[method] === "function") {
+        this[method](playerIndex, params);
+      }
+    },
+    claimSeat(playerIndex) {
+      if (!this.session.isSpectator) return;
+      if (this.session.playerId === this.players[playerIndex].id) {
+        this.$store.commit("session/claimSeat", -1);
+      } else {
+        this.$store.commit("session/claimSeat", playerIndex);
+      }
     },
     openReminderModal(playerIndex) {
       this.selectedPlayer = playerIndex;

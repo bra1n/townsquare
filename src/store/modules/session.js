@@ -22,6 +22,9 @@ const mutations = {
   },
   setPlayerCount(state, playerCount) {
     state.playerCount = playerCount;
+  },
+  claimSeat(state, claimedSeat) {
+    state.claimedSeat = claimedSeat;
   }
 };
 
