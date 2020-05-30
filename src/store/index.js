@@ -1,8 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import persistence from "./persistence";
-import session from "./session";
+import socket from "./socket";
 import players from "./modules/players";
+import session from "./modules/session";
 import editionJSON from "../editions.json";
 import rolesJSON from "../roles.json";
 
@@ -23,7 +24,8 @@ const getRolesByEdition = (edition = "tb") => {
 
 export default new Vuex.Store({
   modules: {
-    players
+    players,
+    session
   },
   state: {
     grimoire: {
@@ -35,12 +37,6 @@ export default new Vuex.Store({
       zoom: 1,
       background: "",
       bluffs: []
-    },
-    session: {
-      sessionId: "",
-      isSpectator: false,
-      playerCount: 0,
-      playerId: ""
     },
     modals: {
       reference: false,
@@ -74,18 +70,6 @@ export default new Vuex.Store({
     },
     setBackground({ grimoire }, background) {
       grimoire.background = background;
-    },
-    setSessionId({ session }, sessionId) {
-      session.sessionId = sessionId;
-    },
-    setPlayerId({ session }, playerId) {
-      session.playerId = playerId;
-    },
-    setSpectator({ session }, spectator) {
-      session.isSpectator = spectator;
-    },
-    setPlayerCount({ session }, playerCount) {
-      session.playerCount = playerCount;
     },
     setBluff({ grimoire }, { index, role } = {}) {
       if (index !== undefined) {
@@ -128,5 +112,5 @@ export default new Vuex.Store({
       }
     }
   },
-  plugins: [persistence, session]
+  plugins: [persistence, socket]
 });

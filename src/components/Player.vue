@@ -69,29 +69,34 @@
       </div>
 
       <transition name="fold">
-        <ul class="menu" v-if="isMenuOpen && !session.isSpectator">
-          <li @click="changeName">
-            <font-awesome-icon icon="user-edit" />Rename
-          </li>
-          <!--<li @click="nomination">
-            <font-awesome-icon icon="hand-point-right" />
-            Nomination
-          </li>-->
-          <li @click="movePlayer()">
-            <font-awesome-icon icon="redo-alt" />
-            Move player
-          </li>
-          <li @click="swapPlayer()">
-            <font-awesome-icon icon="exchange-alt" />
-            Swap seats
-          </li>
-          <li @click="takeScreenshot">
-            <font-awesome-icon icon="camera" />
-            Screenshot
-          </li>
-          <li @click="$emit('remove-player')">
-            <font-awesome-icon icon="times-circle" />
-            Remove
+        <ul class="menu" v-if="isMenuOpen">
+          <template v-if="!session.isSpectator">
+            <li @click="changeName">
+              <font-awesome-icon icon="user-edit" />Rename
+            </li>
+            <!--<li @click="nomination">
+              <font-awesome-icon icon="hand-point-right" />
+              Nomination
+            </li>-->
+            <li @click="movePlayer()">
+              <font-awesome-icon icon="redo-alt" />
+              Move player
+            </li>
+            <li @click="swapPlayer()">
+              <font-awesome-icon icon="exchange-alt" />
+              Swap seats
+            </li>
+            <li @click="takeScreenshot">
+              <font-awesome-icon icon="camera" />
+              Screenshot
+            </li>
+            <li @click="$emit('remove-player')">
+              <font-awesome-icon icon="times-circle" />
+              Remove
+            </li>
+          </template>
+          <li @click="claimSeat" v-if="session.isSpectator">
+            <font-awesome-icon icon="chair" /> Claim seat
           </li>
         </ul>
       </transition>

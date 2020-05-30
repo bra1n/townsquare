@@ -27,7 +27,7 @@ class LiveSession {
     this._socket.onopen = this._onOpen.bind(this);
     this._socket.onclose = () => {
       this._socket = null;
-      this._store.commit("setSessionId", "");
+      this._store.commit("session/setSessionId", "");
       clearInterval(this._pingTimer);
       this._pingTimer = null;
     };
@@ -110,13 +110,13 @@ class LiveSession {
   connect(channel) {
     if (!this._store.state.session.playerId) {
       this._store.commit(
-        "setPlayerId",
+        "session/setPlayerId",
         Math.random()
           .toString(36)
           .substr(2)
       );
     }
-    this._store.commit("setPlayerCount", 0);
+    this._store.commit("session/setPlayerCount", 0);
     this._isSpectator = this._store.state.session.isSpectator;
     this._open(channel);
   }
@@ -125,7 +125,7 @@ class LiveSession {
    * Close the current session, if any.
    */
   disconnect() {
-    this._store.commit("setPlayerCount", 0);
+    this._store.commit("session/setPlayerCount", 0);
     if (this._socket) {
       this._send("bye", this._store.state.session.playerId);
       this._socket.close();
@@ -140,6 +140,7 @@ class LiveSession {
     if (this._isSpectator) return;
     this._gamestate = this._store.state.players.players.map(player => ({
       name: player.name,
+      id: player.id,
       isDead: player.isDead,
       isVoteless: player.isVoteless,
       ...(player.role && player.role.team === "traveler"
@@ -181,28 +182,15 @@ class LiveSession {
     // update status for each player
     gamestate.forEach((state, x) => {
       const player = players[x];
-      const { name, isDead, isVoteless, role } = state;
-      if (player.name !== name) {
-        this._store.commit("players/update", {
-          player,
-          property: "name",
-          value: name
-        });
-      }
-      if (player.isDead !== isDead) {
-        this._store.commit("players/update", {
-          player,
-          property: "isDead",
-          value: isDead
-        });
-      }
-      if (player.isVoteless !== isVoteless) {
-        this._store.commit("players/update", {
-          player,
-          property: "isVoteless",
-          value: isVoteless
-        });
-      }
+      const { role } = state;
+      // update relevant properties
+      ["name", "id", "isDead", "isVoteless"].forEach(property => {
+        const value = state[property];
+        if (player[property] !== value) {
+          this._store.commit("players/update", { player, property, value });
+        }
+      });
+      // roles are special, because of travelers
       if (role && player.role.id !== role.id) {
         this._store.commit("players/update", {
           player,
@@ -298,7 +286,10 @@ class LiveSession {
         delete this._players[player];
       }
     }
-    this._store.commit("setPlayerCount", Object.keys(this._players).length);
+    this._store.commit(
+      "session/setPlayerCount",
+      Object.keys(this._players).length
+    );
   }
 
   /**
@@ -308,7 +299,10 @@ class LiveSession {
    */
   _handleBye(playerId) {
     delete this._players[playerId];
-    this._store.commit("setPlayerCount", Object.keys(this._players).length);
+    this._store.commit(
+      "session/setPlayerCount",
+      Object.keys(this._players).length
+    );
   }
 }
 
@@ -319,7 +313,7 @@ module.exports = store => {
   // listen to mutations
   store.subscribe(({ type, payload }) => {
     switch (type) {
-      case "setSessionId":
+      case "session/setSessionId":
         if (payload) {
           session.connect(payload);
         } else {
@@ -345,7 +339,7 @@ module.exports = store => {
   // check for session Id in hash
   const [command, param] = window.location.hash.substr(1).split("/");
   if (command === "play") {
-    store.commit("setSpectator", true);
-    store.commit("setSessionId", param);
+    store.commit("session/setSpectator", true);
+    store.commit("session/setSessionId", param);
   }
 };

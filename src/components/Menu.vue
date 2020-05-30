@@ -106,10 +106,10 @@
             <em>[C]</em>
             Choose & Assign
           </li>
-          <li @click="clearRoles" v-if="players.length">
-            Remove all
-          </li>
         </template>
+        <li @click="clearRoles" v-if="players.length">
+          Remove all
+        </li>
       </ul>
     </div>
   </div>
@@ -144,9 +144,9 @@ export default {
         Math.round(Math.random() * 10000)
       );
       if (sessionId) {
-        this.$store.commit("setSpectator", false);
+        this.$store.commit("session/setSpectator", false);
         this.$store.commit(
-          "setSessionId",
+          "session/setSessionId",
           sessionId.replace(/[^0-9a-z]/g, "").substr(0, 5)
         );
         this.copySessionUrl();
@@ -169,17 +169,17 @@ export default {
         "Enter the channel number / name of the session you want to join"
       );
       if (sessionId) {
-        this.$store.commit("setSpectator", true);
+        this.$store.commit("session/setSpectator", true);
         this.$store.commit(
-          "setSessionId",
+          "session/setSessionId",
           sessionId.replace(/[^0-9a-z]/g, "").substr(0, 5)
         );
       }
     },
     leaveSession() {
       if (confirm("Are you sure you want to leave the active live game?")) {
-        this.$store.commit("setSpectator", false);
-        this.$store.commit("setSessionId", "");
+        this.$store.commit("session/setSpectator", false);
+        this.$store.commit("session/setSessionId", "");
       }
     },
     addPlayer() {
@@ -203,7 +203,6 @@ export default {
       }
     },
     clearRoles() {
-      if (this.session.isSpectator) return;
       if (confirm("Are you sure you want to remove all player roles?")) {
         this.$store.dispatch("players/clearRoles");
         this.$store.commit("setBluff");

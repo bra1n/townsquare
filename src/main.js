@@ -30,7 +30,8 @@ const faIcons = [
   "UserEdit",
   "UserFriends",
   "Users",
-  "VoteYea"
+  "VoteYea",
+  "Chair"
 ];
 library.add(...faIcons.map(i => fas["fa" + i]));
 Vue.component("font-awesome-icon", FontAwesomeIcon);

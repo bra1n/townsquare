@@ -48,11 +48,23 @@ const actions = {
       .map(a => a[1]);
     commit("set", players);
   },
-  clearRoles({ state, commit }) {
-    const players = state.players.map(({ name }) => ({
-      name,
-      ...NEWPLAYER
-    }));
+  clearRoles({ state, commit, rootState }) {
+    let players;
+    if (rootState.session.isSpectator) {
+      players = state.players.map(player => {
+        if (player.role.team !== "traveler") {
+          player.role = {};
+        }
+        player.reminders = [];
+        return player;
+      });
+    } else {
+      players = state.players.map(({ name, id }) => ({
+        name,
+        id,
+        ...NEWPLAYER
+      }));
+    }
     commit("set", players);
   }
 };
