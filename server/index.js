@@ -19,7 +19,9 @@ wss.on("connection", function connection(ws, req) {
     .pop()
     .toLocaleLowerCase();
   ws.on("message", function incoming(data) {
-    console.log(data);
+    if (!data.match(/^\["ping/i)) {
+      console.log(ws.channel, wss.clients.size, data);
+    }
     wss.clients.forEach(function each(client) {
       if (
         client !== ws &&

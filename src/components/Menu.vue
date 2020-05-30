@@ -140,14 +140,14 @@ export default {
     },
     hostSession() {
       const sessionId = prompt(
-        "Enter a channel number for your session",
+        "Enter a channel number / name for your session",
         Math.round(Math.random() * 10000)
       );
       if (sessionId) {
         this.$store.commit("setSpectator", false);
         this.$store.commit(
           "setSessionId",
-          sessionId.replace(/[^0-9]/g, "").substr(0, 5)
+          sessionId.replace(/[^0-9a-z]/g, "").substr(0, 5)
         );
         this.copySessionUrl();
       }
@@ -166,13 +166,13 @@ export default {
     },
     joinSession() {
       const sessionId = prompt(
-        "Enter the channel number of the session you want to join"
+        "Enter the channel number / name of the session you want to join"
       );
       if (sessionId) {
         this.$store.commit("setSpectator", true);
         this.$store.commit(
           "setSessionId",
-          sessionId.replace(/[^0-9]/g, "").substr(0, 5)
+          sessionId.replace(/[^0-9a-z]/g, "").substr(0, 5)
         );
       }
     },
