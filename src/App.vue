@@ -11,8 +11,9 @@
     }"
   >
     <Intro v-if="!players.length"></Intro>
-    <TownInfo v-if="players.length"></TownInfo>
+    <TownInfo v-if="players.length && !session.nomination"></TownInfo>
     <TownSquare @screenshot="takeScreenshot"></TownSquare>
+    <Vote v-if="session.nomination"></Vote>
     <Menu ref="menu"></Menu>
     <EditionModal />
     <RolesModal />
@@ -29,9 +30,11 @@ import RolesModal from "./components/modals/RolesModal";
 import EditionModal from "./components/modals/EditionModal";
 import Intro from "./components/Intro";
 import ReferenceModal from "./components/modals/ReferenceModal";
+import Vote from "./components/Vote";
 
 export default {
   components: {
+    Vote,
     ReferenceModal,
     Intro,
     TownInfo,

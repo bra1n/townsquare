@@ -3,7 +3,8 @@ const state = () => ({
   isSpectator: false,
   playerCount: 0,
   playerId: "",
-  claimedSeat: -1
+  claimedSeat: -1,
+  nomination: false
 });
 
 const getters = {};
@@ -25,6 +26,9 @@ const mutations = {
   },
   claimSeat(state, claimedSeat) {
     state.claimedSeat = claimedSeat;
+  },
+  nomination(state, nomination) {
+    state.nomination = nomination;
   }
 };
 

@@ -133,6 +133,20 @@ export default {
         this.cancel();
       }
     },
+    nominatePlayer(from, to) {
+      if (to === undefined && from !== this.nominate) {
+        this.cancel();
+        if (from !== this.nominate) {
+          this.nominate = from;
+        }
+      } else {
+        this.$store.commit("session/nomination", [
+          this.nominate,
+          this.players.indexOf(to)
+        ]);
+        this.cancel();
+      }
+    },
     cancel() {
       this.move = -1;
       this.swap = -1;
@@ -229,6 +243,10 @@ export default {
   height: 100%;
   border-radius: 50%;
   padding: 20px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 }
 
 /***** Demon bluffs *******/

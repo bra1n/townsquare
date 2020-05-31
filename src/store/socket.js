@@ -289,6 +289,16 @@ class LiveSession {
         delete this._players[player];
       }
     }
+    // remove claimed seats from players that are no longer connected
+    this._store.state.players.players.forEach(player => {
+      if (player.id && !this._players[player.id]) {
+        this._store.commit("players/update", {
+          player,
+          property: "id",
+          value: ""
+        });
+      }
+    });
     this._store.commit(
       "session/setPlayerCount",
       Object.keys(this._players).length

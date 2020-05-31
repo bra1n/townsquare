@@ -58,6 +58,12 @@
         @click="movePlayer(player)"
         title="Move player to this seat"
       />
+      <font-awesome-icon
+        icon="hand-point-right"
+        class="nominate"
+        @click="nominatePlayer(player)"
+        title="Nominate this player"
+      />
 
       <!-- Claimed seat icon -->
       <font-awesome-icon icon="chair" v-if="player.id" class="seat" />
@@ -85,10 +91,10 @@
             <li @click="changeName">
               <font-awesome-icon icon="user-edit" />Rename
             </li>
-            <!--<li @click="nomination">
+            <li v-if="!session.nomination" @click="nominatePlayer()">
               <font-awesome-icon icon="hand-point-right" />
               Nomination
-            </li>-->
+            </li>
             <li @click="movePlayer()">
               <font-awesome-icon icon="redo-alt" />
               Move player
@@ -218,6 +224,10 @@ export default {
     movePlayer(player) {
       this.isMenuOpen = false;
       this.$emit("trigger", ["movePlayer", player]);
+    },
+    nominatePlayer(player) {
+      this.isMenuOpen = false;
+      this.$emit("trigger", ["nominatePlayer", player]);
     },
     cancel() {
       this.$emit("trigger", ["cancel"]);
@@ -391,6 +401,7 @@ export default {
   cursor: pointer;
   &.swap,
   &.move,
+  &.nominate,
   &.cancel {
     top: 9%;
     left: 20%;
@@ -406,13 +417,14 @@ export default {
   }
 }
 
-li.from .player > svg.cancel {
+li.from:not(.nominate) .player > svg.cancel {
   opacity: 1;
   transform: scale(1);
   pointer-events: all;
 }
 
 li.swap:not(.from) .player > svg.swap,
+li.nominate .player > svg.nominate,
 li.move:not(.from) .player > svg.move {
   opacity: 1;
   transform: scale(1);
