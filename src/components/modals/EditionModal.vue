@@ -86,6 +86,10 @@ export default {
         [
           "Frankenstein's Mayor by Ted",
           "https://gist.githubusercontent.com/bra1n/32c52b422cc01b934a4291eeb81dbcee/raw/3ca5a043c41141ac40667dc15097deb327263268/Frankensteins_Mayor_by_Ted.json"
+        ],
+        [
+          "Vigormortis High School",
+          "https://gist.githubusercontent.com/bra1n/1f65bd4a999524719d5dabe98c3c2d27/raw/f28d3268846c182b2078888122003c6f95c6b2cf/VigormortisHighSchool.json"
         ]
       ]
     };
