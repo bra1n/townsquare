@@ -10,6 +10,7 @@ const faIcons = [
   "BroadcastTower",
   "Camera",
   "CheckSquare",
+  "Skull",
   "Cog",
   "Copy",
   "ExchangeAlt",

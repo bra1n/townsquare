@@ -7,7 +7,8 @@
         {
           dead: player.isDead,
           'no-vote': player.isVoteless,
-          you: player.id === session.playerId
+          you: player.id === session.playerId,
+          'voted-yes': session.votes[index]
         },
         player.role.team
       ]"
@@ -41,6 +42,12 @@
 
       <!-- Overlay icons -->
       <font-awesome-icon
+        icon="skull"
+        class="vote"
+        title="Vote"
+        @click="vote()"
+      />
+      <font-awesome-icon
         icon="times-circle"
         class="cancel"
         title="Cancel"
@@ -71,7 +78,7 @@
       <!-- Ghost vote icon -->
       <font-awesome-icon
         icon="vote-yea"
-        class="vote"
+        class="has-vote"
         v-if="player.isDead && !player.isVoteless"
         @click="updatePlayer('isVoteless', true)"
         title="Ghost vote"
@@ -163,6 +170,9 @@ export default {
     }
   },
   computed: {
+    index: function() {
+      return this.$store.state.players.players.indexOf(this.player);
+    },
     ...mapState(["grimoire", "session"]),
     ...mapGetters({ nightOrder: "players/nightOrder" })
   },
@@ -235,6 +245,10 @@ export default {
     claimSeat() {
       this.isMenuOpen = false;
       this.$emit("trigger", ["claimSeat"]);
+    },
+    vote() {
+      if (this.player.id !== this.session.playerId) return;
+      this.$store.commit("session/vote", [this.index]);
     }
   }
 };
@@ -402,6 +416,7 @@ export default {
   &.swap,
   &.move,
   &.nominate,
+  &.vote,
   &.cancel {
     top: 9%;
     left: 20%;
@@ -415,6 +430,17 @@ export default {
       color: red;
     }
   }
+}
+
+#townsquare.vote .player.voted-yes > svg.vote {
+  color: $demon;
+  opacity: 0.5;
+  transform: scale(1);
+}
+
+#townsquare.vote .player.you.voted-yes > svg.vote {
+  opacity: 1;
+  transform: scale(1);
 }
 
 li.from:not(.nominate) .player > svg.cancel {
@@ -432,7 +458,7 @@ li.move:not(.from) .player > svg.move {
 }
 
 /****** Vote icon ********/
-.player .vote {
+.player .has-vote {
   position: absolute;
   right: 2px;
   bottom: 45px;

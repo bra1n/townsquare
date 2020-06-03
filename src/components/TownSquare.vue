@@ -4,7 +4,8 @@
     class="square"
     v-bind:class="{
       public: grimoire.isPublic,
-      spectator: session.isSpectator
+      spectator: session.isSpectator,
+      vote: session.nomination
     }"
     v-bind:style="{ zoom: grimoire.zoom }"
   >

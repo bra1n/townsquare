@@ -99,6 +99,12 @@ class LiveSession {
       case "ping":
         this._handlePing(params);
         break;
+      case "nomination":
+        this._store.commit("session/nomination", params);
+        break;
+      case "vote":
+        this._store.commit("session/vote", params);
+        break;
       case "bye":
         this._handleBye(params);
         break;
@@ -291,7 +297,7 @@ class LiveSession {
     }
     // remove claimed seats from players that are no longer connected
     this._store.state.players.players.forEach(player => {
-      if (player.id && !this._players[player.id]) {
+      if (!this._isSpectator && player.id && !this._players[player.id]) {
         this._store.commit("players/update", {
           player,
           property: "id",
@@ -336,20 +342,50 @@ class LiveSession {
    * @private
    */
   _updateSeat([index, value]) {
+    if (this._isSpectator) return;
     const property = "id";
+    const players = this._store.state.players.players;
     // remove previous seat
-    const player = this._store.state.players.players.find(
-      ({ id }) => id === value
-    );
-    if (player) {
-      this._store.commit("players/update", { player, property, value: "" });
+    const oldIndex = players.findIndex(({ id }) => id === value);
+    if (oldIndex >= 0 && oldIndex !== index) {
+      this._store.commit("players/update", {
+        player: players[oldIndex],
+        property,
+        value: ""
+      });
     }
     // add playerId to new seat
     if (index >= 0) {
-      const player = this._store.state.players.players[index];
+      const player = players[index];
       if (!player) return;
       this._store.commit("players/update", { player, property, value });
     }
+    // update player session list as if this was a ping
+    this._handlePing([true, value]);
+  }
+
+  /**
+   * A player nomination.
+   * @param nomination [nominator, nominee]
+   */
+  nomination(nomination) {
+    if (this._isSpectator) return;
+    const players = this._store.state.players.players;
+    if (
+      !nomination ||
+      (players.length > nomination[0] && players.length > nomination[1])
+    ) {
+      this._send("nomination", nomination);
+    }
+  }
+
+  /**
+   * Send a vote.
+   * @param index
+   */
+  vote([index]) {
+    if (!this._isSpectator) return;
+    this._send("vote", [index, this._store.state.session.votes[index]]);
   }
 }
 
@@ -370,6 +406,12 @@ module.exports = store => {
         break;
       case "session/claimSeat":
         session.claimSeat(payload);
+        break;
+      case "session/nomination":
+        session.nomination(payload);
+        break;
+      case "session/vote":
+        session.vote(payload);
         break;
       case "players/set":
       case "players/swap":

@@ -4,7 +4,9 @@ const state = () => ({
   playerCount: 0,
   playerId: "",
   claimedSeat: -1,
-  nomination: false
+  nomination: false,
+  votes: [],
+  lockedVote: -1
 });
 
 const getters = {};
@@ -29,6 +31,11 @@ const mutations = {
   },
   nomination(state, nomination) {
     state.nomination = nomination;
+    state.votes = [];
+  },
+  vote(state, [index, vote]) {
+    state.votes = [...state.votes];
+    state.votes[index] = vote === undefined ? !state.votes[index] : vote;
   }
 };
 

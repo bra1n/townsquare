@@ -1,5 +1,5 @@
 <template>
-  <div class="vote">
+  <div id="vote">
     <div class="arrows">
       <span class="nominee" :style="nomineeStyle"></span>
       <span class="nominator" :style="nominatorStyle"></span>
@@ -10,16 +10,28 @@
       >!
       <br />
       <template v-if="nominee.role.team !== 'traveler'">
-        <em class="blue">{{ Math.ceil(alive / 2) }} votes</em> required for an
-        <em>execution</em>
+        <em class="blue">{{ Math.ceil(alive / 2) }} votes</em> required to
+        <em>execute</em>.
       </template>
       <template v-else>
-        <em>{{ Math.ceil(players.length / 2) }} votes</em> required for an
-        <em>exile</em>
+        <em>{{ Math.ceil(players.length / 2) }} votes</em> required to
+        <em>exile</em>.
       </template>
-      <div class="button-group">
+      <div class="button-group" v-if="!session.isSpectator">
         <div class="button">Start Vote</div>
         <div class="button" @click="finish">Finish Vote</div>
+      </div>
+      <div
+        class="button-group"
+        v-else-if="
+          player && (!player.isVoteless || nominee.role.team === 'traveler')
+        "
+      >
+        <div class="button vote-no" @click="vote(false)">Vote NO</div>
+        <div class="button vote-yes" @click="vote(true)">Vote YES</div>
+      </div>
+      <div v-else-if="!player">
+        Please claim a seat to vote.
       </div>
     </div>
   </div>
@@ -54,6 +66,10 @@ export default {
         transform: `rotate(${Math.round((nomination / players) * 360)}deg)`
       };
     },
+    player: function() {
+      const id = this.$store.state.session.playerId;
+      return this.$store.state.players.players.find(p => p.id === id);
+    },
     ...mapState("players", ["players"]),
     ...mapState(["session"]),
     ...mapGetters({ alive: "players/alive" })
@@ -61,6 +77,12 @@ export default {
   methods: {
     finish() {
       this.$store.commit("session/nomination", false);
+    },
+    vote(vote) {
+      const index = this.players.findIndex(p => p.id === this.session.playerId);
+      if (index >= 0 && !!this.session.votes[index] !== vote) {
+        this.$store.commit("session/vote", [index, vote]);
+      }
     }
   }
 };
@@ -69,7 +91,7 @@ export default {
 <style lang="scss" scoped>
 @import "../vars.scss";
 
-.vote {
+#vote {
   position: absolute;
   width: 20%;
   z-index: 20;
@@ -150,5 +172,31 @@ export default {
     background-image: url("../assets/clock-big.png");
     animation: arrow-cw 1s ease-out;
   }
+}
+
+.button.vote-no {
+  background: radial-gradient(
+        at 0 -15%,
+        rgba(255, 255, 255, 0.07) 70%,
+        rgba(255, 255, 255, 0) 71%
+      )
+      0 0/80% 90% no-repeat content-box,
+    linear-gradient(#0031ad, rgba(5, 0, 0, 0.22)) content-box,
+    linear-gradient(#292929, #001142) border-box;
+  box-shadow: inset 0 1px 1px #002c9c, 0 0 10px #000;
+  &:hover {
+    color: #008cf7;
+  }
+}
+.button.vote-yes {
+  background: radial-gradient(
+        at 0 -15%,
+        rgba(255, 255, 255, 0.07) 70%,
+        rgba(255, 255, 255, 0) 71%
+      )
+      0 0/80% 90% no-repeat content-box,
+    linear-gradient(#ad0000, rgba(5, 0, 0, 0.22)) content-box,
+    linear-gradient(#292929, #420000) border-box;
+  box-shadow: inset 0 1px 1px #9c0000, 0 0 10px #000;
 }
 </style>
