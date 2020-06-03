@@ -105,6 +105,9 @@ class LiveSession {
       case "vote":
         this._store.commit("session/vote", params);
         break;
+      case "lock":
+        this._store.commit("session/lockVote", params);
+        break;
       case "bye":
         this._handleBye(params);
         break;
@@ -365,7 +368,7 @@ class LiveSession {
   }
 
   /**
-   * A player nomination.
+   * A player nomination. ST only
    * @param nomination [nominator, nominee]
    */
   nomination(nomination) {
@@ -380,12 +383,20 @@ class LiveSession {
   }
 
   /**
-   * Send a vote.
+   * Send a vote. Player only
    * @param index
    */
   vote([index]) {
     if (!this._isSpectator) return;
     this._send("vote", [index, this._store.state.session.votes[index]]);
+  }
+
+  /**
+   * Lock a vote. ST only
+   */
+  lockVote() {
+    if (this._isSpectator) return;
+    this._send("lock", this._store.state.session.lockedVote);
   }
 }
 
@@ -412,6 +423,9 @@ module.exports = store => {
         break;
       case "session/vote":
         session.vote(payload);
+        break;
+      case "session/lockVote":
+        session.lockVote();
         break;
       case "players/set":
       case "players/swap":

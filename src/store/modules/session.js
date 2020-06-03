@@ -6,7 +6,7 @@ const state = () => ({
   claimedSeat: -1,
   nomination: false,
   votes: [],
-  lockedVote: -1
+  lockedVote: 0
 });
 
 const getters = {};
@@ -32,10 +32,15 @@ const mutations = {
   nomination(state, nomination) {
     state.nomination = nomination;
     state.votes = [];
+    state.lockedVote = 0;
   },
   vote(state, [index, vote]) {
+    if (!state.nomination) return;
     state.votes = [...state.votes];
     state.votes[index] = vote === undefined ? !state.votes[index] : vote;
+  },
+  lockVote(state, lock) {
+    state.lockedVote = lock !== undefined ? lock : state.lockedVote + 1;
   }
 };
 

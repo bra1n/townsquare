@@ -18,8 +18,13 @@
         <em>exile</em>.
       </template>
       <div class="button-group" v-if="!session.isSpectator">
-        <div class="button">Start Vote</div>
-        <div class="button" @click="finish">Finish Vote</div>
+        <div class="button" v-if="!session.lockedVote" @click="start">
+          Start Vote
+        </div>
+        <div class="button" v-else @click="stop">
+          Reset Vote
+        </div>
+        <div class="button" @click="finish">Finish</div>
       </div>
       <div
         class="button-group"
@@ -62,8 +67,10 @@ export default {
     nomineeStyle: function() {
       const players = this.$store.state.players.players.length;
       const nomination = this.$store.state.session.nomination[1];
+      const lock = this.$store.state.session.lockedVote;
+      const rotation = (360 * (nomination + Math.min(lock, players))) / players;
       return {
-        transform: `rotate(${Math.round((nomination / players) * 360)}deg)`
+        transform: `rotate(${Math.round(rotation)}deg)`
       };
     },
     player: function() {
@@ -75,6 +82,19 @@ export default {
     ...mapGetters({ alive: "players/alive" })
   },
   methods: {
+    start() {
+      this.$store.commit("session/lockVote");
+      this.voteTimer = setInterval(() => {
+        this.$store.commit("session/lockVote");
+        if (this.session.lockedVote > this.players.length) {
+          clearInterval(this.voteTimer);
+        }
+      }, 3000);
+    },
+    stop() {
+      this.$store.commit("session/lockVote", 0);
+      clearInterval(this.voteTimer);
+    },
     finish() {
       this.$store.commit("session/nomination", false);
     },
@@ -152,6 +172,7 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
+    transition: transform 3s;
   }
   span:before {
     content: " ";
