@@ -24,80 +24,99 @@
     <div class="menu" v-bind:class="{ open: grimoire.isMenuOpen }">
       <font-awesome-icon icon="cog" @click="toggleMenu" />
       <ul>
-        <!-- Grimoire -->
-        <li class="headline">
-          <font-awesome-icon icon="book-open" />
-          Grimoire
-        </li>
-        <li @click="toggleGrimoire" v-if="players.length">
-          <em>[G]</em>
-          <template v-if="!grimoire.isPublic">Hide</template>
-          <template v-if="grimoire.isPublic">Show</template>
-        </li>
-        <li @click="toggleNightOrder" v-if="players.length">
-          <em
-            ><font-awesome-icon
-              :icon="['fas', grimoire.isNightOrder ? 'check-square' : 'square']"
-          /></em>
-          Night order
-        </li>
-        <li v-if="players.length">
-          <em>
-            <font-awesome-icon @click="updateZoom(-0.1)" icon="search-minus" />
-            {{ Math.round(grimoire.zoom * 100) }}%
-            <font-awesome-icon @click="updateZoom(0.1)" icon="search-plus" />
-          </em>
-          Zoom
-        </li>
-        <li @click="setBackground">
-          Background image
-        </li>
-        <li @click="hostSession" v-if="!session.sessionId">
-          Host Live Session
-        </li>
-        <li @click="joinSession" v-if="!session.sessionId">
-          Join Live Session
-        </li>
-        <li class="headline" v-if="session.sessionId">
-          <font-awesome-icon icon="broadcast-tower" />
-          {{ session.isSpectator ? "Playing" : "Hosting" }}
-        </li>
-        <li v-if="session.sessionId" @click="copySessionUrl">
-          <em><font-awesome-icon icon="copy"/></em>
-          Copy player link
-        </li>
-        <li @click="leaveSession" v-if="session.sessionId">
-          <em>{{ session.sessionId }}</em>
-          Leave Session
+        <li class="tabs" :class="tab">
+          <font-awesome-icon icon="book-open" @click="tab = 'grimoire'" />
+          <font-awesome-icon icon="broadcast-tower" @click="tab = 'session'" />
+          <font-awesome-icon
+            icon="users"
+            v-if="!session.isSpectator"
+            @click="tab = 'players'"
+          />
+          <font-awesome-icon
+            icon="theater-masks"
+            v-if="!session.isSpectator"
+            @click="tab = 'characters'"
+          />
+          <font-awesome-icon icon="question" @click="tab = 'help'" />
         </li>
 
-        <template v-if="!session.isSpectator">
-          <!-- Users -->
-          <li class="headline">
-            <font-awesome-icon icon="users" />
-            Players
+        <template v-if="tab === 'grimoire'">
+          <!-- Grimoire -->
+          <li class="headline">Grimoire</li>
+          <li @click="toggleGrimoire" v-if="players.length">
+            <em>[G]</em>
+            <template v-if="!grimoire.isPublic">Hide</template>
+            <template v-if="grimoire.isPublic">Show</template>
           </li>
+          <li @click="toggleNightOrder" v-if="players.length">
+            <em
+              ><font-awesome-icon
+                :icon="[
+                  'fas',
+                  grimoire.isNightOrder ? 'check-square' : 'square'
+                ]"
+            /></em>
+            Night order
+          </li>
+          <li v-if="players.length">
+            <em>
+              <font-awesome-icon
+                @click="updateZoom(-0.1)"
+                icon="search-minus"
+              />
+              {{ Math.round(grimoire.zoom * 100) }}%
+              <font-awesome-icon @click="updateZoom(0.1)" icon="search-plus" />
+            </em>
+            Zoom
+          </li>
+          <li @click="setBackground">
+            <em><font-awesome-icon icon="image"/></em>
+            Background image
+          </li>
+        </template>
+
+        <template v-if="tab === 'session'">
+          <li class="headline" v-if="session.sessionId">
+            {{ session.isSpectator ? "Playing" : "Hosting" }}
+          </li>
+          <li class="headline" v-else>
+            Live Session
+          </li>
+          <li @click="hostSession" v-if="!session.sessionId">
+            <em>[H]</em> Host (Storyteller)
+          </li>
+          <li @click="joinSession" v-if="!session.sessionId">
+            <em>[J]</em> Join (Player)
+          </li>
+          <li v-if="session.sessionId" @click="copySessionUrl">
+            <em><font-awesome-icon icon="copy"/></em>
+            Copy player link
+          </li>
+          <li @click="leaveSession" v-if="session.sessionId">
+            <em>{{ session.sessionId }}</em>
+            Leave Session
+          </li>
+        </template>
+
+        <template v-if="tab === 'players' && !session.isSpectator">
+          <!-- Users -->
+          <li class="headline">Players</li>
           <li @click="addPlayer" v-if="players.length < 20">
             <em>[A]</em> Add
           </li>
           <li @click="randomizeSeatings" v-if="players.length > 2">
-            <em>[R]</em> Randomize
+            <em><font-awesome-icon icon="dice"/></em>
+            Randomize
           </li>
           <li @click="clearPlayers" v-if="players.length">
+            <em><font-awesome-icon icon="trash-alt"/></em>
             Remove all
           </li>
         </template>
 
-        <!-- Characters -->
-        <li class="headline">
-          <font-awesome-icon icon="theater-masks" />
-          Characters
-        </li>
-        <li @click="toggleModal('reference')">
-          <em>[R]</em>
-          Reference Sheet
-        </li>
-        <template v-if="!session.isSpectator">
+        <template v-if="tab === 'characters' && !session.isSpectator">
+          <!-- Characters -->
+          <li class="headline">Characters</li>
           <li @click="toggleModal('edition')">
             <em>[E]</em>
             Select Edition
@@ -106,10 +125,32 @@
             <em>[C]</em>
             Choose & Assign
           </li>
+          <li @click="clearRoles" v-if="players.length">
+            <em><font-awesome-icon icon="trash-alt"/></em>
+            Remove all
+          </li>
         </template>
-        <li @click="clearRoles" v-if="players.length">
-          Remove all
-        </li>
+
+        <template v-if="tab === 'help'">
+          <!-- Help -->
+          <li class="headline">Help</li>
+          <li @click="toggleModal('reference')">
+            <em>[R]</em>
+            Reference Sheet
+          </li>
+          <li>
+            <a href="https://discord.gg/tkWDny6" target="_blank">
+              <em><font-awesome-icon :icon="['fab', 'discord']"/></em>
+              Join Discord
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/bra1n/townsquare" target="_blank">
+              <em><font-awesome-icon :icon="['fab', 'github']"/></em>
+              Source code
+            </a>
+          </li>
+        </template>
       </ul>
     </div>
   </div>
@@ -126,6 +167,11 @@ export default {
   computed: {
     ...mapState(["grimoire", "session"]),
     ...mapState("players", ["players"])
+  },
+  data() {
+    return {
+      tab: "grimoire"
+    };
   },
   methods: {
     takeScreenshot(dimensions = {}) {
@@ -261,7 +307,7 @@ export default {
     margin-left: 10px;
   }
 
-  .session {
+  span.session {
     color: $demon;
     &.spectator {
       color: $townsfolk;
@@ -270,8 +316,8 @@ export default {
 }
 
 .menu {
-  width: 210px;
-  transform-origin: 190px 22px;
+  width: 220px;
+  transform-origin: 200px 22px;
   transition: transform 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
   transform: rotate(-90deg);
   position: absolute;
@@ -294,6 +340,14 @@ export default {
     padding: 5px 5px 15px;
   }
 
+  a {
+    color: white;
+    text-decoration: none;
+    &:hover {
+      color: red;
+    }
+  }
+
   ul {
     display: flex;
     list-style-type: none;
@@ -306,16 +360,48 @@ export default {
     border-radius: 10px 0 10px 10px;
 
     li {
-      padding: 2px 10px;
+      padding: 2px 5px;
       color: white;
       text-align: left;
       background: rgba(0, 0, 0, 0.7);
+
+      &.tabs {
+        display: flex;
+        padding: 0;
+        svg {
+          flex-grow: 1;
+          flex-shrink: 0;
+          height: 35px;
+          border-bottom: 3px solid black;
+          border-right: 3px solid black;
+          padding: 5px 0;
+          cursor: pointer;
+          transition: color 250ms;
+          &:hover {
+            color: red;
+          }
+          &:last-child {
+            border-right: 0;
+          }
+        }
+        &.grimoire .fa-book-open,
+        &.players .fa-users,
+        &.characters .fa-theater-masks,
+        &.session .fa-broadcast-tower,
+        &.help .fa-question {
+          background: linear-gradient(
+            to bottom,
+            $townsfolk 0%,
+            rgba(0, 0, 0, 0.5) 100%
+          );
+        }
+      }
 
       &:last-child {
         margin-bottom: 0;
       }
 
-      &:not(.headline):hover {
+      &:not(.headline):not(.tabs):hover {
         cursor: pointer;
         color: red;
       }
@@ -332,7 +418,7 @@ export default {
     .headline {
       font-family: PiratesBay, sans-serif;
       letter-spacing: 1px;
-      padding: 5px 10px;
+      padding: 0 10px;
       text-align: center;
       background: linear-gradient(
         to right,
