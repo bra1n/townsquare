@@ -174,7 +174,7 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
-    transition: transform 3s;
+    transition: transform 2.9s ease-in-out;
   }
   span:before {
     content: " ";
