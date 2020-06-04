@@ -7,17 +7,24 @@ const server = https.createServer({
   key: fs.readFileSync("key.pem")
 });
 const wss = new WebSocket.Server({
-  server,
-  // port: 8081,
+  ...(process.env.NODE_ENV === "development" ? { port: 8081 } : { server }),
   verifyClient: info =>
     !!info.origin.match(/^https?:\/\/(bra1n\.github\.io|localhost)/i)
 });
+
+function noop() {}
+
+function heartbeat() {
+  this.isAlive = true;
+}
 
 wss.on("connection", function connection(ws, req) {
   ws.channel = req.url
     .split("/")
     .pop()
     .toLocaleLowerCase();
+  ws.isAlive = true;
+  ws.on("pong", heartbeat);
   ws.on("message", function incoming(data) {
     if (!data.match(/^\["ping/i)) {
       console.log(ws.channel, wss.clients.size, data);
@@ -34,4 +41,18 @@ wss.on("connection", function connection(ws, req) {
   });
 });
 
-server.listen(8080);
+const interval = setInterval(function ping() {
+  wss.clients.forEach(function each(ws) {
+    if (ws.isAlive === false) return ws.terminate();
+    ws.isAlive = false;
+    ws.ping(noop);
+  });
+}, 30000);
+
+wss.on("close", function close() {
+  clearInterval(interval);
+});
+
+if (process.env.NODE_ENV !== "development") {
+  server.listen(8080);
+}
