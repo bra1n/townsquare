@@ -32,11 +32,7 @@
             v-if="!session.isSpectator"
             @click="tab = 'players'"
           />
-          <font-awesome-icon
-            icon="theater-masks"
-            v-if="!session.isSpectator"
-            @click="tab = 'characters'"
-          />
+          <font-awesome-icon icon="theater-masks" @click="tab = 'characters'" />
           <font-awesome-icon icon="question" @click="tab = 'help'" />
         </li>
 
@@ -114,14 +110,17 @@
           </li>
         </template>
 
-        <template v-if="tab === 'characters' && !session.isSpectator">
+        <template v-if="tab === 'characters'">
           <!-- Characters -->
           <li class="headline">Characters</li>
-          <li @click="toggleModal('edition')">
+          <li v-if="!session.isSpectator" @click="toggleModal('edition')">
             <em>[E]</em>
             Select Edition
           </li>
-          <li @click="toggleModal('roles')" v-if="players.length > 4">
+          <li
+            @click="toggleModal('roles')"
+            v-if="!session.isSpectator && players.length > 4"
+          >
             <em>[C]</em>
             Choose & Assign
           </li>
