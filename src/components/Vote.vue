@@ -26,12 +26,7 @@
         </div>
         <div class="button" @click="finish">Finish</div>
       </div>
-      <div
-        class="button-group"
-        v-else-if="
-          player && (!player.isVoteless || nominee.role.team === 'traveler')
-        "
-      >
+      <div class="button-group" v-else-if="canVote">
         <div class="button vote-no" @click="vote(false)">Vote NO</div>
         <div class="button vote-yes" @click="vote(true)">Vote YES</div>
       </div>
@@ -47,39 +42,45 @@ import { mapGetters, mapState } from "vuex";
 
 export default {
   computed: {
+    ...mapState("players", ["players"]),
+    ...mapState(["session"]),
+    ...mapGetters({ alive: "players/alive" }),
     nominator: function() {
-      return this.$store.state.players.players[
-        this.$store.state.session.nomination[0]
-      ];
+      return this.players[this.session.nomination[0]];
     },
     nominatorStyle: function() {
-      const players = this.$store.state.players.players.length;
-      const nomination = this.$store.state.session.nomination[0];
+      const players = this.players.length;
+      const nomination = this.session.nomination[0];
       return {
         transform: `rotate(${Math.round((nomination / players) * 360)}deg)`
       };
     },
     nominee: function() {
-      return this.$store.state.players.players[
-        this.$store.state.session.nomination[1]
-      ];
+      return this.players[this.session.nomination[1]];
     },
     nomineeStyle: function() {
-      const players = this.$store.state.players.players.length;
-      const nomination = this.$store.state.session.nomination[1];
-      const lock = this.$store.state.session.lockedVote;
+      const players = this.players.length;
+      const nomination = this.session.nomination[1];
+      const lock = this.session.lockedVote;
       const rotation = (360 * (nomination + Math.min(lock, players))) / players;
       return {
         transform: `rotate(${Math.round(rotation)}deg)`
       };
     },
     player: function() {
-      const id = this.$store.state.session.playerId;
-      return this.$store.state.players.players.find(p => p.id === id);
+      return this.players.find(p => p.id === this.session.playerId);
     },
-    ...mapState("players", ["players"]),
-    ...mapState(["session"]),
-    ...mapGetters({ alive: "players/alive" })
+    canVote: function() {
+      if (!this.player) return false;
+      if (this.player.isVoteless && this.nominee.role.team !== "traveler")
+        return false;
+      const session = this.session;
+      const players = this.players.length;
+      const index = this.players.indexOf(this.player);
+      const indexAdjusted =
+        (index - 1 + players - session.nomination[1]) % players;
+      return indexAdjusted >= session.lockedVote - 1;
+    }
   },
   methods: {
     start() {
@@ -99,6 +100,7 @@ export default {
       this.$store.commit("session/nomination", false);
     },
     vote(vote) {
+      if (!this.canVote) return false;
       const index = this.players.findIndex(p => p.id === this.session.playerId);
       if (index >= 0 && !!this.session.votes[index] !== vote) {
         this.$store.commit("session/vote", [index, vote]);

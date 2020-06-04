@@ -9,8 +9,8 @@ const faIcons = [
   "BookOpen",
   "BroadcastTower",
   "Camera",
+  "Chair",
   "CheckSquare",
-  "Skull",
   "Cog",
   "Copy",
   "ExchangeAlt",
@@ -23,16 +23,17 @@ const faIcons = [
   "RedoAlt",
   "SearchMinus",
   "SearchPlus",
+  "Skull",
   "Square",
   "TheaterMasks",
+  "Times",
   "TimesCircle",
   "Undo",
   "User",
   "UserEdit",
   "UserFriends",
   "Users",
-  "VoteYea",
-  "Chair"
+  "VoteYea"
 ];
 library.add(...faIcons.map(i => fas["fa" + i]));
 Vue.component("font-awesome-icon", FontAwesomeIcon);

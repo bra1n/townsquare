@@ -8,7 +8,8 @@
           dead: player.isDead,
           'no-vote': player.isVoteless,
           you: player.id === session.playerId,
-          'voted-yes': session.votes[index]
+          'vote-yes': session.votes[index],
+          'vote-lock': voteLocked
         },
         player.role.team
       ]"
@@ -44,7 +45,13 @@
       <font-awesome-icon
         icon="skull"
         class="vote"
-        title="Vote"
+        title="Voted YES"
+        @click="vote()"
+      />
+      <font-awesome-icon
+        icon="times"
+        class="vote"
+        title="Voted NO"
         @click="vote()"
       />
       <font-awesome-icon
@@ -170,11 +177,20 @@ export default {
     }
   },
   computed: {
-    index: function() {
-      return this.$store.state.players.players.indexOf(this.player);
-    },
+    ...mapState("players", ["players"]),
     ...mapState(["grimoire", "session"]),
-    ...mapGetters({ nightOrder: "players/nightOrder" })
+    ...mapGetters({ nightOrder: "players/nightOrder" }),
+    index: function() {
+      return this.players.indexOf(this.player);
+    },
+    voteLocked: function() {
+      const session = this.session;
+      const players = this.players.length;
+      if (!session.nomination) return false;
+      const indexAdjusted =
+        (this.index - 1 + players - session.nomination[1]) % players;
+      return indexAdjusted < session.lockedVote - 1;
+    }
   },
   data() {
     return {
@@ -419,26 +435,36 @@ export default {
   &.vote,
   &.cancel {
     top: 9%;
-    left: 20%;
-    width: 60%;
+    left: 25%;
+    width: 50%;
     height: 60%;
     opacity: 0;
     pointer-events: none;
     transition: all 250ms;
     transform: scale(0.2);
-    &:hover {
-      color: red;
+    * {
+      stroke-width: 10px;
+      stroke: white;
+      fill: url(#default);
+    }
+    &:hover *,
+    &.fa-skull * {
+      fill: url(#demon);
+    }
+    &.fa-times * {
+      fill: url(#townsfolk);
     }
   }
 }
 
-#townsquare.vote .player.voted-yes > svg.vote {
-  color: $demon;
+#townsquare.vote .player.vote-yes > svg.vote.fa-skull {
   opacity: 0.5;
   transform: scale(1);
 }
 
-#townsquare.vote .player.you.voted-yes > svg.vote {
+#townsquare.vote .player.you.vote-yes > svg.vote.fa-skull,
+#townsquare.vote .player.vote-lock.vote-yes > svg.vote.fa-skull,
+#townsquare.vote .player.vote-lock:not(.vote-yes) > svg.vote.fa-times {
   opacity: 1;
   transform: scale(1);
 }

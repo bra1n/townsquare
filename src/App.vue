@@ -18,6 +18,7 @@
     <EditionModal />
     <RolesModal />
     <ReferenceModal />
+    <Gradients />
   </div>
 </template>
 
@@ -31,6 +32,7 @@ import EditionModal from "./components/modals/EditionModal";
 import Intro from "./components/Intro";
 import ReferenceModal from "./components/modals/ReferenceModal";
 import Vote from "./components/Vote";
+import Gradients from "./components/Gradients";
 
 export default {
   components: {
@@ -41,7 +43,8 @@ export default {
     TownSquare,
     Menu,
     EditionModal,
-    RolesModal
+    RolesModal,
+    Gradients
   },
   computed: {
     ...mapState(["grimoire", "session"]),
