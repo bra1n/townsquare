@@ -70,6 +70,7 @@
             Zoom
           </li>
           <li @click="setBackground">
+            <em><font-awesome-icon icon="image"/></em>
             Background image
           </li>
         </template>
@@ -82,10 +83,10 @@
             Live Session
           </li>
           <li @click="hostSession" v-if="!session.sessionId">
-            Host a session
+            <em>[H]</em> Host (Storyteller)
           </li>
           <li @click="joinSession" v-if="!session.sessionId">
-            Join a session
+            <em>[J]</em> Join (Player)
           </li>
           <li v-if="session.sessionId" @click="copySessionUrl">
             <em><font-awesome-icon icon="copy"/></em>
@@ -104,9 +105,11 @@
             <em>[A]</em> Add
           </li>
           <li @click="randomizeSeatings" v-if="players.length > 2">
+            <em><font-awesome-icon icon="dice"/></em>
             Randomize
           </li>
           <li @click="clearPlayers" v-if="players.length">
+            <em><font-awesome-icon icon="trash-alt"/></em>
             Remove all
           </li>
         </template>
@@ -123,6 +126,7 @@
             Choose & Assign
           </li>
           <li @click="clearRoles" v-if="players.length">
+            <em><font-awesome-icon icon="trash-alt"/></em>
             Remove all
           </li>
         </template>
@@ -313,8 +317,8 @@ export default {
 }
 
 .menu {
-  width: 210px;
-  transform-origin: 190px 22px;
+  width: 220px;
+  transform-origin: 200px 22px;
   transition: transform 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
   transform: rotate(-90deg);
   position: absolute;
@@ -357,7 +361,7 @@ export default {
     border-radius: 10px 0 10px 10px;
 
     li {
-      padding: 2px 10px;
+      padding: 2px 5px;
       color: white;
       text-align: left;
       background: rgba(0, 0, 0, 0.7);
