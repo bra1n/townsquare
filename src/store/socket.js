@@ -103,7 +103,7 @@ class LiveSession {
         this._store.commit("session/nomination", params);
         break;
       case "vote":
-        this._store.commit("session/vote", params);
+        this._handleVote(params);
         break;
       case "lock":
         this._store.commit("session/lockVote", params);
@@ -386,11 +386,26 @@ class LiveSession {
 
   /**
    * Send a vote. Player only
-   * @param index
+   * @param index Seat of the player
    */
   vote([index]) {
     if (!this._isSpectator) return;
-    this._send("vote", [index, this._store.state.session.votes[index]]);
+    const player = this._store.state.players.players[index];
+    if (this._store.state.session.playerId === player.id) {
+      // send vote only if it is your own vote
+      this._send("vote", [index, this._store.state.session.votes[index]]);
+    }
+  }
+
+  /**
+   * Handle an incoming vote, but not if it is for your own seat.
+   * @param vote
+   */
+  _handleVote(vote) {
+    const player = this._store.state.players.players[vote[0]];
+    if (this._store.state.session.playerId !== player.id) {
+      this._store.commit("session/vote", vote);
+    }
   }
 
   /**

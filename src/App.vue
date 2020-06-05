@@ -173,7 +173,7 @@ ul {
 .zoom-enter,
 .zoom-leave-to {
   opacity: 0;
-  filter: blur(20px)
+  filter: blur(20px);
 }
 
 // Buttons
