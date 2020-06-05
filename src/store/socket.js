@@ -167,7 +167,8 @@ class LiveSession {
     }));
     this._send("gs", {
       gamestate: this._gamestate,
-      edition: this._store.state.edition
+      edition: this._store.state.edition,
+      nomination: this._store.state.session.nomination
     });
   }
 
@@ -177,9 +178,10 @@ class LiveSession {
    * @param edition
    * @private
    */
-  _updateGamestate({ gamestate, edition }) {
+  _updateGamestate({ gamestate, edition, nomination }) {
     if (!this._isSpectator) return;
     this._store.commit("setEdition", edition);
+    this._store.commit("session/nomination", nomination);
     const players = this._store.state.players.players;
     // adjust number of players
     if (players.length < gamestate.length) {

@@ -10,10 +10,12 @@
         : ''
     }"
   >
-    <Intro v-if="!players.length"></Intro>
-    <TownInfo v-if="players.length && !session.nomination"></TownInfo>
+    <transition name="zoom">
+      <Intro v-if="!players.length"></Intro>
+      <TownInfo v-if="players.length && !session.nomination"></TownInfo>
+      <Vote v-if="session.nomination"></Vote>
+    </transition>
     <TownSquare @screenshot="takeScreenshot"></TownSquare>
-    <Vote v-if="session.nomination"></Vote>
     <Menu ref="menu"></Menu>
     <EditionModal />
     <RolesModal />
@@ -161,6 +163,17 @@ ul {
   align-items: center;
   align-content: center;
   justify-content: center;
+}
+
+.zoom-enter-active,
+.zoom-leave-active {
+  transition: all 250ms;
+  filter: blur(0);
+}
+.zoom-enter,
+.zoom-leave-to {
+  opacity: 0;
+  filter: blur(20px)
 }
 
 // Buttons
