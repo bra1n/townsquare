@@ -169,7 +169,8 @@ export default {
   position: absolute;
   display: flex;
   height: 150%;
-  width: 20%;
+  width: 25%;
+  pointer-events: none;
   span {
     position: absolute;
     width: 100%;
