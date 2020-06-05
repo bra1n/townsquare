@@ -3,11 +3,16 @@
     <div
       ref="player"
       class="player"
-      :class="{
-        dead: player.isDead,
-        'no-vote': player.isVoteless,
-        traveler: player.role && player.role.team === 'traveler'
-      }"
+      :class="[
+        {
+          dead: player.isDead,
+          'no-vote': player.isVoteless,
+          you: player.id === session.playerId,
+          'vote-yes': session.votes[index],
+          'vote-lock': voteLocked
+        },
+        player.role.team
+      ]"
     >
       <div class="shroud" @click="toggleStatus()"></div>
       <div class="life" @click="toggleStatus()"></div>
@@ -31,8 +36,24 @@
         }}</span>
       </div>
 
-      <Token :role="player.role" @set-role="$emit('set-role')" />
+      <Token
+        :role="player.role"
+        @set-role="$emit('trigger', ['openRoleModal'])"
+      />
 
+      <!-- Overlay icons -->
+      <font-awesome-icon
+        icon="skull"
+        class="vote"
+        title="Voted YES"
+        @click="vote()"
+      />
+      <font-awesome-icon
+        icon="times"
+        class="vote"
+        title="Voted NO"
+        @click="vote()"
+      />
       <font-awesome-icon
         icon="times-circle"
         class="cancel"
@@ -51,10 +72,20 @@
         @click="movePlayer(player)"
         title="Move player to this seat"
       />
+      <font-awesome-icon
+        icon="hand-point-right"
+        class="nominate"
+        @click="nominatePlayer(player)"
+        title="Nominate this player"
+      />
 
+      <!-- Claimed seat icon -->
+      <font-awesome-icon icon="chair" v-if="player.id" class="seat" />
+
+      <!-- Ghost vote icon -->
       <font-awesome-icon
         icon="vote-yea"
-        class="vote"
+        class="has-vote"
         v-if="player.isDead && !player.isVoteless"
         @click="updatePlayer('isVoteless', true)"
         title="Ghost vote"
@@ -69,29 +100,38 @@
       </div>
 
       <transition name="fold">
-        <ul class="menu" v-if="isMenuOpen && !session.isSpectator">
-          <li @click="changeName">
-            <font-awesome-icon icon="user-edit" />Rename
-          </li>
-          <!--<li @click="nomination">
-            <font-awesome-icon icon="hand-point-right" />
-            Nomination
-          </li>-->
-          <li @click="movePlayer()">
-            <font-awesome-icon icon="redo-alt" />
-            Move player
-          </li>
-          <li @click="swapPlayer()">
-            <font-awesome-icon icon="exchange-alt" />
-            Swap seats
-          </li>
-          <li @click="takeScreenshot">
-            <font-awesome-icon icon="camera" />
-            Screenshot
-          </li>
-          <li @click="$emit('remove-player')">
-            <font-awesome-icon icon="times-circle" />
-            Remove
+        <ul class="menu" v-if="isMenuOpen">
+          <template v-if="!session.isSpectator">
+            <li @click="changeName">
+              <font-awesome-icon icon="user-edit" />Rename
+            </li>
+            <li v-if="!session.nomination" @click="nominatePlayer()">
+              <font-awesome-icon icon="hand-point-right" />
+              Nomination
+            </li>
+            <li @click="movePlayer()">
+              <font-awesome-icon icon="redo-alt" />
+              Move player
+            </li>
+            <li @click="swapPlayer()">
+              <font-awesome-icon icon="exchange-alt" />
+              Swap seats
+            </li>
+            <li @click="takeScreenshot">
+              <font-awesome-icon icon="camera" />
+              Screenshot
+            </li>
+            <li @click="$emit('trigger', ['removePlayer'])">
+              <font-awesome-icon icon="times-circle" />
+              Remove
+            </li>
+          </template>
+          <li @click="claimSeat" v-if="session.isSpectator">
+            <font-awesome-icon icon="chair" />
+            <template v-if="player.id !== session.playerId">
+              Claim seat
+            </template>
+            <template v-else> Vacate seat </template>
           </li>
         </ul>
       </transition>
@@ -116,7 +156,7 @@
         {{ reminder.name }}
       </div>
     </template>
-    <div class="reminder add" @click="$emit('add-reminder')">
+    <div class="reminder add" @click="$emit('trigger', ['openReminderModal'])">
       <span class="icon"></span>
     </div>
   </li>
@@ -137,8 +177,20 @@ export default {
     }
   },
   computed: {
+    ...mapState("players", ["players"]),
     ...mapState(["grimoire", "session"]),
-    ...mapGetters({ nightOrder: "players/nightOrder" })
+    ...mapGetters({ nightOrder: "players/nightOrder" }),
+    index: function() {
+      return this.players.indexOf(this.player);
+    },
+    voteLocked: function() {
+      const session = this.session;
+      const players = this.players.length;
+      if (!session.nomination) return false;
+      const indexAdjusted =
+        (this.index - 1 + players - session.nomination[1]) % players;
+      return indexAdjusted < session.lockedVote - 1;
+    }
   },
   data() {
     return {
@@ -193,14 +245,26 @@ export default {
     },
     swapPlayer(player) {
       this.isMenuOpen = false;
-      this.$emit("swap-player", player);
+      this.$emit("trigger", ["swapPlayer", player]);
     },
     movePlayer(player) {
       this.isMenuOpen = false;
-      this.$emit("move-player", player);
+      this.$emit("trigger", ["movePlayer", player]);
+    },
+    nominatePlayer(player) {
+      this.isMenuOpen = false;
+      this.$emit("trigger", ["nominatePlayer", player]);
     },
     cancel() {
-      this.$emit("cancel");
+      this.$emit("trigger", ["cancel"]);
+    },
+    claimSeat() {
+      this.isMenuOpen = false;
+      this.$emit("trigger", ["claimSeat"]);
+    },
+    vote() {
+      if (this.player.id !== this.session.playerId) return;
+      this.$store.commit("session/vote", [this.index]);
     }
   }
 };
@@ -367,28 +431,52 @@ export default {
   cursor: pointer;
   &.swap,
   &.move,
+  &.nominate,
+  &.vote,
   &.cancel {
     top: 9%;
-    left: 20%;
-    width: 60%;
+    left: 25%;
+    width: 50%;
     height: 60%;
     opacity: 0;
     pointer-events: none;
     transition: all 250ms;
     transform: scale(0.2);
-    &:hover {
-      color: red;
+    * {
+      stroke-width: 10px;
+      stroke: white;
+      fill: url(#default);
+    }
+    &:hover *,
+    &.fa-skull * {
+      fill: url(#demon);
+    }
+    &.fa-times * {
+      fill: url(#townsfolk);
     }
   }
 }
 
-li.from .player > svg.cancel {
+#townsquare.vote .player.vote-yes > svg.vote.fa-skull {
+  opacity: 0.5;
+  transform: scale(1);
+}
+
+#townsquare.vote .player.you.vote-yes > svg.vote.fa-skull,
+#townsquare.vote .player.vote-lock.vote-yes > svg.vote.fa-skull,
+#townsquare.vote .player.vote-lock:not(.vote-yes) > svg.vote.fa-times {
+  opacity: 1;
+  transform: scale(1);
+}
+
+li.from:not(.nominate) .player > svg.cancel {
   opacity: 1;
   transform: scale(1);
   pointer-events: all;
 }
 
 li.swap:not(.from) .player > svg.swap,
+li.nominate .player > svg.nominate,
 li.move:not(.from) .player > svg.move {
   opacity: 1;
   transform: scale(1);
@@ -396,19 +484,62 @@ li.move:not(.from) .player > svg.move {
 }
 
 /****** Vote icon ********/
-.player .vote {
+.player .has-vote {
   position: absolute;
   right: 2px;
   bottom: 45px;
   color: #fff;
   filter: drop-shadow(0 0 3px black);
-  cursor: pointer;
   transition: opacity 250ms;
 
   #townsquare.public & {
     opacity: 0;
     pointer-events: none;
   }
+}
+
+@mixin glow($name, $color) {
+  @keyframes #{$name}-glow {
+    0% {
+      box-shadow: 0 0 rgba($color, 1);
+      border-color: $color;
+    }
+    50% {
+      border-color: black;
+    }
+    100% {
+      box-shadow: 0 0 20px 16px transparent;
+      border-color: $color;
+    }
+  }
+
+  .player.you.#{$name} .token {
+    animation: #{$name}-glow 2s ease-in-out infinite;
+  }
+}
+
+@include glow("townsfolk", $townsfolk);
+@include glow("outsider", $outsider);
+@include glow("demon", $demon);
+@include glow("minion", $minion);
+@include glow("traveler", $traveler);
+
+.player.you .token {
+  animation: townsfolk-glow 2s ease-in-out infinite;
+}
+
+/****** Seat icon ********/
+.player .seat {
+  position: absolute;
+  left: 2px;
+  bottom: 45px;
+  color: #fff;
+  filter: drop-shadow(0 0 3px black);
+  cursor: default;
+}
+
+.player.you .seat {
+  color: $townsfolk;
 }
 
 /***** Player name *****/

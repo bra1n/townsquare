@@ -4,7 +4,8 @@
     class="square"
     v-bind:class="{
       public: grimoire.isPublic,
-      spectator: session.isSpectator
+      spectator: session.isSpectator,
+      vote: session.nomination
     }"
     v-bind:style="{ zoom: grimoire.zoom }"
   >
@@ -13,13 +14,8 @@
         v-for="(player, index) in players"
         :key="index"
         :player="player"
-        @add-reminder="openReminderModal(index)"
-        @set-role="openRoleModal(index)"
-        @remove-player="removePlayer(index)"
-        @cancel="cancel(index)"
-        @swap-player="swapPlayer(index, $event)"
-        @move-player="movePlayer(index, $event)"
         @screenshot="$emit('screenshot', $event)"
+        @trigger="handleTrigger(index, $event)"
         v-bind:class="{
           from: Math.max(swap, move, nominate) === index,
           swap: swap > -1,
@@ -80,6 +76,19 @@ export default {
       const { width, height, x, y } = this.$refs.bluffs.getBoundingClientRect();
       this.$emit("screenshot", { width, height, x, y });
     },
+    handleTrigger(playerIndex, [method, params]) {
+      if (typeof this[method] === "function") {
+        this[method](playerIndex, params);
+      }
+    },
+    claimSeat(playerIndex) {
+      if (!this.session.isSpectator) return;
+      if (this.session.playerId === this.players[playerIndex].id) {
+        this.$store.commit("session/claimSeat", -1);
+      } else {
+        this.$store.commit("session/claimSeat", playerIndex);
+      }
+    },
     openReminderModal(playerIndex) {
       this.selectedPlayer = playerIndex;
       this.$store.commit("toggleModal", "reminder");
@@ -120,6 +129,20 @@ export default {
       } else {
         this.$store.commit("players/move", [
           this.move,
+          this.players.indexOf(to)
+        ]);
+        this.cancel();
+      }
+    },
+    nominatePlayer(from, to) {
+      if (to === undefined && from !== this.nominate) {
+        this.cancel();
+        if (from !== this.nominate) {
+          this.nominate = from;
+        }
+      } else {
+        this.$store.commit("session/nomination", [
+          this.nominate,
           this.players.indexOf(to)
         ]);
         this.cancel();
@@ -221,6 +244,10 @@ export default {
   height: 100%;
   border-radius: 50%;
   padding: 20px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 }
 
 /***** Demon bluffs *******/

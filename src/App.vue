@@ -10,13 +10,17 @@
         : ''
     }"
   >
-    <Intro v-if="!players.length"></Intro>
-    <TownInfo v-if="players.length"></TownInfo>
+    <transition name="zoom">
+      <Intro v-if="!players.length"></Intro>
+      <TownInfo v-if="players.length && !session.nomination"></TownInfo>
+      <Vote v-if="session.nomination"></Vote>
+    </transition>
     <TownSquare @screenshot="takeScreenshot"></TownSquare>
     <Menu ref="menu"></Menu>
     <EditionModal />
     <RolesModal />
     <ReferenceModal />
+    <Gradients />
   </div>
 </template>
 
@@ -29,16 +33,20 @@ import RolesModal from "./components/modals/RolesModal";
 import EditionModal from "./components/modals/EditionModal";
 import Intro from "./components/Intro";
 import ReferenceModal from "./components/modals/ReferenceModal";
+import Vote from "./components/Vote";
+import Gradients from "./components/Gradients";
 
 export default {
   components: {
+    Vote,
     ReferenceModal,
     Intro,
     TownInfo,
     TownSquare,
     Menu,
     EditionModal,
-    RolesModal
+    RolesModal,
+    Gradients
   },
   computed: {
     ...mapState(["grimoire", "session"]),
@@ -155,6 +163,17 @@ ul {
   align-items: center;
   align-content: center;
   justify-content: center;
+}
+
+.zoom-enter-active,
+.zoom-leave-active {
+  transition: all 250ms;
+  filter: blur(0);
+}
+.zoom-enter,
+.zoom-leave-to {
+  opacity: 0;
+  filter: blur(20px)
 }
 
 // Buttons

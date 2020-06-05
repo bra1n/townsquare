@@ -59,15 +59,13 @@ export default {
           ).length
       };
     },
-    ...mapState({
-      edition: state => state.edition,
-      players: state => state.players.players
-    })
+    ...mapState(["edition"]),
+    ...mapState("players", ["players"])
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../vars.scss";
 
 // Editions
@@ -94,12 +92,8 @@ export default {
 .info {
   position: absolute;
   display: flex;
-  left: 50%;
-  top: 50%;
   width: 20%;
   height: 20%;
-  margin-left: -10%;
-  margin-top: -5%;
   padding: 50px 0 0;
   align-items: center;
   align-content: center;

@@ -32,12 +32,12 @@ module.exports = store => {
   }
   /**** Session related data *****/
   if (localStorage.getItem("playerId")) {
-    store.commit("setPlayerId", localStorage.getItem("playerId"));
+    store.commit("session/setPlayerId", localStorage.getItem("playerId"));
   }
   if (localStorage.getItem("session")) {
     const [spectator, sessionId] = JSON.parse(localStorage.getItem("session"));
-    store.commit("setSpectator", spectator);
-    store.commit("setSessionId", sessionId);
+    store.commit("session/setSpectator", spectator);
+    store.commit("session/setSessionId", sessionId);
   }
 
   // listen to mutations
@@ -99,7 +99,7 @@ module.exports = store => {
           localStorage.removeItem("players");
         }
         break;
-      case "setSessionId":
+      case "session/setSessionId":
         if (payload) {
           localStorage.setItem(
             "session",
@@ -109,11 +109,11 @@ module.exports = store => {
           localStorage.removeItem("session");
         }
         break;
-      case "setPlayerId":
+      case "session/setPlayerId":
         if (payload) {
           localStorage.setItem("playerId", payload);
         } else {
-          localStorage.removeItem("setPlayerId");
+          localStorage.removeItem("playerId");
         }
         break;
     }

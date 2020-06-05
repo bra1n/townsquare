@@ -32,11 +32,7 @@
             v-if="!session.isSpectator"
             @click="tab = 'players'"
           />
-          <font-awesome-icon
-            icon="theater-masks"
-            v-if="!session.isSpectator"
-            @click="tab = 'characters'"
-          />
+          <font-awesome-icon icon="theater-masks" @click="tab = 'characters'" />
           <font-awesome-icon icon="question" @click="tab = 'help'" />
         </li>
 
@@ -114,14 +110,17 @@
           </li>
         </template>
 
-        <template v-if="tab === 'characters' && !session.isSpectator">
+        <template v-if="tab === 'characters'">
           <!-- Characters -->
           <li class="headline">Characters</li>
-          <li @click="toggleModal('edition')">
+          <li v-if="!session.isSpectator" @click="toggleModal('edition')">
             <em>[E]</em>
             Select Edition
           </li>
-          <li @click="toggleModal('roles')" v-if="players.length > 4">
+          <li
+            @click="toggleModal('roles')"
+            v-if="!session.isSpectator && players.length > 4"
+          >
             <em>[C]</em>
             Choose & Assign
           </li>
@@ -190,9 +189,9 @@ export default {
         Math.round(Math.random() * 10000)
       );
       if (sessionId) {
-        this.$store.commit("setSpectator", false);
+        this.$store.commit("session/setSpectator", false);
         this.$store.commit(
-          "setSessionId",
+          "session/setSessionId",
           sessionId.replace(/[^0-9a-z]/g, "").substr(0, 5)
         );
         this.copySessionUrl();
@@ -215,17 +214,17 @@ export default {
         "Enter the channel number / name of the session you want to join"
       );
       if (sessionId) {
-        this.$store.commit("setSpectator", true);
+        this.$store.commit("session/setSpectator", true);
         this.$store.commit(
-          "setSessionId",
+          "session/setSessionId",
           sessionId.replace(/[^0-9a-z]/g, "").substr(0, 5)
         );
       }
     },
     leaveSession() {
       if (confirm("Are you sure you want to leave the active live game?")) {
-        this.$store.commit("setSpectator", false);
-        this.$store.commit("setSessionId", "");
+        this.$store.commit("session/setSpectator", false);
+        this.$store.commit("session/setSessionId", "");
       }
     },
     addPlayer() {
@@ -249,7 +248,6 @@ export default {
       }
     },
     clearRoles() {
-      if (this.session.isSpectator) return;
       if (confirm("Are you sure you want to remove all player roles?")) {
         this.$store.dispatch("players/clearRoles");
         this.$store.commit("setBluff");
