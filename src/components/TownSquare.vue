@@ -135,7 +135,7 @@ export default {
       }
     },
     nominatePlayer(from, to) {
-      if (to === undefined && from !== this.nominate) {
+      if (to === undefined) {
         this.cancel();
         if (from !== this.nominate) {
           this.nominate = from;
