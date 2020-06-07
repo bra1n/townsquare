@@ -195,9 +195,9 @@ export default {
   // general token size depending on player count
   @if $item-count < 7 {
     width: 8vw;
-  } @else if($item-count < 10) {
+  } @else if($item-count <= 10) {
     width: 7vw;
-  } @else if($item-count < 15) {
+  } @else if($item-count <= 15) {
     width: 6vw;
   } @else {
     width: 5vw;
