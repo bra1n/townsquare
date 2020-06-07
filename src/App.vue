@@ -213,9 +213,9 @@ ul {
   text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
   line-height: 40px;
   margin: 5px auto;
-  font-size: 1em;
   cursor: pointer;
   transition: all 200ms;
+  white-space: nowrap;
   &:hover {
     color: red;
   }

@@ -153,7 +153,7 @@
               '.png')})`
           }"
         ></span>
-        {{ reminder.name }}
+        <span class="text">{{ reminder.name }}</span>
       </div>
     </template>
     <div class="reminder add" @click="$emit('trigger', ['openReminderModal'])">
@@ -234,6 +234,7 @@ export default {
       const reminders = [...this.player.reminders];
       reminders.splice(this.player.reminders.indexOf(reminder), 1);
       this.updatePlayer("reminders", reminders);
+      this.isMenuOpen = false;
     },
     updatePlayer(property, value) {
       if (this.session.isSpectator && property !== "reminders") return;
@@ -287,15 +288,20 @@ export default {
 /***** Player token *****/
 .circle .player {
   margin-bottom: 10px;
-  padding-top: $token + 6px;
   padding-bottom: 5px;
+
+  &:before {
+    content: " ";
+    display: block;
+    padding-top: 100%;
+  }
 
   .shroud {
     top: 0;
     left: 0;
     position: absolute;
     width: 100%;
-    height: 2/3 * $token;
+    height: 45%;
     cursor: pointer;
     transform: rotateX(0deg);
     transform-origin: top center;
@@ -306,13 +312,13 @@ export default {
     &:before {
       content: " ";
       background: url("../assets/shroud.png") center -10px no-repeat;
-      background-size: auto 100%;
+      background-size: auto 110%;
       position: absolute;
-      margin-left: -2/6 * $token;
-      width: 2/3 * $token;
-      height: 2/3 * $token;
+      margin-left: -50%;
+      width: 100%;
+      height: 100%;
       left: 50%;
-      top: -30px;
+      top: -30%;
       opacity: 0;
       transform: perspective(400px) scale(1.5);
       transform-origin: top center;
@@ -343,8 +349,7 @@ export default {
   z-index: 2;
   .life {
     border-radius: 50%;
-    height: $token + 6px;
-    width: $token + 6px;
+    width: 100%;
     background: url("../assets/life.png") center center;
     background-size: 100%;
     border: 3px solid black;
@@ -354,9 +359,14 @@ export default {
     transform: perspective(400px) rotateY(180deg);
     backface-visibility: hidden;
     position: absolute;
-    left: 50%;
+    left: 0;
     top: 0;
-    margin-left: ($token + 6) / -2;
+
+    &:before {
+      content: " ";
+      display: block;
+      padding-top: 100%;
+    }
   }
 
   &.dead {
@@ -375,7 +385,7 @@ export default {
         width: 100%;
         background: url("../assets/vote.png") center center no-repeat;
         background-size: 50%;
-        height: $token + 3px;
+        height: 100%;
         pointer-events: none;
       }
     }
@@ -412,8 +422,7 @@ export default {
   position: absolute;
   left: 0;
   top: 0;
-  height: $token + 6px;
-  width: $token + 6px;
+  width: 100%;
   transition: transform 200ms ease-in-out;
   transform: perspective(400px) rotateY(0deg);
   backface-visibility: hidden;
@@ -745,21 +754,32 @@ li.move:not(.from) .player > svg.move {
 .circle .reminder {
   background: url("../assets/reminder.png") center center;
   background-size: 100%;
-  width: $token / 2;
-  height: $token / 2;
-  color: black;
-  font-size: 45%;
-  font-weight: bold;
-  display: block;
-  margin: 5px ($token / -4) 0;
-  text-align: center;
-  padding: ($token * 0.3 + 5px) 5px 0;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0 0 -25%;
   border-radius: 50%;
-  line-height: 90%;
   border: 3px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   transition: all 200ms;
   cursor: pointer;
+  &:before {
+    content: " ";
+    display: block;
+    padding-top: 100%;
+  }
+
+  .text {
+    line-height: 90%;
+    color: black;
+    font-size: 45%;
+    font-weight: bold;
+    position: absolute;
+    width: 90%;
+    text-align: center;
+    margin-top: 25%;
+  }
 
   .icon,
   &:after {
@@ -790,15 +810,13 @@ li.move:not(.from) .player > svg.move {
   }
 
   &.custom {
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    font-size: 70%;
-    word-break: break-word;
     .icon {
       display: none;
+    }
+    .text {
+      font-size: 70%;
+      word-break: break-word;
+      margin-top: 0;
     }
   }
 

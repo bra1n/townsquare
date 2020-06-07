@@ -57,7 +57,7 @@ export default {
     return {};
   },
   filters: {
-    nameToFontSize: name => (name && name.length > 10 ? "20px" : "24px")
+    nameToFontSize: name => (name && name.length > 10 ? "85%" : "110%")
   },
   methods: {
     setRole() {
@@ -70,7 +70,6 @@ export default {
 <style scoped lang="scss">
 .token {
   border-radius: 50%;
-  height: 100%;
   width: 100%;
   background: url("../assets/token.png") center center;
   background-size: 100%;

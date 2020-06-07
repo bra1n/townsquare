@@ -177,9 +177,13 @@ export default {
       z-index: 25 !important;
     }
 
-    > * {
-      margin-left: -78px;
-      width: 156px;
+    > .player {
+      margin-left: -50%;
+      width: 100%;
+    }
+    > .reminder {
+      margin-left: -25%;
+      width: 50%;
     }
   }
 }
@@ -187,6 +191,17 @@ export default {
 @mixin on-circle($item-count) {
   $angle: (360 / $item-count);
   $rot: 0;
+
+  // general token size depending on player count
+  @if $item-count < 7 {
+    width: 8vw;
+  } @else if($item-count < 10) {
+    width: 7vw;
+  } @else if($item-count < 15) {
+    width: 6vw;
+  } @else {
+    width: 5vw;
+  }
 
   @for $i from 1 through $item-count {
     &:nth-child(#{$i}) {
@@ -221,11 +236,11 @@ export default {
       $x: $i - 1;
       @if $x < $q or ($x >= $item-count / 2 and $x < $q * 3) {
         .player {
-          margin-bottom: -10px + 20px * (1 - ($x % $q / $q));
+          margin-bottom: -15% + 20% * (1 - ($x % $q / $q));
         }
       } @else {
         .player {
-          margin-bottom: -10px + 20px * ($x % $q / $q);
+          margin-bottom: -15% + 20% * ($x % $q / $q);
         }
       }
     }
@@ -284,11 +299,10 @@ export default {
     margin-top: 5px;
   }
   li {
-    width: 120px;
-    height: 120px;
+    width: 6vw;
+    height: 6vw;
     margin: 0 5px;
     display: inline-block;
-    font-size: 18px;
   }
 }
 </style>
