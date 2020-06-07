@@ -42,42 +42,44 @@
       />
 
       <!-- Overlay icons -->
-      <font-awesome-icon
-        icon="skull"
-        class="vote"
-        title="Voted YES"
-        @click="vote()"
-      />
-      <font-awesome-icon
-        icon="times"
-        class="vote"
-        title="Voted NO"
-        @click="vote()"
-      />
-      <font-awesome-icon
-        icon="times-circle"
-        class="cancel"
-        title="Cancel"
-        @click="cancel()"
-      />
-      <font-awesome-icon
-        icon="exchange-alt"
-        class="swap"
-        @click="swapPlayer(player)"
-        title="Swap seats with this player"
-      />
-      <font-awesome-icon
-        icon="redo-alt"
-        class="move"
-        @click="movePlayer(player)"
-        title="Move player to this seat"
-      />
-      <font-awesome-icon
-        icon="hand-point-right"
-        class="nominate"
-        @click="nominatePlayer(player)"
-        title="Nominate this player"
-      />
+      <div class="overlay">
+        <font-awesome-icon
+          icon="skull"
+          class="vote"
+          title="Voted YES"
+          @click="vote()"
+        />
+        <font-awesome-icon
+          icon="times"
+          class="vote"
+          title="Voted NO"
+          @click="vote()"
+        />
+        <font-awesome-icon
+          icon="times-circle"
+          class="cancel"
+          title="Cancel"
+          @click="cancel()"
+        />
+        <font-awesome-icon
+          icon="exchange-alt"
+          class="swap"
+          @click="swapPlayer(player)"
+          title="Swap seats with this player"
+        />
+        <font-awesome-icon
+          icon="redo-alt"
+          class="move"
+          @click="movePlayer(player)"
+          title="Move player to this seat"
+        />
+        <font-awesome-icon
+          icon="hand-point-right"
+          class="nominate"
+          @click="nominatePlayer(player)"
+          title="Nominate this player"
+        />
+      </div>
 
       <!-- Claimed seat icon -->
       <font-awesome-icon icon="chair" v-if="player.id" class="seat" />
@@ -433,7 +435,21 @@ export default {
 }
 
 /****** Player choice icons *******/
-.player > svg {
+.player .overlay {
+  width: 100%;
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:after {
+    content: " ";
+    display: block;
+    padding-top: 100%;
+  }
+}
+.player .overlay svg {
   position: absolute;
   filter: drop-shadow(0 0 3px black);
   z-index: 2;
@@ -443,8 +459,6 @@ export default {
   &.nominate,
   &.vote,
   &.cancel {
-    top: 9%;
-    left: 25%;
     width: 50%;
     height: 60%;
     opacity: 0;
@@ -466,27 +480,27 @@ export default {
   }
 }
 
-#townsquare.vote .player.vote-yes > svg.vote.fa-skull {
+#townsquare.vote .player.vote-yes .overlay svg.vote.fa-skull {
   opacity: 0.5;
   transform: scale(1);
 }
 
-#townsquare.vote .player.you.vote-yes > svg.vote.fa-skull,
-#townsquare.vote .player.vote-lock.vote-yes > svg.vote.fa-skull,
-#townsquare.vote .player.vote-lock:not(.vote-yes) > svg.vote.fa-times {
+#townsquare.vote .player.you.vote-yes .overlay svg.vote.fa-skull,
+#townsquare.vote .player.vote-lock.vote-yes .overlay svg.vote.fa-skull,
+#townsquare.vote .player.vote-lock:not(.vote-yes) .overlay svg.vote.fa-times {
   opacity: 1;
   transform: scale(1);
 }
 
-li.from:not(.nominate) .player > svg.cancel {
+li.from:not(.nominate) .player .overlay svg.cancel {
   opacity: 1;
   transform: scale(1);
   pointer-events: all;
 }
 
-li.swap:not(.from) .player > svg.swap,
-li.nominate .player > svg.nominate,
-li.move:not(.from) .player > svg.move {
+li.swap:not(.from) .player .overlay svg.swap,
+li.nominate .player .overlay svg.nominate,
+li.move:not(.from) .player .overlay svg.move {
   opacity: 1;
   transform: scale(1);
   pointer-events: all;
