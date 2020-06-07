@@ -106,7 +106,7 @@ class LiveSession {
         this._handleVote(params);
         break;
       case "lock":
-        this._store.commit("session/lockVote", params);
+        this._handleLock(params);
         break;
       case "bye":
         this._handleBye(params);
@@ -414,7 +414,28 @@ class LiveSession {
    */
   lockVote() {
     if (this._isSpectator) return;
-    this._send("lock", this._store.state.session.lockedVote);
+    const { lockedVote, votes, nomination } = this._store.state.session;
+    const { players } = this._store.state.players;
+    const index = (nomination[1] + lockedVote - 1) % players.length;
+    this._send("lock", [this._store.state.session.lockedVote, votes[index]]);
+  }
+
+  /**
+   * Update vote lock and the locked vote, if it differs.
+   * @param lock
+   * @param vote
+   * @private
+   */
+  _handleLock([lock, vote]) {
+    this._store.commit("session/lockVote", lock);
+    if (lock > 1) {
+      const { lockedVote, nomination } = this._store.state.session;
+      const { players } = this._store.state.players;
+      const index = (nomination[1] + lockedVote - 1) % players.length;
+      if (this._store.state.session.votes[index] !== vote) {
+        this._store.commit("session/vote", [index, vote]);
+      }
+    }
   }
 }
 

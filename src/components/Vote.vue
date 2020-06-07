@@ -17,6 +17,12 @@
         <em>{{ Math.ceil(players.length / 2) }} votes</em> required to
         <em>exile</em>.
       </template>
+
+      <div v-if="session.lockedVote > 1">
+        <em class="blue">{{ voters.join(", ") || "nobody" }} </em>
+        voted <em>YES</em>
+      </div>
+
       <div class="button-group" v-if="!session.isSpectator">
         <div class="button" v-if="!session.lockedVote" @click="start">
           Start Vote
@@ -80,6 +86,17 @@ export default {
       const indexAdjusted =
         (index - 1 + players - session.nomination[1]) % players;
       return indexAdjusted >= session.lockedVote - 1;
+    },
+    voters: function() {
+      const nomination = this.session.nomination[1];
+      const voters = this.session.votes.map((vote, index) =>
+        vote ? this.players[index].name : ""
+      );
+      const reorder = [
+        ...voters.slice(nomination + 1, this.players.length),
+        ...voters.slice(0, nomination + 1)
+      ];
+      return reorder.slice(0, this.session.lockedVote - 1).filter(n => !!n);
     }
   },
   methods: {
