@@ -85,6 +85,7 @@ export default {
   methods: {
     start() {
       this.$store.commit("session/lockVote");
+      clearInterval(this.voteTimer);
       this.voteTimer = setInterval(() => {
         this.$store.commit("session/lockVote");
         if (this.session.lockedVote > this.players.length) {
@@ -93,10 +94,11 @@ export default {
       }, 3000);
     },
     stop() {
-      this.$store.commit("session/lockVote", 0);
       clearInterval(this.voteTimer);
+      this.$store.commit("session/lockVote", 0);
     },
     finish() {
+      clearInterval(this.voteTimer);
       this.$store.commit("session/nomination", false);
     },
     vote(vote) {

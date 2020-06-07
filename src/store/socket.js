@@ -176,6 +176,7 @@ class LiveSession {
    * Update the gamestate based on incoming data.
    * @param gamestate
    * @param edition
+   * @param nomination
    * @private
    */
   _updateGamestate({ gamestate, edition, nomination }) {
