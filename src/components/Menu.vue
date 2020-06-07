@@ -57,11 +57,14 @@
           <li v-if="players.length">
             <em>
               <font-awesome-icon
-                @click="updateZoom(-0.1)"
+                @click="setZoom(grimoire.zoom - 0.1)"
                 icon="search-minus"
               />
               {{ Math.round(grimoire.zoom * 100) }}%
-              <font-awesome-icon @click="updateZoom(0.1)" icon="search-plus" />
+              <font-awesome-icon
+                @click="setZoom(grimoire.zoom + 0.1)"
+                icon="search-plus"
+              />
             </em>
             Zoom
           </li>
@@ -258,7 +261,7 @@ export default {
       "toggleMenu",
       "toggleNightOrder",
       "updateScreenshot",
-      "updateZoom",
+      "setZoom",
       "toggleModal"
     ])
   }

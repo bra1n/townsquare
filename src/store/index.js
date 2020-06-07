@@ -65,8 +65,8 @@ export default new Vuex.Store({
     toggleNightOrder({ grimoire }) {
       grimoire.isNightOrder = !grimoire.isNightOrder;
     },
-    updateZoom({ grimoire }, by = 0) {
-      grimoire.zoom += by;
+    setZoom({ grimoire }, zoom) {
+      grimoire.zoom = zoom;
     },
     setBackground({ grimoire }, background) {
       grimoire.background = background;

@@ -1,7 +1,10 @@
 module.exports = store => {
   // initialize data
-  if (localStorage.background !== undefined) {
+  if (localStorage.getItem("background")) {
     store.commit("setBackground", localStorage.background);
+  }
+  if (localStorage.getItem("zoom")) {
+    store.commit("setZoom", parseFloat(localStorage.getItem("zoom")));
   }
   if (localStorage.isPublic !== undefined) {
     store.commit("toggleGrimoire", JSON.parse(localStorage.isPublic));
@@ -54,6 +57,13 @@ module.exports = store => {
           localStorage.setItem("background", payload);
         } else {
           localStorage.removeItem("background");
+        }
+        break;
+      case "setZoom":
+        if (payload !== 1) {
+          localStorage.setItem("zoom", payload);
+        } else {
+          localStorage.removeItem("zoom");
         }
         break;
       case "setEdition":
