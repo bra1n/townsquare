@@ -34,7 +34,7 @@ export default new Vuex.Store({
       isMenuOpen: false,
       isScreenshot: false,
       isScreenshotSuccess: false,
-      zoom: 1,
+      zoom: 0,
       background: "",
       bluffs: []
     },

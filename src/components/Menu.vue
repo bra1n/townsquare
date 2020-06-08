@@ -57,12 +57,12 @@
           <li v-if="players.length">
             <em>
               <font-awesome-icon
-                @click="setZoom(grimoire.zoom - 0.1)"
+                @click="setZoom(grimoire.zoom - 1)"
                 icon="search-minus"
               />
-              {{ Math.round(grimoire.zoom * 100) }}%
+              {{ Math.round(100 + grimoire.zoom * 10) }}%
               <font-awesome-icon
-                @click="setZoom(grimoire.zoom + 0.1)"
+                @click="setZoom(grimoire.zoom + 1)"
                 icon="search-plus"
               />
             </em>

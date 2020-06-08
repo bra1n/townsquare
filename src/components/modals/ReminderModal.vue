@@ -21,7 +21,7 @@
               '.png')})`
           }"
         ></span>
-        {{ reminder.name }}
+        <span class="text">{{ reminder.name }}</span>
       </li>
     </ul>
   </Modal>
@@ -83,29 +83,36 @@ ul.reminders .reminder {
   background-size: 100%;
   width: 100px;
   height: 100px;
-  color: black;
-  font-size: 65%;
-  font-weight: bold;
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 5px;
-  text-align: center;
+
   border-radius: 50%;
   border: 3px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   cursor: pointer;
-  padding: 70px 9px 0;
   line-height: 100%;
   transition: transform 500ms ease;
 
   .icon {
     position: absolute;
-    left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
     background-size: 100%;
     background-position: center 0;
     background-repeat: no-repeat;
+  }
+
+  .text {
+    color: black;
+    font-size: 65%;
+    font-weight: bold;
+    text-align: center;
+    top: 28%;
+    width: 80%;
+    line-height: 1;
   }
 
   &:hover {

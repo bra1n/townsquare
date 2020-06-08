@@ -16,7 +16,6 @@ export default {
     async capture({ x = 0, y = 0, width = 0, height = 0 }) {
       const canvas = this.$refs.canvas;
       const video = this.$refs.video;
-      const zoom = this.$store.state.grimoire.zoom;
       // start capturing
       if (!this.stream || !this.stream.active) {
         alert(
@@ -40,18 +39,18 @@ export default {
         video.play();
         setTimeout(() => {
           const context = canvas.getContext("2d");
-          canvas.setAttribute("width", width * zoom || video.videoWidth);
-          canvas.setAttribute("height", height * zoom || video.videoHeight);
+          canvas.setAttribute("width", width || video.videoWidth);
+          canvas.setAttribute("height", height || video.videoHeight);
           context.drawImage(
             video,
-            x * zoom || 0,
-            y * zoom || 0,
-            width * zoom || video.videoWidth,
-            height * zoom || video.videoHeight,
+            x || 0,
+            y || 0,
+            width || video.videoWidth,
+            height || video.videoHeight,
             0,
             0,
-            width * zoom || video.videoWidth,
-            height * zoom || video.videoHeight
+            width || video.videoWidth,
+            height || video.videoHeight
           );
           canvas.toBlob(blob => {
             try {

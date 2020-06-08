@@ -60,7 +60,7 @@ module.exports = store => {
         }
         break;
       case "setZoom":
-        if (payload !== 1) {
+        if (payload !== 0) {
           localStorage.setItem("zoom", payload);
         } else {
           localStorage.removeItem("zoom");

@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li :style="zoom">
     <div
       ref="player"
       class="player"
@@ -7,7 +7,7 @@
         {
           dead: player.isDead,
           'no-vote': player.isVoteless,
-          you: player.id === session.playerId,
+          you: session.sessionId && player.id && player.id === session.playerId,
           'vote-yes': session.votes[index],
           'vote-lock': voteLocked
         },
@@ -82,7 +82,11 @@
       </div>
 
       <!-- Claimed seat icon -->
-      <font-awesome-icon icon="chair" v-if="player.id" class="seat" />
+      <font-awesome-icon
+        icon="chair"
+        v-if="player.id && session.sessionId"
+        class="seat"
+      />
 
       <!-- Ghost vote icon -->
       <font-awesome-icon
@@ -192,6 +196,17 @@ export default {
       const indexAdjusted =
         (this.index - 1 + players - session.nomination[1]) % players;
       return indexAdjusted < session.lockedVote - 1;
+    },
+    zoom: function() {
+      if (this.players.length < 7) {
+        return { width: 9 + this.grimoire.zoom + "vw" };
+      } else if (this.players.length <= 10) {
+        return { width: 8 + this.grimoire.zoom + "vw" };
+      } else if (this.players.length <= 15) {
+        return { width: 7 + this.grimoire.zoom + "vw" };
+      } else {
+        return { width: 6 + this.grimoire.zoom + "vw" };
+      }
     }
   },
   data() {
@@ -567,6 +582,7 @@ li.move:not(.from) .player .overlay svg.move {
 
 /***** Player name *****/
 .player > .name {
+  text-align: center;
   font-size: 120%;
   line-height: 120%;
   cursor: pointer;
@@ -789,20 +805,18 @@ li.move:not(.from) .player .overlay svg.move {
     color: black;
     font-size: 45%;
     font-weight: bold;
-    position: absolute;
     width: 90%;
     text-align: center;
-    margin-top: 25%;
+    margin-top: 50%;
   }
 
   .icon,
   &:after {
     content: " ";
     position: absolute;
-    left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
     background-size: 100%;
     background-position: center 0;
     background-repeat: no-repeat;
@@ -820,6 +834,9 @@ li.move:not(.from) .player .overlay svg.move {
     top: 30px;
     &:after {
       display: none;
+    }
+    .icon {
+      top: auto;
     }
   }
 

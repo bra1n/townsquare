@@ -26,7 +26,7 @@
         width="150"
         x="66.6%"
         text-anchor="middle"
-        class="label"
+        class="label mozilla"
         v-bind:font-size="role.name | nameToFontSize"
       >
         <textPath xlink:href="#curve">
@@ -57,7 +57,7 @@ export default {
     return {};
   },
   filters: {
-    nameToFontSize: name => (name && name.length > 10 ? "85%" : "110%")
+    nameToFontSize: name => (name && name.length > 10 ? "90%" : "110%")
   },
   methods: {
     setRole() {
@@ -141,6 +141,16 @@ export default {
       font-weight: bold;
       text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
       letter-spacing: 1px;
+
+      @-moz-document url-prefix() {
+        &.mozilla {
+          // Vue doesn't support scoped media queries, so we have to use a second css class
+          stroke: none;
+          text-shadow: none;
+          filter: drop-shadow(0 2px 0 white) drop-shadow(0 -2px 0 white)
+            drop-shadow(2px 0 0 white) drop-shadow(-2px 0 0 white);
+        }
+      }
     }
   }
 

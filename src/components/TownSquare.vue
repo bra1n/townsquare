@@ -7,7 +7,6 @@
       spectator: session.isSpectator,
       vote: session.nomination
     }"
-    v-bind:style="{ zoom: grimoire.zoom }"
   >
     <ul class="circle" v-bind:class="['size-' + players.length]">
       <Player
@@ -167,11 +166,10 @@ export default {
 
   > li {
     position: absolute;
-    top: 0;
     left: 50%;
     height: 50%;
     transform-origin: 0 100%;
-    text-align: center;
+    pointer-events: none;
 
     &:hover {
       z-index: 25 !important;
@@ -180,10 +178,12 @@ export default {
     > .player {
       margin-left: -50%;
       width: 100%;
+      pointer-events: all;
     }
     > .reminder {
       margin-left: -25%;
       width: 50%;
+      pointer-events: all;
     }
   }
 }
@@ -192,17 +192,7 @@ export default {
   $angle: (360 / $item-count);
   $rot: 0;
 
-  // general token size depending on player count
-  @if $item-count < 7 {
-    width: 8vw;
-  } @else if($item-count <= 10) {
-    width: 7vw;
-  } @else if($item-count <= 15) {
-    width: 6vw;
-  } @else {
-    width: 5vw;
-  }
-
+  // rotation and tooltip placement
   @for $i from 1 through $item-count {
     &:nth-child(#{$i}) {
       transform: rotate($rot * 1deg);
@@ -224,6 +214,8 @@ export default {
       > * {
         transform: rotate($rot * -1deg);
       }
+
+      // animation cascade
       .life,
       .token,
       .shroud,

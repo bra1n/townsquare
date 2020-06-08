@@ -10,7 +10,7 @@
         : ''
     }"
   >
-    <transition name="zoom">
+    <transition name="blur">
       <Intro v-if="!players.length"></Intro>
       <TownInfo v-if="players.length && !session.nomination"></TownInfo>
       <Vote v-if="session.nomination"></Vote>
@@ -165,13 +165,13 @@ ul {
   justify-content: center;
 }
 
-.zoom-enter-active,
-.zoom-leave-active {
+.blur-enter-active,
+.blur-leave-active {
   transition: all 250ms;
   filter: blur(0);
 }
-.zoom-enter,
-.zoom-leave-to {
+.blur-enter,
+.blur-leave-to {
   opacity: 0;
   filter: blur(20px);
 }
