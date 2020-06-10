@@ -104,7 +104,6 @@ export default {
 
   li {
     display: block;
-    white-space: nowrap;
     font-weight: bold;
     text-align: center;
     padding: 0 5px;
@@ -144,11 +143,13 @@ export default {
   li.edition {
     width: 220px;
     height: 200px;
+    max-width: 100%;
+    max-height: 100%;
     background-position: 0 center;
     background-repeat: no-repeat;
     background-size: 100% auto;
     position: absolute;
-    top: -50px;
+    top: -25%;
   }
 }
 </style>

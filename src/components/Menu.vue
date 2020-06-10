@@ -40,11 +40,12 @@
           <!-- Grimoire -->
           <li class="headline">Grimoire</li>
           <li @click="toggleGrimoire" v-if="players.length">
-            <em>[G]</em>
             <template v-if="!grimoire.isPublic">Hide</template>
             <template v-if="grimoire.isPublic">Show</template>
+            <em>[G]</em>
           </li>
           <li @click="toggleNightOrder" v-if="players.length">
+            Night order
             <em
               ><font-awesome-icon
                 :icon="[
@@ -52,9 +53,9 @@
                   grimoire.isNightOrder ? 'check-square' : 'square'
                 ]"
             /></em>
-            Night order
           </li>
           <li v-if="players.length">
+            Zoom
             <em>
               <font-awesome-icon
                 @click="setZoom(grimoire.zoom - 1)"
@@ -66,11 +67,10 @@
                 icon="search-plus"
               />
             </em>
-            Zoom
           </li>
           <li @click="setBackground">
-            <em><font-awesome-icon icon="image"/></em>
             Background image
+            <em><font-awesome-icon icon="image"/></em>
           </li>
         </template>
 
@@ -82,34 +82,32 @@
             Live Session
           </li>
           <li @click="hostSession" v-if="!session.sessionId">
-            <em>[H]</em> Host (Storyteller)
+            Host (Storyteller)<em>[H]</em>
           </li>
           <li @click="joinSession" v-if="!session.sessionId">
-            <em>[J]</em> Join (Player)
+            Join (Player)<em>[J]</em>
           </li>
           <li v-if="session.sessionId" @click="copySessionUrl">
-            <em><font-awesome-icon icon="copy"/></em>
             Copy player link
+            <em><font-awesome-icon icon="copy"/></em>
           </li>
           <li @click="leaveSession" v-if="session.sessionId">
-            <em>{{ session.sessionId }}</em>
             Leave Session
+            <em>{{ session.sessionId }}</em>
           </li>
         </template>
 
         <template v-if="tab === 'players' && !session.isSpectator">
           <!-- Users -->
           <li class="headline">Players</li>
-          <li @click="addPlayer" v-if="players.length < 20">
-            <em>[A]</em> Add
-          </li>
+          <li @click="addPlayer" v-if="players.length < 20">Add<em>[A]</em></li>
           <li @click="randomizeSeatings" v-if="players.length > 2">
-            <em><font-awesome-icon icon="dice"/></em>
             Randomize
+            <em><font-awesome-icon icon="dice"/></em>
           </li>
           <li @click="clearPlayers" v-if="players.length">
-            <em><font-awesome-icon icon="trash-alt"/></em>
             Remove all
+            <em><font-awesome-icon icon="trash-alt"/></em>
           </li>
         </template>
 
@@ -117,19 +115,19 @@
           <!-- Characters -->
           <li class="headline">Characters</li>
           <li v-if="!session.isSpectator" @click="toggleModal('edition')">
-            <em>[E]</em>
             Select Edition
+            <em>[E]</em>
           </li>
           <li
             @click="toggleModal('roles')"
             v-if="!session.isSpectator && players.length > 4"
           >
-            <em>[C]</em>
             Choose & Assign
+            <em>[C]</em>
           </li>
           <li @click="clearRoles" v-if="players.length">
-            <em><font-awesome-icon icon="trash-alt"/></em>
             Remove all
+            <em><font-awesome-icon icon="trash-alt"/></em>
           </li>
         </template>
 
@@ -137,20 +135,20 @@
           <!-- Help -->
           <li class="headline">Help</li>
           <li @click="toggleModal('reference')">
-            <em>[R]</em>
             Reference Sheet
+            <em>[R]</em>
           </li>
           <li>
             <a href="https://discord.gg/tkWDny6" target="_blank">
-              <em><font-awesome-icon :icon="['fab', 'discord']"/></em>
               Join Discord
             </a>
+            <em><font-awesome-icon :icon="['fab', 'discord']"/></em>
           </li>
           <li>
             <a href="https://github.com/bra1n/townsquare" target="_blank">
-              <em><font-awesome-icon :icon="['fab', 'github']"/></em>
               Source code
             </a>
+            <em><font-awesome-icon :icon="['fab', 'github']"/></em>
           </li>
         </template>
       </ul>
@@ -232,6 +230,7 @@ export default {
     },
     addPlayer() {
       if (this.session.isSpectator) return;
+      if (this.players.length >= 20) return;
       const name = prompt("Player name");
       if (name) {
         this.$store.commit("players/add", name);
@@ -288,6 +287,7 @@ export default {
   top: 3px;
   text-align: right;
   padding-right: 50px;
+  z-index: 200;
 
   #app.screenshot & {
     display: none;
@@ -366,6 +366,10 @@ export default {
       color: white;
       text-align: left;
       background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 30px;
 
       &.tabs {
         display: flex;
@@ -399,21 +403,16 @@ export default {
         }
       }
 
-      &:last-child {
-        margin-bottom: 0;
-      }
-
       &:not(.headline):not(.tabs):hover {
         cursor: pointer;
         color: red;
       }
 
       em {
-        float: right;
+        flex-grow: 0;
         font-style: normal;
         margin-left: 10px;
         font-size: 80%;
-        line-height: 31px;
       }
     }
 
@@ -422,6 +421,7 @@ export default {
       letter-spacing: 1px;
       padding: 0 10px;
       text-align: center;
+      justify-content: center;
       background: linear-gradient(
         to right,
         $townsfolk 0%,

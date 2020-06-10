@@ -125,6 +125,65 @@ body {
   overflow: hidden;
 }
 
+// Large devices (desktops, less than 1200px)
+@media screen and (max-width: 1199.98px) {
+  html,
+  body {
+    font-size: 1.1em;
+  }
+  .player .night em {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+// Medium devices (tablets, less than 992px)
+@media screen and (max-width: 991.98px) {
+  html,
+  body {
+    font-size: 1em;
+  }
+  #controls svg {
+    font-size: 20px;
+  }
+  .player .night em {
+    width: 20px;
+    height: 20px;
+  }
+  #townsquare {
+    padding: 10px;
+  }
+}
+
+// Small devices (landscape phones, less than 768px)
+@media screen and (max-width: 767.98px) {
+  html,
+  body {
+    font-size: 0.9em;
+  }
+  .player > .name {
+    top: 0;
+  }
+}
+
+// Old phones
+@media screen and (max-width: 575.98px) {
+  html,
+  body {
+    font-size: 0.8em;
+  }
+}
+
+// odd aspect ratio
+@media (max-aspect-ratio: 11/7) {
+  .bluffs h3 {
+    max-width: 14vh;
+  }
+  .bluffs ul {
+    flex-direction: column;
+  }
+}
+
 * {
   box-sizing: border-box;
   position: relative;
@@ -211,7 +270,7 @@ ul {
   color: white;
   font-weight: bold;
   text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
-  line-height: 40px;
+  line-height: 170%;
   margin: 5px auto;
   cursor: pointer;
   transition: all 200ms;

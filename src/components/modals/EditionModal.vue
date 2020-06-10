@@ -162,7 +162,7 @@ ul.editions .edition {
   font-family: PiratesBay, sans-serif;
   letter-spacing: 1px;
   text-align: center;
-  padding-top: 100px;
+  padding-top: 15%;
   background-position: center center;
   background-size: 100% auto;
   background-repeat: no-repeat;

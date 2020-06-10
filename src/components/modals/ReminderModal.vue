@@ -81,12 +81,14 @@ export default {
 ul.reminders .reminder {
   background: url("../../assets/reminder.png") center center;
   background-size: 100%;
-  width: 100px;
-  height: 100px;
+  width: 14vh;
+  height: 14vh;
+  max-width: 100px;
+  max-height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5px;
+  margin: 1%;
 
   border-radius: 50%;
   border: 3px solid black;

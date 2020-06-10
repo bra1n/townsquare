@@ -127,7 +127,7 @@
               <font-awesome-icon icon="camera" />
               Screenshot
             </li>
-            <li @click="$emit('trigger', ['removePlayer'])">
+            <li @click="removePlayer">
               <font-awesome-icon icon="times-circle" />
               Remove
             </li>
@@ -198,14 +198,15 @@ export default {
       return indexAdjusted < session.lockedVote - 1;
     },
     zoom: function() {
+      const unit = window.innerWidth > window.innerHeight ? "vh" : "vw";
       if (this.players.length < 7) {
-        return { width: 9 + this.grimoire.zoom + "vw" };
+        return { width: 18 + this.grimoire.zoom + unit };
       } else if (this.players.length <= 10) {
-        return { width: 8 + this.grimoire.zoom + "vw" };
+        return { width: 16 + this.grimoire.zoom + unit };
       } else if (this.players.length <= 15) {
-        return { width: 7 + this.grimoire.zoom + "vw" };
+        return { width: 14 + this.grimoire.zoom + unit };
       } else {
-        return { width: 6 + this.grimoire.zoom + "vw" };
+        return { width: 12 + this.grimoire.zoom + unit };
       }
     }
   },
@@ -261,6 +262,10 @@ export default {
         value
       });
     },
+    removePlayer() {
+      this.isMenuOpen = false;
+      this.$emit("trigger", ["removePlayer"]);
+    },
     swapPlayer(player) {
       this.isMenuOpen = false;
       this.$emit("trigger", ["swapPlayer", player]);
@@ -305,7 +310,6 @@ export default {
 /***** Player token *****/
 .circle .player {
   margin-bottom: 10px;
-  padding-bottom: 5px;
 
   &:before {
     content: " ";
@@ -525,10 +529,11 @@ li.move:not(.from) .player .overlay svg.move {
 .player .has-vote {
   position: absolute;
   right: 2px;
-  bottom: 45px;
+  margin-top: -15%;
   color: #fff;
   filter: drop-shadow(0 0 3px black);
   transition: opacity 250ms;
+  z-index: 2;
 
   #townsquare.public & {
     opacity: 0;
@@ -570,10 +575,11 @@ li.move:not(.from) .player .overlay svg.move {
 .player .seat {
   position: absolute;
   left: 2px;
-  bottom: 45px;
+  margin-top: -15%;
   color: #fff;
   filter: drop-shadow(0 0 3px black);
   cursor: default;
+  z-index: 2;
 }
 
 .player.you .seat {
@@ -654,16 +660,21 @@ li.move:not(.from) .player .overlay svg.move {
 /**** Night reminders ****/
 .player .night {
   position: absolute;
-  height: 100%;
   width: 100%;
   z-index: 2;
   cursor: pointer;
   opacity: 1;
   transition: opacity 200ms;
   display: flex;
-  top: -20px;
+  top: 0;
   align-items: center;
   pointer-events: none;
+
+  &:after {
+    content: " ";
+    display: block;
+    padding-top: 100%;
+  }
 
   #townsquare.public & {
     opacity: 0;
@@ -746,8 +757,6 @@ li.move:not(.from) .player .overlay svg.move {
     position: absolute;
     width: 40px;
     height: 40px;
-    text-align: center;
-    line-height: 37px;
     border-radius: 50%;
     border: 3px solid black;
     filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5));
@@ -755,15 +764,18 @@ li.move:not(.from) .player .overlay svg.move {
     opacity: 1;
     pointer-events: all;
     transition: opacity 200ms;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &.first em {
-    left: -15px;
+    left: -10%;
     background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, $townsfolk 100%);
   }
 
   &.other em {
-    right: -15px;
+    right: -10%;
     background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, $demon 100%);
   }
 

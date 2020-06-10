@@ -167,8 +167,7 @@ ul {
     /*background: linear-gradient(0deg, #ffffff0f, transparent);*/
     border-radius: 10px;
     .icon {
-      width: 60px;
-      height: 40px;
+      width: 6vh;
       background-size: cover;
       background-position: 0 -5px;
       flex-grow: 0;
@@ -177,11 +176,16 @@ ul {
       text-align: center;
       border-left: 1px solid #ffffff1f;
       border-right: 1px solid #ffffff1f;
+      &:after {
+        content: " ";
+        display: block;
+        padding-top: 66%;
+      }
     }
     .name {
       flex-grow: 0;
       flex-shrink: 0;
-      width: 150px;
+      width: 15%;
       font-weight: bold;
       text-align: right;
       font-family: "Papyrus", sans-serif;
@@ -206,6 +210,9 @@ ul {
       height: auto;
       font-family: inherit;
       font-size: inherit;
+    }
+    .icon:after {
+      padding-top: 0;
     }
   }
 }

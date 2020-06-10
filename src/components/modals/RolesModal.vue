@@ -146,11 +146,11 @@ export default {
 @import "../../vars.scss";
 
 ul.tokens {
-  padding-left: 55px;
+  padding-left: 5%;
   li {
     border-radius: 50%;
     width: 6vw;
-    margin: 5px;
+    margin: 1%;
     opacity: 0.5;
     transition: all 250ms;
     &.selected {
@@ -181,11 +181,16 @@ ul.tokens {
     position: absolute;
     left: 0;
     font-weight: bold;
-    line-height: 50px;
-    text-align: center;
-    font-size: 100%;
-    width: 50px;
-    height: 50px;
+    font-size: 75%;
+    width: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:after {
+      content: " ";
+      display: block;
+      padding-top: 100%;
+    }
     &.townsfolk {
       color: $townsfolk;
     }

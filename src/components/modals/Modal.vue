@@ -50,6 +50,7 @@ export default {
 
   .characters & {
     max-height: 80%;
+    max-width: 80%;
     overflow-y: auto;
   }
 
@@ -62,7 +63,6 @@ export default {
     align-content: center;
     align-items: center;
     justify-content: center;
-    font-size: 75%;
     line-height: 100%;
   }
   > .close {

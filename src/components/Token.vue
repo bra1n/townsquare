@@ -132,6 +132,7 @@ export default {
   .name {
     width: 100%;
     height: 100%;
+    font-size: 24px; // svg fonts are relative to document font size
     .label {
       fill: black;
       stroke: white;

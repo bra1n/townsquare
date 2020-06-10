@@ -83,7 +83,7 @@ export default {
 ul.tokens li {
   border-radius: 50%;
   width: 6vw;
-  margin: 5px;
+  margin: 1%;
   transition: transform 500ms ease;
 
   &.townsfolk {

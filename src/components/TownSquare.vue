@@ -157,6 +157,16 @@ export default {
 </script>
 
 <style lang="scss">
+#townsquare {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
 .circle {
   padding: 0;
   width: 100%;
@@ -228,11 +238,11 @@ export default {
       $x: $i - 1;
       @if $x < $q or ($x >= $item-count / 2 and $x < $q * 3) {
         .player {
-          margin-bottom: -15% + 20% * (1 - ($x % $q / $q));
+          margin-bottom: -10% + 20% * (1 - ($x % $q / $q));
         }
       } @else {
         .player {
-          margin-bottom: -15% + 20% * ($x % $q / $q);
+          margin-bottom: -10% + 20% * ($x % $q / $q);
         }
       }
     }
@@ -244,17 +254,6 @@ export default {
   .circle.size-#{$i} > li {
     @include on-circle($item-count: $i);
   }
-}
-
-#townsquare {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
 }
 
 /***** Demon bluffs *******/
@@ -290,11 +289,15 @@ export default {
   h3 {
     margin-top: 5px;
   }
-  li {
-    width: 6vw;
-    height: 6vw;
-    margin: 0 5px;
-    display: inline-block;
+  ul {
+    display: flex;
+    align-items: center;
+    li {
+      width: 14vh;
+      height: 14vh;
+      margin: 0 0.5%;
+      display: inline-block;
+    }
   }
 }
 </style>

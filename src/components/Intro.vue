@@ -37,8 +37,10 @@ export default {
     position: absolute;
     bottom: 100%;
     left: 50%;
-    margin-left: -96px;
-    margin-bottom: 20px;
+    width: 25vh;
+    margin-left: -12.5vh;
+    margin-bottom: 2vh;
+    max-width: 192px;
     border-radius: 50%;
     box-shadow: 0 0 10px black;
     border: 3px solid black;
