@@ -30,7 +30,7 @@
       >
       and then upload the generated "custom-list.json" either directly here or
       provide a URL to such a hosted JSON file.<br />
-      <h3>Some custom Teensyville scripts:</h3>
+      <h3>Some popular custom scripts:</h3>
       <ul class="scripts">
         <li
           v-for="(script, index) in scripts"
@@ -76,19 +76,23 @@ export default {
       isCustom: false,
       scripts: [
         [
-          "On Thin Ice",
+          "Catfishing 8.0 (+Sentinel)",
+          "https://gist.githubusercontent.com/bra1n/8a5ec41a7bbf945f6b7dfc1cef72b569/raw/b5c63ac303f279dba918b897211cb6dc708bc64e/catfishing.json"
+        ],
+        [
+          "On Thin Ice (Teensyville, +Sentinel)",
           "https://gist.githubusercontent.com/bra1n/8dacd9f2abc6f428331ea1213ab153f5/raw/9758aff4b59965dc7a094db549d950be5a26b571/custom-script.json"
         ],
         [
-          "Race To The Bottom",
+          "Race To The Bottom (Teensyville, +Sentinel, +Doomsayer)",
           "https://gist.githubusercontent.com/bra1n/63e1354cb3dc9d4032bcd0623dc48888/raw/5be4df8386ec61e3a98c32be77f8cac3f8414379/custom-script.json"
         ],
         [
-          "Frankenstein's Mayor by Ted",
+          "Frankenstein's Mayor by Ted (Teensyville, +Sentinel)",
           "https://gist.githubusercontent.com/bra1n/32c52b422cc01b934a4291eeb81dbcee/raw/3ca5a043c41141ac40667dc15097deb327263268/Frankensteins_Mayor_by_Ted.json"
         ],
         [
-          "Vigormortis High School",
+          "Vigormortis High School (Teensyville, +Sentinel)",
           "https://gist.githubusercontent.com/bra1n/1f65bd4a999524719d5dabe98c3c2d27/raw/f28d3268846c182b2078888122003c6f95c6b2cf/VigormortisHighSchool.json"
         ]
       ]
