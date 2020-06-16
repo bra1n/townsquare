@@ -285,9 +285,16 @@ export default {
       this.isMenuOpen = false;
       this.$emit("trigger", ["claimSeat"]);
     },
+    /**
+     * Allow the ST to override a locked vote.
+     */
     vote() {
-      if (this.player.id !== this.session.playerId) return;
-      this.$store.commit("session/vote", [this.index]);
+      if (this.session.isSpectator) return;
+      if (!this.voteLocked) return;
+      this.$store.commit("session/voteSync", [
+        this.index,
+        !this.session.votes[this.index]
+      ]);
     }
   }
 };
@@ -503,16 +510,23 @@ export default {
   }
 }
 
+// other player voted yes, but is not locked yet
 #townsquare.vote .player.vote-yes .overlay svg.vote.fa-skull {
   opacity: 0.5;
   transform: scale(1);
 }
 
+// you voted yes | a locked vote yes | a locked vote no
 #townsquare.vote .player.you.vote-yes .overlay svg.vote.fa-skull,
 #townsquare.vote .player.vote-lock.vote-yes .overlay svg.vote.fa-skull,
 #townsquare.vote .player.vote-lock:not(.vote-yes) .overlay svg.vote.fa-times {
   opacity: 1;
   transform: scale(1);
+}
+
+// a locked vote can be clicked on by the ST
+#townsquare.vote:not(.spectator) .player.vote-lock .overlay svg.vote {
+  pointer-events: all;
 }
 
 li.from:not(.nominate) .player .overlay svg.cancel {

@@ -386,27 +386,28 @@ class LiveSession {
   }
 
   /**
-   * Send a vote. Player only
+   * Send a vote. Player or ST
    * @param index Seat of the player
+   * @param sync Flag whether to sync this vote with others or not
    */
   vote([index]) {
-    if (!this._isSpectator) return;
     const player = this._store.state.players.players[index];
-    if (this._store.state.session.playerId === player.id) {
-      // send vote only if it is your own vote
+    if (
+      this._store.state.session.playerId === player.id ||
+      !this._isSpectator
+    ) {
+      // send vote only if it is your own vote or you are the storyteller
       this._send("vote", [index, this._store.state.session.votes[index]]);
     }
   }
 
   /**
    * Handle an incoming vote, but not if it is for your own seat.
+   * @param index
    * @param vote
    */
-  _handleVote(vote) {
-    const player = this._store.state.players.players[vote[0]];
-    if (this._store.state.session.playerId !== player.id) {
-      this._store.commit("session/vote", vote);
-    }
+  _handleVote([index, vote]) {
+    this._store.commit("session/vote", [index, vote]);
   }
 
   /**
@@ -460,7 +461,7 @@ module.exports = store => {
       case "session/nomination":
         session.nomination(payload);
         break;
-      case "session/vote":
+      case "session/voteSync":
         session.vote(payload);
         break;
       case "session/lockVote":

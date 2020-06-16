@@ -19,7 +19,8 @@
       </template>
 
       <div v-if="session.lockedVote > 1">
-        <em class="blue">{{ voters.join(", ") || "nobody" }} </em>
+        <em class="blue" v-if="voters.length">{{ voters.join(", ") }} </em>
+        <span v-else>nobody</span>
         voted <em>YES</em>
       </div>
 
@@ -122,7 +123,7 @@ export default {
       if (!this.canVote) return false;
       const index = this.players.findIndex(p => p.id === this.session.playerId);
       if (index >= 0 && !!this.session.votes[index] !== vote) {
-        this.$store.commit("session/vote", [index, vote]);
+        this.$store.commit("session/voteSync", [index, vote]);
       }
     }
   }

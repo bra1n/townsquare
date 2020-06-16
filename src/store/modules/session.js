@@ -1,3 +1,14 @@
+// helper functions
+const set = key => (state, val) => {
+  state[key] = val;
+};
+
+const handleVote = (state, [index, vote]) => {
+  if (!state.nomination) return;
+  state.votes = [...state.votes];
+  state.votes[index] = vote === undefined ? !state.votes[index] : vote;
+};
+
 const state = () => ({
   sessionId: "",
   isSpectator: false,
@@ -14,31 +25,24 @@ const getters = {};
 const actions = {};
 
 const mutations = {
-  setSessionId(state, sessionId) {
-    state.sessionId = sessionId;
-  },
-  setPlayerId(state, playerId) {
-    state.playerId = playerId;
-  },
-  setSpectator(state, spectator) {
-    state.isSpectator = spectator;
-  },
-  setPlayerCount(state, playerCount) {
-    state.playerCount = playerCount;
-  },
-  claimSeat(state, claimedSeat) {
-    state.claimedSeat = claimedSeat;
-  },
+  setSessionId: set("sessionId"),
+  setPlayerId: set("playerId"),
+  setSpectator: set("isSpectator"),
+  setPlayerCount: set("playerCount"),
+  claimSeat: set("claimedSeat"),
   nomination(state, nomination) {
     state.nomination = nomination;
     state.votes = [];
     state.lockedVote = 0;
   },
-  vote(state, [index, vote]) {
-    if (!state.nomination) return;
-    state.votes = [...state.votes];
-    state.votes[index] = vote === undefined ? !state.votes[index] : vote;
-  },
+  /**
+   * Store a vote with and without syncing it to the live session.
+   * This is necessary in order to prevent infinite voting loops.
+   * @param state
+   * @param vote
+   */
+  vote: handleVote,
+  voteSync: handleVote,
   lockVote(state, lock) {
     state.lockedVote = lock !== undefined ? lock : state.lockedVote + 1;
   }
