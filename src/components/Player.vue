@@ -343,7 +343,7 @@ export default {
       opacity: 0;
       transform: perspective(400px) scale(1.5);
       transform-origin: top center;
-      transition: all 200ms ease-in-out;
+      transition: all 200ms;
       pointer-events: none;
     }
 
@@ -362,6 +362,10 @@ export default {
     opacity: 1;
     top: 0;
     transform: perspective(400px) scale(1);
+  }
+
+  #townsquare:not(.spectator) &.dead .shroud:hover:before {
+    opacity: 1;
   }
 }
 

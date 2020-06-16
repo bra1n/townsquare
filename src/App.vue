@@ -21,11 +21,13 @@
     <RolesModal />
     <ReferenceModal />
     <Gradients />
+    <span id="version">v{{ version }}</span>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import { version } from "../package.json";
 import TownSquare from "./components/TownSquare";
 import TownInfo from "./components/TownInfo";
 import Menu from "./components/Menu";
@@ -51,6 +53,11 @@ export default {
   computed: {
     ...mapState(["grimoire", "session"]),
     ...mapState("players", ["players"])
+  },
+  data() {
+    return {
+      version
+    };
   },
   methods: {
     takeScreenshot(dimensions) {
@@ -222,6 +229,14 @@ ul {
   align-items: center;
   align-content: center;
   justify-content: center;
+}
+
+#version {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 60%;
+  opacity: 0.5;
 }
 
 .blur-enter-active,
