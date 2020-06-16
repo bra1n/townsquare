@@ -191,6 +191,15 @@ body {
   }
 }
 
+// Firefox doesn't support screenshot mode yet
+@-moz-document url-prefix() {
+  #controls > span.camera,
+  .player > .menu .screenshot,
+  .bluffs > svg.fa-camera {
+    display: none;
+  }
+}
+
 * {
   box-sizing: border-box;
   position: relative;

@@ -123,7 +123,7 @@
               <font-awesome-icon icon="exchange-alt" />
               Swap seats
             </li>
-            <li @click="takeScreenshot">
+            <li class="screenshot" @click="takeScreenshot">
               <font-awesome-icon icon="camera" />
               Screenshot
             </li>
