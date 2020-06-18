@@ -1,3 +1,5 @@
+import rolesJSON from "../roles.json";
+
 class LiveSession {
   constructor(store) {
     // this._wss = "ws://localhost:8081/";
@@ -159,13 +161,7 @@ class LiveSession {
       isDead: player.isDead,
       isVoteless: player.isVoteless,
       ...(player.role && player.role.team === "traveler"
-        ? {
-            role: {
-              id: player.role.id,
-              team: "traveler",
-              name: player.role.name
-            }
-          }
+        ? { roleId: player.role.id }
         : {})
     }));
     this._send("gs", {
@@ -201,7 +197,7 @@ class LiveSession {
     // update status for each player
     gamestate.forEach((state, x) => {
       const player = players[x];
-      const { role } = state;
+      const { roleId } = state;
       // update relevant properties
       ["name", "id", "isDead", "isVoteless"].forEach(property => {
         const value = state[property];
@@ -210,13 +206,14 @@ class LiveSession {
         }
       });
       // roles are special, because of travelers
-      if (role && player.role.id !== role.id) {
+      if (roleId && player.role.id !== roleId) {
+        const role = rolesJSON.find(r => r.id === roleId);
         this._store.commit("players/update", {
           player,
           property: "role",
           value: role
         });
-      } else if (!role && player.role.team === "traveler") {
+      } else if (!roleId && player.role.team === "traveler") {
         this._store.commit("players/update", {
           player,
           property: "role",
@@ -238,19 +235,16 @@ class LiveSession {
     if (property === "role") {
       if (value.team && value.team === "traveler") {
         // update local gamestate to remember this player as a traveler
-        this._gamestate[index].role = {
-          id: player.role.id,
-          team: "traveler",
-          name: player.role.name
-        };
+        this._gamestate[index].roleId = value.id;
         this._send("player", {
           index,
           property,
-          value: this._gamestate[index].role
+          value: value.id
         });
-      } else if (this._gamestate[index].role) {
-        delete this._gamestate[index].role;
-        this._send("player", { index, property, value: {} });
+      } else if (this._gamestate[index].roleId) {
+        // player was previously a traveler
+        delete this._gamestate[index].roleId;
+        this._send("player", { index, property, value: "" });
       }
     } else {
       this._send("player", { index, property, value });
@@ -268,17 +262,23 @@ class LiveSession {
     const player = this._store.state.players.players[index];
     if (!player) return;
     // special case where a player stops being a traveler
-    if (
-      property === "role" &&
-      value.team !== "traveler" &&
-      player.role.team === "traveler"
-    ) {
-      // reset to an unknown role
-      this._store.commit("players/update", {
-        player,
-        property: "role",
-        value: {}
-      });
+    if (property === "role") {
+      if (!value && player.role.team === "traveler") {
+        // reset to an unknown role
+        this._store.commit("players/update", {
+          player,
+          property: "role",
+          value: {}
+        });
+      } else {
+        // load traveler role
+        const role = rolesJSON.find(r => r.id === value);
+        this._store.commit("players/update", {
+          player,
+          property: "role",
+          value: role
+        });
+      }
     } else {
       // just update the player otherwise
       this._store.commit("players/update", { player, property, value });
@@ -457,7 +457,7 @@ class LiveSession {
   }
 }
 
-module.exports = store => {
+export default store => {
   // setup
   const session = new LiveSession(store);
 
