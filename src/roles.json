@@ -1297,9 +1297,9 @@
   {
     "id": "amnesiac",
     "edition": "",
-    "firstNight": 20,
+    "firstNight": 21,
     "firstNightReminder": "Decide the Amnesiac's entire ability. If the Amnesiac's ability causes them to wake tonight: Wake the Amnesiac and run their ability.",
-    "otherNight": 20,
+    "otherNight": 30,
     "otherNightReminder": "If the Amnesiac's ability causes them to wake tonight: Wake the Amnesiac and run their ability.",
     "reminders": [],
     "setup": false,

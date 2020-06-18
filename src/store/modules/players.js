@@ -25,7 +25,8 @@ const getters = {
   nightOrder({ players }) {
     const firstNight = [0];
     const otherNight = [0];
-    players.forEach(({ role }) => {
+    players.forEach(({ role, isDead }) => {
+      if (isDead) return;
       if (role.firstNight && !firstNight.includes(role.firstNight)) {
         firstNight.push(role.firstNight);
       }

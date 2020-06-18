@@ -7,11 +7,13 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 const faIcons = [
+  "AddressCard",
   "BookOpen",
   "BroadcastTower",
   "Camera",
   "Chair",
   "CheckSquare",
+  "CloudMoon",
   "Cog",
   "Copy",
   "Dice",
