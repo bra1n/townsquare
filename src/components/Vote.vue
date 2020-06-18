@@ -24,19 +24,38 @@
         voted <em>YES</em>
       </div>
 
-      <div class="button-group" v-if="!session.isSpectator">
-        <div class="button" v-if="!session.lockedVote" @click="start">
-          Start Vote
+      <template v-if="!session.isSpectator">
+        <div v-if="!session.lockedVote">
+          Vote time per player:
+          <font-awesome-icon
+            @mousedown.prevent="setVotingSpeed(-1)"
+            icon="minus-circle"
+          />
+          {{ session.votingSpeed }}s
+          <font-awesome-icon
+            @mousedown.prevent="setVotingSpeed(1)"
+            icon="plus-circle"
+          />
         </div>
-        <div class="button" v-else @click="stop">
-          Reset Vote
+        <div class="button-group">
+          <div class="button" v-if="!session.lockedVote" @click="start">
+            Start Vote
+          </div>
+          <div class="button" v-else @click="stop">
+            Reset Vote
+          </div>
+          <div class="button" @click="finish">Finish</div>
         </div>
-        <div class="button" @click="finish">Finish</div>
-      </div>
-      <div class="button-group" v-else-if="canVote">
-        <div class="button vote-no" @click="vote(false)">Vote NO</div>
-        <div class="button vote-yes" @click="vote(true)">Vote YES</div>
-      </div>
+      </template>
+      <template v-else-if="canVote">
+        <div v-if="!session.lockedVote">
+          {{ session.votingSpeed }} seconds between votes
+        </div>
+        <div class="button-group">
+          <div class="button vote-no" @click="vote(false)">Vote NO</div>
+          <div class="button vote-yes" @click="vote(true)">Vote YES</div>
+        </div>
+      </template>
       <div v-else-if="!player">
         Please claim a seat to vote.
       </div>
@@ -59,7 +78,8 @@ export default {
       const players = this.players.length;
       const nomination = this.session.nomination[0];
       return {
-        transform: `rotate(${Math.round((nomination / players) * 360)}deg)`
+        transform: `rotate(${Math.round((nomination / players) * 360)}deg)`,
+        transitionDuration: this.session.votingSpeed - 0.1 + "s"
       };
     },
     nominee: function() {
@@ -71,7 +91,8 @@ export default {
       const lock = this.session.lockedVote;
       const rotation = (360 * (nomination + Math.min(lock, players))) / players;
       return {
-        transform: `rotate(${Math.round(rotation)}deg)`
+        transform: `rotate(${Math.round(rotation)}deg)`,
+        transitionDuration: this.session.votingSpeed - 0.1 + "s"
       };
     },
     player: function() {
@@ -109,7 +130,7 @@ export default {
         if (this.session.lockedVote > this.players.length) {
           clearInterval(this.voteTimer);
         }
-      }, 3000);
+      }, this.session.votingSpeed * 1000);
     },
     stop() {
       clearInterval(this.voteTimer);
@@ -124,6 +145,12 @@ export default {
       const index = this.players.findIndex(p => p.id === this.session.playerId);
       if (index >= 0 && !!this.session.votes[index] !== vote) {
         this.$store.commit("session/voteSync", [index, vote]);
+      }
+    },
+    setVotingSpeed(diff) {
+      const speed = this.session.votingSpeed + diff;
+      if (speed > 0) {
+        this.$store.commit("session/setVotingSpeed", speed);
       }
     }
   }
@@ -159,6 +186,15 @@ export default {
     font-weight: bold;
     &.blue {
       color: $townsfolk;
+    }
+  }
+
+  svg {
+    cursor: pointer;
+    &:hover path {
+      fill: url(#demon);
+      stroke-width: 30px;
+      stroke: white;
     }
   }
 }

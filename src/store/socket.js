@@ -102,6 +102,9 @@ class LiveSession {
       case "nomination":
         this._store.commit("session/nomination", params);
         break;
+      case "votingSpeed":
+        this._store.commit("session/setVotingSpeed", params);
+        break;
       case "vote":
         this._handleVote(params);
         break;
@@ -168,21 +171,22 @@ class LiveSession {
     this._send("gs", {
       gamestate: this._gamestate,
       edition: this._store.state.edition,
-      nomination: this._store.state.session.nomination
+      nomination: this._store.state.session.nomination,
+      votingSpeed: this._store.state.session.votingSpeed
     });
   }
 
   /**
    * Update the gamestate based on incoming data.
-   * @param gamestate
-   * @param edition
-   * @param nomination
+   * @param data
    * @private
    */
-  _updateGamestate({ gamestate, edition, nomination }) {
+  _updateGamestate(data) {
     if (!this._isSpectator) return;
+    const { gamestate, edition, nomination, votingSpeed } = data;
     this._store.commit("setEdition", edition);
     this._store.commit("session/nomination", nomination);
+    this._store.commit("session/setVotingSpeed", votingSpeed);
     const players = this._store.state.players.players;
     // adjust number of players
     if (players.length < gamestate.length) {
@@ -372,6 +376,7 @@ class LiveSession {
 
   /**
    * A player nomination. ST only
+   * This also syncs the voting speed to the players.
    * @param nomination [nominator, nominee]
    */
   nomination(nomination) {
@@ -381,7 +386,19 @@ class LiveSession {
       !nomination ||
       (players.length > nomination[0] && players.length > nomination[1])
     ) {
+      this.setVotingSpeed(this._store.state.session.votingSpeed);
       this._send("nomination", nomination);
+    }
+  }
+
+  /**
+   * Send the voting speed. ST only
+   * @param votingSpeed voting speed in seconds, minimum 1
+   */
+  setVotingSpeed(votingSpeed) {
+    if (this._isSpectator) return;
+    if (votingSpeed) {
+      this._send("votingSpeed", votingSpeed);
     }
   }
 
@@ -466,6 +483,9 @@ module.exports = store => {
         break;
       case "session/lockVote":
         session.lockVote();
+        break;
+      case "session/setVotingSpeed":
+        session.setVotingSpeed(payload);
         break;
       case "players/set":
       case "players/swap":

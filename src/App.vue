@@ -63,7 +63,8 @@ export default {
     takeScreenshot(dimensions) {
       this.$refs.menu.takeScreenshot(dimensions);
     },
-    keyup({ key }) {
+    keyup({ key, ctrlKey, metaKey }) {
+      if (ctrlKey || metaKey) return;
       switch (key.toLocaleLowerCase()) {
         case "g":
           this.$store.commit("toggleGrimoire");

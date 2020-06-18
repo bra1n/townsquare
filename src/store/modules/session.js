@@ -17,7 +17,8 @@ const state = () => ({
   claimedSeat: -1,
   nomination: false,
   votes: [],
-  lockedVote: 0
+  lockedVote: 0,
+  votingSpeed: 3
 });
 
 const getters = {};
@@ -29,6 +30,7 @@ const mutations = {
   setPlayerId: set("playerId"),
   setSpectator: set("isSpectator"),
   setPlayerCount: set("playerCount"),
+  setVotingSpeed: set("votingSpeed"),
   claimSeat: set("claimedSeat"),
   nomination(state, nomination) {
     state.nomination = nomination;
