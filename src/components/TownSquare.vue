@@ -24,9 +24,19 @@
       ></Player>
     </ul>
 
-    <div class="bluffs" v-if="players.length > 6" ref="bluffs">
-      <h3>Demon bluffs</h3>
-      <font-awesome-icon icon="camera" @click.stop="takeScreenshot" />
+    <div
+      class="bluffs"
+      v-if="players.length > 6"
+      ref="bluffs"
+      :class="{ closed: !isBluffsOpen }"
+    >
+      <h3>
+        <font-awesome-icon icon="camera" @click.stop="takeScreenshot" />
+        <span v-if="session.isSpectator">Other characters</span>
+        <span v-else>Demon bluffs</span>
+        <font-awesome-icon icon="times-circle" @click.stop="toggleBluffs" />
+        <font-awesome-icon icon="plus-circle" @click.stop="toggleBluffs" />
+      </h3>
       <ul>
         <li
           v-for="index in bluffs"
@@ -67,13 +77,17 @@ export default {
       bluffs: 3,
       swap: -1,
       move: -1,
-      nominate: -1
+      nominate: -1,
+      isBluffsOpen: true
     };
   },
   methods: {
     takeScreenshot() {
       const { width, height, x, y } = this.$refs.bluffs.getBoundingClientRect();
       this.$emit("screenshot", { width, height, x, y });
+    },
+    toggleBluffs() {
+      this.isBluffsOpen = !this.isBluffsOpen;
     },
     handleTrigger(playerIndex, [method, params]) {
       if (typeof this[method] === "function") {
@@ -287,16 +301,62 @@ export default {
     }
   }
   h3 {
-    margin-top: 5px;
+    margin: 5px 1vh 0;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    span {
+      flex-grow: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    svg {
+      cursor: pointer;
+      flex-grow: 0;
+      &.fa-camera {
+        margin-right: 1vh;
+      }
+      &.fa-times-circle {
+        margin-left: 1vh;
+      }
+      &.fa-plus-circle {
+        margin-left: 1vh;
+        display: none;
+      }
+      &:hover path {
+        fill: url(#demon);
+        stroke-width: 30px;
+        stroke: white;
+      }
+    }
   }
   ul {
     display: flex;
     align-items: center;
+    justify-content: center;
     li {
       width: 14vh;
       height: 14vh;
       margin: 0 0.5%;
       display: inline-block;
+      transition: all 250ms;
+    }
+  }
+  &.closed {
+    svg.fa-camera {
+      display: none;
+    }
+    svg.fa-times-circle {
+      display: none;
+    }
+    svg.fa-plus-circle {
+      display: block;
+    }
+    ul li {
+      width: 0;
+      height: 0;
     }
   }
 }
