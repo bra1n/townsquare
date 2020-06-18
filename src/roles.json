@@ -942,7 +942,7 @@
     "setup": false,
     "name": "Klutz",
     "team": "outsider",
-    "ability": "When you learn that you died, publicly choose 1 alive good player: if they are evil, your team loses."
+    "ability": "When you learn that you died, publicly choose 1 alive player: if they are evil, your team loses."
   },
   {
     "id": "eviltwin",
