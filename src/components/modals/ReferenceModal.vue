@@ -198,8 +198,11 @@ export default {
   }
 }
 
-h3 svg {
-  vertical-align: middle;
+h3 {
+  margin: 0 40px;
+  svg {
+    vertical-align: middle;
+  }
 }
 
 h4 {
