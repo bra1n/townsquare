@@ -89,6 +89,9 @@ class LiveSession {
           this.sendGamestate();
         }
         break;
+      case "edition":
+        this._updateEdition(params);
+        break;
       case "gs":
         this._updateGamestate(params);
         break;
@@ -164,9 +167,9 @@ class LiveSession {
         ? { roleId: player.role.id }
         : {})
     }));
+    this.sendEdition();
     this._send("gs", {
       gamestate: this._gamestate,
-      edition: this._store.state.edition,
       nomination: this._store.state.session.nomination,
       votingSpeed: this._store.state.session.votingSpeed
     });
@@ -179,8 +182,7 @@ class LiveSession {
    */
   _updateGamestate(data) {
     if (!this._isSpectator) return;
-    const { gamestate, edition, nomination, votingSpeed } = data;
-    this._store.commit("setEdition", edition);
+    const { gamestate, nomination, votingSpeed } = data;
     this._store.commit("session/nomination", nomination);
     this._store.commit("session/setVotingSpeed", votingSpeed);
     const players = this._store.state.players.players;
@@ -221,6 +223,36 @@ class LiveSession {
         });
       }
     });
+  }
+
+  /**
+   * Publish an edition update. ST only
+   */
+  sendEdition() {
+    if (this._isSpectator) return;
+    const { edition } = this._store.state;
+    let roles;
+    if (edition === "custom") {
+      roles = Array.from(this._store.state.roles.keys());
+    }
+    this._send("edition", {
+      edition,
+      ...(roles ? { roles } : {})
+    });
+  }
+
+  /**
+   * Update edition and roles for custom editions.
+   * @param edition
+   * @param roles
+   * @private
+   */
+  _updateEdition({ edition, roles }) {
+    if (!this._isSpectator) return;
+    this._store.commit("setEdition", edition);
+    if (roles) {
+      this._store.commit("setRoles", roles);
+    }
   }
 
   /**
@@ -487,13 +519,15 @@ export default store => {
       case "session/setVotingSpeed":
         session.setVotingSpeed(payload);
         break;
+      case "setEdition":
+        session.sendEdition();
+        break;
       case "players/set":
       case "players/swap":
       case "players/move":
       case "players/clear":
       case "players/remove":
       case "players/add":
-      case "setEdition":
         session.sendGamestate();
         break;
       case "players/update":
