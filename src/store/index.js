@@ -100,10 +100,12 @@ export default new Vuex.Store({
     },
     setRoles(state, roleIds) {
       state.roles = new Map(
-        rolesJSON
-          .filter(r => roleIds.includes(r.id))
-          .sort((a, b) => b.team.localeCompare(a.team))
-          .map(role => [role.id, role])
+        roleIds
+          .filter(roleId => rolesJSONbyId.has(roleId))
+          .sort((a, b) =>
+            rolesJSONbyId.get(b).team.localeCompare(rolesJSONbyId.get(a).team)
+          )
+          .map(roleId => [roleId, rolesJSONbyId.get(roleId)])
       );
     },
     setEdition(state, edition) {
