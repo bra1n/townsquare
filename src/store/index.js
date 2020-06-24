@@ -9,6 +9,8 @@ import rolesJSON from "../roles.json";
 
 Vue.use(Vuex);
 
+const rolesJSONbyId = new Map(rolesJSON.map(role => [role.id, role]));
+
 const getRolesByEdition = (edition = "tb") => {
   const selectedEdition =
     editionJSON.find(({ id }) => id === edition) || editionJSON[0];
