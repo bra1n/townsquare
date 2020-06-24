@@ -98,10 +98,10 @@ export default new Vuex.Store({
         grimoire.isScreenshot = false;
       }
     },
-    setRoles(state, roles) {
+    setRoles(state, roleIds) {
       state.roles = new Map(
         rolesJSON
-          .filter(r => roles.includes(r.id))
+          .filter(r => roleIds.includes(r.id))
           .sort((a, b) => b.team.localeCompare(a.team))
           .map(role => [role.id, role])
       );
