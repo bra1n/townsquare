@@ -193,7 +193,10 @@ export default {
         this.$store.commit("session/setSpectator", false);
         this.$store.commit(
           "session/setSessionId",
-          sessionId.replace(/[^0-9a-z]/g, "").substr(0, 5)
+          sessionId
+            .toLocaleLowerCase()
+            .replace(/[^0-9a-z]/g, "")
+            .substr(0, 10)
         );
         this.copySessionUrl();
       }
@@ -218,7 +221,10 @@ export default {
         this.$store.commit("session/setSpectator", true);
         this.$store.commit(
           "session/setSessionId",
-          sessionId.replace(/[^0-9a-z]/g, "").substr(0, 5)
+          sessionId
+            .toLocaleLowerCase()
+            .replace(/[^0-9a-z]/g, "")
+            .substr(0, 10)
         );
       }
     },
