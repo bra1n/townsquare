@@ -26,7 +26,7 @@ definition file might be written:
 [
   {
     "id": "acrobat",
-    "image": "https://github.com/bra1n/townsquare/blob/master/src/assets/icons/acrobat.png?raw=true",
+    "image": "https://github.com/bra1n/townsquare/blob/main/src/assets/icons/acrobat.png?raw=true",
     "edition": "custom",
     "firstNight": 0,
     "firstNightReminder": "",
