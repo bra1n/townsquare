@@ -281,6 +281,7 @@ export default {
   transform: scale(1);
   opacity: 1;
   transition: all 200ms ease-in-out;
+  z-index: 50;
 
   #townsquare.public & {
     opacity: 0;
