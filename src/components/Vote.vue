@@ -138,7 +138,7 @@ export default {
     },
     finish() {
       clearInterval(this.voteTimer);
-      this.$store.commit("session/nomination", false);
+      this.$store.commit("session/nomination");
     },
     vote(vote) {
       if (!this.canVote) return false;

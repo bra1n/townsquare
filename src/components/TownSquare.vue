@@ -154,10 +154,8 @@ export default {
           this.nominate = from;
         }
       } else {
-        this.$store.commit("session/nomination", [
-          this.nominate,
-          this.players.indexOf(to)
-        ]);
+        const nomination = [this.nominate, this.players.indexOf(to)];
+        this.$store.commit("session/nomination", { nomination });
         this.cancel();
       }
     },

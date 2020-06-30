@@ -32,9 +32,10 @@ const mutations = {
   setPlayerCount: set("playerCount"),
   setVotingSpeed: set("votingSpeed"),
   claimSeat: set("claimedSeat"),
-  nomination(state, nomination) {
-    state.nomination = nomination;
-    state.votes = [];
+  nomination(state, { nomination, votes, votingSpeed } = {}) {
+    state.nomination = nomination || false;
+    state.votes = votes || [];
+    state.votingSpeed = votingSpeed || state.votingSpeed;
     state.lockedVote = 0;
   },
   /**

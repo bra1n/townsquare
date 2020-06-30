@@ -105,7 +105,7 @@ class LiveSession {
         this._handlePing(params);
         break;
       case "nomination":
-        this._store.commit("session/nomination", params);
+        this._store.commit("session/nomination", { nomination: params });
         break;
       case "votingSpeed":
         this._store.commit("session/setVotingSpeed", params);
@@ -167,11 +167,13 @@ class LiveSession {
         ? { roleId: player.role.id }
         : {})
     }));
+    const { session } = this._store.state;
     this.sendEdition();
     this._send("gs", {
       gamestate: this._gamestate,
-      nomination: this._store.state.session.nomination,
-      votingSpeed: this._store.state.session.votingSpeed
+      nomination: session.nomination,
+      votingSpeed: session.votingSpeed,
+      ...(session.nomination ? { votes: session.votes } : {})
     });
   }
 
@@ -182,9 +184,12 @@ class LiveSession {
    */
   _updateGamestate(data) {
     if (!this._isSpectator) return;
-    const { gamestate, nomination, votingSpeed } = data;
-    this._store.commit("session/nomination", nomination);
-    this._store.commit("session/setVotingSpeed", votingSpeed);
+    const { gamestate, nomination, votingSpeed, votes } = data;
+    this._store.commit("session/nomination", {
+      nomination,
+      votes,
+      votingSpeed
+    });
     const players = this._store.state.players.players;
     // adjust number of players
     if (players.length < gamestate.length) {
@@ -411,7 +416,7 @@ class LiveSession {
    * This also syncs the voting speed to the players.
    * @param nomination [nominator, nominee]
    */
-  nomination(nomination) {
+  nomination({ nomination } = {}) {
     if (this._isSpectator) return;
     const players = this._store.state.players.players;
     if (
