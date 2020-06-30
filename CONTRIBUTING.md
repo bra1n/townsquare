@@ -17,7 +17,7 @@ Before submitting your contribution, please make sure to take a moment and read 
 
 ## Pull Request Guidelines
 
-- The `master` branch is what is currently deployed to the website. All development should be done in dedicated branches.
+- The `main` branch is what is currently deployed to the website. All development should be done in dedicated branches.
 
 - Work in the `src` folder and **DO NOT** checkin `dist` in the commits.
 
