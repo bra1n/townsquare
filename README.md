@@ -19,7 +19,7 @@ It is supposed to aid storytellers and allow them to quickly set up and capture 
 ### Custom Characters
 
 In order to add custom characters to your local Grimoire, you need to create a JSON definition for them,
-similar to what is provided in the [`roles.json`](https://github.com/bra1n/townsquare/blob/master/src/roles.json) for the 3 base editions. Here's an example of how such a character
+similar to what is provided in the [`roles.json`](https://github.com/bra1n/townsquare/blob/main/src/roles.json) for the 3 base editions. Here's an example of how such a character
 definition file might be written:
 
 ```json
