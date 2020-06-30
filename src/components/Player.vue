@@ -575,7 +575,7 @@ li.move:not(.from) .player .overlay svg.move {
   }
 
   .player.you.#{$name} .token {
-    animation: #{$name}-glow 2s ease-in-out infinite;
+    animation: #{$name}-glow 5s ease-in-out infinite;
   }
 }
 
@@ -586,7 +586,7 @@ li.move:not(.from) .player .overlay svg.move {
 @include glow("traveler", $traveler);
 
 .player.you .token {
-  animation: townsfolk-glow 2s ease-in-out infinite;
+  animation: townsfolk-glow 5s ease-in-out infinite;
 }
 
 /****** Seat icon ********/
