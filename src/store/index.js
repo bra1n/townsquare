@@ -9,6 +9,8 @@ import rolesJSON from "../roles.json";
 
 Vue.use(Vuex);
 
+const rolesJSONbyId = new Map(rolesJSON.map(role => [role.id, role]));
+
 const getRolesByEdition = (edition = "tb") => {
   const selectedEdition =
     editionJSON.find(({ id }) => id === edition) || editionJSON[0];
@@ -96,12 +98,14 @@ export default new Vuex.Store({
         grimoire.isScreenshot = false;
       }
     },
-    setRoles(state, roles) {
+    setRoles(state, roleIds) {
       state.roles = new Map(
-        rolesJSON
-          .filter(r => roles.includes(r.id))
-          .sort((a, b) => b.team.localeCompare(a.team))
-          .map(role => [role.id, role])
+        roleIds
+          .filter(roleId => rolesJSONbyId.has(roleId))
+          .sort((a, b) =>
+            rolesJSONbyId.get(b).team.localeCompare(rolesJSONbyId.get(a).team)
+          )
+          .map(roleId => [roleId, rolesJSONbyId.get(roleId)])
       );
     },
     setEdition(state, edition) {
