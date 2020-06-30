@@ -17,12 +17,12 @@
           {{ edition.name }}
         </li>
         <li class="edition edition-custom" @click="isCustom = true">
-          Custom Script
+          Custom Script / Characters
         </li>
       </ul>
     </div>
     <div class="custom" v-else>
-      <h3>Upload a custom script</h3>
+      <h3>Load custom script / characters</h3>
       To play with a custom script, you need to select the characters you want
       to play with in the official
       <a href="https://bloodontheclocktower.com/script-tool/" target="_blank"
@@ -30,6 +30,14 @@
       >
       and then upload the generated "custom-list.json" either directly here or
       provide a URL to such a hosted JSON file.<br />
+      <br />
+      To play with custom characters, please read
+      <a
+        href="https://github.com/bra1n/townsquare#custom-characters"
+        target="_blank"
+        >the documentation</a
+      >
+      on how to write a custom character definition file.
       <h3>Some popular custom scripts:</h3>
       <ul class="scripts">
         <li
@@ -108,7 +116,7 @@ export default {
       if (file && file.size) {
         const reader = new FileReader();
         reader.addEventListener("load", () => {
-          this.parseScript(JSON.parse(reader.result));
+          this.parseRoles(JSON.parse(reader.result));
         });
         reader.readAsText(file);
       }
@@ -123,13 +131,18 @@ export default {
       const res = await fetch(url);
       if (res && res.json) {
         const script = await res.json();
-        this.parseScript(script);
+        this.parseRoles(script);
       }
     },
-    parseScript(script) {
-      if (!script || !script.length) return;
-      const roles = script.map(({ id }) => id.replace(/[^a-z]/g, ""));
-      this.$store.commit("setRoles", roles);
+    parseRoles(roles) {
+      if (!roles || !roles.length) return;
+      this.$store.commit(
+        "setCustomRoles",
+        roles.map(role => {
+          role.id = role.id.toLocaleLowerCase().replace(/[^a-z0-9-]/g, "");
+          return role;
+        })
+      );
       this.$store.commit("setEdition", "custom");
       this.isCustom = false;
     },

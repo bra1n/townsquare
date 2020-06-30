@@ -16,9 +16,8 @@
         <span
           class="icon"
           :style="{
-            backgroundImage: `url(${require('../../assets/icons/' +
-              reminder.role +
-              '.png')})`
+            backgroundImage: `url(${reminder.image ||
+              require('../../assets/icons/' + reminder.role + '.png')})`
           }"
         ></span>
         <span class="text">{{ reminder.name }}</span>
@@ -42,7 +41,11 @@ export default {
         if (players.some(p => p.role.id === role.id)) {
           reminders = [
             ...reminders,
-            ...role.reminders.map(name => ({ role: role.id, name }))
+            ...role.reminders.map(name => ({
+              role: role.id,
+              image: role.image,
+              name
+            }))
           ];
         }
       });

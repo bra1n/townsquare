@@ -14,7 +14,7 @@ module.exports = store => {
     store.commit("setEdition", localStorage.edition);
   }
   if (localStorage.roles !== undefined) {
-    store.commit("setRoles", JSON.parse(localStorage.roles));
+    store.commit("setCustomRoles", JSON.parse(localStorage.roles));
   }
   if (localStorage.bluffs !== undefined) {
     JSON.parse(localStorage.bluffs).forEach((role, index) => {
@@ -74,7 +74,7 @@ module.exports = store => {
           localStorage.removeItem("roles");
         }
         break;
-      case "setRoles":
+      case "setCustomRoles":
         if (!payload.length) {
           localStorage.removeItem("roles");
         } else {

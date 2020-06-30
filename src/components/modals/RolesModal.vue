@@ -96,11 +96,13 @@ export default {
       const composition = this.game[playerCount - 5];
       Object.keys(composition).forEach(team => {
         for (let x = 0; x < composition[team]; x++) {
-          const available = this.roleSelection[team].filter(
-            role => role.selected !== true
-          );
-          if (available.length) {
-            randomElement(available).selected = true;
+          if (this.roleSelection[team]) {
+            const available = this.roleSelection[team].filter(
+              role => role.selected !== true
+            );
+            if (available.length) {
+              randomElement(available).selected = true;
+            }
           }
         }
       });

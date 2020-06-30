@@ -98,14 +98,37 @@ export default new Vuex.Store({
         grimoire.isScreenshot = false;
       }
     },
-    setRoles(state, roleIds) {
+    /**
+     * Store custom roles
+     * @param state
+     * @param roles Array of role IDs or full role definitions
+     */
+    setCustomRoles(state, roles) {
+      const customRole = {
+        image: "",
+        edition: "custom",
+        firstNight: 0,
+        firstNightReminder: "",
+        otherNight: 0,
+        otherNightReminder: "",
+        reminders: [],
+        setup: false
+      };
       state.roles = new Map(
-        roleIds
-          .filter(roleId => rolesJSONbyId.has(roleId))
-          .sort((a, b) =>
-            rolesJSONbyId.get(b).team.localeCompare(rolesJSONbyId.get(a).team)
+        roles
+          // map existing roles to base definition or pre-populate custom roles to ensure all properties
+          .map(
+            role =>
+              rolesJSONbyId.get(role.id) || Object.assign({}, customRole, role)
           )
-          .map(roleId => [roleId, rolesJSONbyId.get(roleId)])
+          // filter out roles that don't match an existing role and also don't have name/ability/team
+          .filter(role => role.name && role.ability && role.team)
+          // sort by team
+          .sort((a, b) =>
+            b.team.localeCompare(a.team)
+          )
+          // convert to Map
+          .map(role => [role.id, role])
       );
     },
     setEdition(state, edition) {

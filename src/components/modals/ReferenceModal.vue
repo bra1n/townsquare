@@ -40,9 +40,8 @@
               class="icon"
               v-if="role.id"
               v-bind:style="{
-                backgroundImage: `url(${require('../../assets/icons/' +
-                  role.id +
-                  '.png')})`
+                backgroundImage: `url(${role.image ||
+                  require('../../assets/icons/' + role.id + '.png')})`
               }"
             ></span>
             <span class="ability">{{ role.ability }}</span>
