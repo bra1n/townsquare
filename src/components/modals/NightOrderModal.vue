@@ -1,36 +1,28 @@
 <template>
   <Modal
     class="characters"
-    v-show="modals.reference"
-    @close="toggleModal('reference')"
+    v-show="modals.nightOrder"
+    @close="toggleModal('nightOrder')"
     v-if="roles.size"
   >
     <font-awesome-icon
-      @click="toggleModal('nightOrder')"
-      icon="cloud-moon"
+      @click="toggleModal('reference')"
+      icon="address-card"
       class="toggle"
-      title="Show Night Order"
+      title="Show Character Reference"
     />
     <h3>
-      Character Reference
-      <font-awesome-icon icon="address-card" />
+      Night Order
+      <font-awesome-icon icon="cloud-moon" />
       {{ editionName }}
     </h3>
-    <ul class="legend">
-      <li>
-        <span class="name">Name</span>
-        <span class="icon">Icon</span>
-        <span class="ability">Ability</span>
-        <span class="player" v-if="Object.keys(playersByRole).length">
-          Player
-        </span>
-      </li>
-    </ul>
-    <div v-for="(teamRoles, team) in rolesGrouped" :key="team" :class="[team]">
-      <h4>{{ team }}</h4>
-      <ul>
-        <li v-for="role in teamRoles" :class="[team]" :key="role.id">
-          <span class="name">{{ role.name }}</span>
+    <div class="night">
+      <ul class="first">
+        <li class="headline">First Night</li>
+        <li v-for="role in rolesFirstNight" :key="role.id" :class="[role.team]">
+          <span class="name">
+            {{ role.name }}
+          </span>
           <span
             class="icon"
             v-if="role.id"
@@ -39,10 +31,22 @@
                 require('../../assets/icons/' + role.id + '.png')})`
             }"
           ></span>
-          <span class="ability">{{ role.ability }}</span>
-          <span class="player" v-if="Object.keys(playersByRole).length">{{
-            playersByRole[role.id] ? playersByRole[role.id].join(", ") : ""
-          }}</span>
+        </li>
+      </ul>
+      <ul class="other">
+        <li class="headline">Other Nights</li>
+        <li v-for="role in rolesOtherNight" :key="role.id" :class="[role.team]">
+          <span
+            class="icon"
+            v-if="role.id"
+            v-bind:style="{
+              backgroundImage: `url(${role.image ||
+                require('../../assets/icons/' + role.id + '.png')})`
+            }"
+          ></span>
+          <span class="name">
+            {{ role.name }}
+          </span>
         </li>
       </ul>
     </div>
@@ -68,28 +72,25 @@ export default {
       const edition = editionJSON.find(({ id }) => id === this.edition);
       return edition ? edition.name : "Custom Script";
     },
-    rolesGrouped: function() {
-      const rolesGrouped = {};
+    rolesFirstNight: function() {
+      const rolesFirstNight = [];
       this.roles.forEach(role => {
-        if (!rolesGrouped[role.team]) {
-          rolesGrouped[role.team] = [];
+        if (role.firstNight) {
+          rolesFirstNight.push(role);
         }
-        rolesGrouped[role.team].push(role);
       });
-      delete rolesGrouped["traveler"];
-      return rolesGrouped;
+      rolesFirstNight.sort((a, b) => a.firstNight - b.firstNight);
+      return rolesFirstNight;
     },
-    playersByRole: function() {
-      const players = {};
-      this.players.forEach(({ name, role }) => {
-        if (role && role.id && role.team !== "traveler") {
-          if (!players[role.id]) {
-            players[role.id] = [];
-          }
-          players[role.id].push(name);
+    rolesOtherNight: function() {
+      const rolesOtherNight = [];
+      this.roles.forEach(role => {
+        if (role.otherNight) {
+          rolesOtherNight.push(role);
         }
       });
-      return players;
+      rolesOtherNight.sort((a, b) => a.otherNight - b.otherNight);
+      return rolesOtherNight;
     },
     ...mapState(["roles", "modals", "edition"]),
     ...mapState("players", ["players"])
@@ -239,6 +240,47 @@ ul {
     }
     .icon:after {
       padding-top: 0;
+    }
+  }
+}
+
+.night {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  > *:first-child {
+    margin-right: 2vh;
+  }
+  > * {
+    flex-grow: 0;
+    flex-wrap: nowrap;
+    flex-direction: column;
+  }
+  .headline {
+    display: block;
+    font-weight: bold;
+    border-bottom: 1px solid white;
+    padding: 5px 10px;
+    border-radius: 0;
+    text-align: center;
+  }
+  .icon {
+    border-color: white;
+  }
+  .name {
+    flex-grow: 1;
+  }
+  .first {
+    .icon {
+      border-right: 0;
+    }
+  }
+  .other {
+    li .name {
+      text-align: left;
+    }
+    .icon {
+      border-left: 0;
     }
   }
 }

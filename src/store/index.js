@@ -45,7 +45,8 @@ export default new Vuex.Store({
       edition: false,
       roles: false,
       role: false,
-      reminder: false
+      reminder: false,
+      nightOrder: false
     },
     edition: "tb",
     roles: getRolesByEdition()

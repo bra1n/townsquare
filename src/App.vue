@@ -20,6 +20,7 @@
     <EditionModal />
     <RolesModal />
     <ReferenceModal />
+    <NightOrderModal />
     <Gradients />
     <span id="version">v{{ version }}</span>
   </div>
@@ -37,9 +38,11 @@ import Intro from "./components/Intro";
 import ReferenceModal from "./components/modals/ReferenceModal";
 import Vote from "./components/Vote";
 import Gradients from "./components/Gradients";
+import NightOrderModal from "./components/modals/NightOrderModal";
 
 export default {
   components: {
+    NightOrderModal,
     Vote,
     ReferenceModal,
     Intro,
@@ -80,6 +83,9 @@ export default {
           break;
         case "r":
           this.$store.commit("toggleModal", "reference");
+          break;
+        case "n":
+          this.$store.commit("toggleModal", "nightOrder");
           break;
         case "e":
           if (this.session.isSpectator) return;

@@ -138,6 +138,10 @@
             Reference Sheet
             <em>[R]</em>
           </li>
+          <li @click="toggleModal('nightOrder')">
+            Night Order Sheet
+            <em>[N]</em>
+          </li>
           <li>
             <a href="https://discord.gg/tkWDny6" target="_blank">
               Join Discord
