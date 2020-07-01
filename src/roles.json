@@ -998,7 +998,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "name": "Pit Hag",
+    "name": "Pit-Hag",
     "team": "minion",
     "ability": "Each night*, choose a player and a character they become (if not-in-play). If a Demon is made, deaths tonight are arbitrary."
   },
