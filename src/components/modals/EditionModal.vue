@@ -116,7 +116,13 @@ export default {
       if (file && file.size) {
         const reader = new FileReader();
         reader.addEventListener("load", () => {
-          this.parseRoles(JSON.parse(reader.result));
+          try {
+            const roles = JSON.parse(reader.result);
+            this.parseRoles(roles);
+          } catch (e) {
+            alert("Error reading custom script: " + e.message);
+          }
+          this.$refs.upload.value = "";
         });
         reader.readAsText(file);
       }
@@ -130,8 +136,12 @@ export default {
     async handleURL(url) {
       const res = await fetch(url);
       if (res && res.json) {
-        const script = await res.json();
-        this.parseRoles(script);
+        try {
+          const script = await res.json();
+          this.parseRoles(script);
+        } catch (e) {
+          alert("Error loading custom script: " + e.message);
+        }
       }
     },
     parseRoles(roles) {
