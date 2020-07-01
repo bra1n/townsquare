@@ -85,7 +85,7 @@ export default {
       scripts: [
         [
           "Catfishing 8.0 (+Sentinel)",
-          "https://gist.githubusercontent.com/bra1n/8a5ec41a7bbf945f6b7dfc1cef72b569/raw/b5c63ac303f279dba918b897211cb6dc708bc64e/catfishing.json"
+          "https://gist.githubusercontent.com/bra1n/8a5ec41a7bbf945f6b7dfc1cef72b569/raw/a9451def4bb7b3c424426e9524ee94f3ac65dbf4/catfishing.json"
         ],
         [
           "On Thin Ice (Teensyville, +Sentinel)",
@@ -139,7 +139,7 @@ export default {
       this.$store.commit(
         "setCustomRoles",
         roles.map(role => {
-          role.id = role.id.toLocaleLowerCase().replace(/[^a-z0-9-]/g, "");
+          role.id = role.id.toLocaleLowerCase().replace(/[^a-z0-9]/g, "");
           return role;
         })
       );
