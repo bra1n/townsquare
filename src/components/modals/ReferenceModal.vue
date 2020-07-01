@@ -329,7 +329,7 @@ ul {
 
 .night {
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   justify-content: center;
   > *:first-child {
     margin-right: 2vh;

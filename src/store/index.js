@@ -104,6 +104,8 @@ export default new Vuex.Store({
      * @param roles Array of role IDs or full role definitions
      */
     setCustomRoles(state, roles) {
+      const imageBase =
+        "https://raw.githubusercontent.com/bra1n/townsquare/main/src/assets/icons/";
       const customRole = {
         image: "",
         edition: "custom",
@@ -121,12 +123,21 @@ export default new Vuex.Store({
             role =>
               rolesJSONbyId.get(role.id) || Object.assign({}, customRole, role)
           )
+          // default empty icons to good / evil / traveler
+          .map(role => {
+            if (role.team === "townsfolk" || role.team === "outsider") {
+              role.image = role.image || imageBase + "good.png";
+            } else if (role.team === "demon" || role.team === "minion") {
+              role.image = role.image || imageBase + "evil.png";
+            } else {
+              role.image = role.image || imageBase + "custom.png";
+            }
+            return role;
+          })
           // filter out roles that don't match an existing role and also don't have name/ability/team
           .filter(role => role.name && role.ability && role.team)
           // sort by team
-          .sort((a, b) =>
-            b.team.localeCompare(a.team)
-          )
+          .sort((a, b) => b.team.localeCompare(a.team))
           // convert to Map
           .map(role => [role.id, role])
       );
