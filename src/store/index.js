@@ -126,6 +126,7 @@ export default new Vuex.Store({
           )
           // default empty icons to good / evil / traveler
           .map(role => {
+            if (rolesJSONbyId.get(role.id)) return role;
             if (role.team === "townsfolk" || role.team === "outsider") {
               role.image = role.image || imageBase + "good.png";
             } else if (role.team === "demon" || role.team === "minion") {

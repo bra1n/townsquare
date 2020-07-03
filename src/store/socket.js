@@ -256,7 +256,10 @@ class LiveSession {
     if (!this._isSpectator) return;
     this._store.commit("setEdition", edition);
     if (roles) {
-      this._store.commit("setCustomRoles", roles);
+      this._store.commit(
+        "setCustomRoles",
+        roles.map(id => ({ id }))
+      );
     }
   }
 
