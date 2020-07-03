@@ -219,8 +219,30 @@ export default {
     &:nth-child(#{$i}) {
       transform: rotate($rot * 1deg);
       @if $i - 1 <= $item-count / 2 {
+        // first half of players
         z-index: $item-count - $i + 1;
+        // open menu on the left
+        .player > .menu {
+          left: auto;
+          right: 100%;
+          margin-right: 15px;
+          &:before {
+            border-left-color: black;
+            border-right-color: transparent;
+            right: auto;
+            left: 100%;
+          }
+        }
+        .fold-enter-active,
+        .fold-leave-active {
+          transform-origin: right center;
+        }
+        .fold-enter,
+        .fold-leave-to {
+          transform: perspective(200px) rotateY(-90deg);
+        }
       } @else {
+        // second half of players
         z-index: $i - 1;
         .ability {
           right: 120%;
