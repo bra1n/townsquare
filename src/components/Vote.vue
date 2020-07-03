@@ -10,12 +10,12 @@
       >!
       <br />
       <template v-if="nominee.role.team !== 'traveler'">
-        <em class="blue">{{ Math.ceil(alive / 2) }} votes</em> required to
-        <em>execute</em>.
+        <em class="blue">{{ Math.ceil(alive / 2) }} votes</em> required for a
+        <em>majority</em>.
       </template>
       <template v-else>
-        <em>{{ Math.ceil(players.length / 2) }} votes</em> required to
-        <em>exile</em>.
+        <em>{{ Math.ceil(players.length / 2) }} votes</em> required for a
+        <em>majority</em>.
       </template>
 
       <div v-if="session.lockedVote > 1">
