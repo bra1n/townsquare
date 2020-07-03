@@ -154,9 +154,8 @@
         <span
           class="icon"
           v-bind:style="{
-            backgroundImage: `url(${require('../assets/icons/' +
-              reminder.role +
-              '.png')})`
+            backgroundImage: `url(${reminder.image ||
+              require('../assets/icons/' + reminder.role + '.png')})`
           }"
         ></span>
         <span class="text">{{ reminder.name }}</span>
