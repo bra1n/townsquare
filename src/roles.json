@@ -1388,5 +1388,83 @@
     "name": "Leviathan",
     "team": "demon",
     "ability": "All players know you are in play. After 5 days, evil wins. If more than 1 good player is executed, evil wins."
+  },
+  {
+    "id": "acrobat",
+    "edition": "",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 49,
+    "otherNightReminder": "If either good living neighbor is drunk or poisoned, the Acrobat dies.",
+    "reminders": ["Die"],
+    "setup": false,
+    "name": "Acrobat",
+    "team": "outsider",
+    "ability": "Each night*, if either good living neighbor is drunk or poisoned, you die."
+  },
+  {
+    "id": "bountyhunter",
+    "edition": "",
+    "firstNight": 10,
+    "firstNightReminder": "Point to a player that is evil.",
+    "otherNight": 37,
+    "otherNightReminder": "If the evil player that was known by the Bounty Hunter died since the previous night: Point to another player that is evil.",
+    "reminders": ["Known"],
+    "setup": true,
+    "name": "Bounty Hunter",
+    "team": "townsfolk",
+    "ability": "You start knowing 1 evil player. If the evil player you know dies, you learn another that night. [1 Townsfolk is evil]"
+  },
+  {
+    "id": "cultleader",
+    "edition": "",
+    "firstNight": 30,
+    "firstNightReminder": "The Cult Leader becomes the alignment of an alive neighbor: Show the “You are” card. Show the hand signal (thumb-up “good”, thumb-down “evil”) for the Cult Leader's current alignment.",
+    "otherNight": 51,
+    "otherNightReminder": "The Cult Leader becomes the alignment of an alive neighbor: Show the “You are” card. Show the hand signal (thumb-up “good”, thumb-down “evil”) for the Cult Leader's current alignment.",
+    "reminders": [],
+    "setup": false,
+    "name": "Cult Leader",
+    "team": "townsfolk",
+    "ability": "Each night, you become the alignment of an alive neighbor. If all good players choose to join your cult, your team wins."
+  },
+  {
+    "id": "preacher",
+    "edition": "",
+    "firstNight": 7,
+    "firstNightReminder": "The Preacher points to a player. If that player is a Minion: Wake the Minion. Show the Preacher token. The Minion now does not have an ability anymore.",
+    "otherNight": 6,
+    "otherNightReminder": "The Preacher points to a player. If that player is a Minion: Wake the Minion. Show the Preacher token. The Minion now does not have an ability anymore.",
+    "reminders": ["No ability"],
+    "setup": false,
+    "name": "Preacher",
+    "team": "townsfolk",
+    "ability": "Each night, choose a player: a Minion, if chosen, learns this. All chosen Minions have no ability."
+  },
+  {
+    "id": "politician",
+    "edition": "",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "name": "Politician",
+    "team": "outsider",
+    "ability": "If you were the player most responsible for your team losing, you change alignment & win, even if dead."
+  },
+  {
+    "id": "lilmonsta",
+    "edition": "",
+    "firstNight": 14,
+    "firstNightReminder": "Wake all Minions. The Minions point to a player that receives the Lil' Monsta token and becomes the Demon.",
+    "otherNight": 17,
+    "otherNightReminder": "Wake all Minions. The Minions point to a player that receives the Lil' Monsta token and becomes the Demon.",
+    "reminders": ["Die", "The Demon"],
+    "setup": true,
+    "name": "Lil' Monsta",
+    "team": "demon",
+    "ability": "Each night, Minions choose who babysits Lil' Monsta's token & “is the Demon”. A player dies each night*. [+1 Minion]"
   }
 ]
