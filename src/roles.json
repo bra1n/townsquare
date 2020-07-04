@@ -1460,7 +1460,7 @@
     "firstNight": 14,
     "firstNightReminder": "Wake all Minions. The Minions point to a player that receives the Lil' Monsta token and becomes the Demon.",
     "otherNight": 17,
-    "otherNightReminder": "Wake all Minions. The Minions point to a player that receives the Lil' Monsta token and becomes the Demon.",
+    "otherNightReminder": "Wake all Minions. The Minions point to a player that receives the Lil' Monsta token and becomes the Demon. Choose a player that dies.",
     "reminders": ["Die", "The Demon"],
     "setup": true,
     "name": "Lil' Monsta",
