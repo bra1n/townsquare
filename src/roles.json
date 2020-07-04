@@ -922,14 +922,14 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 27,
-    "otherNightReminder": "If the Barber died today : • Wake the Demon. Show the “This character selected you” card, then Barber token. • The Demon either shows a “no” head signal, or points to 2 players. If they chose players: ◦ Swap the character tokens. Wake each player. Show “You are”, then their character token.",
+    "otherNightReminder": "If the Barber died today : • Wake the Demon. Show the “This character selected you” card, then Barber token. • The Demon either shows a “no” head signal, or points to 2 non-Demon players. If they chose players: ◦ Swap the character tokens. Wake each player. Show “You are”, then their character token.",
     "reminders": [
       "Swap"
     ],
     "setup": false,
     "name": "Barber",
     "team": "outsider",
-    "ability": "If you die, tonight the Demon may choose 2 players to swap characters."
+    "ability": "If you die, tonight the Demon may choose 2 players (not another Demon) to swap characters."
   },
   {
     "id": "klutz",
