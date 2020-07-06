@@ -57,7 +57,7 @@ $ npm run serve
 $ npm run build
 
 # run linting scripts
-$ npm run link
+$ npm run lint
 ```
 
 ## Project Structure
