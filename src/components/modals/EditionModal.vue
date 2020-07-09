@@ -84,6 +84,10 @@ export default {
       isCustom: false,
       scripts: [
         [
+          "Deadly Penance Day",
+          "https://gist.githubusercontent.com/bra1n/0337cc44c6fd2c44f7589256ed5486d2/raw/4a7a1545004620146f47583cde4b05f77dd9b6d2/penanceday.json"
+        ],
+        [
           "Catfishing 8.0 (+Sentinel)",
           "https://gist.githubusercontent.com/bra1n/8a5ec41a7bbf945f6b7dfc1cef72b569/raw/a9451def4bb7b3c424426e9524ee94f3ac65dbf4/catfishing.json"
         ],

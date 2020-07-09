@@ -115,6 +115,7 @@ export default new Vuex.Store({
         otherNight: 0,
         otherNightReminder: "",
         reminders: [],
+        remindersGlobal: [],
         setup: false
       };
       state.roles = new Map(
