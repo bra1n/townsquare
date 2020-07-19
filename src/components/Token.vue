@@ -82,6 +82,8 @@ export default {
 
   .icon {
     background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center 30%;
     position: absolute;
     width: 100%;
     height: 100%;

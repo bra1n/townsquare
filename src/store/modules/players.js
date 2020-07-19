@@ -102,6 +102,8 @@ const mutations = {
       state.players[to],
       state.players[from]
     ];
+    // hack: "modify" the array so that Vue notices something changed
+    state.players.splice(0, 0);
   },
   move(state, [from, to]) {
     state.players.splice(to, 0, state.players.splice(from, 1)[0]);
