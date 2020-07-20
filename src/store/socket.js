@@ -105,9 +105,19 @@ class LiveSession {
         this._handlePing(params);
         break;
       case "nomination":
+        if (!this._isSpectator) return;
         this._store.commit("session/nomination", { nomination: params });
         break;
+      case "swap":
+        if (!this._isSpectator) return;
+        this._store.commit("players/swap", params);
+        break;
+      case "move":
+        if (!this._isSpectator) return;
+        this._store.commit("players/move", params);
+        break;
       case "votingSpeed":
+        if (!this._isSpectator) return;
         this._store.commit("session/setVotingSpeed", params);
         break;
       case "vote":
@@ -495,6 +505,24 @@ class LiveSession {
       }
     }
   }
+
+  /**
+   * Swap two player seats. ST only
+   * @param payload
+   */
+  swapPlayer(payload) {
+    if (this._isSpectator) return;
+    this._send("swap", payload);
+  }
+
+  /**
+   * Move a player to another seat. ST only
+   * @param payload
+   */
+  movePlayer(payload) {
+    if (this._isSpectator) return;
+    this._send("move", payload);
+  }
 }
 
 export default store => {
@@ -530,9 +558,13 @@ export default store => {
       case "setEdition":
         session.sendEdition();
         break;
-      case "players/set":
       case "players/swap":
+        session.swapPlayer(payload);
+        break;
       case "players/move":
+        session.movePlayer(payload);
+        break;
+      case "players/set":
       case "players/clear":
       case "players/remove":
       case "players/add":
