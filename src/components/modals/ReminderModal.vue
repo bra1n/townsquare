@@ -116,7 +116,7 @@ ul.reminders .reminder {
     width: 90%;
     height: 90%;
     background-size: 100%;
-    background-position: center 0;
+    background-position: center center;
     background-repeat: no-repeat;
   }
 
