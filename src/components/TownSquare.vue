@@ -48,6 +48,27 @@
       </ul>
     </div>
 
+    <div
+      class="fabled"
+      :class="{ closed: !isFabledOpen }"
+      v-if="grimoire.fabled.length"
+    >
+      <h3>
+        <span>Fabled</span>
+        <font-awesome-icon icon="times-circle" @click.stop="toggleFabled" />
+        <font-awesome-icon icon="plus-circle" @click.stop="toggleFabled" />
+      </h3>
+      <ul>
+        <li
+          v-for="(fabled, index) in grimoire.fabled"
+          :key="index"
+          @click="openRoleModal(index * -1)"
+        >
+          <Token :role="fabled"></Token>
+        </li>
+      </ul>
+    </div>
+
     <ReminderModal :player-index="selectedPlayer"></ReminderModal>
     <RoleModal :player-index="selectedPlayer"></RoleModal>
   </div>
@@ -78,7 +99,8 @@ export default {
       swap: -1,
       move: -1,
       nominate: -1,
-      isBluffsOpen: true
+      isBluffsOpen: true,
+      isFabledOpen: true
     };
   },
   methods: {
@@ -88,6 +110,9 @@ export default {
     },
     toggleBluffs() {
       this.isBluffsOpen = !this.isBluffsOpen;
+    },
+    toggleFabled() {
+      this.isFabledOpen = !this.isFabledOpen;
     },
     handleTrigger(playerIndex, [method, params]) {
       if (typeof this[method] === "function") {
@@ -290,10 +315,16 @@ export default {
   }
 }
 
-/***** Demon bluffs *******/
-.bluffs {
+/***** Demon bluffs / Fabled *******/
+.bluffs,
+.fabled {
   position: absolute;
-  bottom: 10px;
+  &.bluffs {
+    bottom: 10px;
+  }
+  &.fabled {
+    top: 10px;
+  }
   left: 10px;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
@@ -305,7 +336,7 @@ export default {
   transition: all 200ms ease-in-out;
   z-index: 50;
 
-  #townsquare.public & {
+  #townsquare.public &.bluffs {
     opacity: 0;
     transform: scale(0.1);
   }

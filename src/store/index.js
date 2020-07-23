@@ -6,10 +6,12 @@ import players from "./modules/players";
 import session from "./modules/session";
 import editionJSON from "../editions.json";
 import rolesJSON from "../roles.json";
+import fabledJSON from "../fabled.json";
 
 Vue.use(Vuex);
 
 const rolesJSONbyId = new Map(rolesJSON.map(role => [role.id, role]));
+const fabled = new Map(fabledJSON.map(role => [role.id, role]));
 
 const getRolesByEdition = (edition = "tb") => {
   const selectedEdition =
@@ -55,7 +57,8 @@ export default new Vuex.Store({
       isScreenshotSuccess: false,
       zoom: 0,
       background: "",
-      bluffs: []
+      bluffs: [],
+      fabled: []
     },
     modals: {
       reference: false,
@@ -66,7 +69,8 @@ export default new Vuex.Store({
       nightOrder: false
     },
     edition: "tb",
-    roles: getRolesByEdition()
+    roles: getRolesByEdition(),
+    fabled
   },
   getters: {
     /**

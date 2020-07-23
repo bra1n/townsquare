@@ -190,11 +190,14 @@ body {
 
 // odd aspect ratio
 @media (max-aspect-ratio: 11/7) {
-  .bluffs h3 {
-    max-width: 14vh;
-  }
-  .bluffs ul {
-    flex-direction: column;
+  .bluffs,
+  .fabled {
+    h3 {
+      max-width: 14vh;
+    }
+    ul {
+      flex-direction: column;
+    }
   }
 }
 
