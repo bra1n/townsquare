@@ -24,6 +24,23 @@ const getRolesByEdition = (edition = "tb") => {
   );
 };
 
+// base definition for custom roles
+const imageBase =
+  "https://raw.githubusercontent.com/bra1n/townsquare/main/src/assets/icons/";
+const customRole = {
+  image: "",
+  edition: "custom",
+  firstNight: 0,
+  firstNightReminder: "",
+  otherNight: 0,
+  otherNightReminder: "",
+  reminders: [],
+  remindersGlobal: [],
+  setup: false,
+  team: "townsfolk",
+  isCustom: true
+};
+
 export default new Vuex.Store({
   modules: {
     players,
@@ -50,6 +67,34 @@ export default new Vuex.Store({
     },
     edition: "tb",
     roles: getRolesByEdition()
+  },
+  getters: {
+    /**
+     * Return all custom roles, with default values stripped.
+     * @param roles
+     * @returns {[]}
+     */
+    customRoles: ({ roles }) => {
+      const customRoles = [];
+      roles.forEach(role => {
+        if (!role.isCustom) {
+          customRoles.push({ id: role.id });
+        } else {
+          const strippedRole = {};
+          for (let prop in role) {
+            const value = role[prop];
+            if (prop === "image" && value.match(new RegExp("^" + imageBase))) {
+              continue;
+            }
+            if (prop !== "isCustom" && value !== customRole[prop]) {
+              strippedRole[prop] = value;
+            }
+          }
+          customRoles.push(strippedRole);
+        }
+      });
+      return customRoles;
+    }
   },
   mutations: {
     toggleMenu({ grimoire }) {
@@ -105,19 +150,6 @@ export default new Vuex.Store({
      * @param roles Array of role IDs or full role definitions
      */
     setCustomRoles(state, roles) {
-      const imageBase =
-        "https://raw.githubusercontent.com/bra1n/townsquare/main/src/assets/icons/";
-      const customRole = {
-        image: "",
-        edition: "custom",
-        firstNight: 0,
-        firstNightReminder: "",
-        otherNight: 0,
-        otherNightReminder: "",
-        reminders: [],
-        remindersGlobal: [],
-        setup: false
-      };
       state.roles = new Map(
         roles
           // map existing roles to base definition or pre-populate custom roles to ensure all properties
