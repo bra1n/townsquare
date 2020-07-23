@@ -183,6 +183,7 @@ class LiveSession {
       gamestate: this._gamestate,
       nomination: session.nomination,
       votingSpeed: session.votingSpeed,
+      lockedVote: session.lockedVote,
       ...(session.nomination ? { votes: session.votes } : {})
     });
   }
@@ -194,11 +195,12 @@ class LiveSession {
    */
   _updateGamestate(data) {
     if (!this._isSpectator) return;
-    const { gamestate, nomination, votingSpeed, votes } = data;
+    const { gamestate, nomination, votingSpeed, votes, lockedVote } = data;
     this._store.commit("session/nomination", {
       nomination,
       votes,
-      votingSpeed
+      votingSpeed,
+      lockedVote
     });
     const players = this._store.state.players.players;
     // adjust number of players

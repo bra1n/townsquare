@@ -32,11 +32,11 @@ const mutations = {
   setPlayerCount: set("playerCount"),
   setVotingSpeed: set("votingSpeed"),
   claimSeat: set("claimedSeat"),
-  nomination(state, { nomination, votes, votingSpeed } = {}) {
+  nomination(state, { nomination, votes, votingSpeed, lockedVote } = {}) {
     state.nomination = nomination || false;
     state.votes = votes || [];
     state.votingSpeed = votingSpeed || state.votingSpeed;
-    state.lockedVote = 0;
+    state.lockedVote = lockedVote || 0;
   },
   /**
    * Store a vote with and without syncing it to the live session.

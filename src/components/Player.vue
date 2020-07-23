@@ -807,7 +807,7 @@ li.move:not(.from) .player .overlay svg.move {
 
 .player.dead .night em {
   color: #ddd;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, gray 100%) ;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, gray 100%);
 }
 
 /***** Reminder token *****/
