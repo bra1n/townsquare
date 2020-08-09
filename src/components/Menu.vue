@@ -54,6 +54,10 @@
                 ]"
             /></em>
           </li>
+          <li v-if="!session.isSpectator" @click="toggleModal('fabled')">
+            Add Fabled
+            <em><font-awesome-icon icon="dragon"/></em>
+          </li>
           <li v-if="players.length">
             Zoom
             <em>

@@ -1,0 +1,122 @@
+[
+  {
+    "id": "doomsayer",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "name": "Doomsayer",
+    "team": "fabled",
+    "ability": "If 4 or more players live, each living player may publicly choose (once per game) that a player of their own alignment dies."
+  },
+  {
+    "id": "angel",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": ["Protect", "Punish"],
+    "setup": false,
+    "name": "Angel",
+    "team": "fabled",
+    "ability": "Something bad might happen to whoever is most responsible for the death of a new player."
+  },
+  {
+    "id": "buddhist",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "name": "Buddhist",
+    "team": "fabled",
+    "ability": "For the first 2 minutes of each day, veteran players may not talk."
+  },
+  {
+    "id": "hellslibrarian",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": ["Punish"],
+    "setup": false,
+    "name": "Hell's Librarian",
+    "team": "fabled",
+    "ability": "Something bad might happen to whoever talks when the Storyteller has asked for silence."
+  },
+  {
+    "id": "revolutionary",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": ["Used"],
+    "setup": false,
+    "name": "Revolutionary",
+    "team": "fabled",
+    "ability": "2 neighboring players are known to be the same alignment. Once per game, one of them registers falsely."
+  },
+  {
+    "id": "fiddler",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "name": "Fiddler",
+    "team": "fabled",
+    "ability": "Once per game, the Demon secretly chooses an opposing player: all players choose which of these 2 players win."
+  },
+  {
+    "id": "toymaker",
+    "firstNightReminder": "",
+    "otherNightReminder": "If it is a night when a Demon attack could end the game, and the Demon is marked “Final night: No Attack,” then the Demon does not act tonight. (Do not wake them.)",
+    "reminders": ["Final Night: No Attack"],
+    "setup": false,
+    "name": "Toymaker",
+    "team": "fabled",
+    "ability": "The Demon may choose not to attack & must do this at least once per game. Evil players get normal starting info."
+  },
+  {
+    "id": "fibbin",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": ["Used"],
+    "setup": false,
+    "name": "Fibbin",
+    "team": "fabled",
+    "ability": "Once per game, 1 good player might get false information."
+  },
+  {
+    "id": "duchess",
+    "firstNightReminder": "",
+    "otherNightReminder": "Wake each player marked “Visitor” or “False Info” one at a time. Show them the Duchess token, then fingers (1, 2, 3) equaling the number of evil players marked “Visitor” or, if you are waking the player marked “False Info,” show them any number of fingers except the number of evil players marked “Visitor.”",
+    "reminders": ["Visitor", "False Info"],
+    "setup": false,
+    "name": "Duchess",
+    "team": "fabled",
+    "ability": "Each day, 3 players may choose to visit you. At night*, each visitor learns how many visitors are evil, but 1 gets false info."
+  },
+  {
+    "id": "sentinel",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": true,
+    "name": "Sentinel",
+    "team": "fabled",
+    "ability": "There might be 1 extra or 1 fewer Outsider in play."
+  },
+  {
+    "id": "spiritofivory",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": ["No extra evil"],
+    "setup": false,
+    "name": "Spirit of Ivory",
+    "team": "fabled",
+    "ability": "There can't be more than 1 extra evil player."
+  },
+  {
+    "id": "djinn",
+    "firstNightReminder": "Wake each evil player and show them which jinxed characters are in play, so that they know not to bluff as characters that can not be in play.",
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "name": "Djinn",
+    "team": "fabled",
+    "ability": "Jinxed characters are not both in-play, but evil players know which ones are. Or, use the Djinn's \"Special Rule\"."
+  }
+]

@@ -558,6 +558,7 @@ li.move:not(.from) .player .overlay svg.move {
   }
 }
 
+/****** Session seat glow *****/
 @mixin glow($name, $color) {
   @keyframes #{$name}-glow {
     0% {
@@ -666,7 +667,7 @@ li.move:not(.from) .player .overlay svg.move {
 }
 
 /***** Ability text *****/
-#townsquare.public .ability {
+#townsquare.public .circle .ability {
   display: none;
 }
 .circle .player .shroud:hover ~ .token .ability,

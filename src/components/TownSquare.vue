@@ -26,7 +26,7 @@
 
     <div
       class="bluffs"
-      v-if="players.length > 6"
+      v-if="players.length"
       ref="bluffs"
       :class="{ closed: !isBluffsOpen }"
     >
@@ -44,6 +44,27 @@
           @click="openRoleModal(index * -1)"
         >
           <Token :role="grimoire.bluffs[index - 1]"></Token>
+        </li>
+      </ul>
+    </div>
+
+    <div
+      class="fabled"
+      :class="{ closed: !isFabledOpen }"
+      v-if="grimoire.fabled.length"
+    >
+      <h3>
+        <span>Fabled</span>
+        <font-awesome-icon icon="times-circle" @click.stop="toggleFabled" />
+        <font-awesome-icon icon="plus-circle" @click.stop="toggleFabled" />
+      </h3>
+      <ul>
+        <li
+          v-for="(fabled, index) in grimoire.fabled"
+          :key="index"
+          @click="removeFabled(index)"
+        >
+          <Token :role="fabled"></Token>
         </li>
       </ul>
     </div>
@@ -78,7 +99,8 @@ export default {
       swap: -1,
       move: -1,
       nominate: -1,
-      isBluffsOpen: true
+      isBluffsOpen: true,
+      isFabledOpen: true
     };
   },
   methods: {
@@ -88,6 +110,13 @@ export default {
     },
     toggleBluffs() {
       this.isBluffsOpen = !this.isBluffsOpen;
+    },
+    toggleFabled() {
+      this.isFabledOpen = !this.isFabledOpen;
+    },
+    removeFabled(index) {
+      if (this.session.isSpectator) return;
+      this.$store.commit("setFabled", { index });
     },
     handleTrigger(playerIndex, [method, params]) {
       if (typeof this[method] === "function") {
@@ -290,10 +319,16 @@ export default {
   }
 }
 
-/***** Demon bluffs *******/
-.bluffs {
+/***** Demon bluffs / Fabled *******/
+.bluffs,
+.fabled {
   position: absolute;
-  bottom: 10px;
+  &.bluffs {
+    bottom: 10px;
+  }
+  &.fabled {
+    top: 10px;
+  }
   left: 10px;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
@@ -305,7 +340,7 @@ export default {
   transition: all 200ms ease-in-out;
   z-index: 50;
 
-  #townsquare.public & {
+  #townsquare.public &.bluffs {
     opacity: 0;
     transform: scale(0.1);
   }
@@ -378,7 +413,22 @@ export default {
     ul li {
       width: 0;
       height: 0;
+      .token {
+        border-width: 0;
+      }
     }
   }
+}
+
+.fabled ul li .token:before {
+  content: " ";
+  opacity: 0;
+  transition: opacity 250ms;
+  background-image: url("../assets/icons/x.png");
+  z-index: 2;
+}
+
+#townsquare:not(.spectator) .fabled ul li:hover .token:before {
+  opacity: 1;
 }
 </style>

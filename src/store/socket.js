@@ -92,6 +92,9 @@ class LiveSession {
       case "edition":
         this._updateEdition(params);
         break;
+      case "fabled":
+        this._updateFabled(params);
+        break;
       case "gs":
         this._updateGamestate(params);
         break;
@@ -179,6 +182,7 @@ class LiveSession {
     }));
     const { session } = this._store.state;
     this.sendEdition();
+    this.sendFabled();
     this._send("gs", {
       gamestate: this._gamestate,
       nomination: session.nomination,
@@ -270,6 +274,30 @@ class LiveSession {
     if (roles) {
       this._store.commit("setCustomRoles", roles);
     }
+  }
+
+  /**
+   * Publish a fabled update. ST only
+   */
+  sendFabled() {
+    if (this._isSpectator) return;
+    const { fabled } = this._store.state.grimoire;
+    this._send(
+      "fabled",
+      fabled.map(({ id }) => id)
+    );
+  }
+
+  /**
+   * Update fabled roles.
+   * @param fabled
+   * @private
+   */
+  _updateFabled(fabled) {
+    if (!this._isSpectator) return;
+    this._store.commit("setFabled", {
+      fabled: fabled.map(id => this._store.state.fabled.get(id))
+    });
   }
 
   /**
@@ -556,6 +584,9 @@ export default store => {
         break;
       case "setEdition":
         session.sendEdition();
+        break;
+      case "setFabled":
+        session.sendFabled();
         break;
       case "players/swap":
         session.swapPlayer(payload);

@@ -88,24 +88,24 @@ export default {
           "https://gist.githubusercontent.com/bra1n/0337cc44c6fd2c44f7589256ed5486d2/raw/4a7a1545004620146f47583cde4b05f77dd9b6d2/penanceday.json"
         ],
         [
-          "Catfishing 8.0 (+Sentinel)",
-          "https://gist.githubusercontent.com/bra1n/8a5ec41a7bbf945f6b7dfc1cef72b569/raw/a9451def4bb7b3c424426e9524ee94f3ac65dbf4/catfishing.json"
+          "Catfishing 8.0",
+          "https://gist.githubusercontent.com/bra1n/8a5ec41a7bbf945f6b7dfc1cef72b569/raw/86b2ce5293e7160530f8775b8a7118b2078fdd79/catfishing.json"
         ],
         [
-          "On Thin Ice (Teensyville, +Sentinel)",
-          "https://gist.githubusercontent.com/bra1n/8dacd9f2abc6f428331ea1213ab153f5/raw/9758aff4b59965dc7a094db549d950be5a26b571/custom-script.json"
+          "On Thin Ice (Teensyville)",
+          "https://gist.githubusercontent.com/bra1n/8dacd9f2abc6f428331ea1213ab153f5/raw/0cacbcaf8ed9bddae0cca25a9ada97e9958d868b/on-thin-ice.json"
         ],
         [
-          "Race To The Bottom (Teensyville, +Sentinel, +Doomsayer)",
-          "https://gist.githubusercontent.com/bra1n/63e1354cb3dc9d4032bcd0623dc48888/raw/5be4df8386ec61e3a98c32be77f8cac3f8414379/custom-script.json"
+          "Race To The Bottom (Teensyville)",
+          "https://gist.githubusercontent.com/bra1n/63e1354cb3dc9d4032bcd0623dc48888/raw/5acb0eedcc0a67a64a99c7e0e6271de0b7b2e1b2/race-to-the-bottom.json"
         ],
         [
-          "Frankenstein's Mayor by Ted (Teensyville, +Sentinel)",
-          "https://gist.githubusercontent.com/bra1n/32c52b422cc01b934a4291eeb81dbcee/raw/3ca5a043c41141ac40667dc15097deb327263268/Frankensteins_Mayor_by_Ted.json"
+          "Frankenstein's Mayor by Ted (Teensyville)",
+          "https://gist.githubusercontent.com/bra1n/32c52b422cc01b934a4291eeb81dbcee/raw/5bf770693bbf7aff5e86601c82ca4af3222f4ba6/Frankensteins_Mayor_by_Ted.json"
         ],
         [
-          "Vigormortis High School (Teensyville, +Sentinel)",
-          "https://gist.githubusercontent.com/bra1n/1f65bd4a999524719d5dabe98c3c2d27/raw/f28d3268846c182b2078888122003c6f95c6b2cf/VigormortisHighSchool.json"
+          "Vigormortis High School (Teensyville)",
+          "https://gist.githubusercontent.com/bra1n/1f65bd4a999524719d5dabe98c3c2d27/raw/22bbec6bf56a51a7459e5ae41ed47e41971c5445/VigormortisHighSchool.json"
         ]
       ]
     };
@@ -150,14 +150,22 @@ export default {
     },
     parseRoles(roles) {
       if (!roles || !roles.length) return;
-      this.$store.commit(
-        "setCustomRoles",
-        roles.map(role => {
-          role.id = role.id.toLocaleLowerCase().replace(/[^a-z0-9]/g, "");
-          return role;
-        })
-      );
+      const customRoles = roles.map(role => {
+        role.id = role.id.toLocaleLowerCase().replace(/[^a-z0-9]/g, "");
+        return role;
+      });
+      this.$store.commit("setCustomRoles", customRoles);
       this.$store.commit("setEdition", "custom");
+      // check for fabled and set those too, if present
+      if (customRoles.some(({ id }) => this.$store.state.fabled.has(id))) {
+        const fabled = [];
+        customRoles.forEach(({ id }) => {
+          if (this.$store.state.fabled.has(id)) {
+            fabled.push(this.$store.state.fabled.get(id));
+          }
+        });
+        this.$store.commit("setFabled", { fabled });
+      }
       this.isCustom = false;
     },
     ...mapMutations(["toggleModal", "setEdition"])

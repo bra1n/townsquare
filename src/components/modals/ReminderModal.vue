@@ -59,6 +59,16 @@ export default {
           ];
         }
       });
+      this.$store.state.grimoire.fabled.forEach(role => {
+        reminders = [
+          ...reminders,
+          ...role.reminders.map(name => ({
+            role: role.id,
+            image: role.image,
+            name
+          }))
+        ];
+      });
       reminders.push({ role: "good", name: "Good" });
       reminders.push({ role: "evil", name: "Evil" });
       reminders.push({ role: "custom", name: "Custom note" });

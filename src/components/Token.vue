@@ -79,8 +79,23 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: border-color 250ms;
 
-  .icon {
+  &:hover .name .label {
+    stroke: black;
+    fill: white;
+    @-moz-document url-prefix() {
+      &.mozilla {
+        stroke: none;
+        filter: drop-shadow(0 1.5px 0 black) drop-shadow(0 -1.5px 0 black)
+          drop-shadow(1.5px 0 0 black) drop-shadow(-1.5px 0 0 black)
+          drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5));
+      }
+    }
+  }
+
+  .icon,
+  &:before {
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center 30%;
@@ -149,8 +164,9 @@ export default {
           // Vue doesn't support scoped media queries, so we have to use a second css class
           stroke: none;
           text-shadow: none;
-          filter: drop-shadow(0 2px 0 white) drop-shadow(0 -2px 0 white)
-            drop-shadow(2px 0 0 white) drop-shadow(-2px 0 0 white);
+          filter: drop-shadow(0 1.5px 0 white) drop-shadow(0 -1.5px 0 white)
+            drop-shadow(1.5px 0 0 white) drop-shadow(-1.5px 0 0 white)
+            drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5));
         }
       }
     }
