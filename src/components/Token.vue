@@ -67,8 +67,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../vars.scss";
-
 .token {
   border-radius: 50%;
   width: 100%;
