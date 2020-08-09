@@ -26,7 +26,7 @@
 
     <div
       class="bluffs"
-      v-if="players.length > 6"
+      v-if="players.length"
       ref="bluffs"
       :class="{ closed: !isBluffsOpen }"
     >
