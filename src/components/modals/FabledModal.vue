@@ -38,6 +38,7 @@ export default {
       this.$store.commit("setFabled", {
         fabled: role
       });
+      this.$store.commit("toggleModal", "fabled");
     },
     ...mapMutations(["toggleModal"])
   }
@@ -49,8 +50,8 @@ export default {
 
 ul.tokens li {
   border-radius: 50%;
-  width: 6vw;
-  margin: 1%;
+  width: 8vw;
+  margin: 0.5%;
   transition: transform 500ms ease;
 
   &:hover {

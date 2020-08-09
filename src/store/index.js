@@ -134,8 +134,12 @@ export default new Vuex.Store({
     setFabled({ grimoire }, { index, fabled } = {}) {
       if (index !== undefined) {
         grimoire.fabled.splice(index, 1);
-      } else {
-        grimoire.fabled.push(fabled);
+      } else if (fabled) {
+        if (!Array.isArray(fabled)) {
+          grimoire.fabled.push(fabled);
+        } else {
+          grimoire.fabled = fabled;
+        }
       }
     },
     toggleModal({ modals }, name) {

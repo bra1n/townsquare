@@ -25,10 +25,10 @@ module.exports = store => {
     });
   }
   if (localStorage.fabled !== undefined) {
-    JSON.parse(localStorage.fabled).forEach(role => {
-      store.commit("setFabled", {
-        fabled: store.state.fabled.get(role) || {}
-      });
+    store.commit("setFabled", {
+      fabled: JSON.parse(localStorage.fabled).map(id =>
+        store.state.fabled.get(id)
+      )
     });
   }
   if (localStorage.players) {

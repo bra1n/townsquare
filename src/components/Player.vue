@@ -667,7 +667,7 @@ li.move:not(.from) .player .overlay svg.move {
 }
 
 /***** Ability text *****/
-#townsquare.public .ability {
+#townsquare.public .circle .ability {
   display: none;
 }
 .circle .player .shroud:hover ~ .token .ability,

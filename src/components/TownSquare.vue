@@ -115,6 +115,7 @@ export default {
       this.isFabledOpen = !this.isFabledOpen;
     },
     removeFabled(index) {
+      if (this.session.isSpectator) return;
       this.$store.commit("setFabled", { index });
     },
     handleTrigger(playerIndex, [method, params]) {
@@ -427,7 +428,7 @@ export default {
   z-index: 2;
 }
 
-.fabled ul li:hover .token:before {
+#townsquare:not(.spectator) .fabled ul li:hover .token:before {
   opacity: 1;
 }
 </style>
