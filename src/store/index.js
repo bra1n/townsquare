@@ -61,12 +61,13 @@ export default new Vuex.Store({
       fabled: []
     },
     modals: {
-      reference: false,
       edition: false,
-      roles: false,
-      role: false,
+      fabled: false,
+      nightOrder: false,
+      reference: false,
       reminder: false,
-      nightOrder: false
+      role: false,
+      roles: false
     },
     edition: "tb",
     roles: getRolesByEdition(),
@@ -128,6 +129,13 @@ export default new Vuex.Store({
         grimoire.bluffs.splice(index, 1, role);
       } else {
         grimoire.bluffs = [];
+      }
+    },
+    setFabled({ grimoire }, { index, fabled } = {}) {
+      if (index !== undefined) {
+        grimoire.fabled.splice(index, 1);
+      } else {
+        grimoire.fabled.push(fabled);
       }
     },
     toggleModal({ modals }, name) {

@@ -24,6 +24,13 @@ module.exports = store => {
       });
     });
   }
+  if (localStorage.fabled !== undefined) {
+    JSON.parse(localStorage.fabled).forEach(role => {
+      store.commit("setFabled", {
+        fabled: store.state.fabled.get(role) || {}
+      });
+    });
+  }
   if (localStorage.players) {
     store.commit(
       "players/set",
@@ -85,6 +92,12 @@ module.exports = store => {
         localStorage.setItem(
           "bluffs",
           JSON.stringify(state.grimoire.bluffs.map(({ id }) => id))
+        );
+        break;
+      case "setFabled":
+        localStorage.setItem(
+          "fabled",
+          JSON.stringify(state.grimoire.fabled.map(({ id }) => id))
         );
         break;
       case "players/add":

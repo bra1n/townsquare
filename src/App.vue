@@ -18,6 +18,7 @@
     <TownSquare @screenshot="takeScreenshot"></TownSquare>
     <Menu ref="menu"></Menu>
     <EditionModal />
+    <FabledModal />
     <RolesModal />
     <ReferenceModal />
     <NightOrderModal />
@@ -39,9 +40,11 @@ import ReferenceModal from "./components/modals/ReferenceModal";
 import Vote from "./components/Vote";
 import Gradients from "./components/Gradients";
 import NightOrderModal from "./components/modals/NightOrderModal";
+import FabledModal from "@/components/modals/FabledModal";
 
 export default {
   components: {
+    FabledModal,
     NightOrderModal,
     Vote,
     ReferenceModal,

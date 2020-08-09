@@ -542,7 +542,7 @@ li.move:not(.from) .player .overlay svg.move {
   pointer-events: all;
 }
 
-/****** Vote icon ********/
+/****** Vote  icon ********/
 .player .has-vote {
   position: absolute;
   right: 2px;
@@ -558,6 +558,7 @@ li.move:not(.from) .player .overlay svg.move {
   }
 }
 
+/****** Session seat glow *****/
 @mixin glow($name, $color) {
   @keyframes #{$name}-glow {
     0% {

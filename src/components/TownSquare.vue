@@ -62,7 +62,7 @@
         <li
           v-for="(fabled, index) in grimoire.fabled"
           :key="index"
-          @click="openRoleModal(index * -1)"
+          @click="removeFabled(index)"
         >
           <Token :role="fabled"></Token>
         </li>
@@ -113,6 +113,9 @@ export default {
     },
     toggleFabled() {
       this.isFabledOpen = !this.isFabledOpen;
+    },
+    removeFabled(index) {
+      this.$store.commit("setFabled", { index });
     },
     handleTrigger(playerIndex, [method, params]) {
       if (typeof this[method] === "function") {
@@ -409,7 +412,22 @@ export default {
     ul li {
       width: 0;
       height: 0;
+      .token {
+        border-width: 0;
+      }
     }
   }
+}
+
+.fabled ul li .token:before {
+  content: " ";
+  opacity: 0;
+  transition: opacity 250ms;
+  background-image: url("../assets/icons/x.png");
+  z-index: 2;
+}
+
+.fabled ul li:hover .token:before {
+  opacity: 1;
 }
 </style>

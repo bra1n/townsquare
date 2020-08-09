@@ -17,6 +17,7 @@ const faIcons = [
   "Cog",
   "Copy",
   "Dice",
+  "Dragon",
   "ExchangeAlt",
   "FileUpload",
   "HandPointRight",
