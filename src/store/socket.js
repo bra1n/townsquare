@@ -11,6 +11,7 @@ class LiveSession {
     this._pingInterval = 30 * 1000; // 30 seconds between pings
     this._pingTimer = null;
     this._players = {}; // map of players connected to a session
+    this._pings = {}; // map of player IDs to ping
     // reconnect to previous session
     if (this._store.state.session.sessionId) {
       this.connect(this._store.state.session.sessionId);
@@ -65,7 +66,11 @@ class LiveSession {
    * @private
    */
   _ping() {
-    this._send("ping", [this._isSpectator, this._store.state.session.playerId]);
+    this._send("ping", [
+      this._isSpectator,
+      this._store.state.session.playerId,
+      new Date().getTime()
+    ]);
     this._handlePing();
     clearTimeout(this._pingTimer);
     this._pingTimer = setTimeout(this._ping.bind(this), this._pingInterval);
@@ -149,7 +154,9 @@ class LiveSession {
           .substr(2)
       );
     }
+    this._pings = {};
     this._store.commit("session/setPlayerCount", 0);
+    this._store.commit("session/setPing", 0);
     this._isSpectator = this._store.state.session.isSpectator;
     this._open(channel);
   }
@@ -158,7 +165,9 @@ class LiveSession {
    * Close the current session, if any.
    */
   disconnect() {
+    this._pings = {};
     this._store.commit("session/setPlayerCount", 0);
+    this._store.commit("session/setPing", 0);
     if (this._socket) {
       this._send("bye", this._store.state.session.playerId);
       this._socket.close();
@@ -366,20 +375,16 @@ class LiveSession {
    * Handle a ping message by another player / storyteller
    * @param isSpectator
    * @param playerId
+   * @param timestamp
    * @private
    */
-  _handlePing([isSpectator, playerId] = []) {
+  _handlePing([isSpectator, playerId, timestamp] = []) {
     const now = new Date().getTime();
-    if (playerId) {
-      this._players[playerId] = now;
-      if (!this._isSpectator && !isSpectator) {
-        alert("Another storyteller joined the session!");
-      }
-    }
     // remove players that haven't sent a ping in twice the timespan
     for (let player in this._players) {
       if (now - this._players[player] > this._pingInterval * 2) {
         delete this._players[player];
+        delete this._pings[player];
       }
     }
     // remove claimed seats from players that are no longer connected
@@ -392,6 +397,24 @@ class LiveSession {
         });
       }
     });
+    // store new player data
+    if (playerId) {
+      this._players[playerId] = now;
+      if (!this._isSpectator && !isSpectator) {
+        alert("Another storyteller joined the session!");
+      } else if (this._isSpectator && !isSpectator) {
+        // ping to ST
+        this._store.commit("session/setPing", now - timestamp);
+      } else {
+        // ping to Players
+        this._pings[playerId] = now - timestamp;
+        const pings = Object.values(this._pings);
+        this._store.commit(
+          "session/setPing",
+          Math.round(pings.reduce((a, b) => a + b, 0) / pings.length)
+        );
+      }
+    }
     this._store.commit(
       "session/setPlayerCount",
       Object.keys(this._players).length
@@ -491,17 +514,28 @@ class LiveSession {
       !this._isSpectator
     ) {
       // send vote only if it is your own vote or you are the storyteller
-      this._send("vote", [index, this._store.state.session.votes[index]]);
+      this._send("vote", [
+        index,
+        this._store.state.session.votes[index],
+        !this._isSpectator
+      ]);
     }
   }
 
   /**
-   * Handle an incoming vote, but not if it is for your own seat.
+   * Handle an incoming vote, but only if it is from ST or unlocked.
    * @param index
    * @param vote
+   * @param fromST
    */
-  _handleVote([index, vote]) {
-    this._store.commit("session/vote", [index, vote]);
+  _handleVote([index, vote, fromST]) {
+    const { session, players } = this._store.state;
+    const playerCount = players.players.length;
+    const indexAdjusted =
+      (index - 1 + playerCount - session.nomination[1]) % playerCount;
+    if (fromST || indexAdjusted >= session.lockedVote - 1) {
+      this._store.commit("session/vote", [index, vote]);
+    }
   }
 
   /**

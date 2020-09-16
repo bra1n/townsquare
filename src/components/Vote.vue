@@ -10,8 +10,9 @@
       >!
       <br />
       <template v-if="nominee.role.team !== 'traveler'">
-        <em class="blue">{{ Math.ceil(alive / 2) }} votes</em> required for a
-        <em>majority</em>.
+        <em class="blue">{{ voters.length }} vote{{ voters.length != 1 ? 's':'' }}</em>
+        in favor
+        <em>(majority is {{ Math.ceil(alive / 2) }})</em>
       </template>
       <template v-else>
         <em>{{ Math.ceil(players.length / 2) }} votes</em> required for a

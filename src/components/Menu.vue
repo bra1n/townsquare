@@ -7,7 +7,7 @@
       v-if="session.sessionId"
       @click="leaveSession"
       :title="
-        `You're currently in a live game with ${session.playerCount} other players!`
+        `${session.playerCount} other players in this session (${session.ping}ms latency)`
       "
     >
       <font-awesome-icon icon="broadcast-tower" />
@@ -90,6 +90,10 @@
           </li>
           <li @click="joinSession" v-if="!session.sessionId">
             Join (Player)<em>[J]</em>
+          </li>
+          <li v-if="session.sessionId && session.ping">
+            Latency to {{ session.isSpectator ? "storyteller" : "players" }}
+            <em>{{ session.ping }}ms</em>
           </li>
           <li v-if="session.sessionId" @click="copySessionUrl">
             Copy player link

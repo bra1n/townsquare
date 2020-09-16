@@ -3,6 +3,14 @@ const set = key => (state, val) => {
   state[key] = val;
 };
 
+/**
+ * Handle a vote request.
+ * If the vote is from a seat that is already locked, ignore it.
+ * @param state session state
+ * @param index seat of the player in the circle
+ * @param vote true or false
+ * @param indexAdjusted seat of the player counted from the nominated player
+ */
 const handleVote = (state, [index, vote]) => {
   if (!state.nomination) return;
   state.votes = [...state.votes];
@@ -13,6 +21,7 @@ const state = () => ({
   sessionId: "",
   isSpectator: false,
   playerCount: 0,
+  ping: 0,
   playerId: "",
   claimedSeat: -1,
   nomination: false,
@@ -30,6 +39,7 @@ const mutations = {
   setPlayerId: set("playerId"),
   setSpectator: set("isSpectator"),
   setPlayerCount: set("playerCount"),
+  setPing: set("ping"),
   setVotingSpeed: set("votingSpeed"),
   claimSeat: set("claimedSeat"),
   nomination(state, { nomination, votes, votingSpeed, lockedVote } = {}) {
