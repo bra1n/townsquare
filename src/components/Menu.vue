@@ -92,7 +92,7 @@
             Join (Player)<em>[J]</em>
           </li>
           <li v-if="session.sessionId && session.ping">
-            Latency to {{ session.isSpectator ? "storyteller" : "players" }}
+            Delay to {{ session.isSpectator ? "host" : "players" }}
             <em>{{ session.ping }}ms</em>
           </li>
           <li v-if="session.sessionId" @click="copySessionUrl">
