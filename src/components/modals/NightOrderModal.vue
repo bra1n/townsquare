@@ -74,8 +74,29 @@ export default {
     },
     rolesFirstNight: function() {
       const rolesFirstNight = [];
+      // add minion / demon infos to night order sheet
+      if (this.players.length > 6) {
+        rolesFirstNight.push(
+          {
+            id: "evil",
+            name: "Minion info",
+            firstNight: 2,
+            team: "minion"
+          },
+          {
+            id: "evil",
+            name: "Demon info & bluffs",
+            firstNight: 4,
+            team: "demon"
+          }
+        );
+      }
       this.roles.forEach(role => {
-        if (role.firstNight) {
+        if (
+          role.firstNight &&
+          (role.team !== "traveler" ||
+            this.players.some(p => p.role.id === role.id))
+        ) {
           rolesFirstNight.push(role);
         }
       });
@@ -85,7 +106,11 @@ export default {
     rolesOtherNight: function() {
       const rolesOtherNight = [];
       this.roles.forEach(role => {
-        if (role.otherNight) {
+        if (
+          role.otherNight &&
+          (role.team !== "traveler" ||
+            this.players.some(p => p.role.id === role.id))
+        ) {
           rolesOtherNight.push(role);
         }
       });
