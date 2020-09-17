@@ -7,7 +7,9 @@
       v-if="session.sessionId"
       @click="leaveSession"
       :title="
-        `${session.playerCount} other players in this session (${session.ping}ms latency)`
+        `${session.playerCount} other players in this session${
+          session.ping ? ' (' + session.ping + 'ms latency)' : ''
+        }`
       "
     >
       <font-awesome-icon icon="broadcast-tower" />
