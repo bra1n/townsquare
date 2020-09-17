@@ -118,5 +118,15 @@
     "name": "Djinn",
     "team": "fabled",
     "ability": "Jinxed characters are not both in-play, but evil players know which ones are. Or, use the Djinn's \"Special Rule\"."
+  },
+  {
+    "id": "stormcatcher",
+    "firstNightReminder": "Mark a good player as \"Safe\". Wake each evil player and show them the marked player.",
+    "otherNightReminder": "",
+    "reminders": ["Safe"],
+    "setup": false,
+    "name": "Storm Catcher",
+    "team": "fabled",
+    "ability": "Name a good character. If in play, they can only die by execution, but evil players learn which player it is."
   }
 ]

@@ -19,7 +19,7 @@
     <div class="night">
       <ul class="first">
         <li class="headline">First Night</li>
-        <li v-for="role in rolesFirstNight" :key="role.id" :class="[role.team]">
+        <li v-for="role in rolesFirstNight" :key="role.name" :class="[role.team]">
           <span class="name">
             {{ role.name }}
           </span>
@@ -35,7 +35,7 @@
       </ul>
       <ul class="other">
         <li class="headline">Other Nights</li>
-        <li v-for="role in rolesOtherNight" :key="role.id" :class="[role.team]">
+        <li v-for="role in rolesOtherNight" :key="role.name" :class="[role.team]">
           <span
             class="icon"
             v-if="role.id"
