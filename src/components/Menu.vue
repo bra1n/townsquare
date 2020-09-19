@@ -156,13 +156,21 @@
             <a href="https://discord.gg/tkWDny6" target="_blank">
               Join Discord
             </a>
-            <em><font-awesome-icon :icon="['fab', 'discord']"/></em>
+            <em>
+              <a href="https://discord.gg/tkWDny6" target="_blank">
+                <font-awesome-icon :icon="['fab', 'discord']" />
+              </a>
+            </em>
           </li>
           <li>
             <a href="https://github.com/bra1n/townsquare" target="_blank">
               Source code
             </a>
-            <em><font-awesome-icon :icon="['fab', 'github']"/></em>
+            <em>
+              <a href="https://github.com/bra1n/townsquare" target="_blank">
+                <font-awesome-icon :icon="['fab', 'github']" />
+              </a>
+            </em>
           </li>
         </template>
       </ul>
