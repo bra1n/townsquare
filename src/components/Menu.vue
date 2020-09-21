@@ -3,7 +3,10 @@
     <Screenshot ref="screenshot"></Screenshot>
     <span
       class="session"
-      :class="{ spectator: session.isSpectator }"
+      :class="{
+        spectator: session.isSpectator,
+        reconnecting: session.isReconnecting
+      }"
       v-if="session.sessionId"
       @click="leaveSession"
       :title="
@@ -334,6 +337,16 @@ export default {
     &.spectator {
       color: $townsfolk;
     }
+    &.reconnecting {
+      animation: blink 1s infinite;
+    }
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.5;
+    color: gray;
   }
 }
 

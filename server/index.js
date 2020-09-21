@@ -17,6 +17,7 @@ const wss = new WebSocket.Server({
 function noop() {}
 
 function heartbeat() {
+  this.latency = Math.round((new Date().getTime() - this.pingStart) / 2);
   this.isAlive = true;
 }
 
@@ -25,11 +26,32 @@ wss.on("connection", function connection(ws, req) {
     .split("/")
     .pop()
     .toLocaleLowerCase();
+  if (ws.channel.match(/-host$/i)) {
+    ws.isHost = true;
+    ws.channel = ws.channel.substr(0, ws.channel.length - 5);
+    // check for another host on this channel
+    if (
+      Array.from(wss.clients).some(
+        client =>
+          client !== ws &&
+          client.readyState === WebSocket.OPEN &&
+          client.channel === ws.channel &&
+          client.isHost
+      )
+    ) {
+      console.log(ws.channel, "duplicate host");
+      ws.close(1000, `The channel "${ws.channel}" already has a host`);
+      return;
+    }
+  }
   ws.isAlive = true;
+  ws.pingStart = new Date().getTime();
+  ws.ping(noop);
   ws.on("pong", heartbeat);
   ws.on("message", function incoming(data) {
-    if (!data.match(/^\["ping/i)) {
-      console.log(ws.channel, wss.clients.size, data);
+    const isPing = data.match(/^\["ping/i);
+    if (!isPing) {
+      console.log(new Date(), wss.clients.size, ws.channel, data);
     }
     wss.clients.forEach(function each(client) {
       if (
@@ -37,7 +59,12 @@ wss.on("connection", function connection(ws, req) {
         client.readyState === WebSocket.OPEN &&
         client.channel === ws.channel
       ) {
-        client.send(data);
+        // inject latency between both clients if ping message
+        if (isPing && client.latency && ws.latency) {
+          client.send(data.replace(/latency/, client.latency + ws.latency));
+        } else {
+          client.send(data);
+        }
       }
     });
   });
@@ -47,6 +74,7 @@ const interval = setInterval(function ping() {
   wss.clients.forEach(function each(ws) {
     if (ws.isAlive === false) return ws.terminate();
     ws.isAlive = false;
+    ws.pingStart = new Date().getTime();
     ws.ping(noop);
   });
 }, 30000);
