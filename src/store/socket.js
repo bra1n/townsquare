@@ -2,7 +2,7 @@ import rolesJSON from "../roles.json";
 
 class LiveSession {
   constructor(store) {
-    // this._wss = "ws://localhost:8081/";
+    //this._wss = "ws://localhost:8081/";
     this._wss = "wss://baumgart.biz:8080/";
     this._socket = null;
     this._isSpectator = true;
@@ -10,6 +10,7 @@ class LiveSession {
     this._store = store;
     this._pingInterval = 30 * 1000; // 30 seconds between pings
     this._pingTimer = null;
+    this._reconnectTimer = null;
     this._players = {}; // map of players connected to a session
     this._pings = {}; // map of player IDs to ping
     // reconnect to previous session
@@ -25,14 +26,26 @@ class LiveSession {
    */
   _open(channel) {
     this.disconnect();
-    this._socket = new WebSocket(this._wss + channel);
+    this._socket = new WebSocket(
+      this._wss + channel + (this._isSpectator ? "" : "-host")
+    );
     this._socket.addEventListener("message", this._handleMessage.bind(this));
     this._socket.onopen = this._onOpen.bind(this);
-    this._socket.onclose = () => {
+    this._socket.onclose = err => {
       this._socket = null;
-      this._store.commit("session/setSessionId", "");
       clearInterval(this._pingTimer);
       this._pingTimer = null;
+      if (err.code !== 1000) {
+        // connection interrupted, reconnect after 3 seconds
+        this._store.commit("session/setReconnecting", true);
+        this._reconnectTimer = setTimeout(
+          () => this.connect(channel),
+          3 * 1000
+        );
+      } else {
+        this._store.commit("session/setSessionId", "");
+        if (err.reason) alert(err.reason);
+      }
     };
   }
 
@@ -69,7 +82,7 @@ class LiveSession {
     this._send("ping", [
       this._isSpectator,
       this._store.state.session.playerId,
-      new Date().getTime()
+      "latency"
     ]);
     this._handlePing();
     clearTimeout(this._pingTimer);
@@ -168,9 +181,11 @@ class LiveSession {
     this._pings = {};
     this._store.commit("session/setPlayerCount", 0);
     this._store.commit("session/setPing", 0);
+    this._store.commit("session/setReconnecting", false);
+    clearTimeout(this._reconnectTimer);
     if (this._socket) {
       this._send("bye", this._store.state.session.playerId);
-      this._socket.close();
+      this._socket.close(1000);
       this._socket = null;
     }
   }
@@ -378,7 +393,7 @@ class LiveSession {
    * @param timestamp
    * @private
    */
-  _handlePing([isSpectator, playerId, timestamp] = []) {
+  _handlePing([isSpectator, playerId, latency] = []) {
     const now = new Date().getTime();
     // remove players that haven't sent a ping in twice the timespan
     for (let player in this._players) {
@@ -404,10 +419,12 @@ class LiveSession {
         alert("Another storyteller joined the session!");
       } else if (this._isSpectator && !isSpectator) {
         // ping to ST
-        this._store.commit("session/setPing", now - timestamp);
-      } else {
+        if (parseInt(latency, 10)) {
+          this._store.commit("session/setPing", parseInt(latency, 10));
+        }
+      } else if(parseInt(latency, 10)) {
         // ping to Players
-        this._pings[playerId] = now - timestamp;
+        this._pings[playerId] = parseInt(latency, 10);
         const pings = Object.values(this._pings);
         this._store.commit(
           "session/setPing",
