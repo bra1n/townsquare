@@ -415,21 +415,20 @@ class LiveSession {
     // store new player data
     if (playerId) {
       this._players[playerId] = now;
-      if (!this._isSpectator && !isSpectator) {
-        alert("Another storyteller joined the session!");
-      } else if (this._isSpectator && !isSpectator) {
-        // ping to ST
-        if (parseInt(latency, 10)) {
-          this._store.commit("session/setPing", parseInt(latency, 10));
+      const ping = parseInt(latency, 10);
+      if (ping && ping > 0 && ping < 30 * 1000) {
+        if (this._isSpectator && !isSpectator) {
+          // ping to ST
+          this._store.commit("session/setPing", ping);
+        } else if (!this._isSpectator) {
+          // ping to Players
+          this._pings[playerId] = ping;
+          const pings = Object.values(this._pings);
+          this._store.commit(
+            "session/setPing",
+            Math.round(pings.reduce((a, b) => a + b, 0) / pings.length)
+          );
         }
-      } else if(parseInt(latency, 10)) {
-        // ping to Players
-        this._pings[playerId] = parseInt(latency, 10);
-        const pings = Object.values(this._pings);
-        this._store.commit(
-          "session/setPing",
-          Math.round(pings.reduce((a, b) => a + b, 0) / pings.length)
-        );
       }
     }
     this._store.commit(
