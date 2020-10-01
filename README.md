@@ -1,4 +1,4 @@
-# Blood on the Clocktower Town Square
+# Blood on the Clocktower Grimoire & Town Square
 
 ![image](https://user-images.githubusercontent.com/325521/80531231-8f473980-899a-11ea-96d6-edbf79337cb5.png)
 
@@ -74,7 +74,7 @@ _Note:_ custom characters are currently not supported in live sessions and will 
 
 ## Acknowledgements and Copyrights
 
-* [Blood on the Clocktower](https://bloodontheclocktower.com/) names and abilities by [The Pandemonium Institute](https://www.thepandemoniuminstitute.com/)
+* [Blood on the Clocktower](https://bloodontheclocktower.com/) is a trademark of Steven Medway and [The Pandemonium Institute](https://www.thepandemoniuminstitute.com/)
 * Night reminders and other auxiliary text written by [Ben Finney](http://bignose.whitetree.org/projects/botc/diy/)
 * Iconography by [Font Awesome](https://fontawesome.com/)
 * Background image by [Ryan Maloney](https://www.artstation.com/maloney94)
