@@ -7,6 +7,8 @@ It is supposed to aid storytellers and allow them to quickly set up and capture 
 
 [You can try it online!](https://bra1n.github.io/townsquare)
 
+[To set up a game as the host, check out this tutorial video!](https://www.youtube.com/watch?v=-MyizvdRbVw)
+
 ### Features
 
 - Public Town Square and Storyteller Grimoire (toggle with **shortcut \[G\]**)
