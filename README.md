@@ -7,7 +7,8 @@ It is supposed to aid storytellers and allow them to quickly set up and capture 
 
 [You can try it online!](https://bra1n.github.io/townsquare)
 
-[To set up a game as the host, check out this tutorial video!](https://www.youtube.com/watch?v=-MyizvdRbVw)
+To set up a game as the host, check out this tutorial video:
+[![Tutorial video](https://img.youtube.com/vi/-MyizvdRbVw/0.jpg)](https://www.youtube.com/watch?v=-MyizvdRbVw)
 
 ### Features
 
