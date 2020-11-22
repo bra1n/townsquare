@@ -8,8 +8,14 @@
           require('../assets/icons/' + role.id + '.png')})`
       }"
     ></span>
-    <span class="leaf-left" v-if="role.firstNight"></span>
-    <span class="leaf-right" v-if="role.otherNight"></span>
+    <span
+      class="leaf-left"
+      v-if="role.firstNight || role.firstNightReminder"
+    ></span>
+    <span
+      class="leaf-right"
+      v-if="role.otherNight || role.otherNightReminder"
+    ></span>
     <span
       v-if="role.reminders && role.reminders.length"
       v-bind:class="['leaf-top' + role.reminders.length]"
