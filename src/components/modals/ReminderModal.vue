@@ -69,9 +69,9 @@ export default {
           }))
         ];
       });
-      reminders.push({ role: "good", name: "Good" });
-      reminders.push({ role: "evil", name: "Evil" });
-      reminders.push({ role: "custom", name: "Custom note" });
+      reminders.push({ role: "good", name: "Bom" });
+      reminders.push({ role: "evil", name: "Mau" });
+      reminders.push({ role: "custom", name: "Anotação" });
       return reminders;
     },
     ...mapState(["modals"]),

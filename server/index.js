@@ -10,7 +10,7 @@ const wss = new WebSocket.Server({
   ...(process.env.NODE_ENV === "development" ? { port: 8081 } : { server }),
   verifyClient: info =>
     !!info.origin.match(
-      /^https?:\/\/(bra1n\.github\.io|localhost|eddbra1nprivatetownsquare\.xyz)/i
+      /^https?:\/\/(kamekura\.github\.io|localhost|eddbra1nprivatetownsquare\.xyz)/i
     )
 });
 

@@ -1,7 +1,7 @@
 [
   {
     "id": "washerwoman",
-    "name": "Washerwoman",
+    "name": "Lavadeira",
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 19,
@@ -9,15 +9,15 @@
     "otherNight": 0,
     "otherNightReminder": "",
     "reminders": [
-      "Townsfolk",
-      "Decoy"
+      "Cidadão",
+      "Isca"
     ],
     "setup": false,
     "ability": "You start knowing 1 of 2 players is a particular Townsfolk."
   },
   {
     "id": "librarian",
-    "name": "Librarian",
+    "name": "Bibliotecária",
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 20,
@@ -25,15 +25,15 @@
     "otherNight": 0,
     "otherNightReminder": "",
     "reminders": [
-      "Outsider",
-      "Decoy"
+      "Forasteiro",
+      "Isca"
     ],
     "setup": false,
     "ability": "You start knowing that 1 of 2 players is a particular Outsider. (Or that zero are in play)"
   },
   {
     "id": "investigator",
-    "name": "Investigator",
+    "name": "Investigador",
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 21,
@@ -41,8 +41,8 @@
     "otherNight": 0,
     "otherNightReminder": "",
     "reminders": [
-      "Minion",
-      "Decoy"
+      "Lacaio",
+      "Isca"
     ],
     "setup": false,
     "ability": "You start knowing 1 of 2 players is a particular Minion."
@@ -83,7 +83,7 @@
     "otherNight": 39,
     "otherNightReminder": ":eye: The Fortune Teller points to two players. Show the head signal (nod “yes”, shake “no”) for whether one of those players is the Demon. :eye-slash:",
     "reminders": [
-      "Decoy"
+      "Isca"
     ],
     "setup": false,
     "ability": "Each night, choose 2 players: you learn if either is a Demon. There is 1 good player that registers falsely to you."
@@ -154,7 +154,7 @@
     "otherNight": 0,
     "otherNightReminder": "",
     "reminders": [
-      "Used"
+      "Usado"
     ],
     "setup": false,
     "ability": "Once per game, during the day, publicly choose a player: if they are the Demon, they die."
@@ -182,7 +182,7 @@
     "otherNight": 0,
     "otherNightReminder": "",
     "reminders": [
-      "Used"
+      "Usado"
     ],
     "setup": false,
     "ability": "The first time you are nominated, if the nominator is a Townsfolk, they are executed immediately."
@@ -213,7 +213,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "remindersGlobal": [
-      "Drunk"
+      "Bêbado"
     ],
     "setup": true,
     "ability": "You do not know you are the Drunk. You think you are a Townsfolk, but your ability malfunctions."
@@ -233,7 +233,7 @@
   },
   {
     "id": "saint",
-    "name": "Saint",
+    "name": "Santo",
     "edition": "tb",
     "team": "outsider",
     "firstNight": 0,
@@ -259,7 +259,7 @@
   },
   {
     "id": "poisoner",
-    "name": "Poisoner",
+    "name": "Envenenador",
     "edition": "tb",
     "team": "minion",
     "firstNight": 9,
@@ -267,14 +267,14 @@
     "otherNight": 6,
     "otherNightReminder": "The previously poisoned player is no longer poisoned. :plus-circle: :eye: The Poisoner points to a player. :eye-slash: That player is poisoned. :plus-circle:",
     "reminders": [
-      "Poisoned"
+      "Envenenado"
     ],
     "setup": false,
     "ability": "Each night, choose a player: their ability malfunctions tonight and tomorrow day."
   },
   {
     "id": "spy",
-    "name": "Spy",
+    "name": "Espião",
     "edition": "tb",
     "team": "minion",
     "firstNight": 33,
@@ -302,7 +302,7 @@
   },
   {
     "id": "imp",
-    "name": "Imp",
+    "name": "Capeta",
     "edition": "tb",
     "team": "demon",
     "firstNight": 0,
@@ -310,7 +310,7 @@
     "otherNight": 18,
     "otherNightReminder": ":eye: The Imp points to a player. :eye-slash: That player dies. :plus-circle: If the Imp chose themself: • Replace the character of 1 alive minion with a spare Imp token. :plus-circle: • :eye: Wake the new Imp. Show the “You are” card, then the Imp token. :eye-slash:",
     "reminders": [
-      "Die"
+      "Morre"
     ],
     "setup": false,
     "ability": "Each night*, choose a player: they die. If you kill yourself this way, a Minion becomes the Imp."
@@ -567,7 +567,7 @@
       "Attack 1",
       "Attack 2",
       "Attack 3",
-      "Decoy"
+      "Isca"
     ],
     "setup": false,
     "name": "Lunatic",
