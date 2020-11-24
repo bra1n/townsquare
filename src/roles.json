@@ -62,7 +62,7 @@
   },
   {
     "id": "empath",
-    "name": "Empath",
+    "name": "Médium",
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 23,
@@ -75,7 +75,7 @@
   },
   {
     "id": "fortuneteller",
-    "name": "Fortune Teller",
+    "name": "Vidente",
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 24,
@@ -90,7 +90,7 @@
   },
   {
     "id": "undertaker",
-    "name": "Undertaker",
+    "name": "Coveiro",
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 0,
@@ -98,14 +98,14 @@
     "otherNight": 40,
     "otherNightReminder": ":question-circle: If a player was executed today: :eye: Show that player’s character token. :eye-slash:",
     "reminders": [
-      "Executed"
+      "Executado"
     ],
     "setup": false,
     "ability": "Each night*, you learn which character died by execution today."
   },
   {
     "id": "monk",
-    "name": "Monk",
+    "name": "Clérigo",
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 0,
@@ -113,14 +113,14 @@
     "otherNight": 10,
     "otherNightReminder": "The previously protected player is no longer protected. :plus-circle: :eye: The Monk points to a player not themself. :eye-slash: Mark that player “Protected”. :plus-circle:",
     "reminders": [
-      "Protected"
+      "Protegido"
     ],
     "setup": false,
     "ability": "Each night*, choose a player (not yourself): they are safe from the Demon tonight."
   },
   {
     "id": "ravenkeeper",
-    "name": "Ravenkeeper",
+    "name": "Mestre dos Corvos",
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 0,
@@ -133,7 +133,7 @@
   },
   {
     "id": "mayor",
-    "name": "Mayor",
+    "name": "Prefeito",
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 0,
@@ -146,7 +146,7 @@
   },
   {
     "id": "slayer",
-    "name": "Slayer",
+    "name": "Atirador",
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 0,
@@ -161,7 +161,7 @@
   },
   {
     "id": "soldier",
-    "name": "Soldier",
+    "name": "Soldado",
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 0,
@@ -174,7 +174,7 @@
   },
   {
     "id": "virgin",
-    "name": "Virgin",
+    "name": "Virgem",
     "edition": "tb",
     "team": "townsfolk",
     "firstNight": 0,
@@ -189,7 +189,7 @@
   },
   {
     "id": "butler",
-    "name": "Butler",
+    "name": "Mordomo",
     "edition": "tb",
     "team": "outsider",
     "firstNight": 25,
@@ -197,14 +197,14 @@
     "otherNight": 50,
     "otherNightReminder": ":eye: The Butler points to a player. :eye-slash: Mark that player as “Master”. :plus-circle:",
     "reminders": [
-      "Master"
+      "Mestre"
     ],
     "setup": false,
     "ability": "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too."
   },
   {
     "id": "drunk",
-    "name": "Drunk",
+    "name": "Bêbado",
     "edition": "tb",
     "team": "outsider",
     "firstNight": 0,
@@ -220,7 +220,7 @@
   },
   {
     "id": "recluse",
-    "name": "Recluse",
+    "name": "Recluso",
     "edition": "tb",
     "team": "outsider",
     "firstNight": 0,
@@ -246,7 +246,7 @@
   },
   {
     "id": "baron",
-    "name": "Baron",
+    "name": "Barão",
     "edition": "tb",
     "team": "minion",
     "firstNight": 0,
@@ -287,7 +287,7 @@
   },
   {
     "id": "scarletwoman",
-    "name": "Scarlet Woman",
+    "name": "Promíscua",
     "edition": "tb",
     "team": "minion",
     "firstNight": 0,
@@ -1075,7 +1075,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "name": "Scapegoat",
+    "name": "Bode Expiatório",
     "team": "traveler",
     "ability": "If a player of your alignment is executed, you might be executed instead."
   },
@@ -1088,7 +1088,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "name": "Gunslinger",
+    "name": "Pistoleiro",
     "team": "traveler",
     "ability": "Each day, after the 1st vote has been tallied, you may choose a player that voted: they die."
   },
@@ -1101,7 +1101,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "name": "Beggar",
+    "name": "Pedinte",
     "team": "traveler",
     "ability": "You must use a vote token to vote. Dead players may choose to give you theirs. If so, you learn their alignment."
   },
@@ -1113,10 +1113,10 @@
     "otherNight": 1,
     "otherNightReminder": "The Bureaucrat points to a player. Put the Bureaucrat's “Vote x3” reminder by the chosen player's character token.",
     "reminders": [
-      "Vote x3"
+      "Voto x3"
     ],
     "setup": false,
-    "name": "Bureaucrat",
+    "name": "Burocrata",
     "team": "traveler",
     "ability": "Each night, choose a player (not yourself): their vote counts as 3 votes tomorrow."
   },
@@ -1128,10 +1128,10 @@
     "otherNight": 1,
     "otherNightReminder": "The Thief points to a player. Put the Thief's “Negative vote” reminder by the chosen player's character token.",
     "reminders": [
-      "Negative vote"
+      "Voto negativo"
     ],
     "setup": false,
-    "name": "Thief",
+    "name": "Ladrão",
     "team": "traveler",
     "ability": "Each night, choose a player (not yourself): their vote counts negatively tomorrow."
   },
