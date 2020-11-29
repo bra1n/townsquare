@@ -8,7 +8,9 @@ const NEWPLAYER = {
 };
 
 const state = () => ({
-  players: []
+  players: [],
+  fabled: [],
+  bluffs: []
 });
 
 const getters = {
@@ -26,7 +28,6 @@ const getters = {
     const firstNight = [0];
     const otherNight = [0];
     players.forEach(({ role }) => {
-      // if (isDead) return;
       if (role.firstNight && !firstNight.includes(role.firstNight)) {
         firstNight.push(role.firstNight);
       }
@@ -72,12 +73,14 @@ const actions = {
       }));
     }
     commit("set", players);
+    commit("setBluff");
   }
 };
 
 const mutations = {
   clear(state) {
     state.players = [];
+    state.bluffs = [];
   },
   set(state, players = []) {
     state.players = players;
@@ -107,6 +110,24 @@ const mutations = {
   },
   move(state, [from, to]) {
     state.players.splice(to, 0, state.players.splice(from, 1)[0]);
+  },
+  setBluff(state, { index, role } = {}) {
+    if (index !== undefined) {
+      state.bluffs.splice(index, 1, role);
+    } else {
+      state.bluffs = [];
+    }
+  },
+  setFabled(state, { index, fabled } = {}) {
+    if (index !== undefined) {
+      state.fabled.splice(index, 1);
+    } else if (fabled) {
+      if (!Array.isArray(fabled)) {
+        state.fabled.push(fabled);
+      } else {
+        state.fabled = fabled;
+      }
+    }
   }
 };
 

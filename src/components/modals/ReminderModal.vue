@@ -59,7 +59,7 @@ export default {
           ];
         }
       });
-      this.$store.state.grimoire.fabled.forEach(role => {
+      this.$store.state.players.fabled.forEach(role => {
         reminders = [
           ...reminders,
           ...role.reminders.map(name => ({

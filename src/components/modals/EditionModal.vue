@@ -164,7 +164,7 @@ export default {
             fabled.push(this.$store.state.fabled.get(id));
           }
         });
-        this.$store.commit("setFabled", { fabled });
+        this.$store.commit("players/setFabled", { fabled });
       }
       this.isCustom = false;
     },

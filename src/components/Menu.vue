@@ -277,13 +277,11 @@ export default {
       if (this.session.isSpectator) return;
       if (confirm("Are you sure you want to remove all players?")) {
         this.$store.commit("players/clear");
-        this.$store.commit("setBluff");
       }
     },
     clearRoles() {
       if (confirm("Are you sure you want to remove all player roles?")) {
         this.$store.dispatch("players/clearRoles");
-        this.$store.commit("setBluff");
       }
     },
     ...mapMutations([

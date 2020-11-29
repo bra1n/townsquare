@@ -56,9 +56,7 @@ export default new Vuex.Store({
       isScreenshot: false,
       isScreenshotSuccess: false,
       zoom: 0,
-      background: "",
-      bluffs: [],
-      fabled: []
+      background: ""
     },
     modals: {
       edition: false,
@@ -123,24 +121,6 @@ export default new Vuex.Store({
     },
     setBackground({ grimoire }, background) {
       grimoire.background = background;
-    },
-    setBluff({ grimoire }, { index, role } = {}) {
-      if (index !== undefined) {
-        grimoire.bluffs.splice(index, 1, role);
-      } else {
-        grimoire.bluffs = [];
-      }
-    },
-    setFabled({ grimoire }, { index, fabled } = {}) {
-      if (index !== undefined) {
-        grimoire.fabled.splice(index, 1);
-      } else if (fabled) {
-        if (!Array.isArray(fabled)) {
-          grimoire.fabled.push(fabled);
-        } else {
-          grimoire.fabled = fabled;
-        }
-      }
     },
     toggleModal({ modals }, name) {
       if (name) {

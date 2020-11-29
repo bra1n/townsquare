@@ -91,13 +91,13 @@ module.exports = store => {
       case "setBluff":
         localStorage.setItem(
           "bluffs",
-          JSON.stringify(state.grimoire.bluffs.map(({ id }) => id))
+          JSON.stringify(state.players.bluffs.map(({ id }) => id))
         );
         break;
       case "setFabled":
         localStorage.setItem(
           "fabled",
-          JSON.stringify(state.grimoire.fabled.map(({ id }) => id))
+          JSON.stringify(state.players.fabled.map(({ id }) => id))
         );
         break;
       case "players/add":

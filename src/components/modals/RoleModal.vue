@@ -55,8 +55,8 @@ export default {
   methods: {
     setRole(role) {
       if (this.playerIndex < 0) {
-        // assign to bluff slot
-        this.$store.commit("setBluff", {
+        // assign to bluff slot (index < 0)
+        this.$store.commit("players/setBluff", {
           index: this.playerIndex * -1 - 1,
           role
         });

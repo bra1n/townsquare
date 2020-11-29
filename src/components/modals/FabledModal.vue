@@ -25,7 +25,7 @@ export default {
       this.$store.state.fabled.forEach(role => {
         // don't show fabled that are already in play
         if (
-          !this.$store.state.grimoire.fabled.some(fable => fable.id === role.id)
+          !this.$store.state.players.fabled.some(fable => fable.id === role.id)
         ) {
           fabled.push(role);
         }
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     setFabled(role) {
-      this.$store.commit("setFabled", {
+      this.$store.commit("players/setFabled", {
         fabled: role
       });
       this.$store.commit("toggleModal", "fabled");

@@ -39,20 +39,16 @@
       </h3>
       <ul>
         <li
-          v-for="index in bluffs"
+          v-for="index in bluffSize"
           :key="index"
           @click="openRoleModal(index * -1)"
         >
-          <Token :role="grimoire.bluffs[index - 1]"></Token>
+          <Token :role="bluffs[index - 1]"></Token>
         </li>
       </ul>
     </div>
 
-    <div
-      class="fabled"
-      :class="{ closed: !isFabledOpen }"
-      v-if="grimoire.fabled.length"
-    >
+    <div class="fabled" :class="{ closed: !isFabledOpen }" v-if="fabled.length">
       <h3>
         <span>Fabled</span>
         <font-awesome-icon icon="times-circle" @click.stop="toggleFabled" />
@@ -60,11 +56,11 @@
       </h3>
       <ul>
         <li
-          v-for="(fabled, index) in grimoire.fabled"
+          v-for="(fabledRole, index) in fabled"
           :key="index"
           @click="removeFabled(index)"
         >
-          <Token :role="fabled"></Token>
+          <Token :role="fabledRole"></Token>
         </li>
       </ul>
     </div>
@@ -90,12 +86,12 @@ export default {
   },
   computed: {
     ...mapState(["grimoire", "roles", "session"]),
-    ...mapState("players", ["players"])
+    ...mapState("players", ["players", "bluffs", "fabled"])
   },
   data() {
     return {
       selectedPlayer: 0,
-      bluffs: 3,
+      bluffSize: 3,
       swap: -1,
       move: -1,
       nominate: -1,
@@ -116,7 +112,7 @@ export default {
     },
     removeFabled(index) {
       if (this.session.isSpectator) return;
-      this.$store.commit("setFabled", { index });
+      this.$store.commit("players/setFabled", { index });
     },
     handleTrigger(playerIndex, [method, params]) {
       if (typeof this[method] === "function") {
@@ -320,8 +316,8 @@ export default {
 }
 
 /***** Demon bluffs / Fabled *******/
-.bluffs,
-.fabled {
+#townsquare > .bluffs,
+#townsquare > .fabled {
   position: absolute;
   &.bluffs {
     bottom: 10px;

@@ -108,6 +108,11 @@ export default {
           rolesFirstNight.push(role);
         }
       });
+      this.fabled
+        .filter(({ firstNight }) => firstNight)
+        .forEach(fabled => {
+          rolesFirstNight.push(fabled);
+        });
       rolesFirstNight.sort((a, b) => a.firstNight - b.firstNight);
       return rolesFirstNight;
     },
@@ -122,11 +127,16 @@ export default {
           rolesOtherNight.push(role);
         }
       });
+      this.fabled
+        .filter(({ otherNight }) => otherNight)
+        .forEach(fabled => {
+          rolesOtherNight.push(fabled);
+        });
       rolesOtherNight.sort((a, b) => a.otherNight - b.otherNight);
       return rolesOtherNight;
     },
-    ...mapState(["roles", "modals", "edition"]),
-    ...mapState("players", ["players"])
+    ...mapState(["roles", "modals", "edition", "grimoire"]),
+    ...mapState("players", ["players", "fabled"])
   },
   methods: {
     ...mapMutations(["toggleModal"])
@@ -174,6 +184,17 @@ h4 {
   }
 }
 
+.fabled {
+  .name,
+  .player,
+  h4 {
+    color: $fabled;
+    &:before,
+    &:after {
+      background-color: $fabled;
+    }
+  }
+}
 .townsfolk {
   .name,
   .player,
