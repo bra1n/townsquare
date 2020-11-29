@@ -10,17 +10,22 @@ const wss = new WebSocket.Server({
   ...(process.env.NODE_ENV === "development" ? { port: 8081 } : { server }),
   verifyClient: info =>
     !!info.origin.match(
-      /^https?:\/\/(bra1n\.github\.io|localhost|eddbra1nprivatetownsquare\.xyz)/i
+      /^https?:\/\/([^.]+\.github\.io|localhost|live\.clocktower\.online|eddbra1nprivatetownsquare\.xyz)/i
     )
 });
 
 function noop() {}
 
+// calculate latency on heartbeat
 function heartbeat() {
   this.latency = Math.round((new Date().getTime() - this.pingStart) / 2);
   this.isAlive = true;
 }
 
+// map of channels currently in use
+const channels = {};
+
+// a new client connects
 wss.on("connection", function connection(ws, req) {
   ws.channel = req.url
     .split("/")
@@ -31,12 +36,10 @@ wss.on("connection", function connection(ws, req) {
     ws.channel = ws.channel.substr(0, ws.channel.length - 5);
     // check for another host on this channel
     if (
-      Array.from(wss.clients).some(
+      channels[ws.channel] &&
+      channels[ws.channel].some(
         client =>
-          client !== ws &&
-          client.readyState === WebSocket.OPEN &&
-          client.channel === ws.channel &&
-          client.isHost
+          client !== ws && client.readyState === WebSocket.OPEN && client.isHost
       )
     ) {
       console.log(ws.channel, "duplicate host");
@@ -46,19 +49,30 @@ wss.on("connection", function connection(ws, req) {
   }
   ws.isAlive = true;
   ws.pingStart = new Date().getTime();
+  // add channel to list
+  if (!channels[ws.channel]) {
+    channels[ws.channel] = [];
+  }
+  channels[ws.channel].push(ws);
+  // start ping pong
   ws.ping(noop);
   ws.on("pong", heartbeat);
+  // remove client from channels on close
+  ws.on("close", () => {
+    const index = channels[ws.channel].indexOf(ws);
+    if (index >= 0) {
+      channels[ws.channel].splice(index, 1);
+    }
+    if (!channels[ws.channel].length) delete channels[ws.channel];
+  });
+  // handle message
   ws.on("message", function incoming(data) {
     const isPing = data.match(/^\["ping/i);
     if (!isPing) {
       console.log(new Date(), wss.clients.size, ws.channel, data);
     }
-    wss.clients.forEach(function each(client) {
-      if (
-        client !== ws &&
-        client.readyState === WebSocket.OPEN &&
-        client.channel === ws.channel
-      ) {
+    channels[ws.channel].forEach(function each(client) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
         // inject latency between both clients if ping message
         if (isPing && client.latency && ws.latency) {
           client.send(data.replace(/latency/, client.latency + ws.latency));
@@ -70,6 +84,7 @@ wss.on("connection", function connection(ws, req) {
   });
 });
 
+// start ping interval timer
 const interval = setInterval(function ping() {
   wss.clients.forEach(function each(ws) {
     if (ws.isAlive === false) return ws.terminate();
@@ -77,12 +92,24 @@ const interval = setInterval(function ping() {
     ws.pingStart = new Date().getTime();
     ws.ping(noop);
   });
-}, 30000);
+}, 30000); // 30 second pings
 
+// handle server shutdown
 wss.on("close", function close() {
   clearInterval(interval);
 });
 
+// prod mode with stats API
 if (process.env.NODE_ENV !== "development") {
+  console.log("server starting");
   server.listen(8080);
+  server.on("request", (req, res) => {
+    res.writeHead(200);
+    res.end(
+      JSON.stringify({
+        players: wss.clients.size,
+        channels: Object.keys(channels).length
+      })
+    );
+  });
 }
