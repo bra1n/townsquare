@@ -148,9 +148,12 @@ body {
   body {
     font-size: 1.1em;
   }
-  .player .night em {
+  .night-order em {
     width: 30px;
     height: 30px;
+  }
+  .fabled .night-order.first span {
+    left: 30px;
   }
 }
 
@@ -163,9 +166,12 @@ body {
   #controls svg {
     font-size: 20px;
   }
-  .player .night em {
+  .night-order em {
     width: 20px;
     height: 20px;
+  }
+  .fabled .night-order.first span {
+    left: 20px;
   }
   #townsquare {
     padding: 10px;

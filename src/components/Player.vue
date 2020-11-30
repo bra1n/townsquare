@@ -18,7 +18,7 @@
       <div class="life" @click="toggleStatus()"></div>
 
       <div
-        class="night first"
+        class="night-order first"
         v-if="nightOrder.get(player).first && grimoire.isNightOrder"
       >
         <em>{{ nightOrder.get(player).first }}.</em>
@@ -27,7 +27,7 @@
         }}</span>
       </div>
       <div
-        class="night other"
+        class="night-order other"
         v-if="nightOrder.get(player).other && grimoire.isNightOrder"
       >
         <em>{{ nightOrder.get(player).other }}.</em>
@@ -676,137 +676,11 @@ li.move:not(.from) .player .overlay svg.move {
 }
 
 /**** Night reminders ****/
-.player .night {
-  position: absolute;
-  width: 100%;
-  z-index: 2;
-  cursor: pointer;
-  opacity: 1;
-  transition: opacity 200ms;
-  display: flex;
-  top: 0;
-  align-items: center;
-  pointer-events: none;
-
-  &:after {
-    content: " ";
-    display: block;
-    padding-top: 100%;
-  }
-
-  #townsquare.public & {
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  &:hover ~ .token .ability {
-    opacity: 0;
-  }
-
-  span {
-    display: flex;
-    position: absolute;
-    padding: 5px 10px 5px 30px;
-    width: 350px;
-    z-index: 25;
-    font-size: 70%;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    border: 3px solid black;
-    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
-    text-align: left;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 200ms ease-in-out;
-
-    &:before {
-      transform: rotate(-90deg);
-      transform-origin: center top;
-      left: -98px;
-      top: 50%;
-      font-size: 100%;
-      position: absolute;
-      font-weight: bold;
-      text-align: center;
-      width: 200px;
-    }
-
-    &:after {
-      content: " ";
-      border: 10px solid transparent;
-      width: 0;
-      height: 0;
-      position: absolute;
-    }
-  }
-
-  &.first span {
-    right: 120%;
-    background: linear-gradient(
-      to right,
-      $townsfolk 0%,
-      rgba(0, 0, 0, 0.5) 20%
-    );
-    &:before {
-      content: "First Night";
-    }
-    &:after {
-      border-left-color: $townsfolk;
-      margin-left: 3px;
-      left: 100%;
-    }
-  }
-
-  &.other span {
-    left: 120%;
-    background: linear-gradient(to right, $demon 0%, rgba(0, 0, 0, 0.5) 20%);
-    &:before {
-      content: "Other Nights";
-    }
-    &:after {
-      right: 100%;
-      margin-right: 3px;
-      border-right-color: $demon;
-    }
-  }
-
-  em {
-    font-style: normal;
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 3px solid black;
-    filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5));
-    font-weight: bold;
-    opacity: 1;
-    pointer-events: all;
-    transition: opacity 200ms;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &.first em {
-    left: -10%;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, $townsfolk 100%);
-  }
-
-  &.other em {
-    right: -10%;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, $demon 100%);
-  }
-
-  em:hover + span {
-    opacity: 1;
-  }
-
-  #app.screenshot & {
-    display: none;
-  }
+.player .night-order {
+  z-index: 3;
 }
 
-.player.dead .night em {
+.player.dead .night-order em {
   color: #ddd;
   background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, gray 100%);
 }

@@ -24,10 +24,18 @@ const getters = {
     return Math.min(nonTravelers.length, 15);
   },
   // calculate a Map of player => night order
-  nightOrder({ players }) {
+  nightOrder({ players, fabled }) {
     const firstNight = [0];
     const otherNight = [0];
     players.forEach(({ role }) => {
+      if (role.firstNight && !firstNight.includes(role.firstNight)) {
+        firstNight.push(role.firstNight);
+      }
+      if (role.otherNight && !otherNight.includes(role.otherNight)) {
+        otherNight.push(role.otherNight);
+      }
+    });
+    fabled.forEach(role => {
       if (role.firstNight && !firstNight.includes(role.firstNight)) {
         firstNight.push(role.firstNight);
       }
@@ -42,6 +50,11 @@ const getters = {
       const first = Math.max(firstNight.indexOf(player.role.firstNight), 0);
       const other = Math.max(otherNight.indexOf(player.role.otherNight), 0);
       nightOrder.set(player, { first, other });
+    });
+    fabled.forEach(role => {
+      const first = Math.max(firstNight.indexOf(role.firstNight), 0);
+      const other = Math.max(otherNight.indexOf(role.otherNight), 0);
+      nightOrder.set(role, { first, other });
     });
     return nightOrder;
   }

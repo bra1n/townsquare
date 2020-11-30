@@ -18,14 +18,14 @@ module.exports = store => {
   }
   if (localStorage.bluffs !== undefined) {
     JSON.parse(localStorage.bluffs).forEach((role, index) => {
-      store.commit("setBluff", {
+      store.commit("players/setBluff", {
         index,
         role: store.state.roles.get(role) || {}
       });
     });
   }
   if (localStorage.fabled !== undefined) {
-    store.commit("setFabled", {
+    store.commit("players/setFabled", {
       fabled: JSON.parse(localStorage.fabled).map(id =>
         store.state.fabled.get(id)
       )
@@ -88,13 +88,13 @@ module.exports = store => {
           localStorage.setItem("roles", JSON.stringify(payload));
         }
         break;
-      case "setBluff":
+      case "players/setBluff":
         localStorage.setItem(
           "bluffs",
           JSON.stringify(state.players.bluffs.map(({ id }) => id))
         );
         break;
-      case "setFabled":
+      case "players/setFabled":
         localStorage.setItem(
           "fabled",
           JSON.stringify(state.players.fabled.map(({ id }) => id))
