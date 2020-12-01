@@ -690,6 +690,9 @@ li.move:not(.from) .player .overlay svg.move {
   background: url("../assets/reminder.png") center center;
   background-size: 100%;
   width: 50%;
+  height: 0;
+  padding-bottom: 50%;
+  box-sizing: content-box;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -699,20 +702,20 @@ li.move:not(.from) .player .overlay svg.move {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   transition: all 200ms;
   cursor: pointer;
-  &:before {
-    content: " ";
-    display: block;
-    padding-top: 100%;
-  }
 
   .text {
     line-height: 90%;
     color: black;
-    font-size: 45%;
+    font-size: 50%;
     font-weight: bold;
-    width: 90%;
     text-align: center;
     margin-top: 50%;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 15%;
+    text-shadow: 0 1px 1px #f6dfbd, 0 -1px 1px #f6dfbd, 1px 0 1px #f6dfbd,
+      -1px 0 1px #f6dfbd;
   }
 
   .icon,
@@ -732,6 +735,7 @@ li.move:not(.from) .player .overlay svg.move {
   &:after {
     background-image: url("../assets/icons/x.png");
     opacity: 0;
+    top: 5%;
   }
 
   &.add {
@@ -741,7 +745,7 @@ li.move:not(.from) .player .overlay svg.move {
       display: none;
     }
     .icon {
-      top: auto;
+      top: 5%;
     }
   }
 
@@ -753,6 +757,12 @@ li.move:not(.from) .player .overlay svg.move {
       font-size: 70%;
       word-break: break-word;
       margin-top: 0;
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-content: center;
+      border-radius: 50%;
+      top: 0;
     }
   }
 
