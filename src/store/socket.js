@@ -206,13 +206,14 @@ class LiveSession {
         : {})
     }));
     const { session } = this._store.state;
+    const { fabled } = this._store.state.players;
     this.sendEdition();
-    this.sendFabled();
     this._send("gs", {
       gamestate: this._gamestate,
       nomination: session.nomination,
       votingSpeed: session.votingSpeed,
       lockedVote: session.lockedVote,
+      fabled: fabled.map(({ id }) => id),
       ...(session.nomination ? { votes: session.votes } : {})
     });
   }
@@ -224,12 +225,22 @@ class LiveSession {
    */
   _updateGamestate(data) {
     if (!this._isSpectator) return;
-    const { gamestate, nomination, votingSpeed, votes, lockedVote } = data;
+    const {
+      gamestate,
+      nomination,
+      votingSpeed,
+      votes,
+      lockedVote,
+      fabled
+    } = data;
     this._store.commit("session/nomination", {
       nomination,
       votes,
       votingSpeed,
       lockedVote
+    });
+    this._store.commit("players/setFabled", {
+      fabled: fabled.map(id => this._store.state.fabled.get(id))
     });
     const players = this._store.state.players.players;
     // adjust number of players
