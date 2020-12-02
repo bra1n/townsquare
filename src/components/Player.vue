@@ -44,15 +44,15 @@
       <!-- Overlay icons -->
       <div class="overlay">
         <font-awesome-icon
-          icon="skull"
+          icon="hand-paper"
           class="vote"
-          title="Voted YES"
+          title="Hand UP"
           @click="vote()"
         />
         <font-awesome-icon
           icon="times"
           class="vote"
-          title="Voted NO"
+          title="Hand DOWN"
           @click="vote()"
         />
         <font-awesome-icon
@@ -500,7 +500,7 @@ export default {
       fill: url(#default);
     }
     &:hover *,
-    &.fa-skull * {
+    &.fa-hand-paper * {
       fill: url(#demon);
     }
     &.fa-times * {
@@ -510,14 +510,14 @@ export default {
 }
 
 // other player voted yes, but is not locked yet
-#townsquare.vote .player.vote-yes .overlay svg.vote.fa-skull {
+#townsquare.vote .player.vote-yes .overlay svg.vote.fa-hand-paper {
   opacity: 0.5;
   transform: scale(1);
 }
 
 // you voted yes | a locked vote yes | a locked vote no
-#townsquare.vote .player.you.vote-yes .overlay svg.vote.fa-skull,
-#townsquare.vote .player.vote-lock.vote-yes .overlay svg.vote.fa-skull,
+#townsquare.vote .player.you.vote-yes .overlay svg.vote.fa-hand-paper,
+#townsquare.vote .player.vote-lock.vote-yes .overlay svg.vote.fa-hand-paper,
 #townsquare.vote .player.vote-lock:not(.vote-yes) .overlay svg.vote.fa-times {
   opacity: 1;
   transform: scale(1);

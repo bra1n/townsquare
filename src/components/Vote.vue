@@ -24,7 +24,7 @@
       <div v-if="session.lockedVote > 1">
         <em class="blue" v-if="voters.length">{{ voters.join(", ") }} </em>
         <span v-else>nobody</span>
-        voted <em>YES</em>
+        had their hand <em>UP</em>
       </div>
 
       <template v-if="!session.isSpectator">
@@ -55,8 +55,20 @@
           {{ session.votingSpeed }} seconds between votes
         </div>
         <div class="button-group">
-          <div class="button vote-no" @click="vote(false)">Vote NO</div>
-          <div class="button vote-yes" @click="vote(true)">Vote YES</div>
+          <div
+            class="button vote-no"
+            @click="vote(false)"
+            :class="{ disabled: !currentVote }"
+          >
+            Hand DOWN
+          </div>
+          <div
+            class="button vote-yes"
+            @click="vote(true)"
+            :class="{ disabled: currentVote }"
+          >
+            Hand UP
+          </div>
         </div>
       </template>
       <div v-else-if="!player">
@@ -100,6 +112,10 @@ export default {
     },
     player: function() {
       return this.players.find(p => p.id === this.session.playerId);
+    },
+    currentVote: function() {
+      const index = this.players.findIndex(p => p.id === this.session.playerId);
+      return index >= 0 ? !!this.session.votes[index] : undefined;
     },
     canVote: function() {
       if (!this.player) return false;
@@ -257,6 +273,10 @@ export default {
   }
 }
 
+.button.disabled {
+  opacity: 0.75;
+}
+
 .button.vote-no {
   background: radial-gradient(
         at 0 -15%,
@@ -267,7 +287,7 @@ export default {
     linear-gradient(#0031ad, rgba(5, 0, 0, 0.22)) content-box,
     linear-gradient(#292929, #001142) border-box;
   box-shadow: inset 0 1px 1px #002c9c, 0 0 10px #000;
-  &:hover {
+  &:hover:not(.disabled) {
     color: #008cf7;
   }
 }
