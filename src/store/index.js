@@ -50,6 +50,7 @@ export default new Vuex.Store({
   },
   state: {
     grimoire: {
+      isNight: false,
       isNightOrder: true,
       isPublic: true,
       isMenuOpen: false,
@@ -112,6 +113,13 @@ export default new Vuex.Store({
       document.title = `Blood on the Clocktower ${
         grimoire.isPublic ? "Town Square" : "Grimoire"
       }`;
+    },
+    toggleNight({ grimoire }, isNight) {
+      if (isNight === true || isNight === false) {
+        grimoire.isNight = isNight;
+      } else {
+        grimoire.isNight = !grimoire.isNight;
+      }
     },
     toggleNightOrder({ grimoire }) {
       grimoire.isNightOrder = !grimoire.isNightOrder;

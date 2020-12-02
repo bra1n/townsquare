@@ -138,6 +138,10 @@ class LiveSession {
         if (!this._isSpectator) return;
         this._store.commit("players/move", params);
         break;
+      case "isNight":
+        if (!this._isSpectator) return;
+        this._store.commit("toggleNight", params);
+        break;
       case "votingSpeed":
         if (!this._isSpectator) return;
         this._store.commit("session/setVotingSpeed", params);
@@ -205,11 +209,12 @@ class LiveSession {
         ? { roleId: player.role.id }
         : {})
     }));
-    const { session } = this._store.state;
+    const { session, grimoire } = this._store.state;
     const { fabled } = this._store.state.players;
     this.sendEdition();
     this._send("gs", {
       gamestate: this._gamestate,
+      isNight: grimoire.isNight,
       nomination: session.nomination,
       votingSpeed: session.votingSpeed,
       lockedVote: session.lockedVote,
@@ -227,12 +232,14 @@ class LiveSession {
     if (!this._isSpectator) return;
     const {
       gamestate,
+      isNight,
       nomination,
       votingSpeed,
       votes,
       lockedVote,
       fabled
     } = data;
+    this._store.commit("toggleNight", isNight);
     this._store.commit("session/nomination", {
       nomination,
       votes,
@@ -520,6 +527,13 @@ class LiveSession {
   }
 
   /**
+   * Send the isNight status. ST only
+   */
+  setIsNight() {
+    if (this._isSpectator) return;
+    this._send("isNight", this._store.state.grimoire.isNight);
+  }
+  /**
    * Send the voting speed. ST only
    * @param votingSpeed voting speed in seconds, minimum 1
    */
@@ -643,6 +657,9 @@ export default store => {
         break;
       case "session/setVotingSpeed":
         session.setVotingSpeed(payload);
+        break;
+      case "toggleNight":
+        session.setIsNight();
         break;
       case "setEdition":
         session.sendEdition();

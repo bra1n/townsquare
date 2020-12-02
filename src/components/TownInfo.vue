@@ -34,6 +34,11 @@
           v-bind:icon="teams.traveler > 1 ? 'user-friends' : 'user'"
         />
       </template>
+      <template v-if="grimoire.isNight">
+        <br />
+        Night phase
+        <font-awesome-icon :icon="['fas', 'cloud-moon']" />
+      </template>
     </li>
   </ul>
 </template>
@@ -59,7 +64,7 @@ export default {
           ).length
       };
     },
-    ...mapState(["edition"]),
+    ...mapState(["edition", "grimoire"]),
     ...mapState("players", ["players"])
   }
 };

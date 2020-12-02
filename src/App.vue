@@ -3,13 +3,17 @@
     id="app"
     @keyup="keyup"
     tabindex="-1"
-    v-bind:class="{ screenshot: grimoire.isScreenshot }"
+    v-bind:class="{
+      screenshot: grimoire.isScreenshot,
+      night: grimoire.isNight
+    }"
     v-bind:style="{
       backgroundImage: grimoire.background
         ? `url('${grimoire.background}')`
         : ''
     }"
   >
+    <div class="backdrop"></div>
     <transition name="blur">
       <Intro v-if="!players.length"></Intro>
       <TownInfo v-if="players.length && !session.nomination"></TownInfo>
@@ -332,5 +336,48 @@ ul {
     width: 10px;
     height: 10px;
   }
+}
+
+/* Night phase backdrop */
+#app > .backdrop {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  pointer-events: none;
+  background: black;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(1, 22, 46, 1) 50%,
+    rgba(0, 39, 70, 1) 100%
+  );
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  &:after {
+    content: " ";
+    display: block;
+    width: 100%;
+    padding-right: 2000px;
+    height: 100%;
+    background: url("assets/clouds.png") repeat;
+    background-size: 2000px auto;
+    animation: move-background 120s linear infinite;
+    opacity: 0.3;
+  }
+}
+
+@keyframes move-background {
+  from {
+    transform: translate3d(-2000px, 0px, 0px);
+  }
+  to {
+    transform: translate3d(0px, 0px, 0px);
+  }
+}
+
+#app.night > .backdrop {
+  opacity: 0.5;
 }
 </style>

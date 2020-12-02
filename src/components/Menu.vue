@@ -49,6 +49,14 @@
             <template v-if="grimoire.isPublic">Show</template>
             <em>[G]</em>
           </li>
+          <li @click="toggleNight" v-if="!session.isSpectator">
+            <template v-if="!grimoire.isNight">Switch to Night</template>
+            <template v-if="grimoire.isNight">Switch to Day</template>
+            <em
+              ><font-awesome-icon
+                :icon="['fas', grimoire.isNight ? 'sun' : 'cloud-moon']"
+            /></em>
+          </li>
           <li @click="toggleNightOrder" v-if="players.length">
             Night order
             <em
@@ -58,10 +66,6 @@
                   grimoire.isNightOrder ? 'check-square' : 'square'
                 ]"
             /></em>
-          </li>
-          <li v-if="!session.isSpectator" @click="toggleModal('fabled')">
-            Add Fabled
-            <em><font-awesome-icon icon="dragon"/></em>
           </li>
           <li v-if="players.length">
             Zoom
@@ -137,6 +141,10 @@
           >
             Choose & Assign
             <em>[C]</em>
+          </li>
+          <li v-if="!session.isSpectator" @click="toggleModal('fabled')">
+            Add Fabled
+            <em><font-awesome-icon icon="dragon"/></em>
           </li>
           <li @click="clearRoles" v-if="players.length">
             Remove all
@@ -244,6 +252,7 @@ export default {
       );
       if (sessionId) {
         this.$store.commit("session/setSpectator", true);
+        this.$store.commit("toggleGrimoire", false);
         this.$store.commit(
           "session/setSessionId",
           sessionId
@@ -287,6 +296,7 @@ export default {
     ...mapMutations([
       "toggleGrimoire",
       "toggleMenu",
+      "toggleNight",
       "toggleNightOrder",
       "updateScreenshot",
       "setZoom",
