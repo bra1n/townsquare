@@ -336,6 +336,31 @@ ul {
     width: 10px;
     height: 10px;
   }
+  &.townsfolk {
+    background: radial-gradient(
+          at 0 -15%,
+          rgba(255, 255, 255, 0.07) 70%,
+          rgba(255, 255, 255, 0) 71%
+        )
+        0 0/80% 90% no-repeat content-box,
+      linear-gradient(#0031ad, rgba(5, 0, 0, 0.22)) content-box,
+      linear-gradient(#292929, #001142) border-box;
+    box-shadow: inset 0 1px 1px #002c9c, 0 0 10px #000;
+    &:hover:not(.disabled) {
+      color: #008cf7;
+    }
+  }
+  &.demon {
+    background: radial-gradient(
+          at 0 -15%,
+          rgba(255, 255, 255, 0.07) 70%,
+          rgba(255, 255, 255, 0) 71%
+        )
+        0 0/80% 90% no-repeat content-box,
+      linear-gradient(#ad0000, rgba(5, 0, 0, 0.22)) content-box,
+      linear-gradient(#292929, #420000) border-box;
+    box-shadow: inset 0 1px 1px #9c0000, 0 0 10px #000;
+  }
 }
 
 /* Night phase backdrop */

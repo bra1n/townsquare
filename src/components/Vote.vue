@@ -29,25 +29,32 @@
 
       <template v-if="!session.isSpectator">
         <div v-if="!session.lockedVote">
-          Vote time per player:
+          Time per player:
           <font-awesome-icon
-            @mousedown.prevent="setVotingSpeed(-1)"
+            @mousedown.prevent="setVotingSpeed(-500)"
             icon="minus-circle"
           />
-          {{ session.votingSpeed }}s
+          {{ session.votingSpeed / 1000 }}s
           <font-awesome-icon
-            @mousedown.prevent="setVotingSpeed(1)"
+            @mousedown.prevent="setVotingSpeed(500)"
             icon="plus-circle"
           />
         </div>
         <div class="button-group">
-          <div class="button" v-if="!session.lockedVote" @click="start">
-            Start Vote
+          <div
+            class="button townsfolk"
+            v-if="!session.lockedVote"
+            @click="start"
+          >
+            Start
           </div>
-          <div class="button" v-else @click="stop">
-            Reset Vote
-          </div>
-          <div class="button" @click="finish">Finish</div>
+          <template v-else>
+            <div class="button townsfolk" @click="pause">
+              {{ voteTimer ? "Pause" : "Resume" }}
+            </div>
+            <div class="button" @click="stop">Reset</div>
+          </template>
+          <div class="button demon" @click="finish">Close</div>
         </div>
       </template>
       <template v-else-if="canVote">
@@ -56,14 +63,14 @@
         </div>
         <div class="button-group">
           <div
-            class="button vote-no"
+            class="button townsfolk"
             @click="vote(false)"
             :class="{ disabled: !currentVote }"
           >
             Hand DOWN
           </div>
           <div
-            class="button vote-yes"
+            class="button demon"
             @click="vote(true)"
             :class="{ disabled: currentVote }"
           >
@@ -107,7 +114,7 @@ export default {
       const rotation = (360 * (nomination + Math.min(lock, players))) / players;
       return {
         transform: `rotate(${Math.round(rotation)}deg)`,
-        transitionDuration: this.session.votingSpeed - 0.1 + "s"
+        transitionDuration: this.session.votingSpeed - 100 + "ms"
       };
     },
     player: function() {
@@ -140,6 +147,11 @@ export default {
       return reorder.slice(0, this.session.lockedVote - 1).filter(n => !!n);
     }
   },
+  data() {
+    return {
+      voteTimer: null
+    };
+  },
   methods: {
     start() {
       this.$store.commit("session/lockVote");
@@ -149,7 +161,15 @@ export default {
         if (this.session.lockedVote > this.players.length) {
           clearInterval(this.voteTimer);
         }
-      }, this.session.votingSpeed * 1000);
+      }, this.session.votingSpeed);
+    },
+    pause() {
+      if (this.voteTimer) {
+        clearInterval(this.voteTimer);
+        this.voteTimer = null;
+      } else {
+        this.start();
+      }
     },
     stop() {
       clearInterval(this.voteTimer);
@@ -167,7 +187,7 @@ export default {
       }
     },
     setVotingSpeed(diff) {
-      const speed = this.session.votingSpeed + diff;
+      const speed = Math.round(this.session.votingSpeed + diff);
       if (speed > 0) {
         this.$store.commit("session/setVotingSpeed", speed);
       }
@@ -275,31 +295,5 @@ export default {
 
 .button.disabled {
   opacity: 0.75;
-}
-
-.button.vote-no {
-  background: radial-gradient(
-        at 0 -15%,
-        rgba(255, 255, 255, 0.07) 70%,
-        rgba(255, 255, 255, 0) 71%
-      )
-      0 0/80% 90% no-repeat content-box,
-    linear-gradient(#0031ad, rgba(5, 0, 0, 0.22)) content-box,
-    linear-gradient(#292929, #001142) border-box;
-  box-shadow: inset 0 1px 1px #002c9c, 0 0 10px #000;
-  &:hover:not(.disabled) {
-    color: #008cf7;
-  }
-}
-.button.vote-yes {
-  background: radial-gradient(
-        at 0 -15%,
-        rgba(255, 255, 255, 0.07) 70%,
-        rgba(255, 255, 255, 0) 71%
-      )
-      0 0/80% 90% no-repeat content-box,
-    linear-gradient(#ad0000, rgba(5, 0, 0, 0.22)) content-box,
-    linear-gradient(#292929, #420000) border-box;
-  box-shadow: inset 0 1px 1px #9c0000, 0 0 10px #000;
 }
 </style>

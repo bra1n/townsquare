@@ -28,7 +28,7 @@ const state = () => ({
   nomination: false,
   votes: [],
   lockedVote: 0,
-  votingSpeed: 3
+  votingSpeed: 3000
 });
 
 const getters = {};
