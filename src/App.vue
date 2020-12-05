@@ -265,6 +265,7 @@ ul {
 
 #version {
   position: absolute;
+  text-align: right;
   right: 10px;
   bottom: 10px;
   font-size: 60%;

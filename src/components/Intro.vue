@@ -2,14 +2,19 @@
   <div class="intro">
     <img src="static/apple-icon.png" alt="" />
     Welcome to the (unofficial)
-    <b> Virtual Blood on the Clocktower Town Square</b>!<br />
-    Please add more players through the
+    <b>Virtual Town Square and Grimoire</b> for Blood on the Clocktower! Please
+    add more players through the
     <span class="button" @click="toggleMenu">
       <font-awesome-icon icon="cog" /> Menu
     </span>
-    on the top right or by pressing <b>[A]</b>.<br />
-    This project is free and open source and can be found on
-    <a href="https://github.com/bra1n/townsquare" target="_blank">GitHub</a>.
+    on the top right or by pressing <b>[A]</b>. You can also join a game session
+    by pressing <b>[J]</b>.<br />
+    <div class="footer">
+      This project is free and open source and can be found on
+      <a href="https://github.com/bra1n/townsquare" target="_blank">GitHub</a>.
+      It is not affiliated with The Pandemonium Institute. "Blood on the
+      Clocktower" is a trademark of Steven Medway and The Pandemonium Institute.
+    </div>
   </div>
 </template>
 
@@ -33,6 +38,9 @@ export default {
   border: 3px solid black;
   border-radius: 10px;
   z-index: 3;
+  a {
+    color: white;
+  }
   img {
     position: absolute;
     bottom: 100%;
@@ -44,6 +52,10 @@ export default {
     border-radius: 50%;
     box-shadow: 0 0 10px black;
     border: 3px solid black;
+  }
+  .footer {
+    font-size: 60%;
+    opacity: 0.75;
   }
 }
 </style>
