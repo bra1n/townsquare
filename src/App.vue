@@ -328,6 +328,7 @@ ul {
   &.disabled {
     color: gray;
     cursor: default;
+    opacity: 0.75;
   }
   &:before,
   &:after {

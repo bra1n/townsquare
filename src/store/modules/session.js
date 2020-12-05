@@ -28,7 +28,8 @@ const state = () => ({
   nomination: false,
   votes: [],
   lockedVote: 0,
-  votingSpeed: 3000
+  votingSpeed: 3000,
+  isVoteInProgress: false
 });
 
 const getters = {};
@@ -43,12 +44,17 @@ const mutations = {
   setPlayerCount: set("playerCount"),
   setPing: set("ping"),
   setVotingSpeed: set("votingSpeed"),
+  setVoteInProgress: set("isVoteInProgress"),
   claimSeat: set("claimedSeat"),
-  nomination(state, { nomination, votes, votingSpeed, lockedVote } = {}) {
+  nomination(
+    state,
+    { nomination, votes, votingSpeed, lockedVote, isVoteInProgress } = {}
+  ) {
     state.nomination = nomination || false;
     state.votes = votes || [];
     state.votingSpeed = votingSpeed || state.votingSpeed;
     state.lockedVote = lockedVote || 0;
+    state.isVoteInProgress = isVoteInProgress || false;
   },
   /**
    * Store a vote with and without syncing it to the live session.

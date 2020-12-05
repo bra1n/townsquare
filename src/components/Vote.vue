@@ -21,14 +21,14 @@
         <em>majority</em>.
       </template>
 
-      <div v-if="session.lockedVote > 1">
+      <div v-if="session.isVoteInProgress">
         <em class="blue" v-if="voters.length">{{ voters.join(", ") }} </em>
         <span v-else>nobody</span>
         had their hand <em>UP</em>
       </div>
 
       <template v-if="!session.isSpectator">
-        <div v-if="!session.lockedVote">
+        <div v-if="!session.isVoteInProgress">
           Time per player:
           <font-awesome-icon
             @mousedown.prevent="setVotingSpeed(-500)"
@@ -43,13 +43,20 @@
         <div class="button-group">
           <div
             class="button townsfolk"
-            v-if="!session.lockedVote"
-            @click="start"
+            v-if="!session.isVoteInProgress"
+            @click="countdown"
           >
+            Countdown
+          </div>
+          <div class="button" v-if="!session.isVoteInProgress" @click="start">
             Start
           </div>
           <template v-else>
-            <div class="button townsfolk" @click="pause">
+            <div
+              class="button townsfolk"
+              :class="{ disabled: !session.lockedVote }"
+              @click="pause"
+            >
               {{ voteTimer ? "Pause" : "Resume" }}
             </div>
             <div class="button" @click="stop">Reset</div>
@@ -58,8 +65,8 @@
         </div>
       </template>
       <template v-else-if="canVote">
-        <div v-if="!session.lockedVote">
-          {{ session.votingSpeed }} seconds between votes
+        <div v-if="!session.isVoteInProgress">
+          {{ session.votingSpeed / 1000 }} seconds between votes
         </div>
         <div class="button-group">
           <div
@@ -82,6 +89,18 @@
         Please claim a seat to vote.
       </div>
     </div>
+    <transition name="blur">
+      <div
+        class="countdown"
+        v-if="session.isVoteInProgress && !session.lockedVote"
+      >
+        <span>3</span>
+        <span>2</span>
+        <span>1</span>
+        <span>GO</span>
+        <audio autoplay src="../assets/sounds/countdown.mp3"></audio>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -153,13 +172,21 @@ export default {
     };
   },
   methods: {
+    countdown() {
+      this.$store.commit("session/setVoteInProgress", true);
+      this.voteTimer = setInterval(() => {
+        this.start();
+      }, 4000);
+    },
     start() {
+      this.$store.commit("session/setVoteInProgress", true);
       this.$store.commit("session/lockVote");
       clearInterval(this.voteTimer);
       this.voteTimer = setInterval(() => {
         this.$store.commit("session/lockVote");
         if (this.session.lockedVote > this.players.length) {
           clearInterval(this.voteTimer);
+          this.$store.commit("session/setVoteInProgress", false);
         }
       }, this.session.votingSpeed);
     },
@@ -173,6 +200,8 @@ export default {
     },
     stop() {
       clearInterval(this.voteTimer);
+      this.voteTimer = null;
+      this.$store.commit("session/setVoteInProgress", false);
       this.$store.commit("session/lockVote", 0);
     },
     finish() {
@@ -293,7 +322,78 @@ export default {
   }
 }
 
-.button.disabled {
-  opacity: 0.75;
+@keyframes countdown {
+  0% {
+    transform: scale(1.5);
+    opacity: 0;
+    filter: blur(20px);
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    filter: blur(0);
+  }
+  90% {
+    color: $townsfolk;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes countdown-go {
+  0% {
+    transform: scale(1.5);
+    opacity: 0;
+    filter: blur(20px);
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    filter: blur(0);
+  }
+  90% {
+    color: $demon;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.countdown {
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  audio {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+  }
+  span {
+    position: absolute;
+    font-size: 8em;
+    font-weight: bold;
+    opacity: 0;
+  }
+  span:nth-child(1) {
+    animation: countdown 1100ms normal forwards;
+  }
+  span:nth-child(2) {
+    animation: countdown 1100ms normal forwards 1000ms;
+  }
+  span:nth-child(3) {
+    animation: countdown 1100ms normal forwards 2000ms;
+  }
+  span:nth-child(4) {
+    animation: countdown-go 1100ms normal forwards 3000ms;
+  }
 }
 </style>

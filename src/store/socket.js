@@ -146,6 +146,10 @@ class LiveSession {
         if (!this._isSpectator) return;
         this._store.commit("session/setVotingSpeed", params);
         break;
+      case "isVoteInProgress":
+        if (!this._isSpectator) return;
+        this._store.commit("session/setVoteInProgress", params);
+        break;
       case "vote":
         this._handleVote(params);
         break;
@@ -218,6 +222,7 @@ class LiveSession {
       nomination: session.nomination,
       votingSpeed: session.votingSpeed,
       lockedVote: session.lockedVote,
+      isVoteInProgress: session.isVoteInProgress,
       fabled: fabled.map(({ id }) => id),
       ...(session.nomination ? { votes: session.votes } : {})
     });
@@ -237,6 +242,7 @@ class LiveSession {
       votingSpeed,
       votes,
       lockedVote,
+      isVoteInProgress,
       fabled
     } = data;
     this._store.commit("toggleNight", isNight);
@@ -244,7 +250,8 @@ class LiveSession {
       nomination,
       votes,
       votingSpeed,
-      lockedVote
+      lockedVote,
+      isVoteInProgress
     });
     this._store.commit("players/setFabled", {
       fabled: fabled.map(id => this._store.state.fabled.get(id))
@@ -527,6 +534,14 @@ class LiveSession {
   }
 
   /**
+   * Set the isVoteInProgress status. ST only
+   */
+  setVoteInProgress() {
+    if (this._isSpectator) return;
+    this._send("isVoteInProgress", this._store.state.session.isVoteInProgress);
+  }
+
+  /**
    * Send the isNight status. ST only
    */
   setIsNight() {
@@ -648,6 +663,9 @@ export default store => {
         break;
       case "session/nomination":
         session.nomination(payload);
+        break;
+      case "session/setVoteInProgress":
+        session.setVoteInProgress(payload);
         break;
       case "session/voteSync":
         session.vote(payload);
