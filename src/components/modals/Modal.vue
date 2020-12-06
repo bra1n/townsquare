@@ -53,6 +53,11 @@ export default {
     max-width: 80%;
     overflow-y: auto;
   }
+  .vote-history & {
+    max-height: 80%;
+    max-width: 80%;
+    overflow-y: auto;
+  }
 
   ul {
     list-style-type: none;

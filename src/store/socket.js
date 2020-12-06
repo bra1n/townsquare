@@ -128,6 +128,13 @@ class LiveSession {
         break;
       case "nomination":
         if (!this._isSpectator) return;
+        if (!params) {
+          // create vote history record
+          this._store.commit(
+            "session/addHistory",
+            this._store.state.players.players
+          );
+        }
         this._store.commit("session/nomination", { nomination: params });
         break;
       case "swap":
@@ -245,7 +252,7 @@ class LiveSession {
       isVoteInProgress,
       fabled
     } = data;
-    this._store.commit("toggleNight", isNight);
+    this._store.commit("toggleNight", !!isNight);
     this._store.commit("session/nomination", {
       nomination,
       votes,

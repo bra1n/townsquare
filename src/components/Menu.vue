@@ -108,6 +108,13 @@
             Copy player link
             <em><font-awesome-icon icon="copy"/></em>
           </li>
+          <li
+            v-if="session.voteHistory.length"
+            @click="toggleModal('voteHistory')"
+          >
+            Nomination history
+            <em><font-awesome-icon icon="hand-paper"/></em>
+          </li>
           <li @click="leaveSession" v-if="session.sessionId">
             Leave Session
             <em>{{ session.sessionId }}</em>
@@ -223,6 +230,7 @@ export default {
         Math.round(Math.random() * 10000)
       );
       if (sessionId) {
+        this.$store.commit("session/clearHistory");
         this.$store.commit("session/setSpectator", false);
         this.$store.commit(
           "session/setSessionId",
@@ -251,6 +259,7 @@ export default {
         "Enter the channel number / name of the session you want to join"
       );
       if (sessionId) {
+        this.$store.commit("session/clearHistory");
         this.$store.commit("session/setSpectator", true);
         this.$store.commit("toggleGrimoire", false);
         this.$store.commit(

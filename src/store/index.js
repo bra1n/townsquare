@@ -66,7 +66,8 @@ export default new Vuex.Store({
       reference: false,
       reminder: false,
       role: false,
-      roles: false
+      roles: false,
+      voteHistory: false
     },
     edition: "tb",
     roles: getRolesByEdition(),
