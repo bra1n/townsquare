@@ -208,8 +208,10 @@ class LiveSession {
 
   /**
    * Publish the current gamestate.
+   * Optional param to reduce traffic. (send only player data)
+   * @param isLightweight
    */
-  sendGamestate() {
+  sendGamestate(isLightweight = false) {
     if (this._isSpectator) return;
     this._gamestate = this._store.state.players.players.map(player => ({
       name: player.name,
@@ -220,19 +222,23 @@ class LiveSession {
         ? { roleId: player.role.id }
         : {})
     }));
-    const { session, grimoire } = this._store.state;
-    const { fabled } = this._store.state.players;
-    this.sendEdition();
-    this._send("gs", {
-      gamestate: this._gamestate,
-      isNight: grimoire.isNight,
-      nomination: session.nomination,
-      votingSpeed: session.votingSpeed,
-      lockedVote: session.lockedVote,
-      isVoteInProgress: session.isVoteInProgress,
-      fabled: fabled.map(({ id }) => id),
-      ...(session.nomination ? { votes: session.votes } : {})
-    });
+    if (isLightweight) {
+      this._send("gs", { gamestate: this._gamestate, isLightweight });
+    } else {
+      const { session, grimoire } = this._store.state;
+      const { fabled } = this._store.state.players;
+      this.sendEdition();
+      this._send("gs", {
+        gamestate: this._gamestate,
+        isNight: grimoire.isNight,
+        nomination: session.nomination,
+        votingSpeed: session.votingSpeed,
+        lockedVote: session.lockedVote,
+        isVoteInProgress: session.isVoteInProgress,
+        fabled: fabled.map(({ id }) => id),
+        ...(session.nomination ? { votes: session.votes } : {})
+      });
+    }
   }
 
   /**
@@ -244,6 +250,7 @@ class LiveSession {
     if (!this._isSpectator) return;
     const {
       gamestate,
+      isLightweight,
       isNight,
       nomination,
       votingSpeed,
@@ -252,17 +259,6 @@ class LiveSession {
       isVoteInProgress,
       fabled
     } = data;
-    this._store.commit("toggleNight", !!isNight);
-    this._store.commit("session/nomination", {
-      nomination,
-      votes,
-      votingSpeed,
-      lockedVote,
-      isVoteInProgress
-    });
-    this._store.commit("players/setFabled", {
-      fabled: fabled.map(id => this._store.state.fabled.get(id))
-    });
     const players = this._store.state.players.players;
     // adjust number of players
     if (players.length < gamestate.length) {
@@ -301,6 +297,19 @@ class LiveSession {
         });
       }
     });
+    if (!isLightweight) {
+      this._store.commit("toggleNight", !!isNight);
+      this._store.commit("session/nomination", {
+        nomination,
+        votes,
+        votingSpeed,
+        lockedVote,
+        isVoteInProgress
+      });
+      this._store.commit("players/setFabled", {
+        fabled: fabled.map(id => this._store.state.fabled.get(id))
+      });
+    }
   }
 
   /**
@@ -702,7 +711,7 @@ export default store => {
       case "players/clear":
       case "players/remove":
       case "players/add":
-        session.sendGamestate();
+        session.sendGamestate(true);
         break;
       case "players/update":
         session.sendPlayer(payload);
