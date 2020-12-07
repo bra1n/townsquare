@@ -36,8 +36,9 @@ export default {
   computed: {
     availableReminders() {
       let reminders = [];
-      const players = this.$store.state.players.players;
+      const { players, bluffs } = this.$store.state.players;
       this.$store.state.roles.forEach(role => {
+        // add reminders from player roles
         if (players.some(p => p.role.id === role.id)) {
           reminders = [
             ...reminders,
@@ -48,7 +49,19 @@ export default {
             }))
           ];
         }
-        if (role.remindersGlobal && role.remindersGlobal.length) {
+        // add reminders from bluff/other roles
+        else if (bluffs.some(bluff => bluff.id === role.id)) {
+          reminders = [
+            ...reminders,
+            ...role.reminders.map(name => ({
+              role: role.id,
+              image: role.image,
+              name
+            }))
+          ];
+        }
+        // add global reminders
+        else if (role.remindersGlobal && role.remindersGlobal.length) {
           reminders = [
             ...reminders,
             ...role.remindersGlobal.map(name => ({
@@ -59,6 +72,7 @@ export default {
           ];
         }
       });
+      // add fabled reminders
       this.$store.state.players.fabled.forEach(role => {
         reminders = [
           ...reminders,
