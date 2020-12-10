@@ -163,7 +163,9 @@ export default new Vuex.Store({
           // map existing roles to base definition or pre-populate custom roles to ensure all properties
           .map(
             role =>
-              rolesJSONbyId.get(role.id) || Object.assign({}, customRole, role)
+              rolesJSONbyId.get(role.id) ||
+              state.roles.get(role.id) ||
+              Object.assign({}, customRole, role)
           )
           // default empty icons to good / evil / traveler
           .map(role => {

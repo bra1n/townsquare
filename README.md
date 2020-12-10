@@ -69,7 +69,8 @@ For base game characters, it is sufficient to only provide the ID, similar to wh
 - **team**: the team of the character, has to be one of `townsfolk`, `outsider`, `minion`, `demon` or `traveler`
 - **ability**: the displayed ability text of the character
 
-_Note:_ custom characters are currently not supported in live sessions and will not be synchronised to other players.
+_Note:_ in order to use custom characters in live sessions, your players have to load the same JSON file that the storyteller
+has loaded before joining the live session.
 
 ## [Code of Conduct](CODE_OF_CONDUCT.md)
 

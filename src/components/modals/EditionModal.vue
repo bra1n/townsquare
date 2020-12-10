@@ -38,6 +38,7 @@
         >the documentation</a
       >
       on how to write a custom character definition file.
+      <b>Only load custom JSON files from sources that you trust!</b>
       <h3>Some popular custom scripts:</h3>
       <ul class="scripts">
         <li

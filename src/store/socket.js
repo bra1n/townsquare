@@ -320,7 +320,7 @@ class LiveSession {
     const { edition } = this._store.state;
     let roles;
     if (edition === "custom") {
-      roles = this._store.getters.customRoles;
+      roles = Array.from(this._store.state.roles.keys());
     }
     this._send("edition", {
       edition,
@@ -338,7 +338,23 @@ class LiveSession {
     if (!this._isSpectator) return;
     this._store.commit("setEdition", edition);
     if (roles) {
-      this._store.commit("setCustomRoles", roles);
+      this._store.commit(
+        "setCustomRoles",
+        roles.map(id => ({ id }))
+      );
+      if (this._store.state.roles.size !== roles.length) {
+        const missing = [];
+        roles.forEach(id => {
+          if (!this._store.state.roles.get(id)) {
+            missing.push(id);
+          }
+        });
+        alert(
+          `This session contains custom characters that can't be found. ` +
+            `Please load them before joining! ` +
+            `Missing roles: ${missing.join(", ")}`
+        );
+      }
     }
   }
 
