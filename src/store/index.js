@@ -88,7 +88,10 @@ export default new Vuex.Store({
           const strippedRole = {};
           for (let prop in role) {
             const value = role[prop];
-            if (prop === "image" && value.match(new RegExp("^" + imageBase))) {
+            if (
+              prop === "image" &&
+              value.toLocaleLowerCase().includes(imageBase)
+            ) {
               continue;
             }
             if (prop !== "isCustom" && value !== customRole[prop]) {
