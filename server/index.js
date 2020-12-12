@@ -2,6 +2,8 @@ const fs = require("fs");
 const https = require("https");
 const WebSocket = require("ws");
 
+const PING_INTERVAL = 30000; // 30 seconds
+
 const server = https.createServer({
   cert: fs.readFileSync("cert.pem"),
   key: fs.readFileSync("key.pem")
@@ -19,6 +21,7 @@ function noop() {}
 // calculate latency on heartbeat
 function heartbeat() {
   this.latency = Math.round((new Date().getTime() - this.pingStart) / 2);
+  this.counter = 0;
   this.isAlive = true;
 }
 
@@ -49,6 +52,7 @@ wss.on("connection", function connection(ws, req) {
   }
   ws.isAlive = true;
   ws.pingStart = new Date().getTime();
+  ws.counter = 0;
   // add channel to list
   if (!channels[ws.channel]) {
     channels[ws.channel] = [];
@@ -67,6 +71,16 @@ wss.on("connection", function connection(ws, req) {
   });
   // handle message
   ws.on("message", function incoming(data) {
+    // check rate limit (max 5msg/second)
+    ws.counter++;
+    if (ws.counter > (5 * PING_INTERVAL) / 1000) {
+      console.log(ws.channel, "disconnecting user due to spam");
+      ws.close(
+        1000,
+        "Your app seems to be malfunctioning, please clear your browser cache."
+      );
+      return;
+    }
     const isPing = data.match(/^\["ping/i);
     if (!isPing) {
       console.log(new Date(), wss.clients.size, ws.channel, data);
@@ -92,7 +106,7 @@ const interval = setInterval(function ping() {
     ws.pingStart = new Date().getTime();
     ws.ping(noop);
   });
-}, 30000); // 30 second pings
+}, PING_INTERVAL);
 
 // handle server shutdown
 wss.on("close", function close() {
