@@ -62,6 +62,7 @@ export default new Vuex.Store({
     modals: {
       edition: false,
       fabled: false,
+      gameState: false,
       nightOrder: false,
       reference: false,
       reminder: false,

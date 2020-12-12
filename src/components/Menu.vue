@@ -170,6 +170,10 @@
             Night Order Sheet
             <em>[N]</em>
           </li>
+          <li @click="toggleModal('gameState')">
+            Game State JSON
+            <em>G</em>
+          </li>
           <li>
             <a href="https://discord.gg/Gd7ybwWbFk" target="_blank">
               Join Discord

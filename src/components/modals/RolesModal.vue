@@ -1,9 +1,8 @@
 <template>
   <Modal
     class="roles"
-    v-show="modals.roles"
+    v-if="modals.roles && nonTravelers >= 5"
     @close="toggleModal('roles')"
-    v-if="nonTravelers >= 5"
   >
     <h3>Select the characters for {{ nonTravelers }} players:</h3>
     <ul

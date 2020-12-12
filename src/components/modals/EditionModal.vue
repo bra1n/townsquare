@@ -1,9 +1,5 @@
 <template>
-  <Modal
-    class="editions"
-    v-show="modals.edition"
-    @close="toggleModal('edition')"
-  >
+  <Modal class="editions" v-if="modals.edition" @close="toggleModal('edition')">
     <div v-if="!isCustom">
       <h3>Select an edition:</h3>
       <ul class="editions">

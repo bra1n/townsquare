@@ -1,9 +1,8 @@
 <template>
   <Modal
     class="characters"
-    v-show="modals.reference"
     @close="toggleModal('reference')"
-    v-if="roles.size"
+    v-if="modals.reference && roles.size"
   >
     <font-awesome-icon
       @click="toggleModal('nightOrder')"

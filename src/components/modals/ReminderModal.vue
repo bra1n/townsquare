@@ -1,7 +1,6 @@
 <template>
   <Modal
-    v-show="modals.reminder && availableReminders.length"
-    v-if="players[playerIndex]"
+    v-if="modals.reminder && availableReminders.length && players[playerIndex]"
     @close="toggleModal('reminder')"
   >
     <h3>Choose a reminder token:</h3>

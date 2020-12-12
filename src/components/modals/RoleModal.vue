@@ -1,6 +1,6 @@
 <template>
   <Modal
-    v-show="modals.role && availableRoles.length"
+    v-if="modals.role && availableRoles.length"
     @close="toggleModal('role')"
   >
     <h3>

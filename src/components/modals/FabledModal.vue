@@ -1,5 +1,5 @@
 <template>
-  <Modal v-show="modals.fabled && fabled.length" @close="toggleModal('fabled')">
+  <Modal v-if="modals.fabled && fabled.length" @close="toggleModal('fabled')">
     <h3>
       Choose a fabled character to add to the game
     </h3>

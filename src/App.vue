@@ -27,6 +27,7 @@
     <ReferenceModal />
     <NightOrderModal />
     <VoteHistoryModal />
+    <GameStateModal />
     <Gradients />
     <span id="version">v{{ version }}</span>
   </div>
@@ -47,9 +48,11 @@ import Gradients from "./components/Gradients";
 import NightOrderModal from "./components/modals/NightOrderModal";
 import FabledModal from "@/components/modals/FabledModal";
 import VoteHistoryModal from "@/components/modals/VoteHistoryModal";
+import GameStateModal from "@/components/modals/GameStateModal";
 
 export default {
   components: {
+    GameStateModal,
     VoteHistoryModal,
     FabledModal,
     NightOrderModal,

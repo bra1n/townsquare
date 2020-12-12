@@ -1,9 +1,8 @@
 <template>
   <Modal
     class="vote-history"
-    v-show="modals.voteHistory"
+    v-show="modals.voteHistory && session.voteHistory"
     @close="toggleModal('voteHistory')"
-    v-if="session.voteHistory"
   >
     <font-awesome-icon
       @click="clearHistory"
