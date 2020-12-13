@@ -19,6 +19,7 @@ const faIcons = [
   "Dice",
   "Dragon",
   "ExchangeAlt",
+  "FileCode",
   "FileUpload",
   "HandPaper",
   "HandPointRight",

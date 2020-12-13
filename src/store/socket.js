@@ -714,7 +714,7 @@ export default store => {
       case "setEdition":
         session.sendEdition();
         break;
-      case "setFabled":
+      case "players/setFabled":
         session.sendFabled();
         break;
       case "players/swap":

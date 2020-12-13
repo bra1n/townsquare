@@ -172,7 +172,7 @@
           </li>
           <li @click="toggleModal('gameState')">
             Game State JSON
-            <em>G</em>
+            <em><font-awesome-icon icon="file-code" /></em>
           </li>
           <li>
             <a href="https://discord.gg/Gd7ybwWbFk" target="_blank">
