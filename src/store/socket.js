@@ -736,9 +736,9 @@ export default store => {
   });
 
   // check for session Id in hash
-  const [command, param] = window.location.hash.substr(1).split("/");
-  if (command === "play") {
+  const sessionId = window.location.hash.substr(1);
+  if (sessionId) {
     store.commit("session/setSpectator", true);
-    store.commit("session/setSessionId", param);
+    store.commit("session/setSessionId", sessionId);
   }
 };

@@ -172,7 +172,7 @@
           </li>
           <li @click="toggleModal('gameState')">
             Game State JSON
-            <em><font-awesome-icon icon="file-code" /></em>
+            <em><font-awesome-icon icon="file-code"/></em>
           </li>
           <li>
             <a href="https://discord.gg/Gd7ybwWbFk" target="_blank">
@@ -253,7 +253,7 @@ export default {
         .then(({ state }) => {
           if (state === "granted" || state === "prompt") {
             const url = window.location.href.split("#")[0];
-            const link = url + "#play/" + this.session.sessionId;
+            const link = url + "#" + this.session.sessionId;
             navigator.clipboard.writeText(link);
           }
         });
