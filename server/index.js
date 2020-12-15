@@ -30,25 +30,24 @@ const channels = {};
 
 // a new client connects
 wss.on("connection", function connection(ws, req) {
-  ws.channel = req.url
-    .split("/")
-    .pop()
-    .toLocaleLowerCase();
-  if (ws.channel.match(/-host$/i)) {
-    ws.isHost = true;
-    ws.channel = ws.channel.substr(0, ws.channel.length - 5);
-    // check for another host on this channel
-    if (
-      channels[ws.channel] &&
-      channels[ws.channel].some(
-        client =>
-          client !== ws && client.readyState === WebSocket.OPEN && client.isHost
-      )
-    ) {
-      console.log(ws.channel, "duplicate host");
-      ws.close(1000, `The channel "${ws.channel}" already has a host`);
-      return;
-    }
+  // url pattern: clocktower.online/<channel>/<playerId|host>
+  const url = req.url.toLocaleLowerCase().split("/");
+  ws.playerId = url.pop();
+  ws.channel = url.pop();
+  // check for another host on this channel
+  if (
+    ws.playerId === "host" &&
+    channels[ws.channel] &&
+    channels[ws.channel].some(
+      client =>
+        client !== ws &&
+        client.readyState === WebSocket.OPEN &&
+        client.playerId === "host"
+    )
+  ) {
+    console.log(ws.channel, "duplicate host");
+    ws.close(1000, `The channel "${ws.channel}" already has a host`);
+    return;
   }
   ws.isAlive = true;
   ws.pingStart = new Date().getTime();
@@ -81,20 +80,44 @@ wss.on("connection", function connection(ws, req) {
       );
       return;
     }
-    const isPing = data.match(/^\["ping/i);
-    if (!isPing) {
-      console.log(new Date(), wss.clients.size, ws.channel, data);
+    const messageType = data
+      .toLocaleLowerCase()
+      .substr(1)
+      .split(",", 1)
+      .pop();
+    // don't log ping messages
+    if (messageType !== '"ping"') {
+      console.log(new Date(), wss.clients.size, ws.channel, ws.playerId, data);
     }
-    channels[ws.channel].forEach(function each(client) {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        // inject latency between both clients if ping message
-        if (isPing && client.latency && ws.latency) {
-          client.send(data.replace(/latency/, client.latency + ws.latency));
-        } else {
-          client.send(data);
-        }
+    // handle "direct" messages differently
+    if (messageType === '"direct"') {
+      try {
+        const dataToPlayer = JSON.parse(data)[1];
+        channels[ws.channel].forEach(function each(client) {
+          if (
+            client !== ws &&
+            client.readyState === WebSocket.OPEN &&
+            dataToPlayer[client.playerId]
+          ) {
+            client.send(JSON.stringify(dataToPlayer[client.playerId]));
+          }
+        });
+      } catch (e) {
+        console.log("error parsing direct message JSON", e);
       }
-    });
+    } else {
+      // all other messages
+      channels[ws.channel].forEach(function each(client) {
+        if (client !== ws && client.readyState === WebSocket.OPEN) {
+          // inject latency between both clients if ping message
+          if (messageType === '"ping"' && client.latency && ws.latency) {
+            client.send(data.replace(/latency/, client.latency + ws.latency));
+          } else {
+            client.send(data);
+          }
+        }
+      });
+    }
   });
 });
 

@@ -29,7 +29,8 @@ const state = () => ({
   lockedVote: 0,
   votingSpeed: 3000,
   isVoteInProgress: false,
-  voteHistory: []
+  voteHistory: [],
+  isRolesDistributed: false
 });
 
 const getters = {};
@@ -46,6 +47,7 @@ const mutations = {
   setVotingSpeed: set("votingSpeed"),
   setVoteInProgress: set("isVoteInProgress"),
   claimSeat: set("claimedSeat"),
+  distributeRoles: set("isRolesDistributed"),
   nomination(
     state,
     { nomination, votes, votingSpeed, lockedVote, isVoteInProgress } = {}

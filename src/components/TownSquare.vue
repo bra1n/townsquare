@@ -309,7 +309,9 @@ export default {
       .life,
       .token,
       .shroud,
-      .night-order {
+      .night-order,
+      .seat {
+        animation-delay: ($i - 1) * 50ms;
         transition-delay: ($i - 1) * 50ms;
       }
 

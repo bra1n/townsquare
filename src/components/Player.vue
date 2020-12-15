@@ -86,6 +86,7 @@
         icon="chair"
         v-if="player.id && session.sessionId"
         class="seat"
+        :class="{ highlight: session.isRolesDistributed }"
       />
 
       <!-- Ghost vote icon -->
@@ -136,7 +137,7 @@
               v-if="player.id && session.sessionId"
             >
               <font-awesome-icon icon="chair" />
-              Vacate seat
+              Empty seat
             </li>
           </template>
           <li
@@ -613,6 +614,20 @@ li.move:not(.from) .player .overlay svg.move {
   filter: drop-shadow(0 0 3px black);
   cursor: default;
   z-index: 2;
+  &.highlight {
+    animation-iteration-count: 1;
+    animation: redToWhite 1s normal forwards;
+  }
+}
+
+// highlight animation
+@keyframes redToWhite {
+  from {
+    color: $demon;
+  }
+  to {
+    color: white;
+  }
 }
 
 .player.you .seat {

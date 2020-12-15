@@ -108,6 +108,10 @@
             Copy player link
             <em><font-awesome-icon icon="copy"/></em>
           </li>
+          <li v-if="!session.isSpectator" @click="distributeRoles">
+            Distribute Characters
+            <em><font-awesome-icon icon="theater-masks"/></em>
+          </li>
           <li
             v-if="session.voteHistory.length"
             @click="toggleModal('voteHistory')"
@@ -257,6 +261,17 @@ export default {
             navigator.clipboard.writeText(link);
           }
         });
+    },
+    distributeRoles() {
+      if (this.session.isSpectator) return;
+      const popup =
+        "Do you want to distribute assigned characters to all SEATED players?";
+      if (confirm(popup)) {
+        this.$store.commit("session/distributeRoles", true);
+        setTimeout((() => {
+            this.$store.commit("session/distributeRoles", false);
+        }).bind(this), 2000);
+      }
     },
     joinSession() {
       const sessionId = prompt(

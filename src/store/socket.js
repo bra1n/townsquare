@@ -1,10 +1,8 @@
-import rolesJSON from "../roles.json";
-
 class LiveSession {
   constructor(store) {
-    //this._wss = "ws://localhost:8081/";
     this._wss = "wss://live.clocktower.online:8080/";
     this._wss = "wss://baumgart.biz:8080/"; //todo: delete this
+    //this._wss = "ws://localhost:8081/";
     this._socket = null;
     this._isSpectator = true;
     this._gamestate = [];
@@ -28,7 +26,10 @@ class LiveSession {
   _open(channel) {
     this.disconnect();
     this._socket = new WebSocket(
-      this._wss + channel + (this._isSpectator ? "" : "-host")
+      this._wss +
+        channel +
+        "/" +
+        (this._isSpectator ? this._store.state.session.playerId : "host")
     );
     this._socket.addEventListener("message", this._handleMessage.bind(this));
     this._socket.onopen = this._onOpen.bind(this);
@@ -283,7 +284,7 @@ class LiveSession {
       });
       // roles are special, because of travelers
       if (roleId && player.role.id !== roleId) {
-        const role = rolesJSON.find(r => r.id === roleId);
+        const role = this._store.state.roles.get(roleId);
         this._store.commit("players/update", {
           player,
           property: "role",
@@ -430,8 +431,8 @@ class LiveSession {
           value: {}
         });
       } else {
-        // load traveler role
-        const role = rolesJSON.find(r => r.id === value);
+        // load role
+        const role = this._store.state.roles.get(value);
         this._store.commit("players/update", {
           player,
           property: "role",
@@ -548,6 +549,26 @@ class LiveSession {
     }
     // update player session list as if this was a ping
     this._handlePing([true, value]);
+  }
+
+  /**
+   * Distribute player roles to all seated players in a direct message.
+   * This will be split server side so that each player only receives their own (sub)message.
+   */
+  distributeRoles() {
+    if (this._isSpectator) return;
+    const message = {};
+    this._store.state.players.players.forEach((player, index) => {
+      if (player.id && player.role) {
+        message[player.id] = [
+          "player",
+          { index, property: "role", value: player.role.id }
+        ];
+      }
+      if (Object.keys(message).length) {
+        this._send("direct", message);
+      }
+    });
   }
 
   /**
@@ -694,6 +715,11 @@ export default store => {
         break;
       case "session/claimSeat":
         session.claimSeat(payload);
+        break;
+      case "session/distributeRoles":
+        if (payload) {
+          session.distributeRoles();
+        }
         break;
       case "session/nomination":
         session.nomination(payload);
