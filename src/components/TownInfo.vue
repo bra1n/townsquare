@@ -1,6 +1,6 @@
 <template>
   <ul class="info">
-    <li class="edition" v-bind:class="['edition-' + edition]"></li>
+    <li class="edition" :class="['edition-' + edition]"></li>
     <li v-if="players.length - teams.traveler < 5">
       Please add more players!
     </li>
@@ -15,23 +15,23 @@
       {{ teams.outsider }}
       <font-awesome-icon
         class="outsider"
-        v-bind:icon="teams.outsider > 1 ? 'user-friends' : 'user'"
+        :icon="teams.outsider > 1 ? 'user-friends' : 'user'"
       />
       {{ teams.minion }}
       <font-awesome-icon
         class="minion"
-        v-bind:icon="teams.minion > 1 ? 'user-friends' : 'user'"
+        :icon="teams.minion > 1 ? 'user-friends' : 'user'"
       />
       {{ teams.demon }}
       <font-awesome-icon
         class="demon"
-        v-bind:icon="teams.demon > 1 ? 'user-friends' : 'user'"
+        :icon="teams.demon > 1 ? 'user-friends' : 'user'"
       />
       <template v-if="teams.traveler">
         {{ teams.traveler }}
         <font-awesome-icon
           class="traveler"
-          v-bind:icon="teams.traveler > 1 ? 'user-friends' : 'user'"
+          :icon="teams.traveler > 1 ? 'user-friends' : 'user'"
         />
       </template>
       <template v-if="grimoire.isNight">

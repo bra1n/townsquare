@@ -3,11 +3,11 @@
     id="app"
     @keyup="keyup"
     tabindex="-1"
-    v-bind:class="{
+    :class="{
       screenshot: grimoire.isScreenshot,
       night: grimoire.isNight
     }"
-    v-bind:style="{
+    :style="{
       backgroundImage: grimoire.background
         ? `url('${grimoire.background}')`
         : ''

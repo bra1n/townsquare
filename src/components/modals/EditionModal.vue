@@ -6,8 +6,8 @@
         <li
           v-for="edition in editions"
           class="edition"
-          v-bind:class="['edition-' + edition.id]"
-          v-bind:key="edition.id"
+          :class="['edition-' + edition.id]"
+          :key="edition.id"
           @click="setEdition(edition.id)"
         >
           {{ edition.name }}
@@ -39,7 +39,7 @@
       <ul class="scripts">
         <li
           v-for="(script, index) in scripts"
-          v-bind:key="index"
+          :key="index"
           @click="handleURL(script[1])"
         >
           {{ script[0] }}

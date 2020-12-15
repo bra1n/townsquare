@@ -4,7 +4,7 @@
       Choose a fabled character to add to the game
     </h3>
     <ul class="tokens">
-      <li v-for="role in fabled" v-bind:key="role.id" @click="setFabled(role)">
+      <li v-for="role in fabled" :key="role.id" @click="setFabled(role)">
         <Token :role="role" />
       </li>
     </ul>

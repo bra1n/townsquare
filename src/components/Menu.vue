@@ -26,7 +26,7 @@
         :class="{ success: grimoire.isScreenshotSuccess }"
       />
     </span>
-    <div class="menu" v-bind:class="{ open: grimoire.isMenuOpen }">
+    <div class="menu" :class="{ open: grimoire.isMenuOpen }">
       <font-awesome-icon icon="cog" @click="toggleMenu" />
       <ul>
         <li class="tabs" :class="tab">

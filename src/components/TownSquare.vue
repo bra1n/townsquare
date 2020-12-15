@@ -2,20 +2,20 @@
   <div
     id="townsquare"
     class="square"
-    v-bind:class="{
+    :class="{
       public: grimoire.isPublic,
       spectator: session.isSpectator,
       vote: session.nomination
     }"
   >
-    <ul class="circle" v-bind:class="['size-' + players.length]">
+    <ul class="circle" :class="['size-' + players.length]">
       <Player
         v-for="(player, index) in players"
         :key="index"
         :player="player"
         @screenshot="$emit('screenshot', $event)"
         @trigger="handleTrigger(index, $event)"
-        v-bind:class="{
+        :class="{
           from: Math.max(swap, move, nominate) === index,
           swap: swap > -1,
           move: move > -1,

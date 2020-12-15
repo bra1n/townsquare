@@ -510,11 +510,13 @@ class LiveSession {
 
   /**
    * Claim a seat, needs to be confirmed by the Storyteller.
-   * @param seat either -1 or the index of the seat claimed
+   * Seats already occupied can't be claimed.
+   * @param seat either -1 to vacate or the index of the seat claimed
    */
   claimSeat(seat) {
     if (!this._isSpectator) return;
-    if (this._store.state.players.players.length > seat) {
+    const players = this._store.state.players.players;
+    if (players.length > seat && (seat < 0 || !players[seat].id)) {
       this._send("claim", [seat, this._store.state.session.playerId]);
     }
   }

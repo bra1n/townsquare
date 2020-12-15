@@ -100,7 +100,7 @@
       <div
         class="name"
         @click="isMenuOpen = !isMenuOpen"
-        v-bind:class="{ active: isMenuOpen }"
+        :class="{ active: isMenuOpen }"
       >
         {{ player.name }}
       </div>
@@ -131,13 +131,27 @@
               <font-awesome-icon icon="times-circle" />
               Remove
             </li>
+            <li
+              @click="updatePlayer('id', '', true)"
+              v-if="player.id && session.sessionId"
+            >
+              <font-awesome-icon icon="chair" />
+              Vacate seat
+            </li>
           </template>
-          <li @click="claimSeat" v-if="session.isSpectator">
+          <li
+            @click="claimSeat"
+            v-if="session.isSpectator"
+            :class="{ disabled: player.id && player.id !== session.playerId }"
+          >
             <font-awesome-icon icon="chair" />
-            <template v-if="player.id !== session.playerId">
+            <template v-if="!player.id">
               Claim seat
             </template>
-            <template v-else> Vacate seat </template>
+            <template v-else-if="player.id === session.playerId">
+              Vacate seat
+            </template>
+            <template v-else> Seat occupied</template>
           </li>
         </ul>
       </transition>
@@ -146,14 +160,14 @@
     <template v-if="player.reminders">
       <div
         class="reminder"
-        v-bind:key="reminder.role + ' ' + reminder.name"
+        :key="reminder.role + ' ' + reminder.name"
         v-for="reminder in player.reminders"
-        v-bind:class="[reminder.role]"
+        :class="[reminder.role]"
         @click="removeReminder(reminder)"
       >
         <span
           class="icon"
-          v-bind:style="{
+          :style="{
             backgroundImage: `url(${reminder.image ||
               require('../assets/icons/' + reminder.role + '.png')})`
           }"
@@ -244,22 +258,23 @@ export default {
     changeName() {
       if (this.session.isSpectator) return;
       const name = prompt("Player name", this.player.name) || this.player.name;
-      this.updatePlayer("name", name);
-      this.isMenuOpen = false;
+      this.updatePlayer("name", name, true);
     },
     removeReminder(reminder) {
       const reminders = [...this.player.reminders];
       reminders.splice(this.player.reminders.indexOf(reminder), 1);
-      this.updatePlayer("reminders", reminders);
-      this.isMenuOpen = false;
+      this.updatePlayer("reminders", reminders, true);
     },
-    updatePlayer(property, value) {
+    updatePlayer(property, value, closeMenu = false) {
       if (this.session.isSpectator && property !== "reminders") return;
       this.$store.commit("players/update", {
         player: this.player,
         property,
         value
       });
+      if (closeMenu) {
+        this.isMenuOpen = false;
+      }
     },
     removePlayer() {
       this.isMenuOpen = false;
@@ -661,6 +676,14 @@ li.move:not(.from) .player .overlay svg.move {
   li:hover {
     color: red;
   }
+
+  li.disabled {
+    cursor: default;
+    &:hover {
+      color: white;
+    }
+  }
+
   svg {
     margin-right: 2px;
   }

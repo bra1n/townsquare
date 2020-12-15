@@ -14,8 +14,8 @@
     <ul class="tokens">
       <li
         v-for="role in availableRoles"
-        v-bind:class="[role.team]"
-        v-bind:key="role.id"
+        :class="[role.team]"
+        :key="role.id"
         @click="setRole(role)"
       >
         <Token :role="role" />

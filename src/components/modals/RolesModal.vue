@@ -5,19 +5,15 @@
     @close="toggleModal('roles')"
   >
     <h3>Select the characters for {{ nonTravelers }} players:</h3>
-    <ul
-      class="tokens"
-      v-for="(teamRoles, team) in roleSelection"
-      v-bind:key="team"
-    >
-      <li class="count" v-bind:class="[team]">
+    <ul class="tokens" v-for="(teamRoles, team) in roleSelection" :key="team">
+      <li class="count" :class="[team]">
         {{ teamRoles.filter(role => role.selected).length }} /
         {{ game[nonTravelers - 5][team] }}
       </li>
       <li
         v-for="role in teamRoles"
-        v-bind:class="[role.team, role.selected ? 'selected' : '']"
-        v-bind:key="role.id"
+        :class="[role.team, role.selected ? 'selected' : '']"
+        :key="role.id"
         @click="role.selected = !role.selected"
       >
         <Token :role="role" />
@@ -31,7 +27,7 @@
       <div
         class="button"
         @click="assignRoles"
-        v-bind:class="{
+        :class="{
           disabled: selectedRoles > nonTravelers || !selectedRoles
         }"
       >
