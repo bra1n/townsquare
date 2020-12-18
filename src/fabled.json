@@ -132,5 +132,15 @@
     "name": "Storm Catcher",
     "team": "fabled",
     "ability": "Name a good character. If in play, they can only die by execution, but evil players learn which player it is."
+  },
+  {
+    "id": "deusexfiasco",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": ["Whoops"],
+    "setup": false,
+    "name": "Deus ex Fiasco",
+    "team": "fabled",
+    "ability": "Once per game, the Storyteller will make a \"mistake\", correct it and publicly admit to it."
   }
 ]

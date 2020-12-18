@@ -268,9 +268,12 @@ export default {
         "Do you want to distribute assigned characters to all SEATED players?";
       if (confirm(popup)) {
         this.$store.commit("session/distributeRoles", true);
-        setTimeout((() => {
+        setTimeout(
+          (() => {
             this.$store.commit("session/distributeRoles", false);
-        }).bind(this), 2000);
+          }).bind(this),
+          2000
+        );
       }
     },
     joinSession() {
