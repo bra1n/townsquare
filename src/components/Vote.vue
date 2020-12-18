@@ -5,6 +5,7 @@
       <span class="nominator" :style="nominatorStyle"></span>
     </div>
     <div class="overlay">
+      <audio src="../assets/sounds/countdown.mp3"></audio>
       <em class="blue">{{ nominator.name }}</em> nominated
       <em>{{ nominee.name }}</em
       >!
