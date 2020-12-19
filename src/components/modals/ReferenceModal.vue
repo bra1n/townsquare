@@ -13,7 +13,7 @@
     <h3>
       Character Reference
       <font-awesome-icon icon="address-card" />
-      {{ editionName }}
+      {{ edition.name || "Custom Script" }}
     </h3>
     <ul class="legend">
       <li>
@@ -50,7 +50,6 @@
 
 <script>
 import Modal from "./Modal";
-import editionJSON from "./../../editions.json";
 import { mapMutations, mapState } from "vuex";
 
 export default {
@@ -63,10 +62,6 @@ export default {
     };
   },
   computed: {
-    editionName: function() {
-      const edition = editionJSON.find(({ id }) => id === this.edition);
-      return edition ? edition.name : "Custom Script";
-    },
     rolesGrouped: function() {
       const rolesGrouped = {};
       this.roles.forEach(role => {

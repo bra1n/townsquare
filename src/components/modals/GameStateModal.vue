@@ -35,7 +35,7 @@ export default {
       return JSON.stringify({
         bluffs: this.players.bluffs.map(({ id }) => id),
         edition: this.edition,
-        roles: this.edition !== "custom" ? "" : this.$store.getters.customRoles,
+        roles: this.edition.isOfficial ? "" : this.$store.getters.customRoles,
         fabled: this.players.fabled.map(({ id }) => id),
         players: this.players.players.map(player => ({
           ...player,

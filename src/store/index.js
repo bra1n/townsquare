@@ -10,17 +10,16 @@ import fabledJSON from "../fabled.json";
 
 Vue.use(Vuex);
 
+const editionJSONbyId = new Map(
+  editionJSON.map(edition => [edition.id, edition])
+);
 const rolesJSONbyId = new Map(rolesJSON.map(role => [role.id, role]));
 const fabled = new Map(fabledJSON.map(role => [role.id, role]));
 
-const getRolesByEdition = (edition = "tb") => {
-  const selectedEdition =
-    editionJSON.find(({ id }) => id === edition) || editionJSON[0];
+const getRolesByEdition = (edition = editionJSON[0]) => {
   return new Map(
     rolesJSON
-      .filter(
-        r => r.edition === edition || selectedEdition.roles.includes(r.id)
-      )
+      .filter(r => r.edition === edition.id || edition.roles.includes(r.id))
       .sort((a, b) => b.team.localeCompare(a.team))
       .map(role => [role.id, role])
   );
@@ -70,7 +69,7 @@ export default new Vuex.Store({
       roles: false,
       voteHistory: false
     },
-    edition: "tb",
+    edition: editionJSONbyId.get("tb"),
     roles: getRolesByEdition(),
     fabled
   },
@@ -189,11 +188,13 @@ export default new Vuex.Store({
       );
     },
     setEdition(state, edition) {
-      state.edition = edition;
-      state.modals.edition = false;
-      if (edition !== "custom") {
-        state.roles = getRolesByEdition(edition);
+      if (editionJSONbyId.has(edition.id)) {
+        state.edition = editionJSONbyId.get(edition.id);
+        state.roles = getRolesByEdition(state.edition);
+      } else {
+        state.edition = edition;
       }
+      state.modals.edition = false;
     }
   },
   plugins: [persistence, socket]

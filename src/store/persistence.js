@@ -9,13 +9,13 @@ module.exports = store => {
   if (localStorage.isPublic !== undefined) {
     store.commit("toggleGrimoire", JSON.parse(localStorage.isPublic));
   }
-  if (localStorage.edition !== undefined) {
-    // this will initialize state.roles!
-    store.commit("setEdition", localStorage.edition);
-  }
   if (localStorage.roles !== undefined) {
     store.commit("setCustomRoles", JSON.parse(localStorage.roles));
-    store.commit("setEdition", "custom");
+    store.commit("setEdition", { id: "custom" });
+  }
+  if (localStorage.edition !== undefined) {
+    // this will initialize state.roles for official editions
+    store.commit("setEdition", JSON.parse(localStorage.edition));
   }
   if (localStorage.bluffs !== undefined) {
     JSON.parse(localStorage.bluffs).forEach((role, index) => {
@@ -75,10 +75,8 @@ module.exports = store => {
         }
         break;
       case "setEdition":
-        if (payload === "custom") {
-          localStorage.removeItem("edition");
-        } else {
-          localStorage.setItem("edition", payload);
+        localStorage.setItem("edition", JSON.stringify(payload));
+        if (state.edition.isOfficial) {
           localStorage.removeItem("roles");
         }
         break;

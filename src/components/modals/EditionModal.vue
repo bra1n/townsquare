@@ -7,12 +7,23 @@
           v-for="edition in editions"
           class="edition"
           :class="['edition-' + edition.id]"
+          :style="{
+            backgroundImage: `url(${require('../../assets/editions/' +
+              edition.id +
+              '.png')})`
+          }"
           :key="edition.id"
-          @click="setEdition(edition.id)"
+          @click="setEdition(edition)"
         >
           {{ edition.name }}
         </li>
-        <li class="edition edition-custom" @click="isCustom = true">
+        <li
+          class="edition edition-custom"
+          @click="isCustom = true"
+          :style="{
+            backgroundImage: `url(${require('../../assets/editions/custom.png')})`
+          }"
+        >
           Custom Script / Characters
         </li>
       </ul>
@@ -152,7 +163,7 @@ export default {
         return role;
       });
       this.$store.commit("setCustomRoles", customRoles);
-      this.$store.commit("setEdition", "custom");
+      this.$store.commit("setEdition", { id: "custom" });
       // check for fabled and set those too, if present
       if (customRoles.some(({ id }) => this.$store.state.fabled.has(id))) {
         const fabled = [];
@@ -171,29 +182,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../vars";
-
-// Editions
-@each $img, $skipIcons in $editions {
-  .edition-#{$img} {
-    background-image: url("../../assets/editions/#{$img}.png");
-  }
-  @if $skipIcons != true {
-    .edition-#{$img}.townsfolk {
-      background-image: url("../../assets/editions/#{$img}-townsfolk.png");
-    }
-    .edition-#{$img}.outsider {
-      background-image: url("../../assets/editions/#{$img}-outsider.png");
-    }
-    .edition-#{$img}.minion {
-      background-image: url("../../assets/editions/#{$img}-minion.png");
-    }
-    .edition-#{$img}.demon {
-      background-image: url("../../assets/editions/#{$img}-demon.png");
-    }
-  }
-}
-
 ul.editions .edition {
   font-family: PiratesBay, sans-serif;
   letter-spacing: 1px;

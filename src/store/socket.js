@@ -320,7 +320,7 @@ class LiveSession {
     if (this._isSpectator) return;
     const { edition } = this._store.state;
     let roles;
-    if (edition === "custom") {
+    if (!edition.isOfficial) {
       roles = Array.from(this._store.state.roles.keys());
     }
     this._send("edition", {

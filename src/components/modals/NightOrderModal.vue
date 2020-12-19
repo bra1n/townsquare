@@ -13,7 +13,7 @@
     <h3>
       Night Order
       <font-awesome-icon icon="cloud-moon" />
-      {{ editionName }}
+      {{ edition.name || "Custom Script" }}
     </h3>
     <div class="night">
       <ul class="first">
@@ -62,7 +62,6 @@
 
 <script>
 import Modal from "./Modal";
-import editionJSON from "./../../editions.json";
 import { mapMutations, mapState } from "vuex";
 
 export default {
@@ -75,10 +74,6 @@ export default {
     };
   },
   computed: {
-    editionName: function() {
-      const edition = editionJSON.find(({ id }) => id === this.edition);
-      return edition ? edition.name : "Custom Script";
-    },
     rolesFirstNight: function() {
       const rolesFirstNight = [];
       // add minion / demon infos to night order sheet

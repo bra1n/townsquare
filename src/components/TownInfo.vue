@@ -1,6 +1,13 @@
 <template>
   <ul class="info">
-    <li class="edition" :class="['edition-' + edition]"></li>
+    <li
+      class="edition"
+      :class="['edition-' + edition]"
+      :style="{
+        backgroundImage: `url(${edition.logo ||
+          require('../assets/editions/' + edition.id + '.png')})`
+      }"
+    ></li>
     <li v-if="players.length - teams.traveler < 5">
       Please add more players!
     </li>
@@ -72,27 +79,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "../vars.scss";
-
-// Editions
-@each $img, $skipIcons in $editions {
-  .edition-#{$img} {
-    background-image: url("../assets/editions/#{$img}.png");
-  }
-  @if $skipIcons != true {
-    .edition-#{$img}.townsfolk {
-      background-image: url("../assets/editions/#{$img}-townsfolk.png");
-    }
-    .edition-#{$img}.outsider {
-      background-image: url("../assets/editions/#{$img}-outsider.png");
-    }
-    .edition-#{$img}.minion {
-      background-image: url("../assets/editions/#{$img}-minion.png");
-    }
-    .edition-#{$img}.demon {
-      background-image: url("../assets/editions/#{$img}-demon.png");
-    }
-  }
-}
 
 .info {
   position: absolute;
