@@ -34,7 +34,9 @@ export default {
     gamestate: function() {
       return JSON.stringify({
         bluffs: this.players.bluffs.map(({ id }) => id),
-        edition: this.edition,
+        edition: this.edition.isOfficial
+          ? { id: this.edition.id }
+          : this.edition,
         roles: this.edition.isOfficial ? "" : this.$store.getters.customRoles,
         fabled: this.players.fabled.map(({ id }) => id),
         players: this.players.players.map(player => ({
@@ -66,11 +68,11 @@ export default {
       try {
         const data = JSON.parse(this.input || this.gamestate);
         const { bluffs, edition, roles, fabled, players } = data;
-        if (edition) {
-          this.$store.commit("setEdition", edition);
-        }
         if (roles) {
           this.$store.commit("setCustomRoles", roles);
+        }
+        if (edition) {
+          this.$store.commit("setEdition", edition);
         }
         if (bluffs.length) {
           bluffs.forEach((role, index) => {

@@ -2,7 +2,7 @@
   <ul class="info">
     <li
       class="edition"
-      :class="['edition-' + edition]"
+      :class="['edition-' + edition.id]"
       :style="{
         backgroundImage: `url(${edition.logo ||
           require('../assets/editions/' + edition.id + '.png')})`
@@ -12,40 +12,59 @@
       Please add more players!
     </li>
     <li>
-      {{ players.length }} <font-awesome-icon class="players" icon="users" />
-      {{ teams.alive }} <font-awesome-icon class="alive" icon="heartbeat" />
-      {{ teams.votes }} <font-awesome-icon class="votes" icon="vote-yea" />
+      <span class="meta" v-if="!edition.isOfficial">
+        {{ edition.name }}
+        {{ edition.author ? "by " + edition.author : "" }}
+      </span>
+      <span>
+        {{ players.length }} <font-awesome-icon class="players" icon="users" />
+      </span>
+      <span>
+        {{ teams.alive }}
+        <font-awesome-icon class="alive" icon="heartbeat" />
+      </span>
+      <span>
+        {{ teams.votes }} <font-awesome-icon class="votes" icon="vote-yea" />
+      </span>
     </li>
     <li v-if="players.length - teams.traveler >= 5">
-      {{ teams.townsfolk }}
-      <font-awesome-icon class="townsfolk" icon="user-friends" />
-      {{ teams.outsider }}
-      <font-awesome-icon
-        class="outsider"
-        :icon="teams.outsider > 1 ? 'user-friends' : 'user'"
-      />
-      {{ teams.minion }}
-      <font-awesome-icon
-        class="minion"
-        :icon="teams.minion > 1 ? 'user-friends' : 'user'"
-      />
-      {{ teams.demon }}
-      <font-awesome-icon
-        class="demon"
-        :icon="teams.demon > 1 ? 'user-friends' : 'user'"
-      />
-      <template v-if="teams.traveler">
+      <span>
+        {{ teams.townsfolk }}
+        <font-awesome-icon class="townsfolk" icon="user-friends" />
+      </span>
+      <span>
+        {{ teams.outsider }}
+        <font-awesome-icon
+          class="outsider"
+          :icon="teams.outsider > 1 ? 'user-friends' : 'user'"
+        />
+      </span>
+      <span>
+        {{ teams.minion }}
+        <font-awesome-icon
+          class="minion"
+          :icon="teams.minion > 1 ? 'user-friends' : 'user'"
+        />
+      </span>
+      <span>
+        {{ teams.demon }}
+        <font-awesome-icon
+          class="demon"
+          :icon="teams.demon > 1 ? 'user-friends' : 'user'"
+        />
+      </span>
+      <span v-if="teams.traveler">
         {{ teams.traveler }}
         <font-awesome-icon
           class="traveler"
           :icon="teams.traveler > 1 ? 'user-friends' : 'user'"
         />
-      </template>
-      <template v-if="grimoire.isNight">
+      </span>
+      <span v-if="grimoire.isNight">
         <br />
         Night phase
         <font-awesome-icon :icon="['fas', 'cloud-moon']" />
-      </template>
+      </span>
     </li>
   </ul>
 </template>
@@ -94,12 +113,25 @@ export default {
   background-size: auto 100%;
 
   li {
-    display: block;
     font-weight: bold;
-    text-align: center;
-    padding: 0 5px;
     width: 100%;
     filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.7));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-shadow: 0 2px 1px black, 0 -2px 1px black, 2px 0 1px black,
+      -2px 0 1px black;
+
+    span {
+      white-space: nowrap;
+    }
+
+    .meta {
+      text-align: center;
+      flex-basis: 100%;
+      font-family: PiratesBay, sans-serif;
+      font-weight: normal;
+    }
 
     svg {
       margin-right: 10px;

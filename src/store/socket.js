@@ -324,7 +324,9 @@ class LiveSession {
       roles = Array.from(this._store.state.roles.keys());
     }
     this._send("edition", {
-      edition,
+      edition: edition.isOfficial
+        ? { id: edition.id }
+        : Object.assign({}, edition, { logo: "" }),
       ...(roles ? { roles } : {})
     });
   }
