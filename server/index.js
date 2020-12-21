@@ -11,6 +11,7 @@ const server = https.createServer({
 const wss = new WebSocket.Server({
   ...(process.env.NODE_ENV === "development" ? { port: 8081 } : { server }),
   verifyClient: info =>
+    info.origin &&
     !!info.origin.match(
       /^https?:\/\/([^.]+\.github\.io|localhost|live\.clocktower\.online|eddbra1nprivatetownsquare\.xyz)/i
     )
