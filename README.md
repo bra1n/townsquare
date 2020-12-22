@@ -8,7 +8,7 @@ It is supposed to aid storytellers and allow them to quickly set up and capture 
 [You can try it online!](https://clocktower.online)
 
 To set up a game as the host, check out this tutorial video:
-[![Tutorial video](https://img.youtube.com/vi/-MyizvdRbVw/0.jpg)](https://www.youtube.com/watch?v=-MyizvdRbVw)
+[![Tutorial video](https://img.youtube.com/vi/VCpFnJFiCbk/0.jpg)](https://www.youtube.com/watch?v=VCpFnJFiCbk)
 
 ### Features
 
