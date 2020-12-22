@@ -1,5 +1,13 @@
 # Release Notes
 
+## Version 2.0.2
+- fix nomination history type not detecting travelers
+- fix live session domain whitelist
+- fix build path
+- fix changelog version numbering
+
+---
+
 ## Version 2.0.1
 - clearing the nomination history as the Storyteller clears it for the players too
 - vote buttons should work in all situations correctly now
