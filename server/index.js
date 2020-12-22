@@ -144,10 +144,14 @@ if (process.env.NODE_ENV !== "development") {
   server.on("request", (req, res) => {
     res.writeHead(200);
     res.end(
-      JSON.stringify({
-        players: wss.clients.size,
-        channels: Object.keys(channels).length
-      })
+      `# HELP players_concurrent Concurrent players
+# TYPE players_concurrent gauge
+players_concurrent{app="clocktower-online"} ${wss.clients.size}
+
+# HELP channels_concurrent Concurrent channels
+# TYPE channels_concurrent gauge
+channels_concurrent{app="clocktower-online"} ${Object.keys(channels).length}
+`
     );
   });
 }
