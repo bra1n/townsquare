@@ -5,7 +5,7 @@
     @close="toggleModal('voteHistory')"
   >
     <font-awesome-icon
-      @click="clearHistory"
+      @click="clearVoteHistory"
       icon="trash-alt"
       class="clear"
       title="Clear history"
@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     ...mapMutations(["toggleModal"]),
-    ...mapMutations("session", ["clearHistory"])
+    ...mapMutations("session", ["clearVoteHistory"])
   }
 };
 </script>

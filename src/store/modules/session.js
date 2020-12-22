@@ -79,7 +79,7 @@ const mutations = {
         .map(({ name }) => name)
     });
   },
-  clearHistory(state) {
+  clearVoteHistory(state) {
     state.voteHistory = [];
   },
   /**

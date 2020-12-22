@@ -1,6 +1,7 @@
 class LiveSession {
   constructor(store) {
     this._wss = "wss://live.clocktower.online:8080/";
+    //this._wss = "wss://baumgart.biz:8080/"; //todo: delete this
     //this._wss = "ws://localhost:8081/";
     this._socket = null;
     this._isSpectator = true;
@@ -152,6 +153,10 @@ class LiveSession {
       case "votingSpeed":
         if (!this._isSpectator) return;
         this._store.commit("session/setVotingSpeed", params);
+        break;
+      case "clearVoteHistory":
+        if (!this._isSpectator) return;
+        this._store.commit("session/clearVoteHistory");
         break;
       case "isVoteInProgress":
         if (!this._isSpectator) return;
@@ -566,10 +571,10 @@ class LiveSession {
           { index, property: "role", value: player.role.id }
         ];
       }
-      if (Object.keys(message).length) {
-        this._send("direct", message);
-      }
     });
+    if (Object.keys(message).length) {
+      this._send("direct", message);
+    }
   }
 
   /**
@@ -604,6 +609,7 @@ class LiveSession {
     if (this._isSpectator) return;
     this._send("isNight", this._store.state.grimoire.isNight);
   }
+
   /**
    * Send the voting speed. ST only
    * @param votingSpeed voting speed in seconds, minimum 1
@@ -613,6 +619,14 @@ class LiveSession {
     if (votingSpeed) {
       this._send("votingSpeed", votingSpeed);
     }
+  }
+
+  /**
+   * Clear the vote history for everyone. ST only
+   */
+  clearVoteHistory() {
+    if (this._isSpectator) return;
+    this._send("clearVoteHistory");
   }
 
   /**
@@ -736,6 +750,9 @@ export default store => {
         break;
       case "session/setVotingSpeed":
         session.setVotingSpeed(payload);
+        break;
+      case "session/clearVoteHistory":
+        session.clearVoteHistory();
         break;
       case "toggleNight":
         session.setIsNight();

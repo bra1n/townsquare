@@ -238,7 +238,7 @@ export default {
         Math.round(Math.random() * 10000)
       );
       if (sessionId) {
-        this.$store.commit("session/clearHistory");
+        this.$store.commit("session/clearVoteHistory");
         this.$store.commit("session/setSpectator", false);
         this.$store.commit(
           "session/setSessionId",
@@ -281,7 +281,7 @@ export default {
         "Enter the channel number / name of the session you want to join"
       );
       if (sessionId) {
-        this.$store.commit("session/clearHistory");
+        this.$store.commit("session/clearVoteHistory");
         this.$store.commit("session/setSpectator", true);
         this.$store.commit("toggleGrimoire", false);
         this.$store.commit(
