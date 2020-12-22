@@ -18,7 +18,7 @@
       <div class="life" @click="toggleStatus()"></div>
 
       <div
-        class="night first"
+        class="night-order first"
         v-if="nightOrder.get(player).first && grimoire.isNightOrder"
       >
         <em>{{ nightOrder.get(player).first }}.</em>
@@ -27,7 +27,7 @@
         }}</span>
       </div>
       <div
-        class="night other"
+        class="night-order other"
         v-if="nightOrder.get(player).other && grimoire.isNightOrder"
       >
         <em>{{ nightOrder.get(player).other }}.</em>
@@ -44,15 +44,15 @@
       <!-- Overlay icons -->
       <div class="overlay">
         <font-awesome-icon
-          icon="skull"
+          icon="hand-paper"
           class="vote"
-          title="Voted YES"
+          title="Hand UP"
           @click="vote()"
         />
         <font-awesome-icon
           icon="times"
           class="vote"
-          title="Voted NO"
+          title="Hand DOWN"
           @click="vote()"
         />
         <font-awesome-icon
@@ -86,6 +86,7 @@
         icon="chair"
         v-if="player.id && session.sessionId"
         class="seat"
+        :class="{ highlight: session.isRolesDistributed }"
       />
 
       <!-- Ghost vote icon -->
@@ -100,7 +101,7 @@
       <div
         class="name"
         @click="isMenuOpen = !isMenuOpen"
-        v-bind:class="{ active: isMenuOpen }"
+        :class="{ active: isMenuOpen }"
       >
         {{ player.name }}
       </div>
@@ -131,13 +132,27 @@
               <font-awesome-icon icon="times-circle" />
               Remove
             </li>
+            <li
+              @click="updatePlayer('id', '', true)"
+              v-if="player.id && session.sessionId"
+            >
+              <font-awesome-icon icon="chair" />
+              Empty seat
+            </li>
           </template>
-          <li @click="claimSeat" v-if="session.isSpectator">
+          <li
+            @click="claimSeat"
+            v-if="session.isSpectator"
+            :class="{ disabled: player.id && player.id !== session.playerId }"
+          >
             <font-awesome-icon icon="chair" />
-            <template v-if="player.id !== session.playerId">
+            <template v-if="!player.id">
               Claim seat
             </template>
-            <template v-else> Vacate seat </template>
+            <template v-else-if="player.id === session.playerId">
+              Vacate seat
+            </template>
+            <template v-else> Seat occupied</template>
           </li>
         </ul>
       </transition>
@@ -146,14 +161,14 @@
     <template v-if="player.reminders">
       <div
         class="reminder"
-        v-bind:key="reminder.role + ' ' + reminder.name"
+        :key="reminder.role + ' ' + reminder.name"
         v-for="reminder in player.reminders"
-        v-bind:class="[reminder.role]"
+        :class="[reminder.role]"
         @click="removeReminder(reminder)"
       >
         <span
           class="icon"
-          v-bind:style="{
+          :style="{
             backgroundImage: `url(${reminder.image ||
               require('../assets/icons/' + reminder.role + '.png')})`
           }"
@@ -244,22 +259,23 @@ export default {
     changeName() {
       if (this.session.isSpectator) return;
       const name = prompt("Player name", this.player.name) || this.player.name;
-      this.updatePlayer("name", name);
-      this.isMenuOpen = false;
+      this.updatePlayer("name", name, true);
     },
     removeReminder(reminder) {
       const reminders = [...this.player.reminders];
       reminders.splice(this.player.reminders.indexOf(reminder), 1);
-      this.updatePlayer("reminders", reminders);
-      this.isMenuOpen = false;
+      this.updatePlayer("reminders", reminders, true);
     },
-    updatePlayer(property, value) {
+    updatePlayer(property, value, closeMenu = false) {
       if (this.session.isSpectator && property !== "reminders") return;
       this.$store.commit("players/update", {
         player: this.player,
         property,
         value
       });
+      if (closeMenu) {
+        this.isMenuOpen = false;
+      }
     },
     removePlayer() {
       this.isMenuOpen = false;
@@ -500,7 +516,7 @@ export default {
       fill: url(#default);
     }
     &:hover *,
-    &.fa-skull * {
+    &.fa-hand-paper * {
       fill: url(#demon);
     }
     &.fa-times * {
@@ -510,14 +526,14 @@ export default {
 }
 
 // other player voted yes, but is not locked yet
-#townsquare.vote .player.vote-yes .overlay svg.vote.fa-skull {
+#townsquare.vote .player.vote-yes .overlay svg.vote.fa-hand-paper {
   opacity: 0.5;
   transform: scale(1);
 }
 
 // you voted yes | a locked vote yes | a locked vote no
-#townsquare.vote .player.you.vote-yes .overlay svg.vote.fa-skull,
-#townsquare.vote .player.vote-lock.vote-yes .overlay svg.vote.fa-skull,
+#townsquare.vote .player.you.vote-yes .overlay svg.vote.fa-hand-paper,
+#townsquare.vote .player.vote-lock.vote-yes .overlay svg.vote.fa-hand-paper,
 #townsquare.vote .player.vote-lock:not(.vote-yes) .overlay svg.vote.fa-times {
   opacity: 1;
   transform: scale(1);
@@ -598,6 +614,20 @@ li.move:not(.from) .player .overlay svg.move {
   filter: drop-shadow(0 0 3px black);
   cursor: default;
   z-index: 2;
+  &.highlight {
+    animation-iteration-count: 1;
+    animation: redToWhite 1s normal forwards;
+  }
+}
+
+// highlight animation
+@keyframes redToWhite {
+  from {
+    color: $demon;
+  }
+  to {
+    color: white;
+  }
 }
 
 .player.you .seat {
@@ -661,6 +691,14 @@ li.move:not(.from) .player .overlay svg.move {
   li:hover {
     color: red;
   }
+
+  li.disabled {
+    cursor: default;
+    &:hover {
+      color: white;
+    }
+  }
+
   svg {
     margin-right: 2px;
   }
@@ -676,137 +714,11 @@ li.move:not(.from) .player .overlay svg.move {
 }
 
 /**** Night reminders ****/
-.player .night {
-  position: absolute;
-  width: 100%;
-  z-index: 2;
-  cursor: pointer;
-  opacity: 1;
-  transition: opacity 200ms;
-  display: flex;
-  top: 0;
-  align-items: center;
-  pointer-events: none;
-
-  &:after {
-    content: " ";
-    display: block;
-    padding-top: 100%;
-  }
-
-  #townsquare.public & {
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  &:hover ~ .token .ability {
-    opacity: 0;
-  }
-
-  span {
-    display: flex;
-    position: absolute;
-    padding: 5px 10px 5px 30px;
-    width: 350px;
-    z-index: 25;
-    font-size: 70%;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    border: 3px solid black;
-    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
-    text-align: left;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 200ms ease-in-out;
-
-    &:before {
-      transform: rotate(-90deg);
-      transform-origin: center top;
-      left: -98px;
-      top: 50%;
-      font-size: 100%;
-      position: absolute;
-      font-weight: bold;
-      text-align: center;
-      width: 200px;
-    }
-
-    &:after {
-      content: " ";
-      border: 10px solid transparent;
-      width: 0;
-      height: 0;
-      position: absolute;
-    }
-  }
-
-  &.first span {
-    right: 120%;
-    background: linear-gradient(
-      to right,
-      $townsfolk 0%,
-      rgba(0, 0, 0, 0.5) 20%
-    );
-    &:before {
-      content: "First Night";
-    }
-    &:after {
-      border-left-color: $townsfolk;
-      margin-left: 3px;
-      left: 100%;
-    }
-  }
-
-  &.other span {
-    left: 120%;
-    background: linear-gradient(to right, $demon 0%, rgba(0, 0, 0, 0.5) 20%);
-    &:before {
-      content: "Other Nights";
-    }
-    &:after {
-      right: 100%;
-      margin-right: 3px;
-      border-right-color: $demon;
-    }
-  }
-
-  em {
-    font-style: normal;
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 3px solid black;
-    filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5));
-    font-weight: bold;
-    opacity: 1;
-    pointer-events: all;
-    transition: opacity 200ms;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &.first em {
-    left: -10%;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, $townsfolk 100%);
-  }
-
-  &.other em {
-    right: -10%;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, $demon 100%);
-  }
-
-  em:hover + span {
-    opacity: 1;
-  }
-
-  #app.screenshot & {
-    display: none;
-  }
+.player .night-order {
+  z-index: 3;
 }
 
-.player.dead .night em {
+.player.dead .night-order em {
   color: #ddd;
   background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, gray 100%);
 }
@@ -816,6 +728,9 @@ li.move:not(.from) .player .overlay svg.move {
   background: url("../assets/reminder.png") center center;
   background-size: 100%;
   width: 50%;
+  height: 0;
+  padding-bottom: 50%;
+  box-sizing: content-box;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -825,20 +740,20 @@ li.move:not(.from) .player .overlay svg.move {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   transition: all 200ms;
   cursor: pointer;
-  &:before {
-    content: " ";
-    display: block;
-    padding-top: 100%;
-  }
 
   .text {
     line-height: 90%;
     color: black;
-    font-size: 45%;
+    font-size: 50%;
     font-weight: bold;
-    width: 90%;
     text-align: center;
     margin-top: 50%;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 15%;
+    text-shadow: 0 1px 1px #f6dfbd, 0 -1px 1px #f6dfbd, 1px 0 1px #f6dfbd,
+      -1px 0 1px #f6dfbd;
   }
 
   .icon,
@@ -858,6 +773,7 @@ li.move:not(.from) .player .overlay svg.move {
   &:after {
     background-image: url("../assets/icons/x.png");
     opacity: 0;
+    top: 5%;
   }
 
   &.add {
@@ -867,7 +783,7 @@ li.move:not(.from) .player .overlay svg.move {
       display: none;
     }
     .icon {
-      top: auto;
+      top: 5%;
     }
   }
 
@@ -879,6 +795,12 @@ li.move:not(.from) .player .overlay svg.move {
       font-size: 70%;
       word-break: break-word;
       margin-top: 0;
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-content: center;
+      border-radius: 50%;
+      top: 0;
     }
   }
 

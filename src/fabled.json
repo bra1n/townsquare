@@ -62,6 +62,7 @@
   {
     "id": "toymaker",
     "firstNightReminder": "",
+    "otherNight": 1,
     "otherNightReminder": "If it is a night when a Demon attack could end the game, and the Demon is marked “Final night: No Attack,” then the Demon does not act tonight. (Do not wake them.)",
     "reminders": ["Final Night: No Attack"],
     "setup": false,
@@ -82,6 +83,7 @@
   {
     "id": "duchess",
     "firstNightReminder": "",
+    "otherNight": 1,
     "otherNightReminder": "Wake each player marked “Visitor” or “False Info” one at a time. Show them the Duchess token, then fingers (1, 2, 3) equaling the number of evil players marked “Visitor” or, if you are waking the player marked “False Info,” show them any number of fingers except the number of evil players marked “Visitor.”",
     "reminders": ["Visitor", "False Info"],
     "setup": false,
@@ -111,6 +113,7 @@
   },
   {
     "id": "djinn",
+    "firstNight": 1,
     "firstNightReminder": "Wake each evil player and show them which jinxed characters are in play, so that they know not to bluff as characters that can not be in play.",
     "otherNightReminder": "",
     "reminders": [],
@@ -121,6 +124,7 @@
   },
   {
     "id": "stormcatcher",
+    "firstNight": 1,
     "firstNightReminder": "Mark a good player as \"Safe\". Wake each evil player and show them the marked player.",
     "otherNightReminder": "",
     "reminders": ["Safe"],
@@ -128,5 +132,15 @@
     "name": "Storm Catcher",
     "team": "fabled",
     "ability": "Name a good character. If in play, they can only die by execution, but evil players learn which player it is."
+  },
+  {
+    "id": "deusexfiasco",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": ["Whoops"],
+    "setup": false,
+    "name": "Deus ex Fiasco",
+    "team": "fabled",
+    "ability": "Once per game, the Storyteller will make a \"mistake\", correct it and publicly admit to it."
   }
 ]

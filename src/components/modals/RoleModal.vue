@@ -1,6 +1,6 @@
 <template>
   <Modal
-    v-show="modals.role && availableRoles.length"
+    v-if="modals.role && availableRoles.length"
     @close="toggleModal('role')"
   >
     <h3>
@@ -14,8 +14,8 @@
     <ul class="tokens">
       <li
         v-for="role in availableRoles"
-        v-bind:class="[role.team]"
-        v-bind:key="role.id"
+        :class="[role.team]"
+        :key="role.id"
         @click="setRole(role)"
       >
         <Token :role="role" />
@@ -55,8 +55,8 @@ export default {
   methods: {
     setRole(role) {
       if (this.playerIndex < 0) {
-        // assign to bluff slot
-        this.$store.commit("setBluff", {
+        // assign to bluff slot (index < 0)
+        this.$store.commit("players/setBluff", {
           index: this.playerIndex * -1 - 1,
           role
         });

@@ -2,20 +2,20 @@
   <div
     id="townsquare"
     class="square"
-    v-bind:class="{
+    :class="{
       public: grimoire.isPublic,
       spectator: session.isSpectator,
       vote: session.nomination
     }"
   >
-    <ul class="circle" v-bind:class="['size-' + players.length]">
+    <ul class="circle" :class="['size-' + players.length]">
       <Player
         v-for="(player, index) in players"
         :key="index"
         :player="player"
         @screenshot="$emit('screenshot', $event)"
         @trigger="handleTrigger(index, $event)"
-        v-bind:class="{
+        :class="{
           from: Math.max(swap, move, nominate) === index,
           swap: swap > -1,
           move: move > -1,
@@ -39,20 +39,16 @@
       </h3>
       <ul>
         <li
-          v-for="index in bluffs"
+          v-for="index in bluffSize"
           :key="index"
           @click="openRoleModal(index * -1)"
         >
-          <Token :role="grimoire.bluffs[index - 1]"></Token>
+          <Token :role="bluffs[index - 1]"></Token>
         </li>
       </ul>
     </div>
 
-    <div
-      class="fabled"
-      :class="{ closed: !isFabledOpen }"
-      v-if="grimoire.fabled.length"
-    >
+    <div class="fabled" :class="{ closed: !isFabledOpen }" v-if="fabled.length">
       <h3>
         <span>Fabled</span>
         <font-awesome-icon icon="times-circle" @click.stop="toggleFabled" />
@@ -60,11 +56,29 @@
       </h3>
       <ul>
         <li
-          v-for="(fabled, index) in grimoire.fabled"
+          v-for="(role, index) in fabled"
           :key="index"
           @click="removeFabled(index)"
         >
-          <Token :role="fabled"></Token>
+          <div
+            class="night-order first"
+            v-if="nightOrder.get(role).first && grimoire.isNightOrder"
+          >
+            <em>{{ nightOrder.get(role).first }}.</em>
+            <span v-if="role.firstNightReminder">{{
+              role.firstNightReminder
+            }}</span>
+          </div>
+          <div
+            class="night-order other"
+            v-if="nightOrder.get(role).other && grimoire.isNightOrder"
+          >
+            <em>{{ nightOrder.get(role).other }}.</em>
+            <span v-if="role.otherNightReminder">{{
+              role.otherNightReminder
+            }}</span>
+          </div>
+          <Token :role="role"></Token>
         </li>
       </ul>
     </div>
@@ -75,7 +89,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import Player from "./Player";
 import Token from "./Token";
 import ReminderModal from "./modals/ReminderModal";
@@ -89,13 +103,14 @@ export default {
     ReminderModal
   },
   computed: {
+    ...mapGetters({ nightOrder: "players/nightOrder" }),
     ...mapState(["grimoire", "roles", "session"]),
-    ...mapState("players", ["players"])
+    ...mapState("players", ["players", "bluffs", "fabled"])
   },
   data() {
     return {
       selectedPlayer: 0,
-      bluffs: 3,
+      bluffSize: 3,
       swap: -1,
       move: -1,
       nominate: -1,
@@ -116,7 +131,7 @@ export default {
     },
     removeFabled(index) {
       if (this.session.isSpectator) return;
-      this.$store.commit("setFabled", { index });
+      this.$store.commit("players/setFabled", { index });
     },
     handleTrigger(playerIndex, [method, params]) {
       if (typeof this[method] === "function") {
@@ -198,6 +213,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../vars.scss";
+
 #townsquare {
   width: 100%;
   height: 100%;
@@ -292,7 +309,9 @@ export default {
       .life,
       .token,
       .shroud,
-      .night {
+      .night-order,
+      .seat {
+        animation-delay: ($i - 1) * 50ms;
         transition-delay: ($i - 1) * 50ms;
       }
 
@@ -320,8 +339,8 @@ export default {
 }
 
 /***** Demon bluffs / Fabled *******/
-.bluffs,
-.fabled {
+#townsquare > .bluffs,
+#townsquare > .fabled {
   position: absolute;
   &.bluffs {
     bottom: 10px;
@@ -413,6 +432,9 @@ export default {
     ul li {
       width: 0;
       height: 0;
+      .night-order {
+        opacity: 0;
+      }
       .token {
         border-width: 0;
       }
@@ -426,6 +448,153 @@ export default {
   transition: opacity 250ms;
   background-image: url("../assets/icons/x.png");
   z-index: 2;
+}
+
+/**** Night reminders ****/
+.night-order {
+  position: absolute;
+  width: 100%;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 200ms;
+  display: flex;
+  top: 0;
+  align-items: center;
+  pointer-events: none;
+
+  &:after {
+    content: " ";
+    display: block;
+    padding-top: 100%;
+  }
+
+  #townsquare.public & {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &:hover ~ .token .ability {
+    opacity: 0;
+  }
+
+  span {
+    display: flex;
+    position: absolute;
+    padding: 5px 10px 5px 30px;
+    width: 350px;
+    z-index: 25;
+    font-size: 70%;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    border: 3px solid black;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+    text-align: left;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+
+    &:before {
+      transform: rotate(-90deg);
+      transform-origin: center top;
+      left: -98px;
+      top: 50%;
+      font-size: 100%;
+      position: absolute;
+      font-weight: bold;
+      text-align: center;
+      width: 200px;
+    }
+
+    &:after {
+      content: " ";
+      border: 10px solid transparent;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+  }
+
+  &.first span {
+    right: 120%;
+    background: linear-gradient(
+      to right,
+      $townsfolk 0%,
+      rgba(0, 0, 0, 0.5) 20%
+    );
+    &:before {
+      content: "First Night";
+    }
+    &:after {
+      border-left-color: $townsfolk;
+      margin-left: 3px;
+      left: 100%;
+    }
+  }
+
+  &.other span {
+    left: 120%;
+    background: linear-gradient(to right, $demon 0%, rgba(0, 0, 0, 0.5) 20%);
+    &:before {
+      content: "Other Nights";
+    }
+    &:after {
+      right: 100%;
+      margin-right: 3px;
+      border-right-color: $demon;
+    }
+  }
+
+  em {
+    font-style: normal;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid black;
+    filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5));
+    font-weight: bold;
+    opacity: 1;
+    pointer-events: all;
+    transition: opacity 200ms;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+  }
+
+  &.first em {
+    left: -10%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, $townsfolk 100%);
+  }
+
+  &.other em {
+    right: -10%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, $demon 100%);
+  }
+
+  em:hover + span {
+    opacity: 1;
+  }
+
+  #app.screenshot & {
+    display: none;
+  }
+
+  // adjustment for fabled
+  .fabled &.first {
+    span {
+      right: auto;
+      left: 40px;
+      &:after {
+        left: auto;
+        right: 100%;
+        margin-left: 0;
+        margin-right: 3px;
+        border-left-color: transparent;
+        border-right-color: $townsfolk;
+      }
+    }
+  }
 }
 
 #townsquare:not(.spectator) .fabled ul li:hover .token:before {

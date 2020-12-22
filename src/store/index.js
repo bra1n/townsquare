@@ -10,17 +10,16 @@ import fabledJSON from "../fabled.json";
 
 Vue.use(Vuex);
 
+const editionJSONbyId = new Map(
+  editionJSON.map(edition => [edition.id, edition])
+);
 const rolesJSONbyId = new Map(rolesJSON.map(role => [role.id, role]));
 const fabled = new Map(fabledJSON.map(role => [role.id, role]));
 
-const getRolesByEdition = (edition = "tb") => {
-  const selectedEdition =
-    editionJSON.find(({ id }) => id === edition) || editionJSON[0];
+const getRolesByEdition = (edition = editionJSON[0]) => {
   return new Map(
     rolesJSON
-      .filter(
-        r => r.edition === edition || selectedEdition.roles.includes(r.id)
-      )
+      .filter(r => r.edition === edition.id || edition.roles.includes(r.id))
       .sort((a, b) => b.team.localeCompare(a.team))
       .map(role => [role.id, role])
   );
@@ -50,26 +49,27 @@ export default new Vuex.Store({
   },
   state: {
     grimoire: {
+      isNight: false,
       isNightOrder: true,
       isPublic: true,
       isMenuOpen: false,
       isScreenshot: false,
       isScreenshotSuccess: false,
       zoom: 0,
-      background: "",
-      bluffs: [],
-      fabled: []
+      background: ""
     },
     modals: {
       edition: false,
       fabled: false,
+      gameState: false,
       nightOrder: false,
       reference: false,
       reminder: false,
       role: false,
-      roles: false
+      roles: false,
+      voteHistory: false
     },
-    edition: "tb",
+    edition: editionJSONbyId.get("tb"),
     roles: getRolesByEdition(),
     fabled
   },
@@ -88,7 +88,10 @@ export default new Vuex.Store({
           const strippedRole = {};
           for (let prop in role) {
             const value = role[prop];
-            if (prop === "image" && value.match(new RegExp("^" + imageBase))) {
+            if (
+              prop === "image" &&
+              value.toLocaleLowerCase().includes(imageBase)
+            ) {
               continue;
             }
             if (prop !== "isCustom" && value !== customRole[prop]) {
@@ -115,6 +118,13 @@ export default new Vuex.Store({
         grimoire.isPublic ? "Town Square" : "Grimoire"
       }`;
     },
+    toggleNight({ grimoire }, isNight) {
+      if (isNight === true || isNight === false) {
+        grimoire.isNight = isNight;
+      } else {
+        grimoire.isNight = !grimoire.isNight;
+      }
+    },
     toggleNightOrder({ grimoire }) {
       grimoire.isNightOrder = !grimoire.isNightOrder;
     },
@@ -123,24 +133,6 @@ export default new Vuex.Store({
     },
     setBackground({ grimoire }, background) {
       grimoire.background = background;
-    },
-    setBluff({ grimoire }, { index, role } = {}) {
-      if (index !== undefined) {
-        grimoire.bluffs.splice(index, 1, role);
-      } else {
-        grimoire.bluffs = [];
-      }
-    },
-    setFabled({ grimoire }, { index, fabled } = {}) {
-      if (index !== undefined) {
-        grimoire.fabled.splice(index, 1);
-      } else if (fabled) {
-        if (!Array.isArray(fabled)) {
-          grimoire.fabled.push(fabled);
-        } else {
-          grimoire.fabled = fabled;
-        }
-      }
     },
     toggleModal({ modals }, name) {
       if (name) {
@@ -171,7 +163,9 @@ export default new Vuex.Store({
           // map existing roles to base definition or pre-populate custom roles to ensure all properties
           .map(
             role =>
-              rolesJSONbyId.get(role.id) || Object.assign({}, customRole, role)
+              rolesJSONbyId.get(role.id) ||
+              state.roles.get(role.id) ||
+              Object.assign({}, customRole, role)
           )
           // default empty icons to good / evil / traveler
           .map(role => {
@@ -194,11 +188,13 @@ export default new Vuex.Store({
       );
     },
     setEdition(state, edition) {
-      state.edition = edition;
-      state.modals.edition = false;
-      if (edition !== "custom") {
-        state.roles = getRolesByEdition(edition);
+      if (editionJSONbyId.has(edition.id)) {
+        state.edition = editionJSONbyId.get(edition.id);
+        state.roles = getRolesByEdition(state.edition);
+      } else {
+        state.edition = edition;
       }
+      state.modals.edition = false;
     }
   },
   plugins: [persistence, socket]

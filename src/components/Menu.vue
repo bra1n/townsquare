@@ -26,7 +26,7 @@
         :class="{ success: grimoire.isScreenshotSuccess }"
       />
     </span>
-    <div class="menu" v-bind:class="{ open: grimoire.isMenuOpen }">
+    <div class="menu" :class="{ open: grimoire.isMenuOpen }">
       <font-awesome-icon icon="cog" @click="toggleMenu" />
       <ul>
         <li class="tabs" :class="tab">
@@ -49,6 +49,14 @@
             <template v-if="grimoire.isPublic">Show</template>
             <em>[G]</em>
           </li>
+          <li @click="toggleNight" v-if="!session.isSpectator">
+            <template v-if="!grimoire.isNight">Switch to Night</template>
+            <template v-if="grimoire.isNight">Switch to Day</template>
+            <em
+              ><font-awesome-icon
+                :icon="['fas', grimoire.isNight ? 'sun' : 'cloud-moon']"
+            /></em>
+          </li>
           <li @click="toggleNightOrder" v-if="players.length">
             Night order
             <em
@@ -58,10 +66,6 @@
                   grimoire.isNightOrder ? 'check-square' : 'square'
                 ]"
             /></em>
-          </li>
-          <li v-if="!session.isSpectator" @click="toggleModal('fabled')">
-            Add Fabled
-            <em><font-awesome-icon icon="dragon"/></em>
           </li>
           <li v-if="players.length">
             Zoom
@@ -104,6 +108,17 @@
             Copy player link
             <em><font-awesome-icon icon="copy"/></em>
           </li>
+          <li v-if="!session.isSpectator" @click="distributeRoles">
+            Send Characters
+            <em><font-awesome-icon icon="theater-masks"/></em>
+          </li>
+          <li
+            v-if="session.voteHistory.length"
+            @click="toggleModal('voteHistory')"
+          >
+            Nomination history
+            <em><font-awesome-icon icon="hand-paper"/></em>
+          </li>
           <li @click="leaveSession" v-if="session.sessionId">
             Leave Session
             <em>{{ session.sessionId }}</em>
@@ -138,6 +153,10 @@
             Choose & Assign
             <em>[C]</em>
           </li>
+          <li v-if="!session.isSpectator" @click="toggleModal('fabled')">
+            Add Fabled
+            <em><font-awesome-icon icon="dragon"/></em>
+          </li>
           <li @click="clearRoles" v-if="players.length">
             Remove all
             <em><font-awesome-icon icon="trash-alt"/></em>
@@ -154,6 +173,10 @@
           <li @click="toggleModal('nightOrder')">
             Night Order Sheet
             <em>[N]</em>
+          </li>
+          <li @click="toggleModal('gameState')">
+            Game State JSON
+            <em><font-awesome-icon icon="file-code"/></em>
           </li>
           <li>
             <a href="https://discord.gg/Gd7ybwWbFk" target="_blank">
@@ -215,6 +238,7 @@ export default {
         Math.round(Math.random() * 10000)
       );
       if (sessionId) {
+        this.$store.commit("session/clearVoteHistory");
         this.$store.commit("session/setSpectator", false);
         this.$store.commit(
           "session/setSessionId",
@@ -233,17 +257,33 @@ export default {
         .then(({ state }) => {
           if (state === "granted" || state === "prompt") {
             const url = window.location.href.split("#")[0];
-            const link = url + "#play/" + this.session.sessionId;
+            const link = url + "#" + this.session.sessionId;
             navigator.clipboard.writeText(link);
           }
         });
+    },
+    distributeRoles() {
+      if (this.session.isSpectator) return;
+      const popup =
+        "Do you want to distribute assigned characters to all SEATED players?";
+      if (confirm(popup)) {
+        this.$store.commit("session/distributeRoles", true);
+        setTimeout(
+          (() => {
+            this.$store.commit("session/distributeRoles", false);
+          }).bind(this),
+          2000
+        );
+      }
     },
     joinSession() {
       const sessionId = prompt(
         "Enter the channel number / name of the session you want to join"
       );
       if (sessionId) {
+        this.$store.commit("session/clearVoteHistory");
         this.$store.commit("session/setSpectator", true);
+        this.$store.commit("toggleGrimoire", false);
         this.$store.commit(
           "session/setSessionId",
           sessionId
@@ -277,18 +317,17 @@ export default {
       if (this.session.isSpectator) return;
       if (confirm("Are you sure you want to remove all players?")) {
         this.$store.commit("players/clear");
-        this.$store.commit("setBluff");
       }
     },
     clearRoles() {
       if (confirm("Are you sure you want to remove all player roles?")) {
         this.$store.dispatch("players/clearRoles");
-        this.$store.commit("setBluff");
       }
     },
     ...mapMutations([
       "toggleGrimoire",
       "toggleMenu",
+      "toggleNight",
       "toggleNightOrder",
       "updateScreenshot",
       "setZoom",

@@ -3,7 +3,7 @@
     <span
       class="icon"
       v-if="role.id"
-      v-bind:style="{
+      :style="{
         backgroundImage: `url(${role.image ||
           require('../assets/icons/' + role.id + '.png')})`
       }"
@@ -18,7 +18,7 @@
     ></span>
     <span
       v-if="role.reminders && role.reminders.length"
-      v-bind:class="['leaf-top' + role.reminders.length]"
+      :class="['leaf-top' + role.reminders.length]"
     ></span>
     <span class="leaf-orange" v-if="role.setup"></span>
     <svg viewBox="0 0 150 150" class="name">
@@ -32,17 +32,14 @@
         x="66.6%"
         text-anchor="middle"
         class="label mozilla"
-        v-bind:font-size="role.name | nameToFontSize"
+        :font-size="role.name | nameToFontSize"
       >
         <textPath xlink:href="#curve">
           {{ role.name }}
         </textPath>
       </text>
     </svg>
-    <div
-      class="edition"
-      v-bind:class="[`edition-${role.edition}`, role.team]"
-    ></div>
+    <div class="edition" :class="[`edition-${role.edition}`, role.team]"></div>
     <div class="ability" v-if="role.ability">
       {{ role.ability }}
     </div>

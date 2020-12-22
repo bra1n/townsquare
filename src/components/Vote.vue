@@ -5,6 +5,7 @@
       <span class="nominator" :style="nominatorStyle"></span>
     </div>
     <div class="overlay">
+      <audio src="../assets/sounds/countdown.mp3"></audio>
       <em class="blue">{{ nominator.name }}</em> nominated
       <em>{{ nominee.name }}</em
       >!
@@ -21,48 +22,86 @@
         <em>majority</em>.
       </template>
 
-      <div v-if="session.lockedVote > 1">
+      <div v-if="session.isVoteInProgress">
         <em class="blue" v-if="voters.length">{{ voters.join(", ") }} </em>
         <span v-else>nobody</span>
-        voted <em>YES</em>
+        had their hand <em>UP</em>
       </div>
 
       <template v-if="!session.isSpectator">
-        <div v-if="!session.lockedVote">
-          Vote time per player:
+        <div v-if="!session.isVoteInProgress">
+          Time per player:
           <font-awesome-icon
-            @mousedown.prevent="setVotingSpeed(-1)"
+            @mousedown.prevent="setVotingSpeed(-500)"
             icon="minus-circle"
           />
-          {{ session.votingSpeed }}s
+          {{ session.votingSpeed / 1000 }}s
           <font-awesome-icon
-            @mousedown.prevent="setVotingSpeed(1)"
+            @mousedown.prevent="setVotingSpeed(500)"
             icon="plus-circle"
           />
         </div>
         <div class="button-group">
-          <div class="button" v-if="!session.lockedVote" @click="start">
-            Start Vote
+          <div
+            class="button townsfolk"
+            v-if="!session.isVoteInProgress"
+            @click="countdown"
+          >
+            Countdown
           </div>
-          <div class="button" v-else @click="stop">
-            Reset Vote
+          <div class="button" v-if="!session.isVoteInProgress" @click="start">
+            {{ session.lockedVote ? "Restart" : "Start" }}
           </div>
-          <div class="button" @click="finish">Finish</div>
+          <template v-else>
+            <div
+              class="button townsfolk"
+              :class="{ disabled: !session.lockedVote }"
+              @click="pause"
+            >
+              {{ voteTimer ? "Pause" : "Resume" }}
+            </div>
+            <div class="button" @click="stop">Reset</div>
+          </template>
+          <div class="button demon" @click="finish">Close</div>
         </div>
       </template>
       <template v-else-if="canVote">
-        <div v-if="!session.lockedVote">
-          {{ session.votingSpeed }} seconds between votes
+        <div v-if="!session.isVoteInProgress">
+          {{ session.votingSpeed / 1000 }} seconds between votes
         </div>
         <div class="button-group">
-          <div class="button vote-no" @click="vote(false)">Vote NO</div>
-          <div class="button vote-yes" @click="vote(true)">Vote YES</div>
+          <div
+            class="button townsfolk"
+            @click="vote(false)"
+            :class="{ disabled: !currentVote }"
+          >
+            Hand DOWN
+          </div>
+          <div
+            class="button demon"
+            @click="vote(true)"
+            :class="{ disabled: currentVote }"
+          >
+            Hand UP
+          </div>
         </div>
       </template>
       <div v-else-if="!player">
         Please claim a seat to vote.
       </div>
     </div>
+    <transition name="blur">
+      <div
+        class="countdown"
+        v-if="session.isVoteInProgress && !session.lockedVote"
+      >
+        <span>3</span>
+        <span>2</span>
+        <span>1</span>
+        <span>GO</span>
+        <audio autoplay src="../assets/sounds/countdown.mp3"></audio>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -95,11 +134,15 @@ export default {
       const rotation = (360 * (nomination + Math.min(lock, players))) / players;
       return {
         transform: `rotate(${Math.round(rotation)}deg)`,
-        transitionDuration: this.session.votingSpeed - 0.1 + "s"
+        transitionDuration: this.session.votingSpeed - 100 + "ms"
       };
     },
     player: function() {
       return this.players.find(p => p.id === this.session.playerId);
+    },
+    currentVote: function() {
+      const index = this.players.findIndex(p => p.id === this.session.playerId);
+      return index >= 0 ? !!this.session.votes[index] : undefined;
     },
     canVote: function() {
       if (!this.player) return false;
@@ -124,23 +167,54 @@ export default {
       return reorder.slice(0, this.session.lockedVote - 1).filter(n => !!n);
     }
   },
+  data() {
+    return {
+      voteTimer: null
+    };
+  },
   methods: {
+    countdown() {
+      this.$store.commit("session/setVoteInProgress", true);
+      this.$store.commit("session/lockVote", 0);
+      this.voteTimer = setInterval(() => {
+        this.start();
+      }, 4000);
+    },
     start() {
-      this.$store.commit("session/lockVote");
+      this.$store.commit("session/setVoteInProgress", true);
+      this.$store.commit("session/lockVote", 1);
       clearInterval(this.voteTimer);
       this.voteTimer = setInterval(() => {
         this.$store.commit("session/lockVote");
         if (this.session.lockedVote > this.players.length) {
           clearInterval(this.voteTimer);
+          this.$store.commit("session/setVoteInProgress", false);
         }
-      }, this.session.votingSpeed * 1000);
+      }, this.session.votingSpeed);
+    },
+    pause() {
+      if (this.voteTimer) {
+        clearInterval(this.voteTimer);
+        this.voteTimer = null;
+      } else {
+        this.voteTimer = setInterval(() => {
+          this.$store.commit("session/lockVote");
+          if (this.session.lockedVote > this.players.length) {
+            clearInterval(this.voteTimer);
+            this.$store.commit("session/setVoteInProgress", false);
+          }
+        }, this.session.votingSpeed);
+      }
     },
     stop() {
       clearInterval(this.voteTimer);
+      this.voteTimer = null;
+      this.$store.commit("session/setVoteInProgress", false);
       this.$store.commit("session/lockVote", 0);
     },
     finish() {
       clearInterval(this.voteTimer);
+      this.$store.commit("session/addHistory", this.players);
       this.$store.commit("session/nomination");
     },
     vote(vote) {
@@ -151,7 +225,7 @@ export default {
       }
     },
     setVotingSpeed(diff) {
-      const speed = this.session.votingSpeed + diff;
+      const speed = Math.round(this.session.votingSpeed + diff);
       if (speed > 0) {
         this.$store.commit("session/setVotingSpeed", speed);
       }
@@ -257,29 +331,78 @@ export default {
   }
 }
 
-.button.vote-no {
-  background: radial-gradient(
-        at 0 -15%,
-        rgba(255, 255, 255, 0.07) 70%,
-        rgba(255, 255, 255, 0) 71%
-      )
-      0 0/80% 90% no-repeat content-box,
-    linear-gradient(#0031ad, rgba(5, 0, 0, 0.22)) content-box,
-    linear-gradient(#292929, #001142) border-box;
-  box-shadow: inset 0 1px 1px #002c9c, 0 0 10px #000;
-  &:hover {
-    color: #008cf7;
+@keyframes countdown {
+  0% {
+    transform: scale(1.5);
+    opacity: 0;
+    filter: blur(20px);
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    filter: blur(0);
+  }
+  90% {
+    color: $townsfolk;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
-.button.vote-yes {
-  background: radial-gradient(
-        at 0 -15%,
-        rgba(255, 255, 255, 0.07) 70%,
-        rgba(255, 255, 255, 0) 71%
-      )
-      0 0/80% 90% no-repeat content-box,
-    linear-gradient(#ad0000, rgba(5, 0, 0, 0.22)) content-box,
-    linear-gradient(#292929, #420000) border-box;
-  box-shadow: inset 0 1px 1px #9c0000, 0 0 10px #000;
+
+@keyframes countdown-go {
+  0% {
+    transform: scale(1.5);
+    opacity: 0;
+    filter: blur(20px);
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    filter: blur(0);
+  }
+  90% {
+    color: $demon;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.countdown {
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  audio {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+  }
+  span {
+    position: absolute;
+    font-size: 8em;
+    font-weight: bold;
+    opacity: 0;
+  }
+  span:nth-child(1) {
+    animation: countdown 1100ms normal forwards;
+  }
+  span:nth-child(2) {
+    animation: countdown 1100ms normal forwards 1000ms;
+  }
+  span:nth-child(3) {
+    animation: countdown 1100ms normal forwards 2000ms;
+  }
+  span:nth-child(4) {
+    animation: countdown-go 1100ms normal forwards 3000ms;
+  }
 }
 </style>

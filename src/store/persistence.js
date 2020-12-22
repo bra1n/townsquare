@@ -9,23 +9,24 @@ module.exports = store => {
   if (localStorage.isPublic !== undefined) {
     store.commit("toggleGrimoire", JSON.parse(localStorage.isPublic));
   }
-  if (localStorage.edition !== undefined) {
-    // this will initialize state.roles!
-    store.commit("setEdition", localStorage.edition);
-  }
   if (localStorage.roles !== undefined) {
     store.commit("setCustomRoles", JSON.parse(localStorage.roles));
+    store.commit("setEdition", { id: "custom" });
+  }
+  if (localStorage.edition !== undefined) {
+    // this will initialize state.roles for official editions
+    store.commit("setEdition", JSON.parse(localStorage.edition));
   }
   if (localStorage.bluffs !== undefined) {
     JSON.parse(localStorage.bluffs).forEach((role, index) => {
-      store.commit("setBluff", {
+      store.commit("players/setBluff", {
         index,
         role: store.state.roles.get(role) || {}
       });
     });
   }
   if (localStorage.fabled !== undefined) {
-    store.commit("setFabled", {
+    store.commit("players/setFabled", {
       fabled: JSON.parse(localStorage.fabled).map(id =>
         store.state.fabled.get(id)
       )
@@ -74,10 +75,8 @@ module.exports = store => {
         }
         break;
       case "setEdition":
-        if (payload === "custom") {
-          localStorage.removeItem("edition");
-        } else {
-          localStorage.setItem("edition", payload);
+        localStorage.setItem("edition", JSON.stringify(payload));
+        if (state.edition.isOfficial) {
           localStorage.removeItem("roles");
         }
         break;
@@ -85,19 +84,22 @@ module.exports = store => {
         if (!payload.length) {
           localStorage.removeItem("roles");
         } else {
-          localStorage.setItem("roles", JSON.stringify(payload));
+          localStorage.setItem(
+            "roles",
+            JSON.stringify(store.getters.customRoles)
+          );
         }
         break;
-      case "setBluff":
+      case "players/setBluff":
         localStorage.setItem(
           "bluffs",
-          JSON.stringify(state.grimoire.bluffs.map(({ id }) => id))
+          JSON.stringify(state.players.bluffs.map(({ id }) => id))
         );
         break;
-      case "setFabled":
+      case "players/setFabled":
         localStorage.setItem(
           "fabled",
-          JSON.stringify(state.grimoire.fabled.map(({ id }) => id))
+          JSON.stringify(state.players.fabled.map(({ id }) => id))
         );
         break;
       case "players/add":

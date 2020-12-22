@@ -3,13 +3,17 @@
     id="app"
     @keyup="keyup"
     tabindex="-1"
-    v-bind:class="{ screenshot: grimoire.isScreenshot }"
-    v-bind:style="{
+    :class="{
+      screenshot: grimoire.isScreenshot,
+      night: grimoire.isNight
+    }"
+    :style="{
       backgroundImage: grimoire.background
         ? `url('${grimoire.background}')`
         : ''
     }"
   >
+    <div class="backdrop"></div>
     <transition name="blur">
       <Intro v-if="!players.length"></Intro>
       <TownInfo v-if="players.length && !session.nomination"></TownInfo>
@@ -22,6 +26,8 @@
     <RolesModal />
     <ReferenceModal />
     <NightOrderModal />
+    <VoteHistoryModal />
+    <GameStateModal />
     <Gradients />
     <span id="version">v{{ version }}</span>
   </div>
@@ -41,9 +47,13 @@ import Vote from "./components/Vote";
 import Gradients from "./components/Gradients";
 import NightOrderModal from "./components/modals/NightOrderModal";
 import FabledModal from "@/components/modals/FabledModal";
+import VoteHistoryModal from "@/components/modals/VoteHistoryModal";
+import GameStateModal from "@/components/modals/GameStateModal";
 
 export default {
   components: {
+    GameStateModal,
+    VoteHistoryModal,
     FabledModal,
     NightOrderModal,
     Vote,
@@ -148,9 +158,12 @@ body {
   body {
     font-size: 1.1em;
   }
-  .player .night em {
+  .night-order em {
     width: 30px;
     height: 30px;
+  }
+  .fabled .night-order.first span {
+    left: 30px;
   }
 }
 
@@ -163,9 +176,12 @@ body {
   #controls svg {
     font-size: 20px;
   }
-  .player .night em {
+  .night-order em {
     width: 20px;
     height: 20px;
+  }
+  .fabled .night-order.first span {
+    left: 20px;
   }
   #townsquare {
     padding: 10px;
@@ -255,6 +271,7 @@ ul {
 
 #version {
   position: absolute;
+  text-align: right;
   right: 10px;
   bottom: 10px;
   font-size: 60%;
@@ -318,6 +335,7 @@ ul {
   &.disabled {
     color: gray;
     cursor: default;
+    opacity: 0.75;
   }
   &:before,
   &:after {
@@ -326,5 +344,73 @@ ul {
     width: 10px;
     height: 10px;
   }
+  &.townsfolk {
+    background: radial-gradient(
+          at 0 -15%,
+          rgba(255, 255, 255, 0.07) 70%,
+          rgba(255, 255, 255, 0) 71%
+        )
+        0 0/80% 90% no-repeat content-box,
+      linear-gradient(#0031ad, rgba(5, 0, 0, 0.22)) content-box,
+      linear-gradient(#292929, #001142) border-box;
+    box-shadow: inset 0 1px 1px #002c9c, 0 0 10px #000;
+    &:hover:not(.disabled) {
+      color: #008cf7;
+    }
+  }
+  &.demon {
+    background: radial-gradient(
+          at 0 -15%,
+          rgba(255, 255, 255, 0.07) 70%,
+          rgba(255, 255, 255, 0) 71%
+        )
+        0 0/80% 90% no-repeat content-box,
+      linear-gradient(#ad0000, rgba(5, 0, 0, 0.22)) content-box,
+      linear-gradient(#292929, #420000) border-box;
+    box-shadow: inset 0 1px 1px #9c0000, 0 0 10px #000;
+  }
+}
+
+/* Night phase backdrop */
+#app > .backdrop {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  pointer-events: none;
+  background: black;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(1, 22, 46, 1) 50%,
+    rgba(0, 39, 70, 1) 100%
+  );
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  &:after {
+    content: " ";
+    display: block;
+    width: 100%;
+    padding-right: 2000px;
+    height: 100%;
+    background: url("assets/clouds.png") repeat;
+    background-size: 2000px auto;
+    animation: move-background 120s linear infinite;
+    opacity: 0.3;
+  }
+}
+
+@keyframes move-background {
+  from {
+    transform: translate3d(-2000px, 0px, 0px);
+  }
+  to {
+    transform: translate3d(0px, 0px, 0px);
+  }
+}
+
+#app.night > .backdrop {
+  opacity: 0.5;
 }
 </style>

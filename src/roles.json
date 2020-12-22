@@ -1288,7 +1288,10 @@
     "otherNight": 47,
     "otherNightReminder": "Choose a character type you have not chosen yet. Point to a player whose character is of that type, if there are any. Place the Balloonist's \"Seen\" reminder next to that character.",
     "reminders": [
-      "Seen"
+      "Seen Townsfolk",
+      "Seen Outsider",
+      "Seen Minion",
+      "Seen Demon"
     ],
     "setup": true,
     "name": "Balloonist",

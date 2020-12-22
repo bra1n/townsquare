@@ -9,7 +9,6 @@ const set = key => (state, val) => {
  * @param state session state
  * @param index seat of the player in the circle
  * @param vote true or false
- * @param indexAdjusted seat of the player counted from the nominated player
  */
 const handleVote = (state, [index, vote]) => {
   if (!state.nomination) return;
@@ -28,7 +27,10 @@ const state = () => ({
   nomination: false,
   votes: [],
   lockedVote: 0,
-  votingSpeed: 3
+  votingSpeed: 3000,
+  isVoteInProgress: false,
+  voteHistory: [],
+  isRolesDistributed: false
 });
 
 const getters = {};
@@ -43,12 +45,42 @@ const mutations = {
   setPlayerCount: set("playerCount"),
   setPing: set("ping"),
   setVotingSpeed: set("votingSpeed"),
+  setVoteInProgress: set("isVoteInProgress"),
   claimSeat: set("claimedSeat"),
-  nomination(state, { nomination, votes, votingSpeed, lockedVote } = {}) {
+  distributeRoles: set("isRolesDistributed"),
+  nomination(
+    state,
+    { nomination, votes, votingSpeed, lockedVote, isVoteInProgress } = {}
+  ) {
     state.nomination = nomination || false;
     state.votes = votes || [];
     state.votingSpeed = votingSpeed || state.votingSpeed;
     state.lockedVote = lockedVote || 0;
+    state.isVoteInProgress = isVoteInProgress || false;
+  },
+  /**
+   * Create an entry in the vote history log. Requires current player array because it might change later in the game.
+   * Only stores votes that were completed.
+   * @param state
+   * @param players
+   */
+  addHistory(state, players) {
+    if (!state.nomination || state.lockedVote <= players.length) return;
+    const isBanishment = players[state.nomination[1]].team === "traveler";
+    state.voteHistory.push({
+      nominator: players[state.nomination[0]].name,
+      nominee: players[state.nomination[1]].name,
+      type: isBanishment ? "Banishment" : "Execution",
+      majority: Math.ceil(
+        players.filter(player => !player.isDead || isBanishment).length / 2
+      ),
+      votes: players
+        .filter((player, index) => state.votes[index])
+        .map(({ name }) => name)
+    });
+  },
+  clearVoteHistory(state) {
+    state.voteHistory = [];
   },
   /**
    * Store a vote with and without syncing it to the live session.

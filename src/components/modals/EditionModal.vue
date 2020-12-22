@@ -1,22 +1,29 @@
 <template>
-  <Modal
-    class="editions"
-    v-show="modals.edition"
-    @close="toggleModal('edition')"
-  >
+  <Modal class="editions" v-if="modals.edition" @close="toggleModal('edition')">
     <div v-if="!isCustom">
       <h3>Select an edition:</h3>
       <ul class="editions">
         <li
           v-for="edition in editions"
           class="edition"
-          v-bind:class="['edition-' + edition.id]"
-          v-bind:key="edition.id"
-          @click="setEdition(edition.id)"
+          :class="['edition-' + edition.id]"
+          :style="{
+            backgroundImage: `url(${require('../../assets/editions/' +
+              edition.id +
+              '.png')})`
+          }"
+          :key="edition.id"
+          @click="setEdition(edition)"
         >
           {{ edition.name }}
         </li>
-        <li class="edition edition-custom" @click="isCustom = true">
+        <li
+          class="edition edition-custom"
+          @click="isCustom = true"
+          :style="{
+            backgroundImage: `url(${require('../../assets/editions/custom.png')})`
+          }"
+        >
           Custom Script / Characters
         </li>
       </ul>
@@ -38,11 +45,12 @@
         >the documentation</a
       >
       on how to write a custom character definition file.
+      <b>Only load custom JSON files from sources that you trust!</b>
       <h3>Some popular custom scripts:</h3>
       <ul class="scripts">
         <li
           v-for="(script, index) in scripts"
-          v-bind:key="index"
+          :key="index"
           @click="handleURL(script[1])"
         >
           {{ script[0] }}
@@ -85,11 +93,11 @@ export default {
       scripts: [
         [
           "Deadly Penance Day",
-          "https://gist.githubusercontent.com/bra1n/0337cc44c6fd2c44f7589256ed5486d2/raw/4a7a1545004620146f47583cde4b05f77dd9b6d2/penanceday.json"
+          "https://gist.githubusercontent.com/bra1n/0337cc44c6fd2c44f7589256ed5486d2/raw/16be38fa3c01aaf49827303ac80577bdb52c0b25/penanceday.json"
         ],
         [
           "Catfishing 9.0",
-          "https://gist.githubusercontent.com/bra1n/8a5ec41a7bbf945f6b7dfc1cef72b569/raw/998767f82badc48cbb9c284765ad36330f7e28f6/catfishing.json"
+          "https://gist.githubusercontent.com/bra1n/8a5ec41a7bbf945f6b7dfc1cef72b569/raw/fed370d55554e0d83e9d56023c230099f41d0660/catfishing.json"
         ],
         [
           "On Thin Ice (Teensyville)",
@@ -150,12 +158,20 @@ export default {
     },
     parseRoles(roles) {
       if (!roles || !roles.length) return;
+      const metaIndex = roles.findIndex(({ id }) => id === "_meta");
+      let meta = {};
+      if (metaIndex > -1) {
+        meta = roles.splice(metaIndex, 1).pop();
+      }
       const customRoles = roles.map(role => {
         role.id = role.id.toLocaleLowerCase().replace(/[^a-z0-9]/g, "");
         return role;
       });
       this.$store.commit("setCustomRoles", customRoles);
-      this.$store.commit("setEdition", "custom");
+      this.$store.commit(
+        "setEdition",
+        Object.assign({}, meta, { id: "custom" })
+      );
       // check for fabled and set those too, if present
       if (customRoles.some(({ id }) => this.$store.state.fabled.has(id))) {
         const fabled = [];
@@ -164,7 +180,7 @@ export default {
             fabled.push(this.$store.state.fabled.get(id));
           }
         });
-        this.$store.commit("setFabled", { fabled });
+        this.$store.commit("players/setFabled", { fabled });
       }
       this.isCustom = false;
     },
@@ -174,29 +190,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../vars";
-
-// Editions
-@each $img, $skipIcons in $editions {
-  .edition-#{$img} {
-    background-image: url("../../assets/editions/#{$img}.png");
-  }
-  @if $skipIcons != true {
-    .edition-#{$img}.townsfolk {
-      background-image: url("../../assets/editions/#{$img}-townsfolk.png");
-    }
-    .edition-#{$img}.outsider {
-      background-image: url("../../assets/editions/#{$img}-outsider.png");
-    }
-    .edition-#{$img}.minion {
-      background-image: url("../../assets/editions/#{$img}-minion.png");
-    }
-    .edition-#{$img}.demon {
-      background-image: url("../../assets/editions/#{$img}-demon.png");
-    }
-  }
-}
-
 ul.editions .edition {
   font-family: PiratesBay, sans-serif;
   letter-spacing: 1px;
