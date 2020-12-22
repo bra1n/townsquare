@@ -109,7 +109,7 @@
             <em><font-awesome-icon icon="copy"/></em>
           </li>
           <li v-if="!session.isSpectator" @click="distributeRoles">
-            Distribute Characters
+            Send Characters
             <em><font-awesome-icon icon="theater-masks"/></em>
           </li>
           <li

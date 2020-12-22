@@ -1,5 +1,12 @@
 # Release Notes
 
+## Version 2.1
+- clearing the nomination history as the Storyteller clears it for the players too
+- vote buttons should work in all situations correctly now
+- fixed some minor styling and live session issues
+
+---
+
 ## Version 2.0
 - The project is now available under its own domain: [clocktower.online](https://clocktower.online)
 - Added a feature that allows a live session Storyteller to automatically (and safely) distribute assigned
