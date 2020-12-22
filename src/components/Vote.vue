@@ -50,7 +50,7 @@
             Countdown
           </div>
           <div class="button" v-if="!session.isVoteInProgress" @click="start">
-            Start
+            {{ session.lockedVote ? "Restart" : "Start" }}
           </div>
           <template v-else>
             <div
@@ -175,13 +175,14 @@ export default {
   methods: {
     countdown() {
       this.$store.commit("session/setVoteInProgress", true);
+      this.$store.commit("session/lockVote", 0);
       this.voteTimer = setInterval(() => {
         this.start();
       }, 4000);
     },
     start() {
       this.$store.commit("session/setVoteInProgress", true);
-      this.$store.commit("session/lockVote");
+      this.$store.commit("session/lockVote", 1);
       clearInterval(this.voteTimer);
       this.voteTimer = setInterval(() => {
         this.$store.commit("session/lockVote");
@@ -196,7 +197,13 @@ export default {
         clearInterval(this.voteTimer);
         this.voteTimer = null;
       } else {
-        this.start();
+        this.voteTimer = setInterval(() => {
+          this.$store.commit("session/lockVote");
+          if (this.session.lockedVote > this.players.length) {
+            clearInterval(this.voteTimer);
+            this.$store.commit("session/setVoteInProgress", false);
+          }
+        }, this.session.votingSpeed);
       }
     },
     stop() {
