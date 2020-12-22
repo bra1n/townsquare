@@ -31,7 +31,7 @@
 - Players can no longer claim seats that are already occupied and only the Storyteller can vacate seats of other players
   (players can still vacate their own seat)
 - Characters selected in the bluff window now also show up in the list of reminder tokens
-- Homebrew scripts / custom characters no longer automatically load in live sessions, for 2 resons:
+- Homebrew scripts / custom characters no longer automatically load in live sessions, for 2 reasons:
   - the players in a live session have no control over the script that the storyteller loads,
     so a malicious storyteller could load a custom script that contains harmful / inappropriate images
   - some homebrew scripts are quite big JSON files and synching these through the live session
