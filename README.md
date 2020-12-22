@@ -1,6 +1,6 @@
 # Blood on the Clocktower Grimoire & Town Square
 
-![image](https://user-images.githubusercontent.com/325521/80531231-8f473980-899a-11ea-96d6-edbf79337cb5.png)
+![social](https://user-images.githubusercontent.com/325521/102897760-d1147b00-4468-11eb-9d7b-63a204bc9fc1.png)
 
 This is an unofficial online tool to run Blood on the Clocktower games through Discord or other digital means.
 It is supposed to aid storytellers and allow them to quickly set up and capture game states for their players.
