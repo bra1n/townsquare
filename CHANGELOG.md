@@ -1,7 +1,7 @@
 # Release Notes
 
 ## Version 2.0.3
-
+- close session when missing custom roles and open edition modal
 - added a few more metrics
 
 ---

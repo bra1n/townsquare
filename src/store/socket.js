@@ -360,6 +360,8 @@ class LiveSession {
             `Please load them before joining! ` +
             `Missing roles: ${missing.join(", ")}`
         );
+        this.disconnect();
+        this._store.commit("toggleModal", "edition");
       }
     }
   }
