@@ -1,8 +1,7 @@
 class LiveSession {
   constructor(store) {
     this._wss = "wss://live.clocktower.online:8080/";
-    //this._wss = "wss://baumgart.biz:8080/"; //todo: delete this
-    //this._wss = "ws://localhost:8081/";
+    //this._wss = "wss://localhost:8081/";
     this._socket = null;
     this._isSpectator = true;
     this._gamestate = [];

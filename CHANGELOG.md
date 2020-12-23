@@ -1,5 +1,11 @@
 # Release Notes
 
+## Version 2.0.3
+
+- added a few more metrics
+
+---
+
 ## Version 2.0.2
 - fix nomination history type not detecting travelers
 - fix live session domain whitelist
