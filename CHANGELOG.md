@@ -1,6 +1,7 @@
 # Release Notes
 
 ## Version 2.0.3
+- load roles that belong to different editions (like travelers) from gamestate
 - close session when missing custom roles and open edition modal
 - added a few more metrics
 

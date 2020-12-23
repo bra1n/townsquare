@@ -92,7 +92,10 @@ export default {
             "players/set",
             players.map(player => ({
               ...player,
-              role: this.$store.state.roles.get(player.role) || {}
+              role:
+                this.$store.state.roles.get(player.role) ||
+                this.$store.getters.rolesJSONbyId.get(player.role) ||
+                {}
             }))
           );
         }

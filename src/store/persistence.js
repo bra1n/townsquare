@@ -21,7 +21,8 @@ module.exports = store => {
     JSON.parse(localStorage.bluffs).forEach((role, index) => {
       store.commit("players/setBluff", {
         index,
-        role: store.state.roles.get(role) || {}
+        role:
+          store.state.roles.get(role) || {}
       });
     });
   }
@@ -37,7 +38,10 @@ module.exports = store => {
       "players/set",
       JSON.parse(localStorage.players).map(player => ({
         ...player,
-        role: store.state.roles.get(player.role) || {}
+        role:
+          store.state.roles.get(player.role) ||
+          store.getters.rolesJSONbyId.get(player.role) ||
+          {}
       }))
     );
   }

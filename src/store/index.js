@@ -102,7 +102,8 @@ export default new Vuex.Store({
         }
       });
       return customRoles;
-    }
+    },
+    rolesJSONbyId: () => rolesJSONbyId
   },
   mutations: {
     toggleMenu({ grimoire }) {
