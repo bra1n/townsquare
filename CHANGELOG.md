@@ -1,5 +1,11 @@
 # Release Notes
 
+## Version 2.0.4
+- fix bug with live sessions that contain travelers from a different set
+- fix server channel cleanup
+
+---
+
 ## Version 2.0.3
 - load roles that belong to different editions (like travelers) from gamestate
 - close session when missing custom roles and open edition modal

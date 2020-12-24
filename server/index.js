@@ -113,14 +113,6 @@ wss.on("connection", function connection(ws, req) {
   // start ping pong
   ws.ping(noop);
   ws.on("pong", heartbeat);
-  // remove client from channels on close
-  ws.on("close", () => {
-    const index = channels[ws.channel].indexOf(ws);
-    if (index >= 0) {
-      channels[ws.channel].splice(index, 1);
-    }
-    if (!channels[ws.channel].length) delete channels[ws.channel];
-  });
   // handle message
   ws.on("message", function incoming(data) {
     metrics.messages_incoming.inc();
@@ -180,6 +172,7 @@ wss.on("connection", function connection(ws, req) {
 
 // start ping interval timer
 const interval = setInterval(function ping() {
+  // ping each client
   wss.clients.forEach(function each(ws) {
     if (ws.isAlive === false) {
       metrics.connection_terminated_timeout.inc();
@@ -189,6 +182,20 @@ const interval = setInterval(function ping() {
     ws.pingStart = new Date().getTime();
     ws.ping(noop);
   });
+  // clean up empty channels
+  for (let channel in channels) {
+    if (
+      !channels[channel].length ||
+      !channels[channel].some(
+        ws =>
+          ws &&
+          (ws.readyState === WebSocket.OPEN ||
+            ws.readyState === WebSocket.CONNECTING)
+      )
+    ) {
+      delete channels[channel];
+    }
+  }
 }, PING_INTERVAL);
 
 // handle server shutdown

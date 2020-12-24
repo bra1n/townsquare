@@ -287,12 +287,16 @@ class LiveSession {
       });
       // roles are special, because of travelers
       if (roleId && player.role.id !== roleId) {
-        const role = this._store.state.roles.get(roleId);
-        this._store.commit("players/update", {
-          player,
-          property: "role",
-          value: role
-        });
+        const role =
+          this._store.state.roles.get(roleId) ||
+          this._store.getters.rolesJSONbyId.get(roleId);
+        if (role) {
+          this._store.commit("players/update", {
+            player,
+            property: "role",
+            value: role
+          });
+        }
       } else if (!roleId && player.role.team === "traveler") {
         this._store.commit("players/update", {
           player,
