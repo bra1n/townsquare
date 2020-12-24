@@ -423,13 +423,14 @@ class LiveSession {
   }
 
   /**
-   * Update a player based on incoming data.
+   * Update a player based on incoming data. Player only.
    * @param index
    * @param property
    * @param value
    * @private
    */
   _updatePlayer({ index, property, value }) {
+    if (!this._isSpectator) return;
     const player = this._store.state.players.players[index];
     if (!player) return;
     // special case where a player stops being a traveler
@@ -559,7 +560,7 @@ class LiveSession {
       this._store.commit("players/update", { player, property, value });
     }
     // update player session list as if this was a ping
-    this._handlePing([true, value]);
+    this._handlePing([true, value, 0]);
   }
 
   /**

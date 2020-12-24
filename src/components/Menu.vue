@@ -233,6 +233,7 @@ export default {
       }
     },
     hostSession() {
+      if (this.session.sessionId) return;
       const sessionId = prompt(
         "Enter a channel number / name for your session",
         Math.round(Math.random() * 10000)
@@ -277,6 +278,7 @@ export default {
       }
     },
     joinSession() {
+      if (this.session.sessionId) return;
       const sessionId = prompt(
         "Enter the channel number / name of the session you want to join"
       );
