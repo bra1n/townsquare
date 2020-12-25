@@ -38,7 +38,6 @@ const getters = {};
 const actions = {};
 
 const mutations = {
-  setSessionId: set("sessionId"),
   setPlayerId: set("playerId"),
   setSpectator: set("isSpectator"),
   setReconnecting: set("isReconnecting"),
@@ -48,6 +47,12 @@ const mutations = {
   setVoteInProgress: set("isVoteInProgress"),
   claimSeat: set("claimedSeat"),
   distributeRoles: set("isRolesDistributed"),
+  setSessionId(state, sessionId) {
+    state.sessionId = sessionId
+      .toLocaleLowerCase()
+      .replace(/[^0-9a-z]/g, "")
+      .substr(0, 10);
+  },
   nomination(
     state,
     { nomination, votes, votingSpeed, lockedVote, isVoteInProgress } = {}

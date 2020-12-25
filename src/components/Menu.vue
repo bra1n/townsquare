@@ -241,13 +241,7 @@ export default {
       if (sessionId) {
         this.$store.commit("session/clearVoteHistory");
         this.$store.commit("session/setSpectator", false);
-        this.$store.commit(
-          "session/setSessionId",
-          sessionId
-            .toLocaleLowerCase()
-            .replace(/[^0-9a-z]/g, "")
-            .substr(0, 10)
-        );
+        this.$store.commit("session/setSessionId", sessionId);
         this.copySessionUrl();
       }
     },
@@ -286,13 +280,7 @@ export default {
         this.$store.commit("session/clearVoteHistory");
         this.$store.commit("session/setSpectator", true);
         this.$store.commit("toggleGrimoire", false);
-        this.$store.commit(
-          "session/setSessionId",
-          sessionId
-            .toLocaleLowerCase()
-            .replace(/[^0-9a-z]/g, "")
-            .substr(0, 10)
-        );
+        this.$store.commit("session/setSessionId", sessionId);
       }
     },
     leaveSession() {
