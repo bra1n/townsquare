@@ -683,12 +683,13 @@ class LiveSession {
   }
 
   /**
-   * Update vote lock and the locked vote, if it differs.
+   * Update vote lock and the locked vote, if it differs. Player only
    * @param lock
    * @param vote
    * @private
    */
   _handleLock([lock, vote]) {
+    if (!this._isSpectator) return;
     this._store.commit("session/lockVote", lock);
     if (lock > 1) {
       const { lockedVote, nomination } = this._store.state.session;
