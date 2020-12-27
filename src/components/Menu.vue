@@ -1,6 +1,5 @@
 <template>
   <div id="controls">
-    <Screenshot ref="screenshot"></Screenshot>
     <span
       class="session"
       :class="{
@@ -17,14 +16,6 @@
     >
       <font-awesome-icon icon="broadcast-tower" />
       {{ session.playerCount }}
-    </span>
-    <span class="camera">
-      <font-awesome-icon
-        icon="camera"
-        @click="takeScreenshot()"
-        title="Take a screenshot"
-        :class="{ success: grimoire.isScreenshotSuccess }"
-      />
     </span>
     <div class="menu" :class="{ open: grimoire.isMenuOpen }">
       <font-awesome-icon icon="cog" @click="toggleMenu" />
@@ -206,12 +197,8 @@
 
 <script>
 import { mapMutations, mapState } from "vuex";
-import Screenshot from "./Screenshot";
 
 export default {
-  components: {
-    Screenshot
-  },
   computed: {
     ...mapState(["grimoire", "session"]),
     ...mapState("players", ["players"])
@@ -222,10 +209,6 @@ export default {
     };
   },
   methods: {
-    takeScreenshot(dimensions = {}) {
-      this.$store.commit("updateScreenshot");
-      this.$refs.screenshot.capture(dimensions);
-    },
     setBackground() {
       const background = prompt("Enter custom background URL");
       if (background || background === "") {
@@ -319,7 +302,6 @@ export default {
       "toggleMenu",
       "toggleNight",
       "toggleNightOrder",
-      "updateScreenshot",
       "setZoom",
       "toggleModal"
     ])
@@ -348,10 +330,6 @@ export default {
   text-align: right;
   padding-right: 50px;
   z-index: 200;
-
-  #app.screenshot & {
-    display: none;
-  }
 
   svg {
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 1));

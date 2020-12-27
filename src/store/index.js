@@ -53,8 +53,6 @@ export default new Vuex.Store({
       isNightOrder: true,
       isPublic: true,
       isMenuOpen: false,
-      isScreenshot: false,
-      isScreenshotSuccess: false,
       zoom: 0,
       background: ""
     },
@@ -142,15 +140,6 @@ export default new Vuex.Store({
       for (let modal in modals) {
         if (modal === name) continue;
         modals[modal] = false;
-      }
-    },
-    updateScreenshot({ grimoire }, status) {
-      if (status !== true && status !== false) {
-        grimoire.isScreenshotSuccess = false;
-        grimoire.isScreenshot = true;
-      } else {
-        grimoire.isScreenshotSuccess = status;
-        grimoire.isScreenshot = false;
       }
     },
     /**

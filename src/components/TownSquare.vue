@@ -13,7 +13,6 @@
         v-for="(player, index) in players"
         :key="index"
         :player="player"
-        @screenshot="$emit('screenshot', $event)"
         @trigger="handleTrigger(index, $event)"
         :class="{
           from: Math.max(swap, move, nominate) === index,
@@ -31,7 +30,6 @@
       :class="{ closed: !isBluffsOpen }"
     >
       <h3>
-        <font-awesome-icon icon="camera" @click.stop="takeScreenshot" />
         <span v-if="session.isSpectator">Other characters</span>
         <span v-else>Demon bluffs</span>
         <font-awesome-icon icon="times-circle" @click.stop="toggleBluffs" />
@@ -119,10 +117,6 @@ export default {
     };
   },
   methods: {
-    takeScreenshot() {
-      const { width, height, x, y } = this.$refs.bluffs.getBoundingClientRect();
-      this.$emit("screenshot", { width, height, x, y });
-    },
     toggleBluffs() {
       this.isBluffsOpen = !this.isBluffsOpen;
     },
@@ -371,9 +365,6 @@ export default {
     &:hover {
       color: red;
     }
-    #app.screenshot & {
-      display: none;
-    }
   }
   h3 {
     margin: 5px 1vh 0;
@@ -390,9 +381,6 @@ export default {
     svg {
       cursor: pointer;
       flex-grow: 0;
-      &.fa-camera {
-        margin-right: 1vh;
-      }
       &.fa-times-circle {
         margin-left: 1vh;
       }
@@ -420,9 +408,6 @@ export default {
     }
   }
   &.closed {
-    svg.fa-camera {
-      display: none;
-    }
     svg.fa-times-circle {
       display: none;
     }
@@ -574,10 +559,6 @@ export default {
 
   em:hover + span {
     opacity: 1;
-  }
-
-  #app.screenshot & {
-    display: none;
   }
 
   // adjustment for fabled

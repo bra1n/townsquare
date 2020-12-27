@@ -3,10 +3,7 @@
     id="app"
     @keyup="keyup"
     tabindex="-1"
-    :class="{
-      screenshot: grimoire.isScreenshot,
-      night: grimoire.isNight
-    }"
+    :class="{ night: grimoire.isNight }"
     :style="{
       backgroundImage: grimoire.background
         ? `url('${grimoire.background}')`
@@ -19,7 +16,7 @@
       <TownInfo v-if="players.length && !session.nomination"></TownInfo>
       <Vote v-if="session.nomination"></Vote>
     </transition>
-    <TownSquare @screenshot="takeScreenshot"></TownSquare>
+    <TownSquare></TownSquare>
     <Menu ref="menu"></Menu>
     <EditionModal />
     <FabledModal />
@@ -76,9 +73,6 @@ export default {
     };
   },
   methods: {
-    takeScreenshot(dimensions) {
-      this.$refs.menu.takeScreenshot(dimensions);
-    },
     keyup({ key, ctrlKey, metaKey }) {
       if (ctrlKey || metaKey) return;
       switch (key.toLocaleLowerCase()) {
@@ -217,15 +211,6 @@ body {
     ul {
       flex-direction: column;
     }
-  }
-}
-
-// Firefox doesn't support screenshot mode yet
-@-moz-document url-prefix() {
-  #controls > span.camera,
-  .player > .menu .screenshot,
-  .bluffs > svg.fa-camera {
-    display: none;
   }
 }
 

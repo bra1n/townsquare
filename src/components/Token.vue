@@ -215,10 +215,6 @@ export default {
       margin-right: 2px;
       right: 100%;
     }
-
-    #app.screenshot & {
-      display: none;
-    }
   }
 
   &:hover .ability {

@@ -10,7 +10,6 @@ const faIcons = [
   "AddressCard",
   "BookOpen",
   "BroadcastTower",
-  "Camera",
   "Chair",
   "CheckSquare",
   "CloudMoon",

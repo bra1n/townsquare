@@ -124,10 +124,6 @@
               <font-awesome-icon icon="exchange-alt" />
               Swap seats
             </li>
-            <li class="screenshot" @click="takeScreenshot">
-              <font-awesome-icon icon="camera" />
-              Screenshot
-            </li>
             <li @click="removePlayer">
               <font-awesome-icon icon="times-circle" />
               Remove
@@ -234,11 +230,6 @@ export default {
     handleEmojis: text => text.replace(/:([^: ]+?):/g, "").replace(/ •/g, "\n•")
   },
   methods: {
-    takeScreenshot() {
-      const { width, height, x, y } = this.$refs.player.getBoundingClientRect();
-      this.$emit("screenshot", { width, height, x, y });
-      this.isMenuOpen = false;
-    },
     toggleStatus() {
       if (this.grimoire.isPublic) {
         if (!this.player.isDead) {
