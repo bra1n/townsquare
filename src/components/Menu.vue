@@ -255,7 +255,7 @@ export default {
       }
     },
     joinSession() {
-      if (this.session.sessionId) return;
+      if (this.session.sessionId) return this.leaveSession();
       const sessionId = prompt(
         "Enter the channel number / name of the session you want to join"
       );
