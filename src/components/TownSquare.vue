@@ -281,9 +281,7 @@ export default {
         .fold-leave-to {
           transform: perspective(200px) rotateY(-90deg);
         }
-      } @else {
-        // second half of players
-        z-index: $i - 1;
+        // show ability tooltip on the left
         .ability {
           right: 120%;
           left: auto;
@@ -294,7 +292,11 @@ export default {
             left: 100%;
           }
         }
+      } @else {
+        // second half of players
+        z-index: $i - 1;
       }
+
       > * {
         transform: rotate($rot * -1deg);
       }

@@ -1,0 +1,78 @@
+/*** Media queries ***/
+// Large devices (desktops, less than 1200px)
+@media screen and (max-width: 1199.98px) {
+  html,
+  body {
+    font-size: 1.1em;
+  }
+  .night-order em {
+    width: 30px;
+    height: 30px;
+  }
+  .fabled .night-order.first span {
+    left: 30px;
+  }
+}
+
+// Medium devices (tablets, less than 992px)
+@media screen and (max-width: 991.98px) {
+  html,
+  body {
+    font-size: 1em;
+  }
+  #controls svg {
+    font-size: 20px;
+  }
+  .night-order em {
+    width: 20px;
+    height: 20px;
+  }
+  .fabled .night-order.first span {
+    left: 20px;
+  }
+  #townsquare {
+    padding: 10px;
+  }
+}
+
+// Small devices (landscape phones, less than 768px)
+@media screen and (max-width: 767.98px) {
+  html,
+  body {
+    font-size: 0.9em;
+  }
+  .player > .name {
+    top: 0;
+  }
+}
+
+// Old phones
+@media screen and (max-width: 575.98px) {
+  html,
+  body {
+    font-size: 0.8em;
+  }
+}
+
+// odd aspect ratio
+@media (max-aspect-ratio: 11/7) {
+  .bluffs,
+  .fabled {
+    h3 {
+      max-width: 14vh;
+    }
+    ul {
+      flex-direction: column;
+    }
+  }
+}
+
+// touch devices
+@media (hover: none) {
+  .circle li .reminder.add {
+    opacity: 1;
+    top: 0;
+    width: 35%;
+    padding-bottom: 35%;
+  }
+}
