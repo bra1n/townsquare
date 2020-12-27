@@ -5,7 +5,7 @@
       <span class="nominator" :style="nominatorStyle"></span>
     </div>
     <div class="overlay">
-      <audio src="../assets/sounds/countdown.mp3"></audio>
+      <audio src="../assets/sounds/countdown.mp3" preload="auto"></audio>
       <em class="blue">{{ nominator.name }}</em> nominated
       <em>{{ nominee.name }}</em
       >!
@@ -99,7 +99,11 @@
         <span>2</span>
         <span>1</span>
         <span>GO</span>
-        <audio autoplay src="../assets/sounds/countdown.mp3"></audio>
+        <audio
+          :autoplay="!grimoire.isMuted"
+          src="../assets/sounds/countdown.mp3"
+          :muted="grimoire.isMuted"
+        ></audio>
       </div>
     </transition>
   </div>
@@ -111,7 +115,7 @@ import { mapGetters, mapState } from "vuex";
 export default {
   computed: {
     ...mapState("players", ["players"]),
-    ...mapState(["session"]),
+    ...mapState(["session", "grimoire"]),
     ...mapGetters({ alive: "players/alive" }),
     nominator: function() {
       return this.players[this.session.nomination[0]];

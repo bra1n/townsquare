@@ -53,6 +53,7 @@ export default new Vuex.Store({
       isNightOrder: true,
       isPublic: true,
       isMenuOpen: false,
+      isMuted: false,
       zoom: 0,
       background: ""
     },
@@ -132,6 +133,9 @@ export default new Vuex.Store({
     },
     setBackground({ grimoire }, background) {
       grimoire.background = background;
+    },
+    setIsMuted({ grimoire }, isMuted) {
+      grimoire.isMuted = isMuted;
     },
     toggleModal({ modals }, name) {
       if (name) {

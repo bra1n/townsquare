@@ -76,6 +76,13 @@
             Background image
             <em><font-awesome-icon icon="image"/></em>
           </li>
+          <li @click="toggleMute">
+            Mute Sounds
+            <em
+              ><font-awesome-icon
+                :icon="['fas', grimoire.isMuted ? 'volume-mute' : 'volume-up']"
+            /></em>
+          </li>
         </template>
 
         <template v-if="tab === 'session'">
@@ -214,6 +221,9 @@ export default {
       if (background || background === "") {
         this.$store.commit("setBackground", background);
       }
+    },
+    toggleMute() {
+      this.$store.commit("setIsMuted", !this.grimoire.isMuted);
     },
     hostSession() {
       if (this.session.sessionId) return;

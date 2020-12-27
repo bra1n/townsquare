@@ -44,6 +44,8 @@ const faIcons = [
   "UserEdit",
   "UserFriends",
   "Users",
+  "VolumeUp",
+  "VolumeMute",
   "VoteYea"
 ];
 const fabIcons = ["Github", "Discord"];

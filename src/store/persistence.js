@@ -3,6 +3,9 @@ module.exports = store => {
   if (localStorage.getItem("background")) {
     store.commit("setBackground", localStorage.background);
   }
+  if (localStorage.getItem("muted")) {
+    store.commit("setIsMuted", true);
+  }
   if (localStorage.getItem("zoom")) {
     store.commit("setZoom", parseFloat(localStorage.getItem("zoom")));
   }
@@ -68,6 +71,13 @@ module.exports = store => {
           localStorage.setItem("background", payload);
         } else {
           localStorage.removeItem("background");
+        }
+        break;
+      case "setIsMuted":
+        if (payload) {
+          localStorage.setItem("muted", 1);
+        } else {
+          localStorage.removeItem("muted");
         }
         break;
       case "setZoom":
