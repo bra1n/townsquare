@@ -1,5 +1,14 @@
 # Release Notes
 
+## Version 2.1.0
+- reduced countdown volume by 10db
+- added a mute toggle to the Grimoire menu (currently only silences the countdown)
+- pressing [J] while in a session will now leave the session
+- always show reminder add button when on a mobile device that doesn't support hovering
+- removed screenshot feature as it is no longer useful
+
+---
+
 ## Version 2.0.4
 - fix bug with live sessions that contain travelers from a different set
 - fix server channel cleanup
