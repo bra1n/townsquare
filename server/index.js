@@ -53,6 +53,16 @@ const metrics = {
       this.set(Object.keys(channels).length);
     }
   }),
+  channels_list: new client.Gauge({
+    name: "channel_players",
+    help: "Players in each channel",
+    labelNames: ["name"],
+    collect() {
+      for (let channel in channels) {
+        this.set({ name: channel }, channels[channel].length);
+      }
+    }
+  }),
   messages_incoming: new client.Counter({
     name: "messages_incoming",
     help: "Incoming messages"
@@ -193,6 +203,7 @@ const interval = setInterval(function ping() {
             ws.readyState === WebSocket.CONNECTING)
       )
     ) {
+      metrics.channels_list.remove([channel]);
       delete channels[channel];
     }
   }
@@ -208,6 +219,13 @@ if (process.env.NODE_ENV !== "development") {
   console.log("server starting");
   server.listen(8080);
   server.on("request", (req, res) => {
+    if (
+      !["::1", "localhost", "127.0.0.1", "104.248.134.184"].includes(
+        req.connection.remoteAddress
+      )
+    ) {
+      return res.end("nothing to see here");
+    }
     res.setHeader("Content-Type", register.contentType);
     register.metrics().then(out => res.end(out));
   });
