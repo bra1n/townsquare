@@ -219,13 +219,6 @@ if (process.env.NODE_ENV !== "development") {
   console.log("server starting");
   server.listen(8080);
   server.on("request", (req, res) => {
-    if (
-      !["::1", "localhost", "127.0.0.1", "104.248.134.184"].includes(
-        req.connection.remoteAddress
-      )
-    ) {
-      return res.end("nothing to see here");
-    }
     res.setHeader("Content-Type", register.contentType);
     register.metrics().then(out => res.end(out));
   });
