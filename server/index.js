@@ -59,7 +59,15 @@ const metrics = {
     labelNames: ["name"],
     collect() {
       for (let channel in channels) {
-        this.set({ name: channel }, channels[channel].length);
+        this.set(
+          { name: channel },
+          channels[channel].filter(
+            ws =>
+              ws &&
+              (ws.readyState === WebSocket.OPEN ||
+                ws.readyState === WebSocket.CONNECTING)
+          ).length
+        );
       }
     }
   }),
@@ -217,7 +225,7 @@ wss.on("close", function close() {
 // prod mode with stats API
 if (process.env.NODE_ENV !== "development") {
   console.log("server starting");
-  server.listen(8080);
+  server.listen(8081);
   server.on("request", (req, res) => {
     res.setHeader("Content-Type", register.contentType);
     register.metrics().then(out => res.end(out));
