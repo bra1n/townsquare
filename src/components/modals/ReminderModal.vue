@@ -60,7 +60,7 @@ export default {
           ];
         }
         // add global reminders
-        else if (role.remindersGlobal && role.remindersGlobal.length) {
+        if (role.remindersGlobal && role.remindersGlobal.length) {
           reminders = [
             ...reminders,
             ...role.remindersGlobal.map(name => ({
