@@ -22,14 +22,14 @@
         <em>majority</em>.
       </template>
 
-      <div v-if="session.isVoteInProgress">
+      <div v-if="session.isVoteInProgress || session.lockedVote > 1">
         <em class="blue" v-if="voters.length">{{ voters.join(", ") }} </em>
         <span v-else>nobody</span>
         had their hand <em>UP</em>
       </div>
 
       <template v-if="!session.isSpectator">
-        <div v-if="!session.isVoteInProgress">
+        <div v-if="!session.isVoteInProgress && session.lockedVote < 1">
           Time per player:
           <font-awesome-icon
             @mousedown.prevent="setVotingSpeed(-500)"

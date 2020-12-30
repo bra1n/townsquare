@@ -1,5 +1,12 @@
 # Release Notes
 
+## Version 2.1.1
+- show vote results at the end of a vote
+- fixed global reminders not showing up anymore when the associated role is assigned to a player
+- adjusted backend metrics
+
+---
+
 ## Version 2.1.0
 - reduced countdown volume by 10db
 - added a mute toggle to the Grimoire menu (currently only silences the countdown)
