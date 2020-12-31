@@ -86,7 +86,7 @@
       "Decoy"
     ],
     "setup": false,
-    "ability": "Each night, choose 2 players: you learn if either is a Demon. There is 1 good player that registers falsely to you."
+    "ability": "Each night, choose 2 players: you learn if either is a Demon. There is a good player that registers as a Demon to you."
   },
   {
     "id": "undertaker",
@@ -216,7 +216,7 @@
       "Drunk"
     ],
     "setup": true,
-    "ability": "You do not know you are the Drunk. You think you are a Townsfolk, but your ability malfunctions."
+    "ability": "You do not know you are the Drunk. You think you are a Townsfolk, but you are not."
   },
   {
     "id": "recluse",
@@ -270,7 +270,7 @@
       "Poisoned"
     ],
     "setup": false,
-    "ability": "Each night, choose a player: their ability malfunctions tonight and tomorrow day."
+    "ability": "Each night, choose a player: they are poisoned tonight and tomorrow day."
   },
   {
     "id": "spy",
@@ -371,7 +371,7 @@
     "setup": false,
     "name": "Exorcist",
     "team": "townsfolk",
-    "ability": "Each night*, choose a player (not the same as last night): the Demon, if chosen, learns who you are and does not act tonight."
+    "ability": "Each night*, choose a player (different to last night): the Demon, if chosen, learns who you are then doesn't wake tonight."
   },
   {
     "id": "innkeeper",
@@ -459,14 +459,14 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 1,
-    "otherNightReminder": "Remove the “Everyone drunk” marker. If a Minion died today: All players but the Minstrel are drunk. Place the “Everyone drunk” marker.",
+    "otherNightReminder": "Remove the “Everyone drunk” marker. If a Minion died by execution today: All players but the Minstrel are drunk. Place the “Everyone drunk” marker.",
     "reminders": [
       "Everyone drunk"
     ],
     "setup": false,
     "name": "Minstrel",
     "team": "townsfolk",
-    "ability": "If a Minion died today, all other players (except Travelers) are drunk all night, until dusk."
+    "ability": "When a Minion dies by execution, all other players (except Travelers) are drunk until dusk tomorrow."
   },
   {
     "id": "tealady",
@@ -481,7 +481,7 @@
     "setup": false,
     "name": "Tea Lady",
     "team": "townsfolk",
-    "ability": "If both your alive neighbors are good, they can not die."
+    "ability": "If both your alive neighbors are good, they can't die."
   },
   {
     "id": "pacifist",
@@ -539,7 +539,7 @@
     "setup": false,
     "name": "Moonchild",
     "team": "outsider",
-    "ability": "When you learn that you died, choose 1 alive player: if good, they die tonight."
+    "ability": "When you learn that you died, publicly choose 1 alive player. Tonight, if it was a good player, they die."
   },
   {
     "id": "goon",
@@ -572,7 +572,7 @@
     "setup": false,
     "name": "Lunatic",
     "team": "outsider",
-    "ability": "You think you are a Demon, but your abilities malfunction. The Demon knows who you are and who you attack."
+    "ability": "You think you are a Demon, but you are not. The Demon knows who you are & who you choose at night."
   },
   {
     "id": "godfather",
@@ -603,7 +603,7 @@
     "setup": false,
     "name": "Devil's Advocate",
     "team": "minion",
-    "ability": "Each night, choose a living player (not the same as last night): if executed tomorrow, they do not die."
+    "ability": "Each night, choose a living player (different to last night): if executed tomorrow, they don't die."
   },
   {
     "id": "assassin",
@@ -632,7 +632,7 @@
     "setup": false,
     "name": "Mastermind",
     "team": "minion",
-    "ability": "If the Demon dies by execution, play for 1 more day. If a player is then executed, their team loses."
+    "ability": "If the Demon dies by execution (ending the game), play for 1 more day. If a player is then executed, their team loses."
   },
   {
     "id": "po",
@@ -640,7 +640,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 22,
-    "otherNightReminder": "If the Po chose no-one the previous night : The Po points to three players . Otherwise: The Po either shows the “no” head signal , or points to a player . The marked players (if any) die.",
+    "otherNightReminder": "If the Po chose no-one previously: The Po points to three players. Otherwise: The Po either shows the “no” head signal, or points to a player. The marked players (if any) die.",
     "reminders": [
       "Die 1",
       "Die 2",
@@ -650,7 +650,7 @@
     "setup": false,
     "name": "Po",
     "team": "demon",
-    "ability": "Each night*, you may choose a player: they die. If you chose no-one last night, choose 3 players tonight."
+    "ability": "Each night*, you may choose a player: they die. If your last choice was no-one, choose 3 players tonight."
   },
   {
     "id": "zombuul",
@@ -682,7 +682,7 @@
     "setup": false,
     "name": "Pukka",
     "team": "demon",
-    "ability": "Each night, choose a player: they are poisoned until tomorrow night, then die. You act on the 1st night."
+    "ability": "Each night, choose a player: they are poisoned. The previously poisoned player dies then becomes healthy."
   },
   {
     "id": "shabaloth",
@@ -725,15 +725,15 @@
     "setup": false,
     "name": "Dreamer",
     "team": "townsfolk",
-    "ability": "Each night, choose a player (not yourself): you learn 1 good and 1 evil character, 1 of which is correct."
+    "ability": "Each night, choose a player (not yourself, not Travellers); you learn 1 good character & 1 evil character, 1 of which is correct."
   },
   {
     "id": "snakecharmer",
     "edition": "snv",
     "firstNight": 12,
-    "firstNightReminder": "The Snake Charmer points to a player. If that player is the Demon: • Swap the Snake Charmer and Demon character tokens. • Wake the new Demon. Show the “You are” card, then the thumb-down “evil” sign. Show the “You are” card, then the Demon token. • The new Snake Charmer is poisoned . Wake the new Snake Charmer. Show the “You are” card, then the thumb-up “good” sign. Show the “You are” card, then the Snake Charmer token.",
+    "firstNightReminder": "The Snake Charmer points to a player. If that player is the Demon: • Swap the Snake Charmer and Demon character tokens. • Wake the new Demon. Show the “You are” card, then the thumb-down “evil” sign. Show the “You are” card, then the Demon token. • The new Snake Charmer is poisoned. Wake the new Snake Charmer. Show the “You are” card, then the thumb-up “good” sign. Show the “You are” card, then the Snake Charmer token.",
     "otherNight": 9,
-    "otherNightReminder": "The Snake Charmer points to a player. If that player is the Demon: • Swap the Snake Charmer and Demon character tokens. Wake the new Demon. Show the “You are” card, then the thumb-down “evil” sign. Show the “You are” card, then the Demon token. • The new Snake Charmer is poisoned . Wake the new Snake Charmer. Show the “You are” card, then the thumb-up “good” sign. Show the “You are” card, then the Snake Charmer token.",
+    "otherNightReminder": "The Snake Charmer points to a player. If that player is the Demon: • Swap the Snake Charmer and Demon character tokens. Wake the new Demon. Show the “You are” card, then the thumb-down “evil” sign. Show the “You are” card, then the Demon token. • The new Snake Charmer is poisoned. Wake the new Snake Charmer. Show the “You are” card, then the thumb-up “good” sign. Show the “You are” card, then the Snake Charmer token.",
     "reminders": [
       "Poisoned"
     ],
@@ -819,9 +819,9 @@
     "id": "seamstress",
     "edition": "snv",
     "firstNight": 29,
-    "firstNightReminder": "The Seamstress either shows a “no” head signal, or points to two other players. If the Seamstress chose two players , nod “yes” or shake “no” for whether they are of same alignment.",
+    "firstNightReminder": "The Seamstress either shows a “no” head signal, or points to two other players. If the Seamstress chose two players, nod “yes” or shake “no” for whether they are of same alignment.",
     "otherNight": 45,
-    "otherNightReminder": "If the Seamstress has not yet used their ability: • The Seamstress either shows a “no” head signal, or points to two other players. • If the Seamstress chose players , nod “yes” or shake “no” for whether they are of same alignment.",
+    "otherNightReminder": "If the Seamstress has not yet used their ability: • The Seamstress either shows a “no” head signal, or points to two other players. • If the Seamstress chose players, nod “yes” or shake “no” for whether they are of same alignment.",
     "reminders": [
       "Used"
     ],
@@ -834,9 +834,9 @@
     "id": "philosopher",
     "edition": "snv",
     "firstNight": 1,
-    "firstNightReminder": "The Philosopher either shows a “no” head signal, or points to a good character on their sheet. If they chose a character: Swap the out-of-play character token with the Philosopher token. Or, if the character is in play, that player is drunk and the Philosopher is now that character .",
+    "firstNightReminder": "The Philosopher either shows a “no” head signal, or points to a good character on their sheet. If they chose a character: they now have that character's ability. If the character is in play, that player is now drunk.",
     "otherNight": 1,
-    "otherNightReminder": "If the Philosopher has not yet used their ability: • The Philosopher either shows a “no” head signal, or points to a good character on their sheet. • If they chose a character: Swap the out-of-play character token with the Philosopher token. Or, if the character is in play, that player is drunk and the Philosopher is now that character .",
+    "otherNightReminder": "If the Philosopher has not yet used their ability: • The Philosopher either shows a “no” head signal, or points to a good character on their sheet. • If they chose a character: they now have that character's ability. If the character is in play, that player is now drunk.",
     "reminders": [
       "Used",
       "Drunk"
@@ -844,7 +844,7 @@
     "setup": false,
     "name": "Philosopher",
     "team": "townsfolk",
-    "ability": "Once per game, at night, choose a good character: become them. If you duplicate an in-play character, they are drunk."
+    "ability": "Once per game, at night, choose a good character: gain that ability. If this character is in play, they are drunk."
   },
   {
     "id": "artist",
@@ -923,14 +923,14 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 32,
-    "otherNightReminder": "If the Barber died today : • Wake the Demon. Show the “This character selected you” card, then Barber token. • The Demon either shows a “no” head signal, or points to 2 non-Demon players. If they chose players: ◦ Swap the character tokens. Wake each player. Show “You are”, then their character token.",
+    "otherNightReminder": "If the Barber died today or tonight: • Wake the Demon. Show the “This character selected you” card, then Barber token. • The Demon either shows a “no” head signal, or points to 2 non-Demon players. If they chose players: ◦ Swap the character tokens. Wake each player. Show “You are”, then their character token.",
     "reminders": [
       "Swap"
     ],
     "setup": false,
     "name": "Barber",
     "team": "outsider",
-    "ability": "If you die, tonight the Demon may choose 2 players (not another Demon) to swap characters."
+    "ability": "If you died today or tonight, the Demon may choose 2 players (not another Demon) to swap characters."
   },
   {
     "id": "klutz",
@@ -981,7 +981,7 @@
     "firstNight": 17,
     "firstNightReminder": "The Cerenovus points to a player, then to a character on their sheet. That player should “be mad about” being that character. Wake that player. Show the “This character selected you” card, then the Cerenovus token. Show the “mad about being” marker, then that character token.",
     "otherNight": 13,
-    "otherNightReminder": "The Cerenovus points to a player, then to a character on their sheet. That player should “be mad about” being that character. . Wake that player. Show the “This character selected you” card, then the Cerenovus token. Show the “mad about being” marker, then that character token.",
+    "otherNightReminder": "The Cerenovus points to a player, then to a character on their sheet. That player should “be mad about” being that character. Wake that player. Show the “This character selected you” card, then the Cerenovus token. Show the “mad about being” marker, then that character token.",
     "reminders": [
       "Mad"
     ],
@@ -1009,14 +1009,14 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 23,
-    "otherNightReminder": "The Fang Gu points to a player. That player dies . Or, if that player was an Outsider: • The Fang Gu dies instead of the chosen player. The chosen player is now an evil Fang Gu. • Wake the new Fang Gu. Show the “You are” card, then the Fang Gu token. Show the “You are” card, then the thumb-down “evil” hand sign.",
+    "otherNightReminder": "The Fang Gu points to a player. That player dies. If that player was an Outsider: • The Fang Gu dies instead of the chosen player. The chosen player is now an evil Fang Gu. • Wake the new Fang Gu. Show the “You are” card, then the Fang Gu token. Show the “You are” card, then the thumb-down “evil” hand sign.",
     "reminders": [
       "Die"
     ],
     "setup": true,
     "name": "Fang Gu",
     "team": "demon",
-    "ability": "Each night*, choose a player: they die. The 1st Outsider chosen becomes an evil Fang Gu and you die instead. [+1 Outsider]"
+    "ability": "Each night*, choose a player: they die. The 1st Outsider this kills becomes an evil Fang Gu & you die instead. [+1 Outsider]"
   },
   {
     "id": "vigormortis",
@@ -1024,7 +1024,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 26,
-    "otherNightReminder": "The Vigormortis points to a player. That player dies. If a Minion, they keep their ability and one of their Townsfolk neighbours is poisoned .",
+    "otherNightReminder": "The Vigormortis points to a player. That player dies. If a Minion, they keep their ability and one of their Townsfolk neighbours is poisoned.",
     "reminders": [
       "Die",
       "Poisoned",
@@ -1064,7 +1064,7 @@
     "setup": false,
     "name": "Vortox",
     "team": "demon",
-    "ability": "Each night*, choose a player: they die. Good abilities yield false information. Each day, if no-one was executed, evil wins."
+    "ability": "Each night*, choose a player; they die. Townsfolk abilities yield false info. Each day, if no-one was executed, evil wins."
   },
   {
     "id": "scapegoat",
