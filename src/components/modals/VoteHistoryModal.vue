@@ -18,8 +18,9 @@
           <td>Nominator</td>
           <td>Nominee</td>
           <td>Type</td>
-          <td>Majority</td>
+          <td>Votes</td>
           <td><font-awesome-icon icon="hand-paper" /> Hand up</td>
+          <td>Passed</td>
         </tr>
       </thead>
       <tbody>
@@ -27,11 +28,13 @@
           <td>{{ vote.nominator }}</td>
           <td>{{ vote.nominee }}</td>
           <td>{{ vote.type }}</td>
-          <td>{{ vote.majority }}</td>
+          <td><strong>{{ vote.votes.length }}</strong> / {{ vote.majority }}</td>
           <td>
-            {{ vote.votes.length }}
             <font-awesome-icon icon="user-friends" />
             {{ vote.votes.join(", ") }}
+          </td>
+          <td>
+            <font-awesome-icon icon="check-square" v-if="vote.votes.length >= vote.majority" />
           </td>
         </tr>
       </tbody>
@@ -96,6 +99,9 @@ tbody {
     color: $demon;
   }
   td:nth-child(4) {
+    text-align: center;
+  }
+  td:nth-child(6) {
     text-align: center;
   }
 }
