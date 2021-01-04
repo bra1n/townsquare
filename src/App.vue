@@ -103,7 +103,9 @@ export default {
           this.$store.commit("toggleModal", "roles");
           break;
         case "v":
-          this.$store.commit("toggleModal", "voteHistory");
+          if (this.session.voteHistory.length) {
+            this.$store.commit("toggleModal", "voteHistory");
+          }
           break;
         case "escape":
           this.$store.commit("toggleModal");
