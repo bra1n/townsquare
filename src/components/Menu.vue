@@ -114,8 +114,7 @@
             v-if="session.voteHistory.length"
             @click="toggleModal('voteHistory')"
           >
-            Nomination history
-            <em><font-awesome-icon icon="hand-paper"/></em>
+            Nomination history<em>[V]</em>
           </li>
           <li @click="leaveSession" v-if="session.sessionId">
             Leave Session
