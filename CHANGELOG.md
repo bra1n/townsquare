@@ -1,5 +1,11 @@
 # Release Notes
 
+## Version 2.2.1
+- clearing players / roles now also clears Fabled (closes #85)
+- fix list of locked votes showing unlocked votes sometimes
+
+---
+
 ## Version 2.2.0
 - added [V] hotkey to open nomination history (thanks @lilserf)
 - updated roles according to official Wiki changes
