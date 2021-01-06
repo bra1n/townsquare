@@ -1,5 +1,12 @@
 # Release Notes
 
+## Version 2.2.0
+- added [V] hotkey to open nomination history (thanks @lilserf)
+- updated roles according to official Wiki changes
+- adjusted roles night order
+
+---
+
 ## Version 2.1.1
 - show vote results at the end of a vote
 - fixed global reminders not showing up anymore when the associated role is assigned to a player
