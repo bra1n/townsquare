@@ -161,11 +161,13 @@ export default {
     },
     voters: function() {
       const nomination = this.session.nomination[1];
-      const voters = this.session.votes.map((vote, index) =>
-        vote ? this.players[index].name : ""
-      );
+      const voters = Array(this.players.length)
+        .fill("")
+        .map((x, index) =>
+          this.session.votes[index] ? this.players[index].name : ""
+        );
       const reorder = [
-        ...voters.slice(nomination + 1, this.players.length),
+        ...voters.slice(nomination + 1),
         ...voters.slice(0, nomination + 1)
       ];
       return reorder.slice(0, this.session.lockedVote - 1).filter(n => !!n);
