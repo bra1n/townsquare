@@ -67,7 +67,7 @@
     "team": "townsfolk",
     "firstNight": 23,
     "firstNightReminder": ":eye: Show the finger signal (0, 1, 2) for the number of evil alive neighbours of the Empath. :eye-slash:",
-    "otherNight": 38,
+    "otherNight": 42,
     "otherNightReminder": ":eye: Show the finger signal (0, 1, 2) for the number of evil neighbours. :eye-slash:",
     "reminders": [],
     "setup": false,
@@ -80,7 +80,7 @@
     "team": "townsfolk",
     "firstNight": 24,
     "firstNightReminder": ":eye: The Fortune Teller points to two players. Give the head signal (nod yes, shake no) for whether one of those players is the Demon. :eye-slash:",
-    "otherNight": 39,
+    "otherNight": 43,
     "otherNightReminder": ":eye: The Fortune Teller points to two players. Show the head signal (nod “yes”, shake “no”) for whether one of those players is the Demon. :eye-slash:",
     "reminders": [
       "Decoy"
@@ -95,7 +95,7 @@
     "team": "townsfolk",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 40,
+    "otherNight": 45,
     "otherNightReminder": ":question-circle: If a player was executed today: :eye: Show that player’s character token. :eye-slash:",
     "reminders": [
       "Executed"
@@ -125,7 +125,7 @@
     "team": "townsfolk",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 37,
+    "otherNight": 40,
     "otherNightReminder": ":question-circle: If the Ravenkeeper died tonight: :eye: The Ravenkeeper points to a player. Show that player’s character token. :eye-slash:",
     "reminders": [],
     "setup": false,
@@ -194,7 +194,7 @@
     "team": "outsider",
     "firstNight": 25,
     "firstNightReminder": ":eye: The Butler points to a player. :eye-slash: Mark that player as “Master”. :plus-circle:",
-    "otherNight": 50,
+    "otherNight": 44,
     "otherNightReminder": ":eye: The Butler points to a player. :eye-slash: Mark that player as “Master”. :plus-circle:",
     "reminders": [
       "Master"
@@ -264,7 +264,7 @@
     "team": "minion",
     "firstNight": 9,
     "firstNightReminder": ":eye: The Poisoner points to a player. :eye-slash: That player is poisoned. :plus-circle:",
-    "otherNight": 6,
+    "otherNight": 5,
     "otherNightReminder": "The previously poisoned player is no longer poisoned. :plus-circle: :eye: The Poisoner points to a player. :eye-slash: That player is poisoned. :plus-circle:",
     "reminders": [
       "Poisoned"
@@ -279,7 +279,7 @@
     "team": "minion",
     "firstNight": 33,
     "firstNightReminder": ":eye: Show the Grimoire to the Spy for as long as they need. :eye-slash:",
-    "otherNight": 51,
+    "otherNight": 55,
     "otherNightReminder": ":eye: Show the Grimoire to the Spy for as long as they need. :eye-slash:",
     "reminders": [],
     "setup": false,
@@ -320,7 +320,7 @@
     "edition": "bmr",
     "firstNight": 26,
     "firstNightReminder": "Show the marked character token. Point to the marked player.",
-    "otherNight": 31,
+    "otherNight": 38,
     "otherNightReminder": "If the Grandmother’s grandchild was killed by the Demon tonight: • The Grandmother dies.",
     "reminders": [
       "Grandchild"
@@ -333,7 +333,7 @@
   {
     "id": "sailor",
     "edition": "bmr",
-    "firstNight": 4,
+    "firstNight": 5,
     "firstNightReminder": "The Sailor points to a living player. Either the Sailor, or the chosen player, is drunk.",
     "otherNight": 2,
     "otherNightReminder": "The previously drunk player is no longer drunk. The Sailor points to a living player. Either the Sailor, or the chosen player, is drunk.",
@@ -348,9 +348,9 @@
   {
     "id": "chambermaid",
     "edition": "bmr",
-    "firstNight": 35,
+    "firstNight": 36,
     "firstNightReminder": "The Chambermaid points to two players. Show the number signal (0, 1, 2, …) for how many of those players wake tonight for their ability.",
-    "otherNight": 53,
+    "otherNight": 58,
     "otherNightReminder": "The Chambermaid points to two players. Show the number signal (0, 1, 2) for how many of those players wake tonight for their ability.",
     "reminders": [],
     "setup": false,
@@ -378,7 +378,7 @@
     "edition": "bmr",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 3,
+    "otherNight": 6,
     "otherNightReminder": "The previously protected and drunk players lose those markers. The Innkeeper points to two players. Those players are protected. One is drunk.",
     "reminders": [
       "Protected",
@@ -409,7 +409,7 @@
     "edition": "bmr",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 30,
+    "otherNight": 35,
     "otherNightReminder": "If the Gossip’s public statement was true: • Choose a player not protected from dying tonight. That player dies.",
     "reminders": [
       "Die"
@@ -442,7 +442,7 @@
     "edition": "bmr",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 35,
+    "otherNight": 34,
     "otherNightReminder": "If the Professor has not used their ability: • The Professor either shows the “no” head signal, or points to a player. • If that player is a Townsfolk, they are now alive.",
     "reminders": [
       "Alive",
@@ -516,7 +516,7 @@
     "edition": "bmr",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 29,
+    "otherNight": 36,
     "otherNightReminder": "The Tinker might die.",
     "reminders": [
       "Die"
@@ -531,7 +531,7 @@
     "edition": "bmr",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 36,
+    "otherNight": 37,
     "otherNightReminder": "If the Moonchild used their ability to target a player today: • If that player is good, they die.",
     "reminders": [
       "Die"
@@ -559,7 +559,7 @@
   {
     "id": "lunatic",
     "edition": "bmr",
-    "firstNight": 2,
+    "firstNight": 3,
     "firstNightReminder": "If 7 or more players: Show the Lunatic a number of arbitrary “Minion“, players equal to the number of Minions in play. Show 3 character tokens of arbitrary Good characters. If the token received by the Lunatic is a Demon that would wake tonight: • Allow the Lunatic to do the Demon actions. Place their “attack” markers. Wake the Demon. Show the Demon’s real character token. Show them the Lunatic player. • If the Lunatic attacked players: Show the real demon each marked player. Remove any Lunatic “attack” markers.",
     "otherNight": 16,
     "otherNightReminder": "Allow the Lunatic to do the actions of the Demon. Place their “attack” markers. If the Lunatic selected players: Wake the Demon. Show the “attack” marker, then point to each marked player. Remove any Lunatic “attack” markers.",
@@ -579,7 +579,7 @@
     "edition": "bmr",
     "firstNight": 13,
     "firstNightReminder": "Show each of the Outsider tokens in play.",
-    "otherNight": 29,
+    "otherNight": 30,
     "otherNightReminder": "If an Outsider died today: • The Godfather points to a player. That player dies.",
     "reminders": [
       "Died today",
@@ -610,7 +610,7 @@
     "edition": "bmr",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 28,
+    "otherNight": 29,
     "otherNightReminder": "If the Assassin has not yet used their ability: • The Assassin either shows the “no” head signal, or points to a player. That player dies.",
     "reminders": [
       "Die",
@@ -639,7 +639,7 @@
     "edition": "bmr",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 22,
+    "otherNight": 23,
     "otherNightReminder": "If the Po chose no-one previously: The Po points to three players. Otherwise: The Po either shows the “no” head signal, or points to a player. The marked players (if any) die.",
     "reminders": [
       "Die 1",
@@ -689,7 +689,7 @@
     "edition": "bmr",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 21,
+    "otherNight": 22,
     "otherNightReminder": "One player that the Shabaloth chose the previous night might come alive. The Shabaloth points to two players. Those players die.",
     "reminders": [
       "Die 1",
@@ -719,7 +719,7 @@
     "edition": "snv",
     "firstNight": 28,
     "firstNightReminder": "The Dreamer points to a player. Show two character tokens, one of which is that player’s character, the other of which is of opposite alignment to that character.",
-    "otherNight": 41,
+    "otherNight": 46,
     "otherNightReminder": "The Dreamer points to a player. Show 1 good and 1 evil character token; one of these is correct.",
     "reminders": [],
     "setup": false,
@@ -745,9 +745,9 @@
   {
     "id": "mathematician",
     "edition": "snv",
-    "firstNight": 36,
+    "firstNight": 35,
     "firstNightReminder": "Show the hand signal for the number (0, 1, 2, etc.) of “Abnormal Effect” markers. Remove markers",
-    "otherNight": 54,
+    "otherNight": 57,
     "otherNightReminder": "Show the hand signal for the number (0, 1, 2, etc.) of “Abnormal Effect” markers. Remove markers.",
     "reminders": [
       "Abnormal effect"
@@ -762,7 +762,7 @@
     "edition": "snv",
     "firstNight": 0,
     "firstNightReminder": "Place the “Demon did not vote” marker.",
-    "otherNight": 42,
+    "otherNight": 47,
     "otherNightReminder": "Show the head signal (nod “yes”, shake “no”) for whether the Demon voted today. Place the “Demon did not vote” marker (remove “Demon voted”, if any).",
     "reminders": [
       "Demon did vote",
@@ -778,7 +778,7 @@
     "edition": "snv",
     "firstNight": 0,
     "firstNightReminder": "Place the “Minions did not nominate” marker.",
-    "otherNight": 43,
+    "otherNight": 48,
     "otherNightReminder": "Show the head signal (nod “yes”, shake “no”) for whether any Minion nominated today. Place the “Minions did not nominate” marker (remove “Minion nominated”, if any).",
     "reminders": [
       "No Minion nominated",
@@ -794,7 +794,7 @@
     "edition": "snv",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 44,
+    "otherNight": 49,
     "otherNightReminder": "Show the hand signal for the number (0, 1, 2, etc.) of dead evil players.",
     "reminders": [],
     "setup": false,
@@ -820,7 +820,7 @@
     "edition": "snv",
     "firstNight": 29,
     "firstNightReminder": "The Seamstress either shows a “no” head signal, or points to two other players. If the Seamstress chose two players, nod “yes” or shake “no” for whether they are of same alignment.",
-    "otherNight": 45,
+    "otherNight": 50,
     "otherNightReminder": "If the Seamstress has not yet used their ability: • The Seamstress either shows a “no” head signal, or points to two other players. • If the Seamstress chose players, nod “yes” or shake “no” for whether they are of same alignment.",
     "reminders": [
       "Used"
@@ -866,7 +866,7 @@
     "edition": "snv",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 46,
+    "otherNight": 51,
     "otherNightReminder": "If today was the Juggler’s first day: • Show the hand signal for the number (0, 1, 2, etc.) of “Correct” markers. Remove markers.",
     "reminders": [
       "Correct"
@@ -881,7 +881,7 @@
     "edition": "snv",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 34,
+    "otherNight": 33,
     "otherNightReminder": "If the Sage was killed by a Demon: • Point to two players, one of which is that Demon.",
     "reminders": [],
     "setup": false,
@@ -907,7 +907,7 @@
     "edition": "snv",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 33,
+    "otherNight": 32,
     "otherNightReminder": "",
     "reminders": [
       "Drunk"
@@ -922,7 +922,7 @@
     "edition": "snv",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 32,
+    "otherNight": 31,
     "otherNightReminder": "If the Barber died today or tonight: • Wake the Demon. Show the “This character selected you” card, then Barber token. • The Demon either shows a “no” head signal, or points to 2 non-Demon players. If they chose players: ◦ Swap the character tokens. Wake each player. Show “You are”, then their character token.",
     "reminders": [
       "Swap"
@@ -988,7 +988,7 @@
     "setup": false,
     "name": "Cerenovus",
     "team": "minion",
-    "ability": "Each night, choose a player and a good character: they are \"mad\" they are this character tomorrow, or might be executed."
+    "ability": "Each night, choose a player and a good character: they are \"mad\", they are this character tomorrow, or might be executed."
   },
   {
     "id": "pithag",
@@ -1008,7 +1008,7 @@
     "edition": "snv",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 23,
+    "otherNight": 24,
     "otherNightReminder": "The Fang Gu points to a player. That player dies. If that player was an Outsider: • The Fang Gu dies instead of the chosen player. The chosen player is now an evil Fang Gu. • Wake the new Fang Gu. Show the “You are” card, then the Fang Gu token. Show the “You are” card, then the thumb-down “evil” hand sign.",
     "reminders": [
       "Die"
@@ -1023,7 +1023,7 @@
     "edition": "snv",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 26,
+    "otherNight": 27,
     "otherNightReminder": "The Vigormortis points to a player. That player dies. If a Minion, they keep their ability and one of their Townsfolk neighbours is poisoned.",
     "reminders": [
       "Die",
@@ -1040,7 +1040,7 @@
     "edition": "snv",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 24,
+    "otherNight": 25,
     "otherNightReminder": "The No Dashii points to a player. That player dies.",
     "reminders": [
       "Die",
@@ -1056,7 +1056,7 @@
     "edition": "snv",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 25,
+    "otherNight": 26,
     "otherNightReminder": "The Vortox points to a player. That player dies.",
     "reminders": [
       "Die"
@@ -1303,7 +1303,7 @@
     "edition": "",
     "firstNight": 6,
     "firstNightReminder": "Decide the Amnesiac's entire ability. If the Amnesiac's ability causes them to wake tonight: Wake the Amnesiac and run their ability.",
-    "otherNight": 4,
+    "otherNight": 3,
     "otherNightReminder": "If the Amnesiac's ability causes them to wake tonight: Wake the Amnesiac and run their ability.",
     "reminders": [],
     "setup": false,
@@ -1376,7 +1376,7 @@
   {
     "id": "leviathan",
     "edition": "",
-    "firstNight": 100,
+    "firstNight": 38,
     "firstNightReminder": "Place the Leviathan “Day 1” marker. Announce “The Leviathan is in play; this is Day 1.”.",
     "otherNight": 100,
     "otherNightReminder": "Place the next Leviathan “Day n” marker, where “n” is the day number. Announce “The Leviathan is in play; this is Day n.”.",
@@ -1398,7 +1398,7 @@
     "edition": "",
     "firstNight": 0,
     "firstNightReminder": "",
-    "otherNight": 31,
+    "otherNight": 21,
     "otherNightReminder": "If either good living neighbor is drunk or poisoned, the Acrobat dies.",
     "reminders": [
       "Die"
@@ -1413,7 +1413,7 @@
     "edition": "",
     "firstNight": 31,
     "firstNightReminder": "Point to a player that is evil.",
-    "otherNight": 48,
+    "otherNight": 53,
     "otherNightReminder": "If the evil player that was known by the Bounty Hunter died since the previous night: Point to another player that is evil.",
     "reminders": [
       "Known"
@@ -1428,7 +1428,7 @@
     "edition": "",
     "firstNight": 32,
     "firstNightReminder": "The Cult Leader becomes the alignment of an alive neighbor: Show the “You are” card. Show the hand signal (thumb-up “good”, thumb-down “evil”) for the Cult Leader's current alignment.",
-    "otherNight": 49,
+    "otherNight": 54,
     "otherNightReminder": "The Cult Leader becomes the alignment of an alive neighbor: Show the “You are” card. Show the hand signal (thumb-up “good”, thumb-down “evil”) for the Cult Leader's current alignment.",
     "reminders": [],
     "setup": false,
@@ -1441,7 +1441,7 @@
     "edition": "",
     "firstNight": 7,
     "firstNightReminder": "The Preacher points to a player. If that player is a Minion: Wake the Minion. Show the Preacher token. The Minion now does not have an ability anymore.",
-    "otherNight": 5,
+    "otherNight": 4,
     "otherNightReminder": "The Preacher points to a player. If that player is a Minion: Wake the Minion. Show the Preacher token. The Minion now does not have an ability anymore.",
     "reminders": [
       "No ability"
@@ -1486,7 +1486,7 @@
     "edition": "",
     "firstNight": 34,
     "firstNightReminder": "Show the hand signal (thumb-up “good”, thumb-down “evil”, thumb-sideways “neither”) for the alignment that you believe is winning.",
-    "otherNight": 52,
+    "otherNight": 56,
     "otherNightReminder": "Show the hand signal (thumb-up “good”, thumb-down “evil”, thumb-sideways “neither”) for the alignment that you believe is winning.",
     "reminders": [],
     "remindersGlobal": [],
