@@ -238,16 +238,9 @@ export default {
       }
     },
     copySessionUrl() {
-      // check for clipboard permissions
-      navigator.permissions
-        .query({ name: "clipboard-write" })
-        .then(({ state }) => {
-          if (state === "granted" || state === "prompt") {
-            const url = window.location.href.split("#")[0];
-            const link = url + "#" + this.session.sessionId;
-            navigator.clipboard.writeText(link);
-          }
-        });
+      const url = window.location.href.split("#")[0];
+      const link = url + "#" + this.session.sessionId;
+      navigator.clipboard.writeText(link);
     },
     distributeRoles() {
       if (this.session.isSpectator) return;
