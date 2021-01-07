@@ -180,15 +180,15 @@ export default {
   },
   methods: {
     countdown() {
-      this.$store.commit("session/setVoteInProgress", true);
       this.$store.commit("session/lockVote", 0);
+      this.$store.commit("session/setVoteInProgress", true);
       this.voteTimer = setInterval(() => {
         this.start();
       }, 4000);
     },
     start() {
-      this.$store.commit("session/setVoteInProgress", true);
       this.$store.commit("session/lockVote", 1);
+      this.$store.commit("session/setVoteInProgress", true);
       clearInterval(this.voteTimer);
       this.voteTimer = setInterval(() => {
         this.$store.commit("session/lockVote");
