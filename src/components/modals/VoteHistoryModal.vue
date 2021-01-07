@@ -20,7 +20,7 @@
           <td>Type</td>
           <td>Votes</td>
           <td><font-awesome-icon icon="hand-paper" /> Hand up</td>
-          <td>Passed</td>
+          <td>Majority</td>
         </tr>
       </thead>
       <tbody>
@@ -28,13 +28,17 @@
           <td>{{ vote.nominator }}</td>
           <td>{{ vote.nominee }}</td>
           <td>{{ vote.type }}</td>
-          <td><strong>{{ vote.votes.length }}</strong> / {{ vote.majority }}</td>
+          <td>{{ vote.votes.length }}</td>
           <td>
             <font-awesome-icon icon="user-friends" />
             {{ vote.votes.join(", ") }}
           </td>
           <td>
-            <font-awesome-icon icon="check-square" v-if="vote.votes.length >= vote.majority" />
+            {{ vote.majority }}
+            <font-awesome-icon
+              icon="check-square"
+              v-if="vote.votes.length >= vote.majority"
+            />
           </td>
         </tr>
       </tbody>
