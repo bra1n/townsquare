@@ -20,6 +20,14 @@
       >
         <Token :role="role" />
       </li>
+      <li
+        v-for="role in extraTravelers"
+        :class="[role.team]"
+        :key="role.id"
+        @click="setRole(role)"
+      >
+        <Token :role="role" />
+      </li>
     </ul>
   </Modal>
 </template>
@@ -33,6 +41,20 @@ export default {
   components: { Token, Modal },
   props: ["playerIndex"],
   computed: {
+    extraTravelers() {
+      const extraTravelers = [];
+      const players = this.$store.state.players.players;
+      this.$store.state.extraTravelers.forEach(role => {
+        if (
+          this.playerIndex >= 0 ||
+          (this.playerIndex < 0 &&
+            !players.some(player => player.role.id === role.id))
+        ) {
+          extraTravelers.push(role);
+        }
+      });
+      return extraTravelers;
+    },
     availableRoles() {
       const availableRoles = [];
       const players = this.$store.state.players.players;
