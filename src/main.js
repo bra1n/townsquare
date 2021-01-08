@@ -10,7 +10,6 @@ const faIcons = [
   "AddressCard",
   "BookOpen",
   "BroadcastTower",
-  "Camera",
   "Chair",
   "CheckSquare",
   "CloudMoon",
@@ -19,7 +18,9 @@ const faIcons = [
   "Dice",
   "Dragon",
   "ExchangeAlt",
+  "FileCode",
   "FileUpload",
+  "HandPaper",
   "HandPointRight",
   "Heartbeat",
   "Image",
@@ -32,8 +33,8 @@ const faIcons = [
   "RedoAlt",
   "SearchMinus",
   "SearchPlus",
-  "Skull",
   "Square",
+  "Sun",
   "TheaterMasks",
   "Times",
   "TimesCircle",
@@ -43,6 +44,8 @@ const faIcons = [
   "UserEdit",
   "UserFriends",
   "Users",
+  "VolumeUp",
+  "VolumeMute",
   "VoteYea"
 ];
 const fabIcons = ["Github", "Discord"];

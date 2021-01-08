@@ -48,7 +48,9 @@ export default {
   flex-direction: column;
   max-width: 60%;
 
-  .characters & {
+  .characters &,
+  .vote-history &,
+  .night-reference & {
     max-height: 80%;
     max-width: 80%;
     overflow-y: auto;

@@ -1,9 +1,8 @@
 <template>
   <Modal
-    class="characters"
-    v-show="modals.nightOrder"
+    class="night-reference"
     @close="toggleModal('nightOrder')"
-    v-if="roles.size"
+    v-if="modals.nightOrder && roles.size"
   >
     <font-awesome-icon
       @click="toggleModal('reference')"
@@ -14,7 +13,7 @@
     <h3>
       Night Order
       <font-awesome-icon icon="cloud-moon" />
-      {{ editionName }}
+      {{ edition.name || "Custom Script" }}
     </h3>
     <div class="night">
       <ul class="first">
@@ -30,7 +29,7 @@
           <span
             class="icon"
             v-if="role.id"
-            v-bind:style="{
+            :style="{
               backgroundImage: `url(${role.image ||
                 require('../../assets/icons/' + role.id + '.png')})`
             }"
@@ -47,7 +46,7 @@
           <span
             class="icon"
             v-if="role.id"
-            v-bind:style="{
+            :style="{
               backgroundImage: `url(${role.image ||
                 require('../../assets/icons/' + role.id + '.png')})`
             }"
@@ -63,7 +62,6 @@
 
 <script>
 import Modal from "./Modal";
-import editionJSON from "./../../editions.json";
 import { mapMutations, mapState } from "vuex";
 
 export default {
@@ -76,10 +74,6 @@ export default {
     };
   },
   computed: {
-    editionName: function() {
-      const edition = editionJSON.find(({ id }) => id === this.edition);
-      return edition ? edition.name : "Custom Script";
-    },
     rolesFirstNight: function() {
       const rolesFirstNight = [];
       // add minion / demon infos to night order sheet
@@ -108,6 +102,11 @@ export default {
           rolesFirstNight.push(role);
         }
       });
+      this.fabled
+        .filter(({ firstNight }) => firstNight)
+        .forEach(fabled => {
+          rolesFirstNight.push(fabled);
+        });
       rolesFirstNight.sort((a, b) => a.firstNight - b.firstNight);
       return rolesFirstNight;
     },
@@ -122,11 +121,16 @@ export default {
           rolesOtherNight.push(role);
         }
       });
+      this.fabled
+        .filter(({ otherNight }) => otherNight)
+        .forEach(fabled => {
+          rolesOtherNight.push(fabled);
+        });
       rolesOtherNight.sort((a, b) => a.otherNight - b.otherNight);
       return rolesOtherNight;
     },
-    ...mapState(["roles", "modals", "edition"]),
-    ...mapState("players", ["players"])
+    ...mapState(["roles", "modals", "edition", "grimoire"]),
+    ...mapState("players", ["players", "fabled"])
   },
   methods: {
     ...mapMutations(["toggleModal"])
@@ -174,6 +178,17 @@ h4 {
   }
 }
 
+.fabled {
+  .name,
+  .player,
+  h4 {
+    color: $fabled;
+    &:before,
+    &:after {
+      background-color: $fabled;
+    }
+  }
+}
 .townsfolk {
   .name,
   .player,

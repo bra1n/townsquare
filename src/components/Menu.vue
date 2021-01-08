@@ -1,6 +1,5 @@
 <template>
   <div id="controls">
-    <Screenshot ref="screenshot"></Screenshot>
     <span
       class="session"
       :class="{
@@ -18,15 +17,7 @@
       <font-awesome-icon icon="broadcast-tower" />
       {{ session.playerCount }}
     </span>
-    <span class="camera">
-      <font-awesome-icon
-        icon="camera"
-        @click="takeScreenshot()"
-        title="Take a screenshot"
-        :class="{ success: grimoire.isScreenshotSuccess }"
-      />
-    </span>
-    <div class="menu" v-bind:class="{ open: grimoire.isMenuOpen }">
+    <div class="menu" :class="{ open: grimoire.isMenuOpen }">
       <font-awesome-icon icon="cog" @click="toggleMenu" />
       <ul>
         <li class="tabs" :class="tab">
@@ -49,6 +40,14 @@
             <template v-if="grimoire.isPublic">Show</template>
             <em>[G]</em>
           </li>
+          <li @click="toggleNight" v-if="!session.isSpectator">
+            <template v-if="!grimoire.isNight">Switch to Night</template>
+            <template v-if="grimoire.isNight">Switch to Day</template>
+            <em
+              ><font-awesome-icon
+                :icon="['fas', grimoire.isNight ? 'sun' : 'cloud-moon']"
+            /></em>
+          </li>
           <li @click="toggleNightOrder" v-if="players.length">
             Night order
             <em
@@ -58,10 +57,6 @@
                   grimoire.isNightOrder ? 'check-square' : 'square'
                 ]"
             /></em>
-          </li>
-          <li v-if="!session.isSpectator" @click="toggleModal('fabled')">
-            Add Fabled
-            <em><font-awesome-icon icon="dragon"/></em>
           </li>
           <li v-if="players.length">
             Zoom
@@ -80,6 +75,13 @@
           <li @click="setBackground">
             Background image
             <em><font-awesome-icon icon="image"/></em>
+          </li>
+          <li @click="toggleMute">
+            Mute Sounds
+            <em
+              ><font-awesome-icon
+                :icon="['fas', grimoire.isMuted ? 'volume-mute' : 'volume-up']"
+            /></em>
           </li>
         </template>
 
@@ -103,6 +105,16 @@
           <li v-if="session.sessionId" @click="copySessionUrl">
             Copy player link
             <em><font-awesome-icon icon="copy"/></em>
+          </li>
+          <li v-if="!session.isSpectator" @click="distributeRoles">
+            Send Characters
+            <em><font-awesome-icon icon="theater-masks"/></em>
+          </li>
+          <li
+            v-if="session.voteHistory.length"
+            @click="toggleModal('voteHistory')"
+          >
+            Nomination history<em>[V]</em>
           </li>
           <li @click="leaveSession" v-if="session.sessionId">
             Leave Session
@@ -138,6 +150,10 @@
             Choose & Assign
             <em>[C]</em>
           </li>
+          <li v-if="!session.isSpectator" @click="toggleModal('fabled')">
+            Add Fabled
+            <em><font-awesome-icon icon="dragon"/></em>
+          </li>
           <li @click="clearRoles" v-if="players.length">
             Remove all
             <em><font-awesome-icon icon="trash-alt"/></em>
@@ -154,6 +170,10 @@
           <li @click="toggleModal('nightOrder')">
             Night Order Sheet
             <em>[N]</em>
+          </li>
+          <li @click="toggleModal('gameState')">
+            Game State JSON
+            <em><font-awesome-icon icon="file-code"/></em>
           </li>
           <li>
             <a href="https://discord.gg/Gd7ybwWbFk" target="_blank">
@@ -183,12 +203,8 @@
 
 <script>
 import { mapMutations, mapState } from "vuex";
-import Screenshot from "./Screenshot";
 
 export default {
-  components: {
-    Screenshot
-  },
   computed: {
     ...mapState(["grimoire", "session"]),
     ...mapState("players", ["players"])
@@ -199,58 +215,57 @@ export default {
     };
   },
   methods: {
-    takeScreenshot(dimensions = {}) {
-      this.$store.commit("updateScreenshot");
-      this.$refs.screenshot.capture(dimensions);
-    },
     setBackground() {
       const background = prompt("Enter custom background URL");
       if (background || background === "") {
         this.$store.commit("setBackground", background);
       }
     },
+    toggleMute() {
+      this.$store.commit("setIsMuted", !this.grimoire.isMuted);
+    },
     hostSession() {
+      if (this.session.sessionId) return;
       const sessionId = prompt(
         "Enter a channel number / name for your session",
         Math.round(Math.random() * 10000)
       );
       if (sessionId) {
+        this.$store.commit("session/clearVoteHistory");
         this.$store.commit("session/setSpectator", false);
-        this.$store.commit(
-          "session/setSessionId",
-          sessionId
-            .toLocaleLowerCase()
-            .replace(/[^0-9a-z]/g, "")
-            .substr(0, 10)
-        );
+        this.$store.commit("session/setSessionId", sessionId);
         this.copySessionUrl();
       }
     },
     copySessionUrl() {
-      // check for clipboard permissions
-      navigator.permissions
-        .query({ name: "clipboard-write" })
-        .then(({ state }) => {
-          if (state === "granted" || state === "prompt") {
-            const url = window.location.href.split("#")[0];
-            const link = url + "#play/" + this.session.sessionId;
-            navigator.clipboard.writeText(link);
-          }
-        });
+      const url = window.location.href.split("#")[0];
+      const link = url + "#" + this.session.sessionId;
+      navigator.clipboard.writeText(link);
+    },
+    distributeRoles() {
+      if (this.session.isSpectator) return;
+      const popup =
+        "Do you want to distribute assigned characters to all SEATED players?";
+      if (confirm(popup)) {
+        this.$store.commit("session/distributeRoles", true);
+        setTimeout(
+          (() => {
+            this.$store.commit("session/distributeRoles", false);
+          }).bind(this),
+          2000
+        );
+      }
     },
     joinSession() {
+      if (this.session.sessionId) return this.leaveSession();
       const sessionId = prompt(
         "Enter the channel number / name of the session you want to join"
       );
       if (sessionId) {
+        this.$store.commit("session/clearVoteHistory");
         this.$store.commit("session/setSpectator", true);
-        this.$store.commit(
-          "session/setSessionId",
-          sessionId
-            .toLocaleLowerCase()
-            .replace(/[^0-9a-z]/g, "")
-            .substr(0, 10)
-        );
+        this.$store.commit("toggleGrimoire", false);
+        this.$store.commit("session/setSessionId", sessionId);
       }
     },
     leaveSession() {
@@ -277,20 +292,18 @@ export default {
       if (this.session.isSpectator) return;
       if (confirm("Are you sure you want to remove all players?")) {
         this.$store.commit("players/clear");
-        this.$store.commit("setBluff");
       }
     },
     clearRoles() {
       if (confirm("Are you sure you want to remove all player roles?")) {
         this.$store.dispatch("players/clearRoles");
-        this.$store.commit("setBluff");
       }
     },
     ...mapMutations([
       "toggleGrimoire",
       "toggleMenu",
+      "toggleNight",
       "toggleNightOrder",
-      "updateScreenshot",
       "setZoom",
       "toggleModal"
     ])
@@ -319,10 +332,6 @@ export default {
   text-align: right;
   padding-right: 50px;
   z-index: 200;
-
-  #app.screenshot & {
-    display: none;
-  }
 
   svg {
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 1));

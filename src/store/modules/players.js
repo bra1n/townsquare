@@ -8,7 +8,9 @@ const NEWPLAYER = {
 };
 
 const state = () => ({
-  players: []
+  players: [],
+  fabled: [],
+  bluffs: []
 });
 
 const getters = {
@@ -22,11 +24,18 @@ const getters = {
     return Math.min(nonTravelers.length, 15);
   },
   // calculate a Map of player => night order
-  nightOrder({ players }) {
+  nightOrder({ players, fabled }) {
     const firstNight = [0];
     const otherNight = [0];
     players.forEach(({ role }) => {
-      // if (isDead) return;
+      if (role.firstNight && !firstNight.includes(role.firstNight)) {
+        firstNight.push(role.firstNight);
+      }
+      if (role.otherNight && !otherNight.includes(role.otherNight)) {
+        otherNight.push(role.otherNight);
+      }
+    });
+    fabled.forEach(role => {
       if (role.firstNight && !firstNight.includes(role.firstNight)) {
         firstNight.push(role.firstNight);
       }
@@ -41,6 +50,11 @@ const getters = {
       const first = Math.max(firstNight.indexOf(player.role.firstNight), 0);
       const other = Math.max(otherNight.indexOf(player.role.otherNight), 0);
       nightOrder.set(player, { first, other });
+    });
+    fabled.forEach(role => {
+      const first = Math.max(firstNight.indexOf(role.firstNight), 0);
+      const other = Math.max(otherNight.indexOf(role.otherNight), 0);
+      nightOrder.set(role, { first, other });
     });
     return nightOrder;
   }
@@ -70,14 +84,18 @@ const actions = {
         name,
         id
       }));
+      commit("setFabled", { fabled: [] });
     }
     commit("set", players);
+    commit("setBluff");
   }
 };
 
 const mutations = {
   clear(state) {
     state.players = [];
+    state.bluffs = [];
+    state.fabled = [];
   },
   set(state, players = []) {
     state.players = players;
@@ -107,6 +125,24 @@ const mutations = {
   },
   move(state, [from, to]) {
     state.players.splice(to, 0, state.players.splice(from, 1)[0]);
+  },
+  setBluff(state, { index, role } = {}) {
+    if (index !== undefined) {
+      state.bluffs.splice(index, 1, role);
+    } else {
+      state.bluffs = [];
+    }
+  },
+  setFabled(state, { index, fabled } = {}) {
+    if (index !== undefined) {
+      state.fabled.splice(index, 1);
+    } else if (fabled) {
+      if (!Array.isArray(fabled)) {
+        state.fabled.push(fabled);
+      } else {
+        state.fabled = fabled;
+      }
+    }
   }
 };
 

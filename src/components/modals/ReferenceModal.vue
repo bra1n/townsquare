@@ -1,9 +1,8 @@
 <template>
   <Modal
     class="characters"
-    v-show="modals.reference"
     @close="toggleModal('reference')"
-    v-if="roles.size"
+    v-if="modals.reference && roles.size"
   >
     <font-awesome-icon
       @click="toggleModal('nightOrder')"
@@ -14,7 +13,7 @@
     <h3>
       Character Reference
       <font-awesome-icon icon="address-card" />
-      {{ editionName }}
+      {{ edition.name || "Custom Script" }}
     </h3>
     <ul class="legend">
       <li>
@@ -34,7 +33,7 @@
           <span
             class="icon"
             v-if="role.id"
-            v-bind:style="{
+            :style="{
               backgroundImage: `url(${role.image ||
                 require('../../assets/icons/' + role.id + '.png')})`
             }"
@@ -51,7 +50,6 @@
 
 <script>
 import Modal from "./Modal";
-import editionJSON from "./../../editions.json";
 import { mapMutations, mapState } from "vuex";
 
 export default {
@@ -64,10 +62,6 @@ export default {
     };
   },
   computed: {
-    editionName: function() {
-      const edition = editionJSON.find(({ id }) => id === this.edition);
-      return edition ? edition.name : "Custom Script";
-    },
     rolesGrouped: function() {
       const rolesGrouped = {};
       this.roles.forEach(role => {

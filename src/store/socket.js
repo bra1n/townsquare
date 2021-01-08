@@ -1,9 +1,7 @@
-import rolesJSON from "../roles.json";
-
 class LiveSession {
   constructor(store) {
-    //this._wss = "ws://localhost:8081/";
-    this._wss = "wss://baumgart.biz:8080/";
+    this._wss = "wss://live.clocktower.online:8080/";
+    //this._wss = "wss://localhost:8081/";
     this._socket = null;
     this._isSpectator = true;
     this._gamestate = [];
@@ -27,7 +25,10 @@ class LiveSession {
   _open(channel) {
     this.disconnect();
     this._socket = new WebSocket(
-      this._wss + channel + (this._isSpectator ? "" : "-host")
+      this._wss +
+        channel +
+        "/" +
+        (this._isSpectator ? this._store.state.session.playerId : "host")
     );
     this._socket.addEventListener("message", this._handleMessage.bind(this));
     this._socket.onopen = this._onOpen.bind(this);
@@ -127,6 +128,13 @@ class LiveSession {
         break;
       case "nomination":
         if (!this._isSpectator) return;
+        if (!params) {
+          // create vote history record
+          this._store.commit(
+            "session/addHistory",
+            this._store.state.players.players
+          );
+        }
         this._store.commit("session/nomination", { nomination: params });
         break;
       case "swap":
@@ -137,9 +145,21 @@ class LiveSession {
         if (!this._isSpectator) return;
         this._store.commit("players/move", params);
         break;
+      case "isNight":
+        if (!this._isSpectator) return;
+        this._store.commit("toggleNight", params);
+        break;
       case "votingSpeed":
         if (!this._isSpectator) return;
         this._store.commit("session/setVotingSpeed", params);
+        break;
+      case "clearVoteHistory":
+        if (!this._isSpectator) return;
+        this._store.commit("session/clearVoteHistory");
+        break;
+      case "isVoteInProgress":
+        if (!this._isSpectator) return;
+        this._store.commit("session/setVoteInProgress", params);
         break;
       case "vote":
         this._handleVote(params);
@@ -192,8 +212,10 @@ class LiveSession {
 
   /**
    * Publish the current gamestate.
+   * Optional param to reduce traffic. (send only player data)
+   * @param isLightweight
    */
-  sendGamestate() {
+  sendGamestate(isLightweight = false) {
     if (this._isSpectator) return;
     this._gamestate = this._store.state.players.players.map(player => ({
       name: player.name,
@@ -204,16 +226,23 @@ class LiveSession {
         ? { roleId: player.role.id }
         : {})
     }));
-    const { session } = this._store.state;
-    this.sendEdition();
-    this.sendFabled();
-    this._send("gs", {
-      gamestate: this._gamestate,
-      nomination: session.nomination,
-      votingSpeed: session.votingSpeed,
-      lockedVote: session.lockedVote,
-      ...(session.nomination ? { votes: session.votes } : {})
-    });
+    if (isLightweight) {
+      this._send("gs", { gamestate: this._gamestate, isLightweight });
+    } else {
+      const { session, grimoire } = this._store.state;
+      const { fabled } = this._store.state.players;
+      this.sendEdition();
+      this._send("gs", {
+        gamestate: this._gamestate,
+        isNight: grimoire.isNight,
+        nomination: session.nomination,
+        votingSpeed: session.votingSpeed,
+        lockedVote: session.lockedVote,
+        isVoteInProgress: session.isVoteInProgress,
+        fabled: fabled.map(({ id }) => id),
+        ...(session.nomination ? { votes: session.votes } : {})
+      });
+    }
   }
 
   /**
@@ -223,13 +252,17 @@ class LiveSession {
    */
   _updateGamestate(data) {
     if (!this._isSpectator) return;
-    const { gamestate, nomination, votingSpeed, votes, lockedVote } = data;
-    this._store.commit("session/nomination", {
+    const {
+      gamestate,
+      isLightweight,
+      isNight,
       nomination,
-      votes,
       votingSpeed,
-      lockedVote
-    });
+      votes,
+      lockedVote,
+      isVoteInProgress,
+      fabled
+    } = data;
     const players = this._store.state.players.players;
     // adjust number of players
     if (players.length < gamestate.length) {
@@ -254,12 +287,16 @@ class LiveSession {
       });
       // roles are special, because of travelers
       if (roleId && player.role.id !== roleId) {
-        const role = rolesJSON.find(r => r.id === roleId);
-        this._store.commit("players/update", {
-          player,
-          property: "role",
-          value: role
-        });
+        const role =
+          this._store.state.roles.get(roleId) ||
+          this._store.getters.rolesJSONbyId.get(roleId);
+        if (role) {
+          this._store.commit("players/update", {
+            player,
+            property: "role",
+            value: role
+          });
+        }
       } else if (!roleId && player.role.team === "traveler") {
         this._store.commit("players/update", {
           player,
@@ -268,6 +305,19 @@ class LiveSession {
         });
       }
     });
+    if (!isLightweight) {
+      this._store.commit("toggleNight", !!isNight);
+      this._store.commit("session/nomination", {
+        nomination,
+        votes,
+        votingSpeed,
+        lockedVote,
+        isVoteInProgress
+      });
+      this._store.commit("players/setFabled", {
+        fabled: fabled.map(id => this._store.state.fabled.get(id))
+      });
+    }
   }
 
   /**
@@ -277,11 +327,13 @@ class LiveSession {
     if (this._isSpectator) return;
     const { edition } = this._store.state;
     let roles;
-    if (edition === "custom") {
-      roles = this._store.getters.customRoles;
+    if (!edition.isOfficial) {
+      roles = Array.from(this._store.state.roles.keys());
     }
     this._send("edition", {
-      edition,
+      edition: edition.isOfficial
+        ? { id: edition.id }
+        : Object.assign({}, edition, { logo: "" }),
       ...(roles ? { roles } : {})
     });
   }
@@ -296,7 +348,25 @@ class LiveSession {
     if (!this._isSpectator) return;
     this._store.commit("setEdition", edition);
     if (roles) {
-      this._store.commit("setCustomRoles", roles);
+      this._store.commit(
+        "setCustomRoles",
+        roles.map(id => ({ id }))
+      );
+      if (this._store.state.roles.size !== roles.length) {
+        const missing = [];
+        roles.forEach(id => {
+          if (!this._store.state.roles.get(id)) {
+            missing.push(id);
+          }
+        });
+        alert(
+          `This session contains custom characters that can't be found. ` +
+            `Please load them before joining! ` +
+            `Missing roles: ${missing.join(", ")}`
+        );
+        this.disconnect();
+        this._store.commit("toggleModal", "edition");
+      }
     }
   }
 
@@ -305,7 +375,7 @@ class LiveSession {
    */
   sendFabled() {
     if (this._isSpectator) return;
-    const { fabled } = this._store.state.grimoire;
+    const { fabled } = this._store.state.players;
     this._send(
       "fabled",
       fabled.map(({ id }) => id)
@@ -319,7 +389,7 @@ class LiveSession {
    */
   _updateFabled(fabled) {
     if (!this._isSpectator) return;
-    this._store.commit("setFabled", {
+    this._store.commit("players/setFabled", {
       fabled: fabled.map(id => this._store.state.fabled.get(id))
     });
   }
@@ -353,13 +423,14 @@ class LiveSession {
   }
 
   /**
-   * Update a player based on incoming data.
+   * Update a player based on incoming data. Player only.
    * @param index
    * @param property
    * @param value
    * @private
    */
   _updatePlayer({ index, property, value }) {
+    if (!this._isSpectator) return;
     const player = this._store.state.players.players[index];
     if (!player) return;
     // special case where a player stops being a traveler
@@ -372,8 +443,8 @@ class LiveSession {
           value: {}
         });
       } else {
-        // load traveler role
-        const role = rolesJSON.find(r => r.id === value);
+        // load role
+        const role = this._store.state.roles.get(value);
         this._store.commit("players/update", {
           player,
           property: "role",
@@ -452,11 +523,13 @@ class LiveSession {
 
   /**
    * Claim a seat, needs to be confirmed by the Storyteller.
-   * @param seat either -1 or the index of the seat claimed
+   * Seats already occupied can't be claimed.
+   * @param seat either -1 to vacate or the index of the seat claimed
    */
   claimSeat(seat) {
     if (!this._isSpectator) return;
-    if (this._store.state.players.players.length > seat) {
+    const players = this._store.state.players.players;
+    if (players.length > seat && (seat < 0 || !players[seat].id)) {
       this._send("claim", [seat, this._store.state.session.playerId]);
     }
   }
@@ -487,7 +560,27 @@ class LiveSession {
       this._store.commit("players/update", { player, property, value });
     }
     // update player session list as if this was a ping
-    this._handlePing([true, value]);
+    this._handlePing([true, value, 0]);
+  }
+
+  /**
+   * Distribute player roles to all seated players in a direct message.
+   * This will be split server side so that each player only receives their own (sub)message.
+   */
+  distributeRoles() {
+    if (this._isSpectator) return;
+    const message = {};
+    this._store.state.players.players.forEach((player, index) => {
+      if (player.id && player.role) {
+        message[player.id] = [
+          "player",
+          { index, property: "role", value: player.role.id }
+        ];
+      }
+    });
+    if (Object.keys(message).length) {
+      this._send("direct", message);
+    }
   }
 
   /**
@@ -508,6 +601,22 @@ class LiveSession {
   }
 
   /**
+   * Set the isVoteInProgress status. ST only
+   */
+  setVoteInProgress() {
+    if (this._isSpectator) return;
+    this._send("isVoteInProgress", this._store.state.session.isVoteInProgress);
+  }
+
+  /**
+   * Send the isNight status. ST only
+   */
+  setIsNight() {
+    if (this._isSpectator) return;
+    this._send("isNight", this._store.state.grimoire.isNight);
+  }
+
+  /**
    * Send the voting speed. ST only
    * @param votingSpeed voting speed in seconds, minimum 1
    */
@@ -516,6 +625,14 @@ class LiveSession {
     if (votingSpeed) {
       this._send("votingSpeed", votingSpeed);
     }
+  }
+
+  /**
+   * Clear the vote history for everyone. ST only
+   */
+  clearVoteHistory() {
+    if (this._isSpectator) return;
+    this._send("clearVoteHistory");
   }
 
   /**
@@ -566,12 +683,13 @@ class LiveSession {
   }
 
   /**
-   * Update vote lock and the locked vote, if it differs.
+   * Update vote lock and the locked vote, if it differs. Player only
    * @param lock
    * @param vote
    * @private
    */
   _handleLock([lock, vote]) {
+    if (!this._isSpectator) return;
     this._store.commit("session/lockVote", lock);
     if (lock > 1) {
       const { lockedVote, nomination } = this._store.state.session;
@@ -620,8 +738,16 @@ export default store => {
       case "session/claimSeat":
         session.claimSeat(payload);
         break;
+      case "session/distributeRoles":
+        if (payload) {
+          session.distributeRoles();
+        }
+        break;
       case "session/nomination":
         session.nomination(payload);
+        break;
+      case "session/setVoteInProgress":
+        session.setVoteInProgress(payload);
         break;
       case "session/voteSync":
         session.vote(payload);
@@ -632,10 +758,16 @@ export default store => {
       case "session/setVotingSpeed":
         session.setVotingSpeed(payload);
         break;
+      case "session/clearVoteHistory":
+        session.clearVoteHistory();
+        break;
+      case "toggleNight":
+        session.setIsNight();
+        break;
       case "setEdition":
         session.sendEdition();
         break;
-      case "setFabled":
+      case "players/setFabled":
         session.sendFabled();
         break;
       case "players/swap":
@@ -648,7 +780,7 @@ export default store => {
       case "players/clear":
       case "players/remove":
       case "players/add":
-        session.sendGamestate();
+        session.sendGamestate(true);
         break;
       case "players/update":
         session.sendPlayer(payload);
@@ -657,9 +789,9 @@ export default store => {
   });
 
   // check for session Id in hash
-  const [command, param] = window.location.hash.substr(1).split("/");
-  if (command === "play") {
+  const sessionId = window.location.hash.substr(1);
+  if (sessionId) {
     store.commit("session/setSpectator", true);
-    store.commit("session/setSessionId", param);
+    store.commit("session/setSessionId", sessionId);
   }
 };
