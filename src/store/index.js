@@ -25,6 +25,15 @@ const getRolesByEdition = (edition = editionJSON[0]) => {
   );
 };
 
+const getTravelersNotInEdition = (edition = editionJSON[0]) => {
+  return new Map(
+    rolesJSON
+      .filter(r => r.team === "traveler")
+      .filter(r => r.edition !== edition.id || !edition.roles.includes(r.id))
+      .map(role => [role.id, role])
+  );
+};
+
 // base definition for custom roles
 const imageBase =
   "https://raw.githubusercontent.com/bra1n/townsquare/main/src/assets/icons/";
@@ -70,6 +79,7 @@ export default new Vuex.Store({
     },
     edition: editionJSONbyId.get("tb"),
     roles: getRolesByEdition(),
+    extraTravelers: getTravelersNotInEdition(),
     fabled
   },
   getters: {
