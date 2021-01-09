@@ -1,5 +1,12 @@
 # Release Notes
 
+## Version 2.3.1
+- better vote history design and added timestamps
+- adjusted player menu styling on smaller screens
+- improved CONTRIBUTING.md description of hosting your own copy
+
+---
+
 ## Version 2.3.0
 - added spoiler role (Lycanthrope!)
 - fixed copy to clipboard in Firefox
@@ -8,7 +15,7 @@
 ---
 
 ## Version 2.2.1
-- clearing players / roles now also clears Fabled (closes #85)
+- clearing players / roles now also clears Fabled
 - fix list of locked votes showing unlocked votes sometimes
 
 ---
