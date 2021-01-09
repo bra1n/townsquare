@@ -25,7 +25,7 @@ const getRolesByEdition = (edition = editionJSON[0]) => {
   );
 };
 
-const getTravelersNotInEdition = (edition = editionJSON[0]) => {
+const getTravellersNotInEdition = (edition = editionJSON[0]) => {
   return new Map(
     rolesJSON
       .filter(r => r.team === "traveler")
@@ -79,7 +79,7 @@ export default new Vuex.Store({
     },
     edition: editionJSONbyId.get("tb"),
     roles: getRolesByEdition(),
-    extraTravelers: getTravelersNotInEdition(),
+    extraTravellers: getTravellersNotInEdition(),
     fabled
   },
   getters: {
