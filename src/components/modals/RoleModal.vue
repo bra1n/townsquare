@@ -12,7 +12,7 @@
       }}
     </h3>
     <ul>
-      <li class="button-group">
+      <li class="button-group" v-if="isBluffs()">
         <span
           class="button"
           :class="{ active: tab === 'editionRoles' }"
@@ -105,6 +105,9 @@ export default {
         });
       }
       this.$store.commit("toggleModal", "role");
+    },
+    isBluffs() {
+      return this.playerIndex > 0;
     },
     ...mapMutations(["toggleModal"])
   }
