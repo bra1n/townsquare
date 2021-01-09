@@ -1,8 +1,5 @@
 <template>
-  <Modal
-    v-if="modals.role && availableRoles.length"
-    @close="toggleModal('role')"
-  >
+  <Modal v-if="modals.role && availableRoles.length" @close="close()">
     <h3>
       Choose a new character for
       {{
@@ -108,6 +105,10 @@ export default {
     },
     isBluffs() {
       return this.playerIndex > 0;
+    },
+    close() {
+      this.tab = "editionRoles";
+      this.toggleModal("role");
     },
     ...mapMutations(["toggleModal"])
   }
