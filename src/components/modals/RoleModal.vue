@@ -145,7 +145,11 @@ ul.tokens li {
 }
 
 .button.active {
-  background: linear-gradient(to bottom, $townsfolk 0%, rgba(0, 0, 0, 0.7) 100%);
+  background: linear-gradient(
+    to bottom,
+    $townsfolk 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
 }
 
 #townsquare.spectator ul.tokens li.traveler {
