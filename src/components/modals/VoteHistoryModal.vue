@@ -30,8 +30,16 @@
       <tbody>
         <tr v-for="(vote, index) in session.voteHistory" :key="index">
           <td>
-            {{ vote.timestamp.getHours().toString().padStart(2, "0") }}:{{
-              vote.timestamp.getMinutes().toString().padStart(2, "0")
+            {{
+              vote.timestamp
+                .getHours()
+                .toString()
+                .padStart(2, "0")
+            }}:{{
+              vote.timestamp
+                .getMinutes()
+                .toString()
+                .padStart(2, "0")
             }}
           </td>
           <td>{{ vote.nominator }}</td>
