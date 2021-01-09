@@ -161,11 +161,13 @@ export default {
     },
     voters: function() {
       const nomination = this.session.nomination[1];
-      const voters = this.session.votes.map((vote, index) =>
-        vote ? this.players[index].name : ""
-      );
+      const voters = Array(this.players.length)
+        .fill("")
+        .map((x, index) =>
+          this.session.votes[index] ? this.players[index].name : ""
+        );
       const reorder = [
-        ...voters.slice(nomination + 1, this.players.length),
+        ...voters.slice(nomination + 1),
         ...voters.slice(0, nomination + 1)
       ];
       return reorder.slice(0, this.session.lockedVote - 1).filter(n => !!n);
@@ -178,15 +180,15 @@ export default {
   },
   methods: {
     countdown() {
-      this.$store.commit("session/setVoteInProgress", true);
       this.$store.commit("session/lockVote", 0);
+      this.$store.commit("session/setVoteInProgress", true);
       this.voteTimer = setInterval(() => {
         this.start();
       }, 4000);
     },
     start() {
-      this.$store.commit("session/setVoteInProgress", true);
       this.$store.commit("session/lockVote", 1);
+      this.$store.commit("session/setVoteInProgress", true);
       clearInterval(this.voteTimer);
       this.voteTimer = setInterval(() => {
         this.$store.commit("session/lockVote");
