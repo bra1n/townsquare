@@ -194,6 +194,13 @@ export default new Vuex.Store({
           // convert to Map
           .map(role => [role.id, role])
       );
+
+      // update travelers by edition list
+      state.extraTravellers = new Map(
+        rolesJSON
+          .filter(r => r.team === "traveler" && !roles.some(i => i.id === r.id))
+          .map(role => [role.id, role])
+      );
     },
     setEdition(state, edition) {
       if (editionJSONbyId.has(edition.id)) {
