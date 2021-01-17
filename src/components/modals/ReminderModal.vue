@@ -82,6 +82,31 @@ export default {
           }))
         ];
       });
+
+      // add out of script traveller reminders
+      this.$store.state.extraTravellers.forEach(role => {
+        if (players.some(p => p.role.id === role.id)) {
+          reminders = [
+            ...reminders,
+            ...role.reminders.map(name => ({
+              role: role.id,
+              image: role.image,
+              name
+            }))
+          ];
+        }
+        if (role.remindersGlobal && role.remindersGlobal.length) {
+          reminders = [
+            ...reminders,
+            ...role.remindersGlobal.map(name => ({
+              role: role.id,
+              image: role.image,
+              name
+            }))
+          ];
+        }
+      });
+
       reminders.push({ role: "good", name: "Good" });
       reminders.push({ role: "evil", name: "Evil" });
       reminders.push({ role: "custom", name: "Custom note" });
