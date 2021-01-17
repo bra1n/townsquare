@@ -664,11 +664,10 @@ li.move:not(.from) .player .overlay svg.move {
   }
 
   .pronouns {
-    display: inline-block;
+    display: inline-flex;
     position: absolute;
     padding: 5px 10px;
-    left: 120%;
-    z-index: 25;
+    left: 110%;
     font-size: 80%;
     background: rgba(0, 0, 0, 0.5);
     border-radius: 10px;
