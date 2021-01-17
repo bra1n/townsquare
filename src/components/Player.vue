@@ -112,6 +112,9 @@
             <li @click="changeName">
               <font-awesome-icon icon="user-edit" />Rename
             </li>
+            <li @click="changePronoun">
+              <font-awesome-icon icon="" />Change Pronouns
+            </li>
             <li v-if="!session.nomination" @click="nominatePlayer()">
               <font-awesome-icon icon="hand-point-right" />
               Nomination
@@ -230,6 +233,13 @@ export default {
     handleEmojis: text => text.replace(/:([^: ]+?):/g, "").replace(/ •/g, "\n•")
   },
   methods: {
+    changePronoun() {
+      if (this.session.isSpectator) return;
+      const pronoun =
+        prompt("Player preffered pronouns", this.player.pronoun) ||
+        this.player.pronoun;
+      this.updatePlayer("pronoun", pronoun, true);
+    },
     toggleStatus() {
       if (this.grimoire.isPublic) {
         if (!this.player.isDead) {
