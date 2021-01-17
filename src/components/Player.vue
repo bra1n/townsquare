@@ -104,6 +104,9 @@
         :class="{ active: isMenuOpen }"
       >
         {{ player.name }}
+        <div class="pronouns" v-if="player.pronoun && player.pronoun !== ''">
+          {{ player.pronoun }}
+        </div>
       </div>
 
       <transition name="fold">
@@ -641,6 +644,7 @@ li.move:not(.from) .player .overlay svg.move {
 /***** Player name *****/
 .player > .name {
   text-align: center;
+  justify-content: center;
   font-size: 120%;
   line-height: 120%;
   cursor: pointer;
@@ -652,12 +656,55 @@ li.move:not(.from) .player .overlay svg.move {
   top: 5px;
   box-shadow: 0 0 5px black;
   text-overflow: ellipsis;
-  overflow: hidden;
   padding: 0 4px;
 
   #townsquare:not(.spectator) &:hover,
   &.active {
     color: red;
+  }
+
+  .pronouns {
+    display: inline-block;
+    position: absolute;
+    padding: 5px 10px;
+    left: 120%;
+    z-index: 25;
+    font-size: 80%;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    border: 3px solid black;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+    text-align: left;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+
+    &:before {
+      content: " ";
+      border: 10px solid transparent;
+      width: 0;
+      height: 0;
+      border-right-color: black;
+      position: absolute;
+      margin-right: 2px;
+      right: 100%;
+    }
+  }
+
+  &:hover {
+    .pronouns {
+      opacity: 1;
+    }
+  }
+
+  #townsquare:not(.spectator) &:hover,
+  &.active {
+    .pronouns {
+      color: white;
+    }
   }
 }
 
