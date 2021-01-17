@@ -112,9 +112,6 @@
             <li @click="changeName">
               <font-awesome-icon icon="user-edit" />Rename
             </li>
-            <li @click="changePronoun">
-              <font-awesome-icon icon="" />Change Pronouns
-            </li>
             <li v-if="!session.nomination" @click="nominatePlayer()">
               <font-awesome-icon icon="hand-point-right" />
               Nomination
@@ -152,6 +149,12 @@
               Vacate seat
             </template>
             <template v-else> Seat occupied</template>
+          </li>
+          <li
+            @click="changePronoun"
+            v-if="!session.isSpectator || player.id === session.playerId"
+          >
+            <font-awesome-icon icon="" />Change Pronouns
           </li>
         </ul>
       </transition>
