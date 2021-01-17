@@ -104,7 +104,7 @@ export default {
       this.$store.commit("toggleModal", "role");
     },
     isBluffs() {
-      return this.playerIndex > 0;
+      return this.playerIndex >= 0;
     },
     close() {
       this.tab = "editionRoles";
