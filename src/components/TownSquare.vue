@@ -292,6 +292,17 @@ export default {
             left: 100%;
           }
         }
+        //show pronouns tooltip on the left
+        .pronouns {
+          right: 120%;
+          left: auto;
+          &:before {
+            border-right-color: transparent;
+            border-left-color: black;
+            right: auto;
+            left: 100%;
+          }
+        }
       } @else {
         // second half of players
         z-index: $i - 1;
