@@ -245,6 +245,7 @@ export default {
         prompt("Player preffered pronouns", this.player.pronoun) ||
         this.player.pronoun;
       this.updatePlayer("pronoun", pronoun, true);
+      this.$emit("trigger", ["updatePlayer", this.player, "pronoun", pronoun]);
     },
     toggleStatus() {
       if (this.grimoire.isPublic) {
