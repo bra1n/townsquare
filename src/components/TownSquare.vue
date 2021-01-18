@@ -294,7 +294,7 @@ export default {
         }
         //show pronouns tooltip on the left
         .pronouns {
-          right: 120%;
+          right: 110%;
           left: auto;
           &:before {
             border-right-color: transparent;
