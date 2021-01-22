@@ -1,5 +1,12 @@
 # Release Notes
 
+## Version 2.4.0
+- added spoiler role (Pixie!)
+- fixed bug with ST sending out roles that are not part of the current edition / script (ie. travelers or base set roles)
+- better Lycanthrope icon (thanks @AWConant)
+
+---
+
 ## Version 2.3.1
 - better vote history design and added timestamps
 - adjusted player menu styling on smaller screens
