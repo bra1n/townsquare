@@ -8,7 +8,7 @@
           : "bluffing"
       }}
     </h3>
-    <ul class="tokens" v-if="tab === 'editionRoles'">
+    <ul class="tokens" v-if="tab === 'editionRoles' || !otherTravelers.size">
       <li
         v-for="role in availableRoles"
         :class="[role.team]"
@@ -18,7 +18,7 @@
         <Token :role="role" />
       </li>
     </ul>
-    <ul class="tokens" v-if="tab === 'otherTravelers'">
+    <ul class="tokens" v-if="tab === 'otherTravelers' && otherTravelers.size">
       <li
         v-for="role in otherTravelers.values()"
         :class="[role.team]"
@@ -28,7 +28,7 @@
         <Token :role="role" />
       </li>
     </ul>
-    <div class="button-group" v-if="playerIndex >= 0">
+    <div class="button-group" v-if="playerIndex >= 0 && otherTravelers.size">
       <span
         class="button"
         :class="{ townsfolk: tab === 'editionRoles' }"
