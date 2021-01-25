@@ -24,7 +24,13 @@
           :class="[role.team]"
         >
           <span class="name">
-            {{ role.name }}
+            {{ role.name }}<br />
+            <small>{{
+                players
+                    .filter(p => p.role.id === role.id)
+                    .map(p => p.name)
+                    .join(", ")
+              }}</small>
           </span>
           <span
             class="icon"
@@ -52,7 +58,13 @@
             }"
           ></span>
           <span class="name">
-            {{ role.name }}
+            {{ role.name }}<br />
+            <small>{{
+              players
+                  .filter(p => p.role.id === role.id)
+                  .map(p => p.name)
+                  .join(", ")
+            }}</small>
           </span>
         </li>
       </ul>
@@ -179,57 +191,42 @@ h4 {
 }
 
 .fabled {
-  .name,
-  .player,
-  h4 {
-    color: $fabled;
-    &:before,
-    &:after {
-      background-color: $fabled;
+  .name {
+    background: linear-gradient(90deg, $fabled, transparent 35%);
+    .night .other & {
+      background: linear-gradient(-90deg, $fabled, transparent 35%);
     }
   }
 }
 .townsfolk {
-  .name,
-  .player,
-  h4 {
-    color: $townsfolk;
-    &:before,
-    &:after {
-      background-color: $townsfolk;
+  .name {
+    background: linear-gradient(90deg, $townsfolk, transparent 35%);
+    .night .other & {
+      background: linear-gradient(-90deg, $townsfolk, transparent 35%);
     }
   }
 }
 .outsider {
-  .name,
-  .player,
-  h4 {
-    color: $outsider;
-    &:before,
-    &:after {
-      background-color: $outsider;
+  .name {
+    background: linear-gradient(90deg, $outsider, transparent 35%);
+    .night .other & {
+      background: linear-gradient(-90deg, $outsider, transparent 35%);
     }
   }
 }
 .minion {
-  .name,
-  .player,
-  h4 {
-    color: $minion;
-    &:before,
-    &:after {
-      background-color: $minion;
+  .name {
+    background: linear-gradient(90deg, $minion, transparent 35%);
+    .night .other & {
+      background: linear-gradient(-90deg, $minion, transparent 35%);
     }
   }
 }
 .demon {
-  .name,
-  .player,
-  h4 {
-    color: $demon;
-    &:before,
-    &:after {
-      background-color: $demon;
+  .name {
+    background: linear-gradient(90deg, $demon, transparent 35%);
+    .night .other & {
+      background: linear-gradient(-90deg, $demon, transparent 35%);
     }
   }
 }
@@ -237,20 +234,15 @@ ul {
   li {
     display: flex;
     width: 100%;
-    align-items: center;
-    align-content: center;
-    /*background: linear-gradient(0deg, #ffffff0f, transparent);*/
-    border-radius: 10px;
+    margin-bottom: 3px;
     .icon {
       width: 6vh;
       background-size: cover;
-      background-position: 0 -5px;
+      background-position: 0 0;
       flex-grow: 0;
       flex-shrink: 0;
-      margin: 0 10px;
       text-align: center;
-      border-left: 1px solid #ffffff1f;
-      border-right: 1px solid #ffffff1f;
+      margin: 0 2px;
       &:after {
         content: " ";
         display: block;
@@ -261,19 +253,14 @@ ul {
       flex-grow: 0;
       flex-shrink: 0;
       width: 15%;
-      font-weight: bold;
       text-align: right;
-      font-family: "Papyrus", sans-serif;
       font-size: 110%;
-    }
-    .player {
-      flex-grow: 0;
-      flex-shrink: 1;
-      text-align: right;
-      margin: 0 10px;
-    }
-    .ability {
-      flex-grow: 1;
+      padding: 5px;
+      border-left: 1px solid rgba(255, 255, 255, 0.4);
+      border-right: 1px solid rgba(255, 255, 255, 0.4);
+      small {
+        color: #888;
+      }
     }
   }
   &.legend {
@@ -307,28 +294,23 @@ ul {
   .headline {
     display: block;
     font-weight: bold;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
     padding: 5px 10px;
     border-radius: 0;
     text-align: center;
-  }
-  .icon {
-    border-color: white;
   }
   .name {
     flex-grow: 1;
   }
   .first {
-    .icon {
-      border-right: 0;
+    .name {
+      border-left: 0;
     }
   }
   .other {
     li .name {
       text-align: left;
-    }
-    .icon {
-      border-left: 0;
+      border-right: 0;
     }
   }
 }
