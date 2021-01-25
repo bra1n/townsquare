@@ -28,7 +28,10 @@
         <Token :role="role" />
       </li>
     </ul>
-    <div class="button-group" v-if="playerIndex >= 0 && otherTravelers.size">
+    <div
+      class="button-group"
+      v-if="playerIndex >= 0 && otherTravelers.size && !session.isSpectator"
+    >
       <span
         class="button"
         :class="{ townsfolk: tab === 'editionRoles' }"
