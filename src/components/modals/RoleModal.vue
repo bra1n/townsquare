@@ -20,7 +20,7 @@
     </ul>
     <ul class="tokens" v-if="tab === 'otherTravelers'">
       <li
-        v-for="role in otherTravelers"
+        v-for="role in otherTravelers.values()"
         :class="[role.team]"
         :key="role.id"
         @click="setRole(role)"
@@ -54,9 +54,6 @@ export default {
   components: { Token, Modal },
   props: ["playerIndex"],
   computed: {
-    otherTravelers() {
-      return [...this.$store.state.otherTravelers.values()];
-    },
     availableRoles() {
       const availableRoles = [];
       const players = this.$store.state.players.players;
@@ -74,7 +71,8 @@ export default {
       return availableRoles;
     },
     ...mapState(["modals", "roles", "session"]),
-    ...mapState("players", ["players"])
+    ...mapState("players", ["players"]),
+    ...mapState(["otherTravelers"])
   },
   data() {
     return {
