@@ -155,7 +155,7 @@
           </li>
           <li
             @click="changePronoun"
-            v-if="!session.isSpectator || player.id === session.playerId"
+            v-if="session.isSpectator && player.id === session.playerId"
           >
             <font-awesome-icon icon="transgender" />Change Pronouns
           </li>
