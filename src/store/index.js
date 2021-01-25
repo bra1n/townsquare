@@ -194,8 +194,7 @@ export default new Vuex.Store({
           // convert to Map
           .map(role => [role.id, role])
       );
-
-      // update travelers by edition list
+      // update extraTravelers map to only show travelers not in this script
       state.otherTravelers = new Map(
         rolesJSON
           .filter(r => r.team === "traveler" && !roles.some(i => i.id === r.id))
