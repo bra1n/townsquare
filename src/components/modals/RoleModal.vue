@@ -28,7 +28,7 @@
         <Token :role="role" />
       </li>
     </ul>
-    <div class="button-group" v-if="isBluffs()">
+    <div class="button-group" v-if="playerIndex >= 0">
       <span
         class="button"
         :class="{ townsfolk: tab === 'editionRoles' }"
@@ -98,9 +98,6 @@ export default {
         });
       }
       this.$store.commit("toggleModal", "role");
-    },
-    isBluffs() {
-      return this.playerIndex >= 0;
     },
     close() {
       this.tab = "editionRoles";
