@@ -95,16 +95,6 @@ export default {
             }))
           ];
         }
-        if (role.remindersGlobal && role.remindersGlobal.length) {
-          reminders = [
-            ...reminders,
-            ...role.remindersGlobal.map(name => ({
-              role: role.id,
-              image: role.image,
-              name
-            }))
-          ];
-        }
       });
 
       reminders.push({ role: "good", name: "Good" });
