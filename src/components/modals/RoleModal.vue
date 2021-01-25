@@ -8,42 +8,40 @@
           : "bluffing"
       }}
     </h3>
-    <ul>
-      <li class="button-group" v-if="isBluffs()">
-        <span
-          class="button"
-          :class="{ active: tab === 'editionRoles' }"
-          @click="tab = 'editionRoles'"
-          >Edtition Roles</span
-        >
-        <span
-          class="button"
-          :class="{ active: tab === 'otherTravellers' }"
-          @click="tab = 'otherTravellers'"
-          >Other Travellers</span
-        >
+    <ul class="tokens" v-if="tab === 'editionRoles'">
+      <li
+        v-for="role in availableRoles"
+        :class="[role.team]"
+        :key="role.id"
+        @click="setRole(role)"
+      >
+        <Token :role="role" />
       </li>
-      <ul class="tokens" v-if="tab === 'editionRoles'">
-        <li
-          v-for="role in availableRoles"
-          :class="[role.team]"
-          :key="role.id"
-          @click="setRole(role)"
-        >
-          <Token :role="role" />
-        </li>
-      </ul>
-      <ul class="tokens" v-if="tab === 'otherTravellers'">
-        <li
-          v-for="role in extraTravellers"
-          :class="[role.team]"
-          :key="role.id"
-          @click="setRole(role)"
-        >
-          <Token :role="role" />
-        </li>
-      </ul>
     </ul>
+    <ul class="tokens" v-if="tab === 'otherTravellers'">
+      <li
+        v-for="role in extraTravellers"
+        :class="[role.team]"
+        :key="role.id"
+        @click="setRole(role)"
+      >
+        <Token :role="role" />
+      </li>
+    </ul>
+    <div class="button-group" v-if="isBluffs()">
+      <span
+        class="button"
+        :class="{ townsfolk: tab === 'editionRoles' }"
+        @click="tab = 'editionRoles'"
+        >Edtition Roles</span
+      >
+      <span
+        class="button"
+        :class="{ townsfolk: tab === 'otherTravellers' }"
+        @click="tab = 'otherTravellers'"
+        >Other Travellers</span
+      >
+    </div>
   </Modal>
 </template>
 
@@ -143,14 +141,6 @@ ul.tokens li {
     transform: scale(1.2);
     z-index: 10;
   }
-}
-
-.button.active {
-  background: linear-gradient(
-    to bottom,
-    $townsfolk 0%,
-    rgba(0, 0, 0, 0.7) 100%
-  );
 }
 
 #townsquare.spectator ul.tokens li.traveler {
