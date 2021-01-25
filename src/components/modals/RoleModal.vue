@@ -18,9 +18,9 @@
         <Token :role="role" />
       </li>
     </ul>
-    <ul class="tokens" v-if="tab === 'otherTravellers'">
+    <ul class="tokens" v-if="tab === 'otherTravelers'">
       <li
-        v-for="role in extraTravellers"
+        v-for="role in extraTravelers"
         :class="[role.team]"
         :key="role.id"
         @click="setRole(role)"
@@ -37,9 +37,9 @@
       >
       <span
         class="button"
-        :class="{ townsfolk: tab === 'otherTravellers' }"
-        @click="tab = 'otherTravellers'"
-        >Other Travellers</span
+        :class="{ townsfolk: tab === 'otherTravelers' }"
+        @click="tab = 'otherTravelers'"
+        >Other Travelers</span
       >
     </div>
   </Modal>
@@ -54,8 +54,8 @@ export default {
   components: { Token, Modal },
   props: ["playerIndex"],
   computed: {
-    extraTravellers() {
-      return [...this.$store.state.extraTravellers.values()];
+    extraTravelers() {
+      return [...this.$store.state.extraTravelers.values()];
     },
     availableRoles() {
       const availableRoles = [];
