@@ -1,5 +1,11 @@
 # Release Notes
 
+## Version 2.5.0
+- all travelers from the base editions are now optionally available (thanks @davotronic5000)
+- night order shows player names near roles now
+
+---
+
 ## Version 2.4.0
 - added spoiler role (Pixie!)
 - fixed bug with ST sending out roles that are not part of the current edition / script (ie. travelers or base set roles)
