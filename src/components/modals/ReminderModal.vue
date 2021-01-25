@@ -84,7 +84,7 @@ export default {
       });
 
       // add out of script traveler reminders
-      this.$store.state.extraTravelers.forEach(role => {
+      this.$store.state.otherTravelers.forEach(role => {
         if (players.some(p => p.role.id === role.id)) {
           reminders = [
             ...reminders,

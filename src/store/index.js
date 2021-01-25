@@ -83,7 +83,7 @@ export default new Vuex.Store({
     },
     edition: editionJSONbyId.get("tb"),
     roles: getRolesByEdition(),
-    extraTravelers: getTravelersNotInEdition(),
+    otherTravelers: getTravelersNotInEdition(),
     fabled
   },
   getters: {
@@ -196,7 +196,7 @@ export default new Vuex.Store({
       );
 
       // update travelers by edition list
-      state.extraTravelers = new Map(
+      state.otherTravelers = new Map(
         rolesJSON
           .filter(r => r.team === "traveler" && !roles.some(i => i.id === r.id))
           .map(role => [role.id, role])
@@ -206,7 +206,7 @@ export default new Vuex.Store({
       if (editionJSONbyId.has(edition.id)) {
         state.edition = editionJSONbyId.get(edition.id);
         state.roles = getRolesByEdition(state.edition);
-        state.extraTravelers = getTravelersNotInEdition(state.edition);
+        state.otherTravelers = getTravelersNotInEdition(state.edition);
       } else {
         state.edition = edition;
       }
