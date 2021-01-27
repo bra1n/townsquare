@@ -80,12 +80,14 @@ class LiveSession {
    * @private
    */
   _ping() {
-    this._send("ping", [
-      this._isSpectator,
-      this._store.state.session.playerId,
-      "latency"
-    ]);
     this._handlePing();
+    if (this._isSpectator) {
+      this._send("direct", {
+        host: [this._store.state.session.playerId, "latency"]
+      });
+    } else {
+      this._send("ping", [Object.keys(this._players).length, "latency"]);
+    }
     clearTimeout(this._pingTimer);
     this._pingTimer = setTimeout(this._ping.bind(this), this._pingInterval);
   }
@@ -462,41 +464,37 @@ class LiveSession {
 
   /**
    * Handle a ping message by another player / storyteller
-   * @param isSpectator
-   * @param playerId
-   * @param timestamp
+   * @param playerIdOrCount
+   * @param latency
    * @private
    */
-  _handlePing([isSpectator, playerId, latency] = []) {
+  _handlePing([playerIdOrCount, latency] = []) {
     const now = new Date().getTime();
-    // remove players that haven't sent a ping in twice the timespan
-    for (let player in this._players) {
-      if (now - this._players[player] > this._pingInterval * 2) {
-        delete this._players[player];
-        delete this._pings[player];
+    if (!this._isSpectator) {
+      // remove players that haven't sent a ping in twice the timespan
+      for (let player in this._players) {
+        if (now - this._players[player] > this._pingInterval * 2) {
+          delete this._players[player];
+          delete this._pings[player];
+        }
       }
-    }
-    // remove claimed seats from players that are no longer connected
-    this._store.state.players.players.forEach(player => {
-      if (!this._isSpectator && player.id && !this._players[player.id]) {
-        this._store.commit("players/update", {
-          player,
-          property: "id",
-          value: ""
-        });
-      }
-    });
-    // store new player data
-    if (playerId) {
-      this._players[playerId] = now;
-      const ping = parseInt(latency, 10);
-      if (ping && ping > 0 && ping < 30 * 1000) {
-        if (this._isSpectator && !isSpectator) {
-          // ping to ST
-          this._store.commit("session/setPing", ping);
-        } else if (!this._isSpectator) {
+      // remove claimed seats from players that are no longer connected
+      this._store.state.players.players.forEach(player => {
+        if (player.id && !this._players[player.id]) {
+          this._store.commit("players/update", {
+            player,
+            property: "id",
+            value: ""
+          });
+        }
+      });
+      // store new player data
+      if (playerIdOrCount) {
+        this._players[playerIdOrCount] = now;
+        const ping = parseInt(latency, 10);
+        if (ping && ping > 0 && ping < 30 * 1000) {
           // ping to Players
-          this._pings[playerId] = ping;
+          this._pings[playerIdOrCount] = ping;
           const pings = Object.values(this._pings);
           this._store.commit(
             "session/setPing",
@@ -504,10 +502,15 @@ class LiveSession {
           );
         }
       }
+    } else if (latency) {
+      // ping to ST
+      this._store.commit("session/setPing", parseInt(latency, 10));
     }
     this._store.commit(
       "session/setPlayerCount",
-      Object.keys(this._players).length
+      this._isSpectator
+        ? playerIdOrCount || 0
+        : Object.keys(this._players).length
     );
   }
 
