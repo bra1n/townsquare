@@ -34,7 +34,6 @@ const faIcons = [
   "SearchMinus",
   "SearchPlus",
   "Square",
-  "Sun",
   "TheaterMasks",
   "Times",
   "TimesCircle",

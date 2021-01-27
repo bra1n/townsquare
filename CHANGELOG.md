@@ -1,5 +1,11 @@
 # Release Notes
 
+## Version 2.6.0
+- night mode can be toggeled with [S] now (thanks @davotronic5000)
+- night order shows which players are dead
+
+---
+
 ## Version 2.5.0
 - all travelers from the base editions are now optionally available (thanks @davotronic5000)
 - night order shows player names near roles now

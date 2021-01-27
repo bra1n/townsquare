@@ -56,11 +56,6 @@ export default {
   components: {
     Modal
   },
-  data: function() {
-    return {
-      roleSelection: {}
-    };
-  },
   computed: {
     rolesGrouped: function() {
       const rolesGrouped = {};
@@ -136,7 +131,6 @@ h4 {
 
 .townsfolk {
   .name,
-  .player,
   h4 {
     color: $townsfolk;
     &:before,
@@ -147,7 +141,6 @@ h4 {
 }
 .outsider {
   .name,
-  .player,
   h4 {
     color: $outsider;
     &:before,
@@ -158,7 +151,6 @@ h4 {
 }
 .minion {
   .name,
-  .player,
   h4 {
     color: $minion;
     &:before,
@@ -169,7 +161,6 @@ h4 {
 }
 .demon {
   .name,
-  .player,
   h4 {
     color: $demon;
     &:before,
@@ -208,7 +199,6 @@ ul {
       width: 15%;
       font-weight: bold;
       text-align: right;
-      font-family: "Papyrus", sans-serif;
       font-size: 110%;
     }
     .player {
@@ -216,6 +206,8 @@ ul {
       flex-shrink: 1;
       text-align: right;
       margin: 0 10px;
+      color: #888;
+      font-size: smaller;
     }
     .ability {
       flex-grow: 1;
@@ -230,6 +222,7 @@ ul {
       height: auto;
       font-family: inherit;
       font-size: inherit;
+      color: #fff;
     }
     .icon:after {
       padding-top: 0;
