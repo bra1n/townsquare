@@ -107,6 +107,10 @@ export default {
             this.$store.commit("toggleModal", "voteHistory");
           }
           break;
+        case "s":
+          if (this.session.isSpectator) return;
+          this.$store.commit("toggleNight");
+          break;
         case "escape":
           this.$store.commit("toggleModal");
       }

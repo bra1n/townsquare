@@ -24,13 +24,18 @@
           :class="[role.team]"
         >
           <span class="name">
-            {{ role.name }}<br />
-            <small>{{
-                players
-                    .filter(p => p.role.id === role.id)
-                    .map(p => p.name)
-                    .join(", ")
-              }}</small>
+            {{ role.name }}
+            <template v-if="role.players.length">
+              <br />
+              <small
+                v-for="(player, index) in role.players"
+                :class="{ dead: player.isDead }"
+                :key="index"
+                >{{
+                  player.name + (role.players.length > index + 1 ? "," : "")
+                }}</small
+              >
+            </template>
           </span>
           <span
             class="icon"
@@ -58,13 +63,18 @@
             }"
           ></span>
           <span class="name">
-            {{ role.name }}<br />
-            <small>{{
-              players
-                  .filter(p => p.role.id === role.id)
-                  .map(p => p.name)
-                  .join(", ")
-            }}</small>
+            {{ role.name }}
+            <template v-if="role.players.length">
+              <br />
+              <small
+                v-for="(player, index) in role.players"
+                :class="{ dead: player.isDead }"
+                :key="index"
+                >{{
+                  player.name + (role.players.length > index + 1 ? "," : "")
+                }}</small
+              >
+            </template>
           </span>
         </li>
       </ul>
@@ -80,11 +90,6 @@ export default {
   components: {
     Modal
   },
-  data: function() {
-    return {
-      roleSelection: {}
-    };
-  },
   computed: {
     rolesFirstNight: function() {
       const rolesFirstNight = [];
@@ -95,23 +100,22 @@ export default {
             id: "evil",
             name: "Minion info",
             firstNight: 2,
-            team: "minion"
+            team: "minion",
+            players: this.players.filter(p => p.role.team === "minion")
           },
           {
             id: "evil",
             name: "Demon info & bluffs",
             firstNight: 4,
-            team: "demon"
+            team: "demon",
+            players: this.players.filter(p => p.role.team === "demon")
           }
         );
       }
       this.roles.forEach(role => {
-        if (
-          role.firstNight &&
-          (role.team !== "traveler" ||
-            this.players.some(p => p.role.id === role.id))
-        ) {
-          rolesFirstNight.push(role);
+        const players = this.players.filter(p => p.role.id === role.id);
+        if (role.firstNight && (role.team !== "traveler" || players.length)) {
+          rolesFirstNight.push(Object.assign({ players }, role));
         }
       });
       this.fabled
@@ -125,12 +129,9 @@ export default {
     rolesOtherNight: function() {
       const rolesOtherNight = [];
       this.roles.forEach(role => {
-        if (
-          role.otherNight &&
-          (role.team !== "traveler" ||
-            this.players.some(p => p.role.id === role.id))
-        ) {
-          rolesOtherNight.push(role);
+        const players = this.players.filter(p => p.role.id === role.id);
+        if (role.otherNight && (role.team !== "traveler" || players.length)) {
+          rolesOtherNight.push(Object.assign({ players }, role));
         }
       });
       this.fabled
@@ -260,6 +261,10 @@ ul {
       border-right: 1px solid rgba(255, 255, 255, 0.4);
       small {
         color: #888;
+        margin-right: 5px;
+        &.dead {
+          text-decoration: line-through;
+        }
       }
     }
   }

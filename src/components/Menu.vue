@@ -43,10 +43,7 @@
           <li @click="toggleNight" v-if="!session.isSpectator">
             <template v-if="!grimoire.isNight">Switch to Night</template>
             <template v-if="grimoire.isNight">Switch to Day</template>
-            <em
-              ><font-awesome-icon
-                :icon="['fas', grimoire.isNight ? 'sun' : 'cloud-moon']"
-            /></em>
+            <em>[S]</em>
           </li>
           <li @click="toggleNightOrder" v-if="players.length">
             Night order
