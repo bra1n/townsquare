@@ -107,6 +107,12 @@ const mutations = {
       state.players[index][property] = value;
     }
   },
+  setPronoun(state, { player, pronoun }) {
+    const index = state.players.indexOf(player);
+    if (index >= 0) {
+      state.players[index].pronoun = pronoun;
+    }
+  },
   add(state, name) {
     state.players.push({
       ...NEWPLAYER,

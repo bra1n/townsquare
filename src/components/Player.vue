@@ -240,12 +240,12 @@ export default {
   },
   methods: {
     changePronoun() {
-      if (this.session.isSpectator) return;
-      const pronoun =
-        prompt("Player preffered pronouns", this.player.pronoun) ||
-        this.player.pronoun;
-      this.updatePlayer("pronoun", pronoun, true);
-      this.$emit("trigger", ["updatePlayer", this.player, "pronoun", pronoun]);
+      const pronoun = prompt("Player preffered pronouns", this.player.pronoun);
+      this.$store.commit("players/setPronoun", {
+        player: this.player,
+        pronoun
+      });
+      this.isMenuOpen = false;
     },
     toggleStatus() {
       if (this.grimoire.isPublic) {
