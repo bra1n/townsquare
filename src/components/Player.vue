@@ -240,6 +240,8 @@ export default {
   },
   methods: {
     changePronoun() {
+      if (!this.session.isSpectator || this.player.id !== this.session.playerId)
+        return;
       const pronoun = prompt("Player preffered pronouns", this.player.pronoun);
       this.$store.commit("players/setPronoun", {
         player: this.player,
