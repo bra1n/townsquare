@@ -170,6 +170,9 @@ class LiveSession {
       case "bye":
         this._handleBye(params);
         break;
+      case "pronoun":
+        this._updatePlayerPronoun(params);
+        break;
     }
   }
 
@@ -459,6 +462,24 @@ class LiveSession {
       // just update the player otherwise
       this._store.commit("players/update", { player, property, value });
     }
+  }
+
+  sendPlayerPronoun({ player, pronoun }) {
+    if (!this._isSpectator) return;
+    const index = this._store.state.players.players.indexOf(player);
+    this._send("pronoun", { index, pronoun });
+  }
+
+  /**
+   * Update a pronoun based on incoming data. Player only.
+   * @param index
+   * @param pronoun
+   * @private
+   */
+  _updatePlayerPronoun({ index, pronoun }) {
+    const player = this._store.state.players.players[index];
+    if (!player) return;
+    this._store.commit("players/setPronoun", { player, pronoun });
   }
 
   /**
@@ -788,6 +809,9 @@ export default store => {
         break;
       case "players/update":
         session.sendPlayer(payload);
+        break;
+      case "players/setPronoun":
+        session.sendPlayerPronoun(payload);
         break;
     }
   });
