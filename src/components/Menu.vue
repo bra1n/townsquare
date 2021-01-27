@@ -273,9 +273,16 @@ export default {
     },
     joinSession() {
       if (this.session.sessionId) return this.leaveSession();
-      const sessionId = prompt(
+      let sessionId = prompt(
         "Enter the channel number / name of the session you want to join"
       );
+      if (
+        sessionId.match(
+          /^https?:\/\/([^.]+\.github\.io|localhost|clocktower\.online|eddbra1nprivatetownsquare\.xyz)/i
+        )
+      ) {
+        sessionId = sessionId.split("#")[1];
+      }
       if (sessionId) {
         this.$store.commit("session/clearVoteHistory");
         this.$store.commit("session/setSpectator", true);
