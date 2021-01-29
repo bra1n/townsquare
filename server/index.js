@@ -150,40 +150,63 @@ wss.on("connection", function connection(ws, req) {
       .substr(1)
       .split(",", 1)
       .pop();
-    // don't log ping messages
-    if (messageType !== '"ping"') {
-      console.log(new Date(), wss.clients.size, ws.channel, ws.playerId, data);
-    }
-    // handle "direct" messages differently
-    if (messageType === '"direct"') {
-      try {
-        const dataToPlayer = JSON.parse(data)[1];
+    switch (messageType) {
+      case '"ping"':
+        // ping messages will only be sent host -> all or all -> host
         channels[ws.channel].forEach(function each(client) {
           if (
             client !== ws &&
             client.readyState === WebSocket.OPEN &&
-            dataToPlayer[client.playerId]
+            (ws.playerId === "host" || client.playerId === "host")
           ) {
-            client.send(JSON.stringify(dataToPlayer[client.playerId]));
+            client.send(
+              data.replace(/latency/, (client.latency || 0) + (ws.latency || 0))
+            );
             metrics.messages_outgoing.inc();
           }
         });
-      } catch (e) {
-        console.log("error parsing direct message JSON", e);
-      }
-    } else {
-      // all other messages
-      channels[ws.channel].forEach(function each(client) {
-        if (client !== ws && client.readyState === WebSocket.OPEN) {
-          // inject latency between both clients if ping message
-          if (messageType === '"ping"' && client.latency && ws.latency) {
-            client.send(data.replace(/latency/, client.latency + ws.latency));
-          } else {
-            client.send(data);
-          }
-          metrics.messages_outgoing.inc();
+        break;
+      case '"direct"':
+        // handle "direct" messages differently
+        console.log(
+          new Date(),
+          wss.clients.size,
+          ws.channel,
+          ws.playerId,
+          data
+        );
+        try {
+          const dataToPlayer = JSON.parse(data)[1];
+          channels[ws.channel].forEach(function each(client) {
+            if (
+              client !== ws &&
+              client.readyState === WebSocket.OPEN &&
+              dataToPlayer[client.playerId]
+            ) {
+              client.send(JSON.stringify(dataToPlayer[client.playerId]));
+              metrics.messages_outgoing.inc();
+            }
+          });
+        } catch (e) {
+          console.log("error parsing direct message JSON", e);
         }
-      });
+        break;
+      default:
+        // all other messages
+        console.log(
+          new Date(),
+          wss.clients.size,
+          ws.channel,
+          ws.playerId,
+          data
+        );
+        channels[ws.channel].forEach(function each(client) {
+          if (client !== ws && client.readyState === WebSocket.OPEN) {
+            client.send(data);
+            metrics.messages_outgoing.inc();
+          }
+        });
+        break;
     }
   });
 });
