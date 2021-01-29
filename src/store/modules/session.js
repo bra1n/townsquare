@@ -72,8 +72,8 @@ const mutations = {
   addHistory(state, players) {
     if (!state.nomination || state.lockedVote <= players.length) return;
     const isBanishment = players[state.nomination[1]].role.team === "traveler";
-    console.log(isBanishment);
     state.voteHistory.push({
+      timestamp: new Date(),
       nominator: players[state.nomination[0]].name,
       nominee: players[state.nomination[1]].name,
       type: isBanishment ? "Banishment" : "Execution",

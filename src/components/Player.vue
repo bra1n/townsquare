@@ -675,7 +675,7 @@ li.move:not(.from) .player .overlay svg.move {
     border: 10px solid transparent;
     border-right-color: black;
     right: 100%;
-    bottom: 7px;
+    bottom: 5px;
     margin-right: 2px;
   }
 

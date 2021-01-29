@@ -43,10 +43,7 @@
           <li @click="toggleNight" v-if="!session.isSpectator">
             <template v-if="!grimoire.isNight">Switch to Night</template>
             <template v-if="grimoire.isNight">Switch to Day</template>
-            <em
-              ><font-awesome-icon
-                :icon="['fas', grimoire.isNight ? 'sun' : 'cloud-moon']"
-            /></em>
+            <em>[S]</em>
           </li>
           <li @click="toggleNightOrder" v-if="players.length">
             Night order
@@ -114,8 +111,7 @@
             v-if="session.voteHistory.length"
             @click="toggleModal('voteHistory')"
           >
-            Nomination history
-            <em><font-awesome-icon icon="hand-paper"/></em>
+            Nomination history<em>[V]</em>
           </li>
           <li @click="leaveSession" v-if="session.sessionId">
             Leave Session
@@ -239,16 +235,9 @@ export default {
       }
     },
     copySessionUrl() {
-      // check for clipboard permissions
-      navigator.permissions
-        .query({ name: "clipboard-write" })
-        .then(({ state }) => {
-          if (state === "granted" || state === "prompt") {
-            const url = window.location.href.split("#")[0];
-            const link = url + "#" + this.session.sessionId;
-            navigator.clipboard.writeText(link);
-          }
-        });
+      const url = window.location.href.split("#")[0];
+      const link = url + "#" + this.session.sessionId;
+      navigator.clipboard.writeText(link);
     },
     distributeRoles() {
       if (this.session.isSpectator) return;

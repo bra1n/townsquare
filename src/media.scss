@@ -44,6 +44,12 @@
   .player > .name {
     top: 0;
   }
+  .player > .menu {
+    bottom: 0;
+    &:before {
+      bottom: 0;
+    }
+  }
 }
 
 // Old phones

@@ -443,8 +443,11 @@ class LiveSession {
           value: {}
         });
       } else {
-        // load role
-        const role = this._store.state.roles.get(value);
+        // load role, first from session, the global, then fail gracefully
+        const role =
+          this._store.state.roles.get(value) ||
+          this._store.getters.rolesJSONbyId.get(value) ||
+          {};
         this._store.commit("players/update", {
           player,
           property: "role",

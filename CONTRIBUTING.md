@@ -43,6 +43,20 @@ $ npm install
 
 The development server can be started with `npm run serve`.
 
+### Deploying to GitHub pages or with a non-root path
+
+Deploying a forked version to GitHub Pages or running your local
+development copy in a sub-path (instead of the web root) will require you to modify
+the `vue.config.js` and configure the path at which the website will be served.
+
+For example, deploying your forked `townsquare` project to GitHub pages would need the following
+`vue.config.js` changes: 
+```js
+module.exports = {
+  publicPath: process.env.NODE_ENV === "production" ? "/townsquare/" : "/"
+};
+```
+
 ### Committing Changes
 
 Commit messages should be verbose enough to allow someone else to follow your changes and should include references to issues that are being worked on.
@@ -64,6 +78,10 @@ $ npm run lint
 
 - **`dist`**: contains built files for distribution.
 
+- **`public`**: static assets and templates that don't need to be built dynamically.
+  
+- **`server`**: NodeJS code for the live session backend server.
+
 - **`src`**: contains the source code. The codebase is written in ES2015.
 
   - **`assets`**: contains all graphical assets like images, fonts, icons, etc.
@@ -73,9 +91,13 @@ $ npm run lint
     - **`fonts`**: webfonts used on the page
 
     - **`icons`**: character token icons
+      
+    - **`sounds`**: sound effects used on the page
 
   - **`components`**: the internal components used in the project
   
     - **`modals`**: the modals have a separate subfolder
 
   - **`store`**: the VueX data store and modules
+    
+    - **`modules`**: VueX modules that live in their own namespace

@@ -1,9 +1,56 @@
 # Release Notes
 
+## Version 2.6.0
+- night mode can be toggeled with [S] now (thanks @davotronic5000)
+- night order shows which players are dead
+
+---
+
+## Version 2.5.0
+- all travelers from the base editions are now optionally available (thanks @davotronic5000)
+- night order shows player names near roles now
+
+---
+
+## Version 2.4.0
+- added spoiler role (Pixie!)
+- fixed bug with ST sending out roles that are not part of the current edition / script (ie. travelers or base set roles)
+- better Lycanthrope icon (thanks @AWConant)
+
+---
+
+## Version 2.3.1
+- better vote history design and added timestamps
+- adjusted player menu styling on smaller screens
+- improved CONTRIBUTING.md description of hosting your own copy
+
+---
+
+## Version 2.3.0
+- added spoiler role (Lycanthrope!)
+- fixed copy to clipboard in Firefox
+- fixed non-countdown votes still playing countdown sound for a split second
+
+---
+
+## Version 2.2.1
+- clearing players / roles now also clears Fabled
+- fix list of locked votes showing unlocked votes sometimes
+
+---
+
+## Version 2.2.0
+- added [V] hotkey to open nomination history (thanks @lilserf)
+- updated roles according to official Wiki changes
+- adjusted roles night order
+
+---
+
 ## Version 2.1.1
 - show vote results at the end of a vote
 - fixed global reminders not showing up anymore when the associated role is assigned to a player
 - adjusted backend metrics
+
 
 ---
 
