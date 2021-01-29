@@ -48,11 +48,16 @@ export default {
   flex-direction: column;
   max-width: 60%;
 
-  .characters &,
-  .vote-history &,
-  .night-reference & {
+  .night-reference &,
+  .vote-history & {
     max-height: 80%;
     max-width: 80%;
+    overflow-y: auto;
+  }
+  .characters & {
+    background: rgba(0, 0, 0, 0.95);
+    max-height: 100%;
+    max-width: 100%;
     overflow-y: auto;
   }
 

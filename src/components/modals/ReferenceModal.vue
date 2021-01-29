@@ -118,7 +118,7 @@ h4 {
   text-transform: capitalize;
   display: flex;
   align-items: center;
-  height: 20px;
+  height: 12px;
   &:before,
   &:after {
     content: " ";
