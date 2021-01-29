@@ -276,11 +276,7 @@ export default {
       let sessionId = prompt(
         "Enter the channel number / name of the session you want to join"
       );
-      if (
-        sessionId.match(
-          /^https?:\/\/([^.]+\.github\.io|localhost|clocktower\.online|eddbra1nprivatetownsquare\.xyz)/i
-        )
-      ) {
+      if (sessionId.match(/^https?:\/\//i)) {
         sessionId = sessionId.split("#")[1];
       }
       if (sessionId) {
