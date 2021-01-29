@@ -84,6 +84,7 @@ const actions = {
         name,
         id
       }));
+      commit("setFabled", { fabled: [] });
     }
     commit("set", players);
     commit("setBluff");
@@ -94,6 +95,7 @@ const mutations = {
   clear(state) {
     state.players = [];
     state.bluffs = [];
+    state.fabled = [];
   },
   set(state, players = []) {
     state.players = players;

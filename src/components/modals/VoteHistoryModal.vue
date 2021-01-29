@@ -15,22 +15,50 @@
     <table>
       <thead>
         <tr>
+          <td>Time</td>
           <td>Nominator</td>
           <td>Nominee</td>
           <td>Type</td>
+          <td>Votes</td>
           <td>Majority</td>
-          <td><font-awesome-icon icon="hand-paper" /> Hand up</td>
+          <td>
+            <font-awesome-icon icon="user-friends" />
+            Voters
+          </td>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(vote, index) in session.voteHistory" :key="index">
+          <td>
+            {{
+              vote.timestamp
+                .getHours()
+                .toString()
+                .padStart(2, "0")
+            }}:{{
+              vote.timestamp
+                .getMinutes()
+                .toString()
+                .padStart(2, "0")
+            }}
+          </td>
           <td>{{ vote.nominator }}</td>
           <td>{{ vote.nominee }}</td>
           <td>{{ vote.type }}</td>
-          <td>{{ vote.majority }}</td>
           <td>
             {{ vote.votes.length }}
-            <font-awesome-icon icon="user-friends" />
+            <font-awesome-icon icon="hand-paper" />
+          </td>
+          <td>
+            {{ vote.majority }}
+            <font-awesome-icon
+              :icon="[
+                'fas',
+                vote.votes.length >= vote.majority ? 'check-square' : 'square'
+              ]"
+            />
+          </td>
+          <td>
             {{ vote.votes.join(", ") }}
           </td>
         </tr>
@@ -89,13 +117,16 @@ thead td {
 }
 
 tbody {
-  td:nth-child(1) {
+  td:nth-child(2) {
     color: $townsfolk;
   }
-  td:nth-child(2) {
+  td:nth-child(3) {
     color: $demon;
   }
-  td:nth-child(4) {
+  td:nth-child(5) {
+    text-align: center;
+  }
+  td:nth-child(6) {
     text-align: center;
   }
 }

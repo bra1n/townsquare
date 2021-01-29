@@ -1,8 +1,5 @@
 <template>
-  <Modal
-    v-if="modals.role && availableRoles.length"
-    @close="toggleModal('role')"
-  >
+  <Modal v-if="modals.role && availableRoles.length" @close="close">
     <h3>
       Choose a new character for
       {{
@@ -11,7 +8,7 @@
           : "bluffing"
       }}
     </h3>
-    <ul class="tokens">
+    <ul class="tokens" v-if="tab === 'editionRoles' || !otherTravelers.size">
       <li
         v-for="role in availableRoles"
         :class="[role.team]"
@@ -21,6 +18,33 @@
         <Token :role="role" />
       </li>
     </ul>
+    <ul class="tokens" v-if="tab === 'otherTravelers' && otherTravelers.size">
+      <li
+        v-for="role in otherTravelers.values()"
+        :class="[role.team]"
+        :key="role.id"
+        @click="setRole(role)"
+      >
+        <Token :role="role" />
+      </li>
+    </ul>
+    <div
+      class="button-group"
+      v-if="playerIndex >= 0 && otherTravelers.size && !session.isSpectator"
+    >
+      <span
+        class="button"
+        :class="{ townsfolk: tab === 'editionRoles' }"
+        @click="tab = 'editionRoles'"
+        >Edtition Roles</span
+      >
+      <span
+        class="button"
+        :class="{ townsfolk: tab === 'otherTravelers' }"
+        @click="tab = 'otherTravelers'"
+        >Other Travelers</span
+      >
+    </div>
   </Modal>
 </template>
 
@@ -50,7 +74,13 @@ export default {
       return availableRoles;
     },
     ...mapState(["modals", "roles", "session"]),
-    ...mapState("players", ["players"])
+    ...mapState("players", ["players"]),
+    ...mapState(["otherTravelers"])
+  },
+  data() {
+    return {
+      tab: "editionRoles"
+    };
   },
   methods: {
     setRole(role) {
@@ -71,6 +101,10 @@ export default {
         });
       }
       this.$store.commit("toggleModal", "role");
+    },
+    close() {
+      this.tab = "editionRoles";
+      this.toggleModal("role");
     },
     ...mapMutations(["toggleModal"])
   }

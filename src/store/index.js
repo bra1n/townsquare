@@ -25,6 +25,19 @@ const getRolesByEdition = (edition = editionJSON[0]) => {
   );
 };
 
+const getTravelersNotInEdition = (edition = editionJSON[0]) => {
+  return new Map(
+    rolesJSON
+      .filter(
+        r =>
+          r.team === "traveler" &&
+          r.edition !== edition.id &&
+          !edition.roles.includes(r.id)
+      )
+      .map(role => [role.id, role])
+  );
+};
+
 // base definition for custom roles
 const imageBase =
   "https://raw.githubusercontent.com/bra1n/townsquare/main/src/assets/icons/";
@@ -70,6 +83,7 @@ export default new Vuex.Store({
     },
     edition: editionJSONbyId.get("tb"),
     roles: getRolesByEdition(),
+    otherTravelers: getTravelersNotInEdition(),
     fabled
   },
   getters: {
@@ -180,11 +194,18 @@ export default new Vuex.Store({
           // convert to Map
           .map(role => [role.id, role])
       );
+      // update extraTravelers map to only show travelers not in this script
+      state.otherTravelers = new Map(
+        rolesJSON
+          .filter(r => r.team === "traveler" && !roles.some(i => i.id === r.id))
+          .map(role => [role.id, role])
+      );
     },
     setEdition(state, edition) {
       if (editionJSONbyId.has(edition.id)) {
         state.edition = editionJSONbyId.get(edition.id);
         state.roles = getRolesByEdition(state.edition);
+        state.otherTravelers = getTravelersNotInEdition(state.edition);
       } else {
         state.edition = edition;
       }

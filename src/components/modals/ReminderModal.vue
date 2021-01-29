@@ -82,6 +82,21 @@ export default {
           }))
         ];
       });
+
+      // add out of script traveler reminders
+      this.$store.state.otherTravelers.forEach(role => {
+        if (players.some(p => p.role.id === role.id)) {
+          reminders = [
+            ...reminders,
+            ...role.reminders.map(name => ({
+              role: role.id,
+              image: role.image,
+              name
+            }))
+          ];
+        }
+      });
+
       reminders.push({ role: "good", name: "Good" });
       reminders.push({ role: "evil", name: "Evil" });
       reminders.push({ role: "custom", name: "Custom note" });
