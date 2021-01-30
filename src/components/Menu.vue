@@ -277,7 +277,7 @@ export default {
         "Enter the channel number / name of the session you want to join"
       );
       if (sessionId.match(/^https?:\/\//i)) {
-        sessionId = sessionId.split("#")[1];
+        sessionId = sessionId.split("#").pop();
       }
       if (sessionId) {
         this.$store.commit("session/clearVoteHistory");
