@@ -10,12 +10,14 @@ import fabledJSON from "../fabled.json";
 
 Vue.use(Vuex);
 
+// global data maps
 const editionJSONbyId = new Map(
   editionJSON.map(edition => [edition.id, edition])
 );
 const rolesJSONbyId = new Map(rolesJSON.map(role => [role.id, role]));
 const fabled = new Map(fabledJSON.map(role => [role.id, role]));
 
+// helper functions
 const getRolesByEdition = (edition = editionJSON[0]) => {
   return new Map(
     rolesJSON
@@ -36,6 +38,18 @@ const getTravelersNotInEdition = (edition = editionJSON[0]) => {
       )
       .map(role => [role.id, role])
   );
+};
+
+const set = key => ({ grimoire }, val) => {
+  grimoire[key] = val;
+};
+
+const toggle = key => ({ grimoire }, val) => {
+  if (val === true || val === false) {
+    grimoire[key] = val;
+  } else {
+    grimoire[key] = !grimoire[key];
+  }
 };
 
 // base definition for custom roles
@@ -67,6 +81,7 @@ export default new Vuex.Store({
       isPublic: true,
       isMenuOpen: false,
       isMuted: false,
+      isImageOptIn: false,
       zoom: 0,
       background: ""
     },
@@ -119,38 +134,14 @@ export default new Vuex.Store({
     rolesJSONbyId: () => rolesJSONbyId
   },
   mutations: {
-    toggleMenu({ grimoire }) {
-      grimoire.isMenuOpen = !grimoire.isMenuOpen;
-    },
-    toggleGrimoire({ grimoire }, isPublic) {
-      if (isPublic === true || isPublic === false) {
-        grimoire.isPublic = isPublic;
-      } else {
-        grimoire.isPublic = !grimoire.isPublic;
-      }
-      document.title = `Blood on the Clocktower ${
-        grimoire.isPublic ? "Town Square" : "Grimoire"
-      }`;
-    },
-    toggleNight({ grimoire }, isNight) {
-      if (isNight === true || isNight === false) {
-        grimoire.isNight = isNight;
-      } else {
-        grimoire.isNight = !grimoire.isNight;
-      }
-    },
-    toggleNightOrder({ grimoire }) {
-      grimoire.isNightOrder = !grimoire.isNightOrder;
-    },
-    setZoom({ grimoire }, zoom) {
-      grimoire.zoom = zoom;
-    },
-    setBackground({ grimoire }, background) {
-      grimoire.background = background;
-    },
-    setIsMuted({ grimoire }, isMuted) {
-      grimoire.isMuted = isMuted;
-    },
+    setZoom: set("zoom"),
+    setBackground: set("background"),
+    toggleMuted: toggle("isMuted"),
+    toggleMenu: toggle("isMenuOpen"),
+    toggleNightOrder: toggle("isNightOrder"),
+    toggleNight: toggle("isNight"),
+    toggleGrimoire: toggle("isPublic"),
+    toggleImageOptIn: toggle("isImageOptIn"),
     toggleModal({ modals }, name) {
       if (name) {
         modals[name] = !modals[name];

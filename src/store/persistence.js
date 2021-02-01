@@ -1,16 +1,25 @@
 module.exports = store => {
+  const updatePagetitle = isPublic =>
+    (document.title = `Blood on the Clocktower ${
+      isPublic ? "Town Square" : "Grimoire"
+    }`);
+
   // initialize data
   if (localStorage.getItem("background")) {
     store.commit("setBackground", localStorage.background);
   }
   if (localStorage.getItem("muted")) {
-    store.commit("setIsMuted", true);
+    store.commit("toggleMuted", true);
+  }
+  if (localStorage.getItem("imageOptIn")) {
+    store.commit("toggleImageOptIn", true);
   }
   if (localStorage.getItem("zoom")) {
     store.commit("setZoom", parseFloat(localStorage.getItem("zoom")));
   }
-  if (localStorage.isPublic !== undefined) {
-    store.commit("toggleGrimoire", JSON.parse(localStorage.isPublic));
+  if (localStorage.getItem("isGrimoire")) {
+    store.commit("toggleGrimoire", false);
+    updatePagetitle(false);
   }
   if (localStorage.roles !== undefined) {
     store.commit("setCustomRoles", JSON.parse(localStorage.roles));
@@ -61,10 +70,12 @@ module.exports = store => {
   store.subscribe(({ type, payload }, state) => {
     switch (type) {
       case "toggleGrimoire":
-        localStorage.setItem(
-          "isPublic",
-          JSON.stringify(state.grimoire.isPublic)
-        );
+        if (!state.grimoire.isPublic) {
+          localStorage.setItem("isGrimoire", 1);
+        } else {
+          localStorage.removeItem("isGrimoire");
+        }
+        updatePagetitle(state.grimoire.isPublic);
         break;
       case "setBackground":
         if (payload) {
@@ -73,11 +84,18 @@ module.exports = store => {
           localStorage.removeItem("background");
         }
         break;
-      case "setIsMuted":
-        if (payload) {
+      case "toggleMuted":
+        if (state.grimoire.isMuted) {
           localStorage.setItem("muted", 1);
         } else {
           localStorage.removeItem("muted");
+        }
+        break;
+      case "toggleImageOptIn":
+        if (state.grimoire.isImageOptIn) {
+          localStorage.setItem("imageOptIn", 1);
+        } else {
+          localStorage.removeItem("imageOptIn");
         }
         break;
       case "setZoom":
