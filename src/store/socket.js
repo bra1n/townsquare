@@ -63,12 +63,32 @@ class LiveSession {
   }
 
   /**
+   * Send a message directly to a single playerId, if provided.
+   * Otherwise broadcast it.
+   * @param playerId player ID or "host", optional
+   * @param command
+   * @param params
+   * @private
+   */
+  _sendDirect(playerId, command, params) {
+    if (playerId) {
+      this._send("direct", { [playerId]: [command, params] });
+    } else {
+      this._send(command, params);
+    }
+  }
+
+  /**
    * Open event handler for socket.
    * @private
    */
   _onOpen() {
     if (this._isSpectator) {
-      this._send("req", "gs");
+      this._sendDirect(
+        "host",
+        "getGamestate",
+        this._store.state.session.playerId
+      );
     } else {
       this.sendGamestate();
     }
@@ -80,12 +100,13 @@ class LiveSession {
    * @private
    */
   _ping() {
+    this._handlePing();
     this._send("ping", [
-      this._isSpectator,
-      this._store.state.session.playerId,
+      this._isSpectator
+        ? this._store.state.session.playerId
+        : Object.keys(this._players).length,
       "latency"
     ]);
-    this._handlePing();
     clearTimeout(this._pingTimer);
     this._pingTimer = setTimeout(this._ping.bind(this), this._pingInterval);
   }
@@ -103,10 +124,8 @@ class LiveSession {
       console.log("unsupported socket message", data);
     }
     switch (command) {
-      case "req":
-        if (params === "gs") {
-          this.sendGamestate();
-        }
+      case "getGamestate":
+        this.sendGamestate(params);
         break;
       case "edition":
         this._updateEdition(params);
@@ -204,7 +223,9 @@ class LiveSession {
     this._store.commit("session/setReconnecting", false);
     clearTimeout(this._reconnectTimer);
     if (this._socket) {
-      this._send("bye", this._store.state.session.playerId);
+      if (this._isSpectator) {
+        this._sendDirect("host", "bye", this._store.state.session.playerId);
+      }
       this._socket.close(1000);
       this._socket = null;
     }
@@ -213,9 +234,10 @@ class LiveSession {
   /**
    * Publish the current gamestate.
    * Optional param to reduce traffic. (send only player data)
+   * @param playerId
    * @param isLightweight
    */
-  sendGamestate(isLightweight = false) {
+  sendGamestate(playerId = "", isLightweight = false) {
     if (this._isSpectator) return;
     this._gamestate = this._store.state.players.players.map(player => ({
       name: player.name,
@@ -227,12 +249,15 @@ class LiveSession {
         : {})
     }));
     if (isLightweight) {
-      this._send("gs", { gamestate: this._gamestate, isLightweight });
+      this._sendDirect(playerId, "gs", {
+        gamestate: this._gamestate,
+        isLightweight
+      });
     } else {
       const { session, grimoire } = this._store.state;
       const { fabled } = this._store.state.players;
-      this.sendEdition();
-      this._send("gs", {
+      this.sendEdition(playerId);
+      this._sendDirect(playerId, "gs", {
         gamestate: this._gamestate,
         isNight: grimoire.isNight,
         nomination: session.nomination,
@@ -322,15 +347,16 @@ class LiveSession {
 
   /**
    * Publish an edition update. ST only
+   * @param playerId
    */
-  sendEdition() {
+  sendEdition(playerId = "") {
     if (this._isSpectator) return;
     const { edition } = this._store.state;
     let roles;
     if (!edition.isOfficial) {
       roles = Array.from(this._store.state.roles.keys());
     }
-    this._send("edition", {
+    this._sendDirect(playerId, "edition", {
       edition: edition.isOfficial
         ? { id: edition.id }
         : Object.assign({}, edition, { logo: "" }),
@@ -462,41 +488,37 @@ class LiveSession {
 
   /**
    * Handle a ping message by another player / storyteller
-   * @param isSpectator
-   * @param playerId
-   * @param timestamp
+   * @param playerIdOrCount
+   * @param latency
    * @private
    */
-  _handlePing([isSpectator, playerId, latency] = []) {
+  _handlePing([playerIdOrCount = 0, latency] = []) {
     const now = new Date().getTime();
-    // remove players that haven't sent a ping in twice the timespan
-    for (let player in this._players) {
-      if (now - this._players[player] > this._pingInterval * 2) {
-        delete this._players[player];
-        delete this._pings[player];
+    if (!this._isSpectator) {
+      // remove players that haven't sent a ping in twice the timespan
+      for (let player in this._players) {
+        if (now - this._players[player] > this._pingInterval * 2) {
+          delete this._players[player];
+          delete this._pings[player];
+        }
       }
-    }
-    // remove claimed seats from players that are no longer connected
-    this._store.state.players.players.forEach(player => {
-      if (!this._isSpectator && player.id && !this._players[player.id]) {
-        this._store.commit("players/update", {
-          player,
-          property: "id",
-          value: ""
-        });
-      }
-    });
-    // store new player data
-    if (playerId) {
-      this._players[playerId] = now;
-      const ping = parseInt(latency, 10);
-      if (ping && ping > 0 && ping < 30 * 1000) {
-        if (this._isSpectator && !isSpectator) {
-          // ping to ST
-          this._store.commit("session/setPing", ping);
-        } else if (!this._isSpectator) {
+      // remove claimed seats from players that are no longer connected
+      this._store.state.players.players.forEach(player => {
+        if (player.id && !this._players[player.id]) {
+          this._store.commit("players/update", {
+            player,
+            property: "id",
+            value: ""
+          });
+        }
+      });
+      // store new player data
+      if (playerIdOrCount) {
+        this._players[playerIdOrCount] = now;
+        const ping = parseInt(latency, 10);
+        if (ping && ping > 0 && ping < 30 * 1000) {
           // ping to Players
-          this._pings[playerId] = ping;
+          this._pings[playerIdOrCount] = ping;
           const pings = Object.values(this._pings);
           this._store.commit(
             "session/setPing",
@@ -504,19 +526,26 @@ class LiveSession {
           );
         }
       }
+    } else if (latency) {
+      // ping to ST
+      this._store.commit("session/setPing", parseInt(latency, 10));
     }
-    this._store.commit(
-      "session/setPlayerCount",
-      Object.keys(this._players).length
-    );
+    // update player count
+    if (!this._isSpectator || playerIdOrCount) {
+      this._store.commit(
+        "session/setPlayerCount",
+        this._isSpectator ? playerIdOrCount : Object.keys(this._players).length
+      );
+    }
   }
 
   /**
-   * Handle a player leaving the sessions
+   * Handle a player leaving the sessions. ST only
    * @param playerId
    * @private
    */
   _handleBye(playerId) {
+    if (this._isSpectator) return;
     delete this._players[playerId];
     this._store.commit(
       "session/setPlayerCount",
@@ -783,7 +812,7 @@ export default store => {
       case "players/clear":
       case "players/remove":
       case "players/add":
-        session.sendGamestate(true);
+        session.sendGamestate("", true);
         break;
       case "players/update":
         session.sendPlayer(payload);
