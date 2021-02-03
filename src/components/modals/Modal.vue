@@ -56,8 +56,11 @@ export default {
   }
   .characters & {
     background: rgba(0, 0, 0, 0.95);
-    max-height: 100%;
+    padding: 0;
+    height: 100%;
+    width: 100%;
     max-width: 100%;
+    max-height: 100%;
     overflow-y: auto;
   }
 
