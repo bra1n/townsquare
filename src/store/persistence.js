@@ -117,7 +117,7 @@ module.exports = store => {
         } else {
           localStorage.setItem(
             "roles",
-            JSON.stringify(store.getters.customRoles)
+            JSON.stringify(payload)
           );
         }
         break;

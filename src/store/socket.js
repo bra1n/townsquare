@@ -354,12 +354,10 @@ class LiveSession {
     const { edition } = this._store.state;
     let roles;
     if (!edition.isOfficial) {
-      roles = Array.from(this._store.state.roles.keys());
+      roles = this._store.getters.customRolesStripped;
     }
     this._sendDirect(playerId, "edition", {
-      edition: edition.isOfficial
-        ? { id: edition.id }
-        : Object.assign({}, edition, { logo: "" }),
+      edition: edition.isOfficial ? { id: edition.id } : edition,
       ...(roles ? { roles } : {})
     });
   }
@@ -374,10 +372,7 @@ class LiveSession {
     if (!this._isSpectator) return;
     this._store.commit("setEdition", edition);
     if (roles) {
-      this._store.commit(
-        "setCustomRoles",
-        roles.map(id => ({ id }))
-      );
+      this._store.commit("setCustomRoles", roles);
       if (this._store.state.roles.size !== roles.length) {
         const missing = [];
         roles.forEach(id => {

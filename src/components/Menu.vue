@@ -83,6 +83,7 @@
         </template>
 
         <template v-if="tab === 'session'">
+          <!-- Session -->
           <li class="headline" v-if="session.sessionId">
             {{ session.isSpectator ? "Playing" : "Hosting" }}
           </li>
@@ -106,7 +107,10 @@
               Send Characters
               <em><font-awesome-icon icon="theater-masks"/></em>
             </li>
-            <li v-if="session.isSpectator" @click="imageOptIn">
+            <li
+              v-if="session.isSpectator && !edition.isOfficial"
+              @click="imageOptIn"
+            >
               Show Custom Images
               <em
                 ><font-awesome-icon
@@ -213,7 +217,7 @@ import { mapMutations, mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["grimoire", "session"]),
+    ...mapState(["grimoire", "session", "edition"]),
     ...mapState("players", ["players"])
   },
   data() {

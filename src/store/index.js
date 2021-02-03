@@ -103,25 +103,23 @@ export default new Vuex.Store({
   },
   getters: {
     /**
-     * Return all custom roles, with default values stripped.
+     * Return all custom roles, with default values and non-essential data stripped.
      * @param roles
      * @returns {[]}
      */
-    customRoles: ({ roles }) => {
+    customRolesStripped: ({ roles }) => {
       const customRoles = [];
+      const strippedProps = ["firstNightReminder", "otherNightReminder"]
       roles.forEach(role => {
         if (!role.isCustom) {
           customRoles.push({ id: role.id });
         } else {
           const strippedRole = {};
           for (let prop in role) {
-            const value = role[prop];
-            if (
-              prop === "image" &&
-              value.toLocaleLowerCase().includes(imageBase)
-            ) {
+            if (strippedProps.includes(prop)) {
               continue;
             }
+            const value = role[prop];
             if (prop !== "isCustom" && value !== customRole[prop]) {
               strippedRole[prop] = value;
             }
