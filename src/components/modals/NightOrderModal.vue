@@ -41,8 +41,13 @@
             class="icon"
             v-if="role.id"
             :style="{
-              backgroundImage: `url(${role.image ||
-                require('../../assets/icons/' + role.id + '.png')})`
+              backgroundImage: `url(${
+                role.image && grimoire.isImageOptIn
+                  ? role.image
+                  : require('../../assets/icons/' +
+                      (role.imageAlt || role.id) +
+                      '.png')
+              })`
             }"
           ></span>
         </li>
@@ -58,8 +63,13 @@
             class="icon"
             v-if="role.id"
             :style="{
-              backgroundImage: `url(${role.image ||
-                require('../../assets/icons/' + role.id + '.png')})`
+              backgroundImage: `url(${
+                role.image && grimoire.isImageOptIn
+                  ? role.image
+                  : require('../../assets/icons/' +
+                      (role.imageAlt || role.id) +
+                      '.png')
+              })`
             }"
           ></span>
           <span class="name">

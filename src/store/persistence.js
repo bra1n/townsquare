@@ -115,10 +115,7 @@ module.exports = store => {
         if (!payload.length) {
           localStorage.removeItem("roles");
         } else {
-          localStorage.setItem(
-            "roles",
-            JSON.stringify(payload)
-          );
+          localStorage.setItem("roles", JSON.stringify(payload));
         }
         break;
       case "players/setBluff":

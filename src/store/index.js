@@ -53,10 +53,11 @@ const toggle = key => ({ grimoire }, val) => {
 };
 
 // base definition for custom roles
-const imageBase =
-  "https://raw.githubusercontent.com/bra1n/townsquare/main/src/assets/icons/";
 const customRole = {
+  id: "",
+  name: "",
   image: "",
+  ability: "",
   edition: "custom",
   firstNight: 0,
   firstNightReminder: "",
@@ -109,7 +110,11 @@ export default new Vuex.Store({
      */
     customRolesStripped: ({ roles }) => {
       const customRoles = [];
-      const strippedProps = ["firstNightReminder", "otherNightReminder"]
+      const strippedProps = [
+        "firstNightReminder",
+        "otherNightReminder",
+        "isCustom"
+      ];
       roles.forEach(role => {
         if (!role.isCustom) {
           customRoles.push({ id: role.id });
@@ -120,7 +125,10 @@ export default new Vuex.Store({
               continue;
             }
             const value = role[prop];
-            if (prop !== "isCustom" && value !== customRole[prop]) {
+            if (
+              Object.keys(customRole).includes(prop) &&
+              value !== customRole[prop]
+            ) {
               strippedRole[prop] = value;
             }
           }
@@ -164,16 +172,16 @@ export default new Vuex.Store({
               state.roles.get(role.id) ||
               Object.assign({}, customRole, role)
           )
-          // default empty icons to good / evil / traveler
+          // default empty icons and placeholders
           .map(role => {
             if (rolesJSONbyId.get(role.id)) return role;
-            if (role.team === "townsfolk" || role.team === "outsider") {
-              role.image = role.image || imageBase + "good.png";
-            } else if (role.team === "demon" || role.team === "minion") {
-              role.image = role.image || imageBase + "evil.png";
-            } else {
-              role.image = role.image || imageBase + "custom.png";
-            }
+            role.imageAlt = // map team to generic icon
+              {
+                townsfolk: "good",
+                outsider: "outsider",
+                minion: "minion",
+                demon: "evil"
+              }[role.team] || "custom";
             return role;
           })
           // filter out roles that don't match an existing role and also don't have name/ability/team
