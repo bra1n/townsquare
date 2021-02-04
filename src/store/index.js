@@ -105,11 +105,13 @@ export default new Vuex.Store({
   getters: {
     /**
      * Return all custom roles, with default values and non-essential data stripped.
+     * Role object keys will be replaced with a numerical index to conserve bandwidth.
      * @param roles
      * @returns {[]}
      */
     customRolesStripped: ({ roles }) => {
       const customRoles = [];
+      const customKeys = Object.keys(customRole);
       const strippedProps = [
         "firstNightReminder",
         "otherNightReminder",
@@ -125,11 +127,8 @@ export default new Vuex.Store({
               continue;
             }
             const value = role[prop];
-            if (
-              Object.keys(customRole).includes(prop) &&
-              value !== customRole[prop]
-            ) {
-              strippedRole[prop] = value;
+            if (customKeys.includes(prop) && value !== customRole[prop]) {
+              strippedRole[customKeys.indexOf(prop)] = value;
             }
           }
           customRoles.push(strippedRole);
@@ -165,6 +164,21 @@ export default new Vuex.Store({
     setCustomRoles(state, roles) {
       state.roles = new Map(
         roles
+          // replace numerical role object keys with matching key names
+          .map(role => {
+            if (role[0]) {
+              const customKeys = Object.keys(customRole);
+              const mappedRole = {};
+              for (let prop in role) {
+                if (customKeys[prop]) {
+                  mappedRole[customKeys[prop]] = role[prop];
+                }
+              }
+              return mappedRole;
+            } else {
+              return role;
+            }
+          })
           // map existing roles to base definition or pre-populate custom roles to ensure all properties
           .map(
             role =>
