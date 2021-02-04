@@ -131,7 +131,7 @@ export default {
       this.fabled
         .filter(({ firstNight }) => firstNight)
         .forEach(fabled => {
-          rolesFirstNight.push(fabled);
+          rolesFirstNight.push(Object.assign({ players: [] }, fabled));
         });
       rolesFirstNight.sort((a, b) => a.firstNight - b.firstNight);
       return rolesFirstNight;
@@ -147,7 +147,7 @@ export default {
       this.fabled
         .filter(({ otherNight }) => otherNight)
         .forEach(fabled => {
-          rolesOtherNight.push(fabled);
+          rolesOtherNight.push(Object.assign({ players: [] }, fabled));
         });
       rolesOtherNight.sort((a, b) => a.otherNight - b.otherNight);
       return rolesOtherNight;
