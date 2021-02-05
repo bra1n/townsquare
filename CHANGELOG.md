@@ -1,5 +1,17 @@
 # Release Notes
 
+## Version 2.7.0
+- added hands-off live session support for homebrew / custom characters again!
+- added custom image opt-in that will prevent any (potentially malicious / harmful) images from loading until a player manually allows them to
+- further live session bandwidth optimizations
+- sessions can now be joined by pasting the whole link into the popup (thanks @davotronic5000)
+- fabled night order bug fixed
+- added Legion to list of available characters (thanks @eddgabriel)
+- added support for mp4/webm video backgrounds
+- added tooltips to night order popup
+
+---
+
 ## Version 2.6.0
 - night mode can be toggeled with [S] now (thanks @davotronic5000)
 - night order shows which players are dead
