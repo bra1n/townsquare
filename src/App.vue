@@ -10,6 +10,13 @@
         : ''
     }"
   >
+    <video
+      id="background"
+      v-if="grimoire.background && grimoire.background.match(/\.(mp4|webm)$/i)"
+      :src="grimoire.background"
+      autoplay
+      loop
+    ></video>
     <div class="backdrop"></div>
     <transition name="blur">
       <Intro v-if="!players.length"></Intro>
@@ -297,6 +304,14 @@ ul {
       linear-gradient(#292929, #420000) border-box;
     box-shadow: inset 0 1px 1px #9c0000, 0 0 10px #000;
   }
+}
+
+/* video background */
+video#background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Night phase backdrop */
