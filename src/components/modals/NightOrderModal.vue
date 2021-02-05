@@ -45,6 +45,9 @@
                 require('../../assets/icons/' + role.id + '.png')})`
             }"
           ></span>
+          <span class="reminder" v-if="role.firstNightReminder">
+            {{ role.firstNightReminder }}
+          </span>
         </li>
       </ul>
       <ul class="other">
@@ -75,6 +78,9 @@
                 }}</small
               >
             </template>
+          </span>
+          <span class="reminder" v-if="role.otherNightReminder">
+            {{ role.otherNightReminder }}
           </span>
         </li>
       </ul>
@@ -266,6 +272,26 @@ ul {
           text-decoration: line-through;
         }
       }
+    }
+    .reminder {
+      position: fixed;
+      padding: 5px 10px;
+      left: 50%;
+      bottom: 10%;
+      width: 500px;
+      z-index: 25;
+      background: rgba(0, 0, 0, 0.75);
+      border-radius: 10px;
+      border: 3px solid black;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+      text-align: left;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 200ms ease-in-out;
+      margin-left: -250px;
+    }
+    &:hover .reminder {
+      opacity: 1;
     }
   }
   &.legend {
