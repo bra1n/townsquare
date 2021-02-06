@@ -117,14 +117,21 @@ export default {
             name: "Minion info",
             firstNight: 2,
             team: "minion",
-            players: this.players.filter(p => p.role.team === "minion")
+            players: this.players.filter(p => p.role.team === "minion"),
+            firstNightReminder:
+              "• If more than one Minion, they all make eye contact with each other. " +
+              "• Show the “This is the Demon” card. Point to the Demon."
           },
           {
             id: "evil",
             name: "Demon info & bluffs",
             firstNight: 4,
             team: "demon",
-            players: this.players.filter(p => p.role.team === "demon")
+            players: this.players.filter(p => p.role.team === "demon"),
+            firstNightReminder:
+              "• Show the “These are your minions” card. Point to each Minion. " +
+              "• Show the “These characters are not in play” card. Show 3 character tokens of good " +
+              "characters not in play."
           }
         );
       }
