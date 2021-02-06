@@ -7,16 +7,24 @@
     <h3>Select the characters for {{ nonTravelers }} players:</h3>
     <ul class="tokens" v-for="(teamRoles, team) in roleSelection" :key="team">
       <li class="count" :class="[team]">
-        {{ teamRoles.filter(role => role.selected).length }} /
+        {{ teamRoles.reduce((a, { selected }) => a + selected, 0) }} /
         {{ game[nonTravelers - 5][team] }}
       </li>
       <li
         v-for="role in teamRoles"
         :class="[role.team, role.selected ? 'selected' : '']"
         :key="role.id"
-        @click="role.selected = !role.selected"
+        @click="role.selected = role.selected ? 0 : 1"
       >
         <Token :role="role" />
+        <div class="buttons">
+          <font-awesome-icon
+            icon="minus-circle"
+            @click.stop="role.selected--"
+          />
+          <span>{{ role.selected > 1 ? "x" + role.selected : "" }}</span>
+          <font-awesome-icon icon="plus-circle" @click.stop="role.selected++" />
+        </div>
       </li>
     </ul>
     <div class="warning" v-if="hasSelectedSetupRoles">
@@ -64,7 +72,7 @@ export default {
   computed: {
     selectedRoles: function() {
       return Object.values(this.roleSelection)
-        .map(roles => roles.filter(role => role.selected).length)
+        .map(roles => roles.reduce((a, { selected }) => a + selected, 0))
         .reduce((a, b) => a + b, 0);
     },
     hasSelectedSetupRoles: function() {
@@ -84,7 +92,7 @@ export default {
           this.$set(this.roleSelection, role.team, []);
         }
         this.roleSelection[role.team].push(role);
-        this.$set(role, "selected", false);
+        this.$set(role, "selected", 0);
       });
       delete this.roleSelection["traveler"];
       const playerCount = Math.max(5, this.nonTravelers);
@@ -93,10 +101,10 @@ export default {
         for (let x = 0; x < composition[team]; x++) {
           if (this.roleSelection[team]) {
             const available = this.roleSelection[team].filter(
-              role => role.selected !== true
+              role => !role.selected
             );
             if (available.length) {
-              randomElement(available).selected = true;
+              randomElement(available).selected = 1;
             }
           }
         }
@@ -106,7 +114,12 @@ export default {
       if (this.selectedRoles <= this.nonTravelers && this.selectedRoles) {
         // generate list of selected roles and randomize it
         const roles = Object.values(this.roleSelection)
-          .map(roles => roles.filter(role => role.selected))
+          .map(roles =>
+            roles
+              // duplicate roles selected more than once and filter unselected
+              .reduce((a, r) => [...a, ...Array(r.selected).fill(r)], [])
+          )
+          // flatten into a single array
           .reduce((a, b) => [...a, ...b], [])
           .map(a => [Math.random(), a])
           .sort((a, b) => a[0] - b[0])
@@ -152,6 +165,9 @@ ul.tokens {
     transition: all 250ms;
     &.selected {
       opacity: 1;
+      .buttons {
+        display: flex;
+      }
     }
     &.townsfolk {
       box-shadow: 0 0 10px $townsfolk, 0 0 10px #004cff;
@@ -171,6 +187,27 @@ ul.tokens {
     &:hover {
       transform: scale(1.2);
       z-index: 10;
+    }
+    .buttons {
+      display: none;
+      position: absolute;
+      top: 95%;
+      text-align: center;
+      width: 100%;
+      z-index: 30;
+      font-weight: bold;
+      filter: drop-shadow(0 0 5px rgba(0, 0, 0, 1));
+      span {
+        flex-grow: 1;
+      }
+      svg {
+        opacity: 0.25;
+        cursor: pointer;
+        &:hover {
+          opacity: 1;
+          color: red;
+        }
+      }
     }
   }
   .count {
