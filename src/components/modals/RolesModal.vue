@@ -17,7 +17,7 @@
         @click="role.selected = role.selected ? 0 : 1"
       >
         <Token :role="role" />
-        <div class="buttons">
+        <div class="buttons" v-if="allowMultiple">
           <font-awesome-icon
             icon="minus-circle"
             @click.stop="role.selected--"
@@ -28,9 +28,17 @@
       </li>
     </ul>
     <div class="warning" v-if="hasSelectedSetupRoles">
-      Warning: there are characters selected that modify the game setup! The
-      randomizer does not account for these characters.
+      <font-awesome-icon icon="exclamation-triangle" />
+      <span>
+        Warning: there are characters selected that modify the game setup! The
+        randomizer does not account for these characters.
+      </span>
     </div>
+    <label class="multiple" :class="{ checked: allowMultiple }">
+      <font-awesome-icon :icon="allowMultiple ? 'check-square' : 'square'" />
+      <input type="checkbox" name="allow-multiple" v-model="allowMultiple" />
+      Allow duplicate characters
+    </label>
     <div class="button-group">
       <div
         class="button"
@@ -66,7 +74,8 @@ export default {
   data: function() {
     return {
       roleSelection: {},
-      game: gameJSON
+      game: gameJSON,
+      allowMultiple: false
     };
   },
   computed: {
@@ -240,9 +249,51 @@ ul.tokens {
   }
 }
 
-.roles .modal .warning {
-  color: red;
-  text-align: center;
-  margin: auto;
+.roles .modal {
+  .multiple {
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    &.checked,
+    &:hover {
+      color: red;
+    }
+    &.checked {
+      margin-top: 10px;
+    }
+    svg {
+      margin-right: 5px;
+    }
+    input {
+      display: none;
+    }
+  }
+
+  .warning {
+    color: red;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+    svg {
+      font-size: 150%;
+      vertical-align: middle;
+    }
+    span {
+      display: none;
+      text-align: center;
+      position: absolute;
+      right: -20px;
+      bottom: 30px;
+      width: 420px;
+      background: rgba(0, 0, 0, 0.75);
+      padding: 5px;
+      border-radius: 10px;
+      border: 2px solid black;
+    }
+    &:hover span {
+      display: block;
+    }
+  }
 }
 </style>
