@@ -20,7 +20,6 @@
 <script>
 export default {
   data: function () {
-    console.log("new modal");
     return {
 	  isMaximized: false
 	};
