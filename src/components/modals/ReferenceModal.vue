@@ -7,7 +7,7 @@
     <font-awesome-icon
       @click="toggleModal('nightOrder')"
       icon="cloud-moon"
-      class="nightorder-toggle"
+      class="toggle"
       title="Show Night Order"
     />
     <h3>
@@ -56,9 +56,6 @@ export default {
   components: {
     Modal
   },
-  mounted: function() {
-    this.$children[0].isMaximized = true;
-  },
   computed: {
     rolesGrouped: function() {
       const rolesGrouped = {};
@@ -95,7 +92,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../vars.scss";
 
-.nightorder-toggle {
+.toggle {
   position: absolute;
   left: 20px;
   top: 20px;
@@ -116,7 +113,7 @@ h4 {
   text-transform: capitalize;
   display: flex;
   align-items: center;
-  height: 12px;
+  height: 20px;
   &:before,
   &:after {
     content: " ";

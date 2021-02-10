@@ -10,7 +10,7 @@
         @click.stop=""
       >
         <font-awesome-icon
-          @click="toggleMaximized"
+          @click="isMaximized = !isMaximized"
           class="maximize-toggle"
           icon="window-maximize"
         />
@@ -31,9 +31,6 @@ export default {
   methods: {
     close() {
       this.$emit("close");
-    },
-    toggleMaximized() {
-      this.isMaximized = !this.isMaximized;
     }
   }
 };
@@ -73,7 +70,7 @@ export default {
     justify-content: center;
     line-height: 100%;
   }
-  .close {
+  > .close {
     position: absolute;
     right: 20px;
     top: 20px;

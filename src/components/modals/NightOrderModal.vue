@@ -7,7 +7,7 @@
     <font-awesome-icon
       @click="toggleModal('reference')"
       icon="address-card"
-      class="toggle-reference"
+      class="toggle"
       title="Show Character Reference"
     />
     <h3>
@@ -154,7 +154,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../vars.scss";
 
-.toggle-reference {
+.toggle {
   position: absolute;
   left: 20px;
   top: 20px;
