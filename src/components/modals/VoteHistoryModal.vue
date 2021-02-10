@@ -99,7 +99,7 @@ export default {
 }
 
 h3 {
-  margin: 0 40px;
+  margin: 0 90px;
   svg {
     vertical-align: middle;
   }
@@ -107,6 +107,7 @@ h3 {
 
 table {
   border-spacing: 10px 0;
+  padding: 10px 0px 0px 0px;
 }
 
 thead td {

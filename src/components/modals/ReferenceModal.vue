@@ -2,12 +2,12 @@
   <Modal
     class="characters"
     @close="toggleModal('reference')"
-    v-if="modals.reference && roles.size"
+    v-show="modals.reference && roles.size"
   >
     <font-awesome-icon
       @click="toggleModal('nightOrder')"
       icon="cloud-moon"
-      class="toggle"
+      class="nightorder-toggle"
       title="Show Night Order"
     />
     <h3>
@@ -92,7 +92,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../vars.scss";
 
-.toggle {
+.nightorder-toggle {
   position: absolute;
   left: 20px;
   top: 20px;
@@ -103,7 +103,7 @@ export default {
 }
 
 h3 {
-  margin: 0 40px;
+  margin: 0 90px;
   svg {
     vertical-align: middle;
   }

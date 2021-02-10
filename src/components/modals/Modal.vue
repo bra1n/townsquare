@@ -3,11 +3,13 @@
     <div class="modal-backdrop" @click="close">
       <div
         class="modal"
+        v-bind:class="[isMaximized ? 'maximized' : 'not-maximized']"
         role="dialog"
         aria-labelledby="modalTitle"
         aria-describedby="modalDescription"
         @click.stop=""
       >
+        <font-awesome-icon @click="toggleMaximized" class="maximize-toggle" icon="window-maximize" />
         <font-awesome-icon @click="close" class="close" icon="times-circle" />
         <slot></slot>
       </div>
@@ -17,9 +19,18 @@
 
 <script>
 export default {
+  data: function () {
+    console.log("new modal");
+    return {
+	  isMaximized: false
+	};
+  },
   methods: {
     close() {
       this.$emit("close");
+    },
+    toggleMaximized() {
+      this.isMaximized = !this.isMaximized;
     }
   }
 };
@@ -46,23 +57,7 @@ export default {
   box-shadow: 2px 2px 20px 1px #000;
   display: flex;
   flex-direction: column;
-  max-width: 60%;
-
-  .night-reference &,
-  .vote-history & {
-    max-height: 80%;
-    max-width: 80%;
-    overflow-y: auto;
-  }
-  .characters & {
-    background: rgba(0, 0, 0, 0.95);
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    overflow-y: auto;
-  }
+  overflow-y: auto;
 
   ul {
     list-style-type: none;
@@ -75,7 +70,7 @@ export default {
     justify-content: center;
     line-height: 100%;
   }
-  > .close {
+  .close {
     position: absolute;
     right: 20px;
     top: 20px;
@@ -85,6 +80,32 @@ export default {
       color: red;
     }
   }
+  .maximize-toggle {
+    position: absolute;
+    right: 50px;
+    top: 20px;
+    cursor: pointer;
+    &:hover {
+      color: red;
+    }
+  }  
+}
+
+.maximized {
+  background: rgba(0, 0, 0, 0.95);
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+.not-maximized {
+  background: rgba(0, 0, 0, 0.8);;
+  padding: 10px 20px;
+  height: revert;
+  width: revert;
+  max-width: 80%;
+  max-height: 80%;
 }
 
 .modal-fade-enter,
@@ -96,4 +117,5 @@ export default {
 .modal-fade-leave-active {
   transition: opacity 0.2s ease;
 }
+
 </style>

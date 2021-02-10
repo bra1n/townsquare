@@ -45,7 +45,8 @@ const faIcons = [
   "Users",
   "VolumeUp",
   "VolumeMute",
-  "VoteYea"
+  "VoteYea",
+  "WindowMaximize"
 ];
 const fabIcons = ["Github", "Discord"];
 library.add(

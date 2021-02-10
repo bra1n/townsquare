@@ -2,12 +2,12 @@
   <Modal
     class="night-reference"
     @close="toggleModal('nightOrder')"
-    v-if="modals.nightOrder && roles.size"
+    v-show="modals.nightOrder && roles.size"
   >
     <font-awesome-icon
       @click="toggleModal('reference')"
       icon="address-card"
-      class="toggle"
+      class="toggle-reference"
       title="Show Character Reference"
     />
     <h3>
@@ -154,7 +154,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../vars.scss";
 
-.toggle {
+.toggle-reference {
   position: absolute;
   left: 20px;
   top: 20px;
@@ -165,7 +165,7 @@ export default {
 }
 
 h3 {
-  margin: 0 40px;
+  margin: 0 90px;
   svg {
     vertical-align: middle;
   }
