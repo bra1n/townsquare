@@ -9,7 +9,11 @@
         aria-describedby="modalDescription"
         @click.stop=""
       >
-        <font-awesome-icon @click="toggleMaximized" class="maximize-toggle" icon="window-maximize" />
+        <font-awesome-icon
+          @click="toggleMaximized"
+          class="maximize-toggle"
+          icon="window-maximize"
+        />
         <font-awesome-icon @click="close" class="close" icon="times-circle" />
         <slot></slot>
       </div>
@@ -19,10 +23,10 @@
 
 <script>
 export default {
-  data: function () {
+  data: function() {
     return {
-	  isMaximized: false
-	};
+      isMaximized: false
+    };
   },
   methods: {
     close() {
@@ -87,7 +91,7 @@ export default {
     &:hover {
       color: red;
     }
-  }  
+  }
 }
 
 .maximized {
@@ -99,7 +103,7 @@ export default {
   max-height: 100%;
 }
 .not-maximized {
-  background: rgba(0, 0, 0, 0.8);;
+  background: rgba(0, 0, 0, 0.8);
   padding: 10px 20px;
   height: revert;
   width: revert;
@@ -116,5 +120,4 @@ export default {
 .modal-fade-leave-active {
   transition: opacity 0.2s ease;
 }
-
 </style>
