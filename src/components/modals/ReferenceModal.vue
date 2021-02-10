@@ -56,6 +56,9 @@ export default {
   components: {
     Modal
   },
+  mounted: function() {
+    this.$children[0].isMaximized = true;
+  },
   computed: {
     rolesGrouped: function() {
       const rolesGrouped = {};

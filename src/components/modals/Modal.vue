@@ -85,7 +85,7 @@ export default {
   }
   .maximize-toggle {
     position: absolute;
-    right: 50px;
+    right: 55px;
     top: 20px;
     cursor: pointer;
     &:hover {
