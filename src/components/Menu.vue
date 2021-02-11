@@ -69,6 +69,16 @@
               />
             </em>
           </li>
+          <li v-if="!edition.isOfficial" @click="imageOptIn">
+            <small>Show Custom Images</small>
+            <em
+              ><font-awesome-icon
+                :icon="[
+                  'fas',
+                  grimoire.isImageOptIn ? 'check-square' : 'square'
+                ]"
+            /></em>
+          </li>
           <li @click="setBackground">
             Background image
             <em><font-awesome-icon icon="image"/></em>
@@ -106,19 +116,6 @@
             <li v-if="!session.isSpectator" @click="distributeRoles">
               Send Characters
               <em><font-awesome-icon icon="theater-masks"/></em>
-            </li>
-            <li
-              v-if="session.isSpectator && !edition.isOfficial"
-              @click="imageOptIn"
-            >
-              Show Custom Images
-              <em
-                ><font-awesome-icon
-                  :icon="[
-                    'fas',
-                    grimoire.isImageOptIn ? 'check-square' : 'square'
-                  ]"
-              /></em>
             </li>
             <li
               v-if="session.voteHistory.length"
@@ -266,7 +263,7 @@ export default {
     },
     imageOptIn() {
       const popup =
-        "Are you sure you want to allow custom images? A malicious storyteller might get access to your IP address this way.";
+        "Are you sure you want to allow custom images? A malicious script file author might track your IP address this way.";
       if (this.grimoire.isImageOptIn || confirm(popup)) {
         this.toggleImageOptIn();
       }
