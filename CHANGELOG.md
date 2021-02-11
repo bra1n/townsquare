@@ -1,5 +1,11 @@
 # Release Notes
 
+### Version 2.8.0
+- added hands-off live session support for homebrew / custom characters again!
+- added custom image opt-in that will prevent any (potentially malicious / harmful) images from loading until a player manually allows them to
+
+---
+
 ## Version 2.7.0
 - added support for assigning duplicate characters to more than one player (like Legion)
 - further live session bandwidth optimizations

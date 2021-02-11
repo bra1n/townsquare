@@ -69,11 +69,21 @@
               />
             </em>
           </li>
+          <li v-if="!edition.isOfficial" @click="imageOptIn">
+            <small>Show Custom Images</small>
+            <em
+              ><font-awesome-icon
+                :icon="[
+                  'fas',
+                  grimoire.isImageOptIn ? 'check-square' : 'square'
+                ]"
+            /></em>
+          </li>
           <li @click="setBackground">
             Background image
             <em><font-awesome-icon icon="image"/></em>
           </li>
-          <li @click="toggleMute">
+          <li @click="toggleMuted">
             Mute Sounds
             <em
               ><font-awesome-icon
@@ -83,40 +93,41 @@
         </template>
 
         <template v-if="tab === 'session'">
+          <!-- Session -->
           <li class="headline" v-if="session.sessionId">
             {{ session.isSpectator ? "Playing" : "Hosting" }}
           </li>
           <li class="headline" v-else>
             Live Session
           </li>
-          <li @click="hostSession" v-if="!session.sessionId">
-            Host (Storyteller)<em>[H]</em>
-          </li>
-          <li @click="joinSession" v-if="!session.sessionId">
-            Join (Player)<em>[J]</em>
-          </li>
-          <li v-if="session.sessionId && session.ping">
-            Delay to {{ session.isSpectator ? "host" : "players" }}
-            <em>{{ session.ping }}ms</em>
-          </li>
-          <li v-if="session.sessionId" @click="copySessionUrl">
-            Copy player link
-            <em><font-awesome-icon icon="copy"/></em>
-          </li>
-          <li v-if="!session.isSpectator" @click="distributeRoles">
-            Send Characters
-            <em><font-awesome-icon icon="theater-masks"/></em>
-          </li>
-          <li
-            v-if="session.voteHistory.length"
-            @click="toggleModal('voteHistory')"
-          >
-            Nomination history<em>[V]</em>
-          </li>
-          <li @click="leaveSession" v-if="session.sessionId">
-            Leave Session
-            <em>{{ session.sessionId }}</em>
-          </li>
+          <template v-if="!session.sessionId">
+            <li @click="hostSession">Host (Storyteller)<em>[H]</em></li>
+            <li @click="joinSession">Join (Player)<em>[J]</em></li>
+          </template>
+          <template v-else>
+            <li v-if="session.ping">
+              Delay to {{ session.isSpectator ? "host" : "players" }}
+              <em>{{ session.ping }}ms</em>
+            </li>
+            <li @click="copySessionUrl">
+              Copy player link
+              <em><font-awesome-icon icon="copy"/></em>
+            </li>
+            <li v-if="!session.isSpectator" @click="distributeRoles">
+              Send Characters
+              <em><font-awesome-icon icon="theater-masks"/></em>
+            </li>
+            <li
+              v-if="session.voteHistory.length"
+              @click="toggleModal('voteHistory')"
+            >
+              Nomination history<em>[V]</em>
+            </li>
+            <li @click="leaveSession">
+              Leave Session
+              <em>{{ session.sessionId }}</em>
+            </li>
+          </template>
         </template>
 
         <template v-if="tab === 'players' && !session.isSpectator">
@@ -203,7 +214,7 @@ import { mapMutations, mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["grimoire", "session"]),
+    ...mapState(["grimoire", "session", "edition"]),
     ...mapState("players", ["players"])
   },
   data() {
@@ -217,9 +228,6 @@ export default {
       if (background || background === "") {
         this.$store.commit("setBackground", background);
       }
-    },
-    toggleMute() {
-      this.$store.commit("setIsMuted", !this.grimoire.isMuted);
     },
     hostSession() {
       if (this.session.sessionId) return;
@@ -251,6 +259,13 @@ export default {
           }).bind(this),
           2000
         );
+      }
+    },
+    imageOptIn() {
+      const popup =
+        "Are you sure you want to allow custom images? A malicious script file author might track your IP address this way.";
+      if (this.grimoire.isImageOptIn || confirm(popup)) {
+        this.toggleImageOptIn();
       }
     },
     joinSession() {
@@ -302,6 +317,8 @@ export default {
     ...mapMutations([
       "toggleGrimoire",
       "toggleMenu",
+      "toggleImageOptIn",
+      "toggleMuted",
       "toggleNight",
       "toggleNightOrder",
       "setZoom",
