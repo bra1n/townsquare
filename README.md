@@ -84,7 +84,8 @@ For base game characters, it is sufficient to only provide the ID, similar to wh
 
 **Required properties:** `id`, `name`, `team`, `ability`
 
-- **id**: the internal ID for this character, without spaces or special characters
+- **id**: the internal ID for this character, without spaces or special characters<br>
+  _Note_: this ID needs to be unique and can't be the same as any ID already used by an existing character, otherwise the custom character will be overwritten with the existing role!
 - **image**: a URL to a PNG of the character token icon (should have a transparent background!)
 - **edition**: the ID of the edition for this character. can be left blank or "custom"
 - **firstNight** / **otherNight**: the position that this character acts on the first / other nights, compared to all
