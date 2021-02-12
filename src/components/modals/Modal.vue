@@ -119,7 +119,6 @@ export default {
   max-height: 100%;
   display: flex;
   align-content: center;
-  //justify-content: center;
 }
 
 .modal-fade-enter,

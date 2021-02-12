@@ -190,7 +190,7 @@ ul {
       &:after {
         content: " ";
         display: block;
-        padding-top: 66%;
+        padding-top: 65%;
       }
     }
     .name {
