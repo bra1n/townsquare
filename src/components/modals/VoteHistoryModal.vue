@@ -107,6 +107,8 @@ h3 {
 
 table {
   border-spacing: 10px 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 thead td {
