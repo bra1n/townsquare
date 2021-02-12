@@ -12,6 +12,13 @@
         <font-awesome-icon
           @click="isMaximized = !isMaximized"
           class="maximize-toggle"
+          v-if="isMaximized"
+          icon="window-minimize"
+        />
+        <font-awesome-icon
+          @click="isMaximized = !isMaximized"
+          class="maximize-toggle"
+          v-if="!isMaximized"
           icon="window-maximize"
         />
         <font-awesome-icon @click="close" class="close" icon="times-circle" />
@@ -57,7 +64,13 @@ export default {
   box-shadow: 2px 2px 20px 1px #000;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  max-width: 60%;
+
+  .vote-history &,
+  .night-reference &,
+  .characters & {
+    overflow-y: auto;
+  }
 
   ul {
     list-style-type: none;
@@ -80,15 +93,21 @@ export default {
       color: red;
     }
   }
-  .maximize-toggle {
+  > .maximize-toggle {
+    z-index: 100;
     position: absolute;
-    right: 55px;
+    right: 52px;
     top: 20px;
     cursor: pointer;
     &:hover {
       color: red;
     }
   }
+}
+
+.not-maximized {
+  max-height: 80%;
+  max-width: 80%;
 }
 
 .maximized {
@@ -98,14 +117,9 @@ export default {
   width: 100%;
   max-width: 100%;
   max-height: 100%;
-}
-.not-maximized {
-  background: rgba(0, 0, 0, 0.8);
-  padding: 10px 20px;
-  height: revert;
-  width: revert;
-  max-width: 80%;
-  max-height: 80%;
+  display: flex;
+  align-content: center;
+  //justify-content: center;
 }
 
 .modal-fade-enter,
