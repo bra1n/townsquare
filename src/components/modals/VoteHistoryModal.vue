@@ -99,7 +99,7 @@ export default {
 }
 
 h3 {
-  margin: 0 90px 0 10px;
+  margin: 0 40px 0 10px;
   svg {
     vertical-align: middle;
   }
