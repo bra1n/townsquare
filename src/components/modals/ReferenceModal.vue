@@ -214,6 +214,7 @@ ul {
     }
   }
   &.legend {
+    width: 100%;
     font-weight: bold;
     height: 20px;
     margin-top: 10px;
