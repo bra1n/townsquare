@@ -1,11 +1,13 @@
 <template>
   <Modal v-if="modals.role && availableRoles.length" @close="close">
     <h3>
-      Choose a new character for
       {{
-        playerIndex >= 0 && players.length
-          ? players[playerIndex].name
-          : "bluffing"
+        $t("role-modal.choose-character", {
+          player:
+            playerIndex >= 0 && players.length
+              ? players[playerIndex].name
+              : $t("role-modal.bluffing")
+        })
       }}
     </h3>
     <ul class="tokens" v-if="tab === 'editionRoles' || !otherTravelers.size">
@@ -36,14 +38,16 @@
         class="button"
         :class="{ townsfolk: tab === 'editionRoles' }"
         @click="tab = 'editionRoles'"
-        >Edition Roles</span
       >
+        {{ $t("role-modal.edition-roles") }}
+      </span>
       <span
         class="button"
         :class="{ townsfolk: tab === 'otherTravelers' }"
         @click="tab = 'otherTravelers'"
-        >Other Travelers</span
       >
+        {{ $t("role-modal.other-travelers") }}
+      </span>
     </div>
   </Modal>
 </template>

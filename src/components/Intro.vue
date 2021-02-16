@@ -1,19 +1,31 @@
 <template>
   <div class="intro">
     <img src="static/apple-icon.png" alt="" />
-    Welcome to the (unofficial)
-    <b>Virtual Town Square and Grimoire</b> for Blood on the Clocktower! Please
-    add more players through the
-    <span class="button" @click="toggleMenu">
-      <font-awesome-icon icon="cog" /> Menu
-    </span>
-    on the top right or by pressing <b>[A]</b>. You can also join a game session
-    by pressing <b>[J]</b>.<br />
+    <i18n path="intro.welcome">
+      <template #menu>
+        <span class="button" @click="toggleMenu">
+          <font-awesome-icon icon="cog" /> {{ $t("intro.menu") }}</span
+        >
+      </template>
+      <template #grimoire>
+        <b>{{ $t("intro.townsquare-grimoire") }}</b>
+      </template>
+      <template #a-key>
+        <b>[A]</b>
+      </template>
+      <template #j-key>
+        <b>[J]</b>
+      </template>
+    </i18n>
+    <br />
     <div class="footer">
-      This project is free and open source and can be found on
-      <a href="https://github.com/bra1n/townsquare" target="_blank">GitHub</a>.
-      It is not affiliated with The Pandemonium Institute. "Blood on the
-      Clocktower" is a trademark of Steven Medway and The Pandemonium Institute.
+      <i18n path="intro.project-notice">
+        <template #github>
+          <a href="https://github.com/bra1n/townsquare" target="_blank"
+            >GitHub</a
+          >
+        </template>
+      </i18n>
     </div>
   </div>
 </template>

@@ -30,8 +30,12 @@
       :class="{ closed: !isBluffsOpen }"
     >
       <h3>
-        <span v-if="session.isSpectator">Other characters</span>
-        <span v-else>Demon bluffs</span>
+        <span v-if="session.isSpectator">
+          {{ $t("townsquare.other-characters") }}
+        </span>
+        <span v-else>
+          {{ $t("townsquare.demon-bluffs") }}
+        </span>
         <font-awesome-icon icon="times-circle" @click.stop="toggleBluffs" />
         <font-awesome-icon icon="plus-circle" @click.stop="toggleBluffs" />
       </h3>
@@ -48,7 +52,9 @@
 
     <div class="fabled" :class="{ closed: !isFabledOpen }" v-if="fabled.length">
       <h3>
-        <span>Fabled</span>
+        <span>
+          {{ $t("townsquare.fabled") }}
+        </span>
         <font-awesome-icon icon="times-circle" @click.stop="toggleFabled" />
         <font-awesome-icon icon="plus-circle" @click.stop="toggleFabled" />
       </h3>
