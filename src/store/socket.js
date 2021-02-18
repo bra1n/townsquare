@@ -375,7 +375,7 @@ class LiveSession {
       this._store.commit("setCustomRoles", roles);
       if (this._store.state.roles.size !== roles.length) {
         const missing = [];
-        roles.forEach(id => {
+        roles.forEach(({ id }) => {
           if (!this._store.state.roles.get(id)) {
             missing.push(id);
           }
