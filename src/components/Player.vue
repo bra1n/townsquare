@@ -104,8 +104,8 @@
         :class="{ active: isMenuOpen }"
       >
         {{ player.name }}
-        <div class="pronouns" v-if="player.pronoun && player.pronoun !== ''">
-          {{ player.pronoun }}
+        <div class="pronouns" v-if="player.pronouns && player.pronouns !== ''">
+          {{ player.pronouns }}
         </div>
       </div>
 
@@ -154,7 +154,7 @@
             <template v-else> Seat occupied</template>
           </li>
           <li
-            @click="changePronoun"
+            @click="changePronouns"
             v-if="session.isSpectator && player.id === session.playerId"
           >
             <font-awesome-icon icon="transgender" />Change Pronouns
@@ -241,13 +241,16 @@ export default {
     };
   },
   methods: {
-    changePronoun() {
+    changePronouns() {
       if (!this.session.isSpectator || this.player.id !== this.session.playerId)
         return;
-      const pronoun = prompt("Player preffered pronouns", this.player.pronoun);
-      this.$store.commit("players/setPronoun", {
+      const pronouns = prompt(
+        "Player preffered pronouns",
+        this.player.pronouns
+      );
+      this.$store.commit("players/setPronouns", {
         player: this.player,
-        pronoun
+        pronouns
       });
       this.isMenuOpen = false;
     },

@@ -189,8 +189,8 @@ class LiveSession {
       case "bye":
         this._handleBye(params);
         break;
-      case "pronoun":
-        this._updatePlayerPronoun(params);
+      case "pronouns":
+        this._updatePlayerPronouns(params);
         break;
     }
   }
@@ -247,7 +247,7 @@ class LiveSession {
       id: player.id,
       isDead: player.isDead,
       isVoteless: player.isVoteless,
-      pronoun: player.pronoun,
+      pronouns: player.pronouns,
       ...(player.role && player.role.team === "traveler"
         ? { roleId: player.role.id }
         : {})
@@ -308,7 +308,7 @@ class LiveSession {
       const player = players[x];
       const { roleId } = state;
       // update relevant properties
-      ["name", "id", "isDead", "isVoteless", "pronoun"].forEach(property => {
+      ["name", "id", "isDead", "isVoteless", "pronouns"].forEach(property => {
         const value = state[property];
         if (player[property] !== value) {
           this._store.commit("players/update", { player, property, value });
@@ -486,26 +486,26 @@ class LiveSession {
   }
 
   /**
-   * Publish a player pronoun update
+   * Publish a player pronouns update
    * @param player
-   * @param pronoun
+   * @param pronouns
    */
-  sendPlayerPronoun({ player, pronoun }) {
+  sendPlayerPronouns({ player, pronouns }) {
     if (!this._isSpectator) return;
     const index = this._store.state.players.players.indexOf(player);
-    this._send("pronoun", { index, pronoun });
+    this._send("pronouns", { index, pronouns });
   }
 
   /**
-   * Update a pronoun based on incoming data. Player only.
+   * Update a pronouns based on incoming data. Player only.
    * @param index
-   * @param pronoun
+   * @param pronouns
    * @private
    */
-  _updatePlayerPronoun({ index, pronoun }) {
+  _updatePlayerPronouns({ index, pronouns }) {
     const player = this._store.state.players.players[index];
     if (!player) return;
-    this._store.commit("players/setPronoun", { player, pronoun });
+    this._store.commit("players/setPronouns", { player, pronouns });
   }
 
   /**
@@ -839,8 +839,8 @@ export default store => {
       case "players/update":
         session.sendPlayer(payload);
         break;
-      case "players/setPronoun":
-        session.sendPlayerPronoun(payload);
+      case "players/setPronouns":
+        session.sendPlayerPronouns(payload);
         break;
     }
   });
