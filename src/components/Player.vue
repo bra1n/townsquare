@@ -245,7 +245,7 @@ export default {
       if (!this.session.isSpectator || this.player.id !== this.session.playerId)
         return;
       const pronouns = prompt(
-        "Player preffered pronouns",
+        "Player preferred pronouns",
         this.player.pronouns
       );
       this.updatePlayer("pronouns", pronouns, true);
