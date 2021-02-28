@@ -488,24 +488,29 @@ class LiveSession {
   /**
    * Publish a player pronouns update
    * @param player
-   * @param pronouns
+   * @param value
    */
-  sendPlayerPronouns({ player, pronouns }) {
-    if (!this._isSpectator) return;
+  sendPlayerPronouns({ player, value }) {
+    //send pronoun only for the current player
+    if (this._store.state.session.playerId !== player.id) return;
     const index = this._store.state.players.players.indexOf(player);
-    this._send("pronouns", { index, pronouns });
+    this._send("pronouns", { index, value });
   }
 
   /**
    * Update a pronouns based on incoming data. Player only.
    * @param index
-   * @param pronouns
+   * @param value
    * @private
    */
-  _updatePlayerPronouns({ index, pronouns }) {
+  _updatePlayerPronouns({ index, value }) {
     const player = this._store.state.players.players[index];
-    if (!player) return;
-    this._store.commit("players/setPronouns", { player, pronouns });
+    if (!player || this._store.state.session.playerId === player.id) return;
+    this._store.commit("players/update", {
+      player,
+      property: "pronouns",
+      value
+    });
   }
 
   /**
@@ -837,10 +842,11 @@ export default store => {
         session.sendGamestate("", true);
         break;
       case "players/update":
+        if (payload.property === "pronouns") {
+          session.sendPlayerPronouns(payload);
+          break;
+        }
         session.sendPlayer(payload);
-        break;
-      case "players/setPronouns":
-        session.sendPlayerPronouns(payload);
         break;
     }
   });

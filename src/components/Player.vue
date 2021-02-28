@@ -248,11 +248,7 @@ export default {
         "Player preffered pronouns",
         this.player.pronouns
       );
-      this.$store.commit("players/setPronouns", {
-        player: this.player,
-        pronouns
-      });
-      this.isMenuOpen = false;
+      this.updatePlayer("pronouns", pronouns, true);
     },
     toggleStatus() {
       if (this.grimoire.isPublic) {
@@ -282,7 +278,12 @@ export default {
       this.updatePlayer("reminders", reminders, true);
     },
     updatePlayer(property, value, closeMenu = false) {
-      if (this.session.isSpectator && property !== "reminders") return;
+      if (
+        this.session.isSpectator &&
+        property !== "reminders" &&
+        property !== "pronouns"
+      )
+        return;
       this.$store.commit("players/update", {
         player: this.player,
         property,
