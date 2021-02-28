@@ -38,6 +38,7 @@ const faIcons = [
   "TheaterMasks",
   "Times",
   "TimesCircle",
+  "Transgender",
   "TrashAlt",
   "Undo",
   "User",
@@ -46,8 +47,7 @@ const faIcons = [
   "Users",
   "VolumeUp",
   "VolumeMute",
-  "VoteYea",
-  "Transgender"
+  "VoteYea"
 ];
 const fabIcons = ["Github", "Discord"];
 library.add(
