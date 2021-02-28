@@ -41,10 +41,18 @@
             class="icon"
             v-if="role.id"
             :style="{
-              backgroundImage: `url(${role.image ||
-                require('../../assets/icons/' + role.id + '.png')})`
+              backgroundImage: `url(${
+                role.image && grimoire.isImageOptIn
+                  ? role.image
+                  : require('../../assets/icons/' +
+                      (role.imageAlt || role.id) +
+                      '.png')
+              })`
             }"
           ></span>
+          <span class="reminder" v-if="role.firstNightReminder">
+            {{ role.firstNightReminder }}
+          </span>
         </li>
       </ul>
       <ul class="other">
@@ -58,8 +66,13 @@
             class="icon"
             v-if="role.id"
             :style="{
-              backgroundImage: `url(${role.image ||
-                require('../../assets/icons/' + role.id + '.png')})`
+              backgroundImage: `url(${
+                role.image && grimoire.isImageOptIn
+                  ? role.image
+                  : require('../../assets/icons/' +
+                      (role.imageAlt || role.id) +
+                      '.png')
+              })`
             }"
           ></span>
           <span class="name">
@@ -75,6 +88,9 @@
                 }}</small
               >
             </template>
+          </span>
+          <span class="reminder" v-if="role.otherNightReminder">
+            {{ role.otherNightReminder }}
           </span>
         </li>
       </ul>
@@ -101,14 +117,21 @@ export default {
             name: "Minion info",
             firstNight: 2,
             team: "minion",
-            players: this.players.filter(p => p.role.team === "minion")
+            players: this.players.filter(p => p.role.team === "minion"),
+            firstNightReminder:
+              "• If more than one Minion, they all make eye contact with each other. " +
+              "• Show the “This is the Demon” card. Point to the Demon."
           },
           {
             id: "evil",
             name: "Demon info & bluffs",
             firstNight: 4,
             team: "demon",
-            players: this.players.filter(p => p.role.team === "demon")
+            players: this.players.filter(p => p.role.team === "demon"),
+            firstNightReminder:
+              "• Show the “These are your minions” card. Point to each Minion. " +
+              "• Show the “These characters are not in play” card. Show 3 character tokens of good " +
+              "characters not in play."
           }
         );
       }
@@ -121,7 +144,7 @@ export default {
       this.fabled
         .filter(({ firstNight }) => firstNight)
         .forEach(fabled => {
-          rolesFirstNight.push(fabled);
+          rolesFirstNight.push(Object.assign({ players: [] }, fabled));
         });
       rolesFirstNight.sort((a, b) => a.firstNight - b.firstNight);
       return rolesFirstNight;
@@ -137,7 +160,7 @@ export default {
       this.fabled
         .filter(({ otherNight }) => otherNight)
         .forEach(fabled => {
-          rolesOtherNight.push(fabled);
+          rolesOtherNight.push(Object.assign({ players: [] }, fabled));
         });
       rolesOtherNight.sort((a, b) => a.otherNight - b.otherNight);
       return rolesOtherNight;
@@ -266,6 +289,26 @@ ul {
           text-decoration: line-through;
         }
       }
+    }
+    .reminder {
+      position: fixed;
+      padding: 5px 10px;
+      left: 50%;
+      bottom: 10%;
+      width: 500px;
+      z-index: 25;
+      background: rgba(0, 0, 0, 0.75);
+      border-radius: 10px;
+      border: 3px solid black;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+      text-align: left;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 200ms ease-in-out;
+      margin-left: -250px;
+    }
+    &:hover .reminder {
+      opacity: 1;
     }
   }
   &.legend {

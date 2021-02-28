@@ -23,7 +23,7 @@
       >
         <em>{{ nightOrder.get(player).first }}.</em>
         <span v-if="player.role.firstNightReminder">{{
-          player.role.firstNightReminder | handleEmojis
+          player.role.firstNightReminder
         }}</span>
       </div>
       <div
@@ -32,7 +32,7 @@
       >
         <em>{{ nightOrder.get(player).other }}.</em>
         <span v-if="player.role.otherNightReminder">{{
-          player.role.otherNightReminder | handleEmojis
+          player.role.otherNightReminder
         }}</span>
       </div>
 
@@ -174,8 +174,13 @@
         <span
           class="icon"
           :style="{
-            backgroundImage: `url(${reminder.image ||
-              require('../assets/icons/' + reminder.role + '.png')})`
+            backgroundImage: `url(${
+              reminder.image && grimoire.isImageOptIn
+                ? reminder.image
+                : require('../assets/icons/' +
+                    (reminder.imageAlt || reminder.role) +
+                    '.png')
+            })`
           }"
         ></span>
         <span class="text">{{ reminder.name }}</span>
@@ -234,9 +239,6 @@ export default {
       isMenuOpen: false,
       isSwap: false
     };
-  },
-  filters: {
-    handleEmojis: text => text.replace(/:([^: ]+?):/g, "").replace(/ •/g, "\n•")
   },
   methods: {
     changePronoun() {

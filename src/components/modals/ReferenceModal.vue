@@ -34,8 +34,13 @@
             class="icon"
             v-if="role.id"
             :style="{
-              backgroundImage: `url(${role.image ||
-                require('../../assets/icons/' + role.id + '.png')})`
+              backgroundImage: `url(${
+                role.image && grimoire.isImageOptIn
+                  ? role.image
+                  : require('../../assets/icons/' +
+                      (role.imageAlt || role.id) +
+                      '.png')
+              })`
             }"
           ></span>
           <span class="ability">{{ role.ability }}</span>
@@ -80,7 +85,7 @@ export default {
       });
       return players;
     },
-    ...mapState(["roles", "modals", "edition"]),
+    ...mapState(["roles", "modals", "edition", "grimoire"]),
     ...mapState("players", ["players"])
   },
   methods: {
