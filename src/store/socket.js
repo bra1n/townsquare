@@ -491,21 +491,28 @@ class LiveSession {
    * @param value
    */
   sendPlayerPronouns({ player, value }) {
-    //send pronoun only for the current player
-    if (this._store.state.session.playerId !== player.id) return;
+    //send pronoun only for the seated player or storyteller
+    if (this._isSpectator && this._store.state.session.playerId !== player.id)
+      return;
     const index = this._store.state.players.players.indexOf(player);
-    this._send("pronouns", { index, value });
+    this._send("pronouns", { index, value, fromST: !this._isSpectator });
   }
 
   /**
    * Update a pronouns based on incoming data. Player only.
    * @param index
    * @param value
+   * @param fromSt
    * @private
    */
-  _updatePlayerPronouns({ index, value }) {
+  _updatePlayerPronouns({ index, value, fromST }) {
     const player = this._store.state.players.players[index];
-    if (!player || this._store.state.session.playerId === player.id) return;
+    if (
+      !player ||
+      (!fromST && this._store.state.session.playerId === player.id) ||
+      player.pronouns === value
+    )
+      return;
     this._store.commit("players/update", {
       player,
       property: "pronouns",
