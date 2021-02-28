@@ -96,8 +96,8 @@ export default {
           "https://gist.githubusercontent.com/bra1n/0337cc44c6fd2c44f7589256ed5486d2/raw/16be38fa3c01aaf49827303ac80577bdb52c0b25/penanceday.json"
         ],
         [
-          "Catfishing 9.0",
-          "https://gist.githubusercontent.com/bra1n/8a5ec41a7bbf945f6b7dfc1cef72b569/raw/fed370d55554e0d83e9d56023c230099f41d0660/catfishing.json"
+          "Catfishing 11.1",
+          "https://gist.githubusercontent.com/bra1n/8a5ec41a7bbf945f6b7dfc1cef72b569/raw/a312ab93c2f302e0ef83c8b65a4e8e82760fda3a/catfishing.json"
         ],
         [
           "On Thin Ice (Teensyville)",
