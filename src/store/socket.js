@@ -485,6 +485,11 @@ class LiveSession {
     }
   }
 
+  /**
+   * Publish a player pronoun update
+   * @param player
+   * @param pronoun
+   */
   sendPlayerPronoun({ player, pronoun }) {
     if (!this._isSpectator) return;
     const index = this._store.state.players.players.indexOf(player);
