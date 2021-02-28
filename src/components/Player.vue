@@ -701,17 +701,13 @@ li.move:not(.from) .player .overlay svg.move {
     }
   }
 
-  &:hover {
-    .pronouns {
-      opacity: 1;
-    }
+  &:hover .pronouns {
+    opacity: 1;
   }
 
-  #townsquare:not(.spectator) &:hover,
-  &.active {
-    .pronouns {
-      color: white;
-    }
+  #townsquare:not(.spectator) &:hover .pronouns,
+  &.active .pronouns {
+    color: white;
   }
 }
 
