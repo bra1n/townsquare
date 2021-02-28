@@ -155,7 +155,10 @@
           </li>
           <li
             @click="changePronouns"
-            v-if="session.isSpectator && player.id === session.playerId"
+            v-if="
+              !session.isSpectator ||
+                (session.isSpectator && player.id === session.playerId)
+            "
           >
             <font-awesome-icon icon="transgender" />Change Pronouns
           </li>
@@ -242,7 +245,7 @@ export default {
   },
   methods: {
     changePronouns() {
-      if (!this.session.isSpectator || this.player.id !== this.session.playerId)
+      if (this.session.isSpectator && this.player.id !== this.session.playerId)
         return;
       const pronouns = prompt(
         "Player preferred pronouns",
