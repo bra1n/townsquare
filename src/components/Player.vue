@@ -675,6 +675,7 @@ li.move:not(.from) .player .overlay svg.move {
   .pronouns {
     display: inline-flex;
     position: absolute;
+    max-width: 250px;
     padding: 5px 10px;
     left: 110%;
     font-size: 80%;
@@ -687,6 +688,7 @@ li.move:not(.from) .player .overlay svg.move {
     align-content: center;
     align-items: center;
     pointer-events: none;
+    overflow: hidden;
     opacity: 0;
     transition: opacity 200ms ease-in-out;
 
