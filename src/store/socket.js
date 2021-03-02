@@ -495,7 +495,7 @@ class LiveSession {
     if (this._isSpectator && this._store.state.session.playerId !== player.id)
       return;
     const index = this._store.state.players.players.indexOf(player);
-    this._send("pronouns", { index, value, fromST: !this._isSpectator });
+    this._send("pronouns", [index, value, !this._isSpectator]);
   }
 
   /**
@@ -505,19 +505,19 @@ class LiveSession {
    * @param fromSt
    * @private
    */
-  _updatePlayerPronouns({ index, value, fromST }) {
+  _updatePlayerPronouns([index, value, fromST]) {
     const player = this._store.state.players.players[index];
     if (
-      !player ||
-      (!fromST && this._store.state.session.playerId === player.id) ||
-      player.pronouns === value
-    )
-      return;
-    this._store.commit("players/update", {
-      player,
-      property: "pronouns",
-      value
-    });
+      player &&
+      (fromST || this._store.state.session.playerId !== player.id) &&
+      player.pronouns !== value
+    ) {
+      this._store.commit("players/update", {
+        player,
+        property: "pronouns",
+        value
+      });
+    }
   }
 
   /**
@@ -851,9 +851,9 @@ export default store => {
       case "players/update":
         if (payload.property === "pronouns") {
           session.sendPlayerPronouns(payload);
-          break;
+        } else {
+          session.sendPlayer(payload);
         }
-        session.sendPlayer(payload);
         break;
     }
   });
