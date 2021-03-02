@@ -159,7 +159,7 @@
                 (session.isSpectator && player.id === session.playerId)
             "
           >
-            <font-awesome-icon icon="transgender" />Change Pronouns
+            <font-awesome-icon icon="venus-mars" />Change Pronouns
           </li>
         </ul>
       </transition>
