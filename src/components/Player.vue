@@ -97,15 +97,14 @@
         @click="updatePlayer('isVoteless', true)"
         title="Ghost vote"
       />
-
       <div
         class="name"
         @click="isMenuOpen = !isMenuOpen"
         :class="{ active: isMenuOpen }"
       >
-        {{ player.name }}
+        <span>{{ player.name }}</span>
         <div class="pronouns" v-if="player.pronouns && player.pronouns !== ''">
-          {{ player.pronouns }}
+          <span>{{ player.pronouns }}</span>
         </div>
       </div>
 
@@ -653,7 +652,7 @@ li.move:not(.from) .player .overlay svg.move {
 
 /***** Player name *****/
 .player > .name {
-  text-align: center;
+  display: inline-flex;
   justify-content: center;
   font-size: 120%;
   line-height: 120%;
@@ -665,31 +664,36 @@ li.move:not(.from) .player .overlay svg.move {
   border-radius: 10px;
   top: 5px;
   box-shadow: 0 0 5px black;
-  text-overflow: ellipsis;
   padding: 0 4px;
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
   #townsquare:not(.spectator) &:hover,
   &.active {
     color: red;
   }
 
+  &:hover .pronouns {
+    opacity: 1;
+    color: white;
+  }
+
   .pronouns {
     display: inline-flex;
     position: absolute;
+    right: 120%;
     max-width: 250px;
-    padding: 5px 10px;
-    left: 110%;
-    font-size: 80%;
+    z-index: 25;
     background: rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     border: 3px solid black;
     filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
-    text-align: left;
-    justify-items: center;
-    align-content: center;
     align-items: center;
     pointer-events: none;
-    overflow: hidden;
     opacity: 0;
     transition: opacity 200ms ease-in-out;
 
@@ -698,20 +702,11 @@ li.move:not(.from) .player .overlay svg.move {
       border: 10px solid transparent;
       width: 0;
       height: 0;
-      border-right-color: black;
+      border-left-color: black;
       position: absolute;
-      margin-right: 2px;
-      right: 100%;
+      margin-left: 2px;
+      left: 100%;
     }
-  }
-
-  &:hover .pronouns {
-    opacity: 1;
-  }
-
-  #townsquare:not(.spectator) &:hover .pronouns,
-  &.active .pronouns {
-    color: white;
   }
 }
 

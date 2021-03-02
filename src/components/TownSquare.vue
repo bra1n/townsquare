@@ -292,15 +292,15 @@ export default {
             left: 100%;
           }
         }
-        //show pronouns tooltip on the left
+
         .pronouns {
-          right: 110%;
-          left: auto;
+          left: 120%;
+          right: auto;
           &:before {
-            border-right-color: transparent;
-            border-left-color: black;
-            right: auto;
-            left: 100%;
+            border-left-color: transparent;
+            border-right-color: black;
+            left: auto;
+            right: 100%;
           }
         }
       } @else {
