@@ -102,6 +102,10 @@
         @click="isMenuOpen = !isMenuOpen"
         :class="{ active: isMenuOpen }"
       >
+        <font-awesome-icon
+          icon="venus-mars"
+          v-if="player.pronouns && player.pronouns !== ''"
+        />
         <span>{{ player.name }}</span>
         <div class="pronouns" v-if="player.pronouns && player.pronouns !== ''">
           <span>{{ player.pronouns }}</span>
@@ -652,19 +656,25 @@ li.move:not(.from) .player .overlay svg.move {
 
 /***** Player name *****/
 .player > .name {
-  display: inline-flex;
+  right: 10%;
+  display: flex;
   justify-content: center;
   font-size: 120%;
   line-height: 120%;
   cursor: pointer;
   white-space: nowrap;
-  width: 100%;
+  width: 120%;
   background: rgba(0, 0, 0, 0.5);
   border: 3px solid black;
   border-radius: 10px;
   top: 5px;
   box-shadow: 0 0 5px black;
   padding: 0 4px;
+
+  svg {
+    top: 3px;
+    margin-right: 10px;
+  }
 
   span {
     overflow: hidden;
@@ -683,9 +693,9 @@ li.move:not(.from) .player .overlay svg.move {
   }
 
   .pronouns {
-    display: inline-flex;
+    display: flex;
     position: absolute;
-    right: 120%;
+    right: 110%;
     max-width: 250px;
     z-index: 25;
     background: rgba(0, 0, 0, 0.5);
@@ -696,6 +706,8 @@ li.move:not(.from) .player .overlay svg.move {
     pointer-events: none;
     opacity: 0;
     transition: opacity 200ms ease-in-out;
+    padding: 0 4px;
+    bottom: -3px;
 
     &:before {
       content: " ";
@@ -717,7 +729,7 @@ li.move:not(.from) .player .overlay svg.move {
 /***** Player menu *****/
 .player > .menu {
   position: absolute;
-  left: 100%;
+  left: 110%;
   bottom: -5px;
   text-align: left;
   white-space: nowrap;
