@@ -250,9 +250,11 @@ export default {
     changePronouns() {
       if (this.session.isSpectator && this.player.id !== this.session.playerId)
         return;
-      const pronouns =
-        prompt("Player pronouns", this.player.pronouns) || this.player.pronouns;
-      this.updatePlayer("pronouns", pronouns, true);
+      const pronouns = prompt("Player pronouns", this.player.pronouns);
+      //Only update pronouns if not null (prompt was not cancelled)
+      if (pronouns !== null) {
+        this.updatePlayer("pronouns", pronouns, true);
+      }
     },
     toggleStatus() {
       if (this.grimoire.isPublic) {
