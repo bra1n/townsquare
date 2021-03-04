@@ -2,7 +2,7 @@
   <Modal
     class="characters"
     @close="toggleModal('reference')"
-    v-show="modals.reference && roles.size"
+    v-if="modals.reference && roles.size"
   >
     <font-awesome-icon
       @click="toggleModal('nightOrder')"

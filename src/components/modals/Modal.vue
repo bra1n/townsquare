@@ -3,25 +3,24 @@
     <div class="modal-backdrop" @click="close">
       <div
         class="modal"
-        v-bind:class="[isMaximized ? 'maximized' : 'not-maximized']"
+        :class="{ maximized: isMaximized }"
         role="dialog"
         aria-labelledby="modalTitle"
         aria-describedby="modalDescription"
         @click.stop=""
       >
-        <font-awesome-icon
-          @click="isMaximized = !isMaximized"
-          class="maximize-toggle"
-          v-if="isMaximized"
-          icon="window-minimize"
-        />
-        <font-awesome-icon
-          @click="isMaximized = !isMaximized"
-          class="maximize-toggle"
-          v-if="!isMaximized"
-          icon="window-maximize"
-        />
-        <font-awesome-icon @click="close" class="close" icon="times-circle" />
+        <div class="top-right-buttons">
+          <font-awesome-icon
+            @click="isMaximized = !isMaximized"
+            class="top-right-button"
+            :icon="['fas', isMaximized ? 'window-minimize' : 'window-maximize']"
+          />
+          <font-awesome-icon
+            @click="close"
+            class="top-right-button"
+            icon="times-circle"
+          />
+        </div>
         <slot></slot>
       </div>
     </div>
@@ -64,7 +63,8 @@ export default {
   box-shadow: 2px 2px 20px 1px #000;
   display: flex;
   flex-direction: column;
-  max-width: 60%;
+  max-height: 80%;
+  max-width: 80%;
 
   .vote-history &,
   .night-reference &,
@@ -83,31 +83,19 @@ export default {
     justify-content: center;
     line-height: 100%;
   }
-  > .close {
+  > .top-right-buttons {
     position: absolute;
-    right: 20px;
-    top: 20px;
-    cursor: pointer;
-    z-index: 5;
-    &:hover {
-      color: red;
-    }
-  }
-  > .maximize-toggle {
     z-index: 100;
-    position: absolute;
-    right: 52px;
     top: 20px;
-    cursor: pointer;
-    &:hover {
-      color: red;
+    right: 20px;
+    > .top-right-button {
+      cursor: pointer;
+      width: 28px;
+      &:hover {
+        color: red;
+      }
     }
   }
-}
-
-.not-maximized {
-  max-height: 80%;
-  max-width: 80%;
 }
 
 .maximized {
@@ -119,7 +107,6 @@ export default {
   max-height: 100%;
   display: flex;
   align-content: center;
-  align-items: center;
   justify-content: safe center;
 }
 

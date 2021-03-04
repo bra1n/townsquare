@@ -1,7 +1,7 @@
 <template>
   <Modal
     class="vote-history"
-    v-show="modals.voteHistory && session.voteHistory"
+    v-if="modals.voteHistory && session.voteHistory"
     @close="toggleModal('voteHistory')"
   >
     <font-awesome-icon
