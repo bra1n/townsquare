@@ -36,7 +36,7 @@
         class="button"
         :class="{ townsfolk: tab === 'editionRoles' }"
         @click="tab = 'editionRoles'"
-        >Edtition Roles</span
+        >Edition Roles</span
       >
       <span
         class="button"
