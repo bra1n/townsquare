@@ -292,24 +292,14 @@ export default {
             left: 100%;
           }
         }
-
-        .name {
-          flex-direction: row-reverse;
-
-          svg {
-            margin-left: 10px;
-            margin-right: 2px;
-          }
-
-          .pronouns {
-            left: 110%;
-            right: auto;
-            &:before {
-              border-left-color: transparent;
-              border-right-color: black;
-              left: auto;
-              right: 100%;
-            }
+        .pronouns {
+          left: 110%;
+          right: auto;
+          &:before {
+            border-left-color: transparent;
+            border-right-color: black;
+            left: auto;
+            right: 100%;
           }
         }
       } @else {

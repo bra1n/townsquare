@@ -102,12 +102,9 @@
         @click="isMenuOpen = !isMenuOpen"
         :class="{ active: isMenuOpen }"
       >
-        <font-awesome-icon
-          icon="venus-mars"
-          v-if="player.pronouns && player.pronouns !== ''"
-        />
         <span>{{ player.name }}</span>
-        <div class="pronouns" v-if="player.pronouns && player.pronouns !== ''">
+        <font-awesome-icon icon="venus-mars" v-if="player.pronouns" />
+        <div class="pronouns" v-if="player.pronouns">
           <span>{{ player.pronouns }}</span>
         </div>
       </div>
@@ -675,13 +672,15 @@ li.move:not(.from) .player .overlay svg.move {
 
   svg {
     top: 3px;
-    margin-right: 10px;
+    margin-right: 2px;
   }
 
   span {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-align: center;
+    flex-grow: 1;
   }
 
   #townsquare:not(.spectator) &:hover,
