@@ -91,7 +91,7 @@ export default {
 .clear {
   position: absolute;
   left: 20px;
-  top: 20px;
+  top: 15px;
   cursor: pointer;
   &:hover {
     color: red;

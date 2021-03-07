@@ -21,7 +21,9 @@
             icon="times-circle"
           />
         </div>
-        <slot></slot>
+        <div class="slot">
+          <slot></slot>
+        </div>
       </div>
     </div>
   </transition>
@@ -83,10 +85,11 @@ export default {
     justify-content: center;
     line-height: 100%;
   }
+
   > .top-right-buttons {
     position: absolute;
     z-index: 100;
-    top: 20px;
+    top: 15px;
     right: 20px;
     > .top-right-button {
       cursor: pointer;
@@ -95,6 +98,11 @@ export default {
         color: red;
       }
     }
+  }
+
+  > .slot {
+    max-height: 100%;
+    position: initial;
   }
 }
 
@@ -107,7 +115,7 @@ export default {
   max-height: 100%;
   display: flex;
   align-content: center;
-  justify-content: safe center;
+  justify-content: center;
 }
 
 .modal-fade-enter,
