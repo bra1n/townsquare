@@ -1,6 +1,19 @@
 <template>
   <div id="controls">
     <span
+      class="nomlogSummary"
+      v-show="session.voteHistory.length"
+      @click="toggleModal('voteHistory')"
+      :title="
+        `${session.voteHistory.length} recent ${
+          session.voteHistory.length == 1 ? 'nomination' : 'nominations'
+        }`
+      "
+    >
+      <font-awesome-icon icon="book-dead" />
+      {{ session.voteHistory.length }}
+    </span>
+    <span
       class="session"
       :class="{
         spectator: session.isSpectator,
@@ -362,6 +375,12 @@ export default {
     display: inline-block;
     cursor: pointer;
     z-index: 5;
+    margin-top: 7px;
+    margin-left: 10px;
+  }
+
+  span.nomlogSummary {
+    color: $townsfolk;
     margin-top: 7px;
     margin-left: 10px;
   }
