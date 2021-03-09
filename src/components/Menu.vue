@@ -348,7 +348,7 @@ export default {
   top: 3px;
   text-align: right;
   padding-right: 50px;
-  z-index: 200;
+  z-index: 75;
 
   svg {
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 1));
