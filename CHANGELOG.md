@@ -2,8 +2,11 @@
 
 ### Version 2.9.0
 - added support for assigning pronouns to players and display of the pronouns in a tooltip on the player name.
+- added button to modals that allows the user to maximize them
+- added Mephit and Snitch to roles.json
 
 ---
+
 ### Version 2.8.0
 - added hands-off live session support for homebrew / custom characters again!
 - added custom image opt-in that will prevent any (potentially malicious / harmful) images from loading until a player manually allows them to
