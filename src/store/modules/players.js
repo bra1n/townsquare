@@ -80,10 +80,11 @@ const actions = {
         return player;
       });
     } else {
-      players = state.players.map(({ name, id }) => ({
+      players = state.players.map(({ name, id, pronouns }) => ({
         ...NEWPLAYER,
         name,
-        id
+        id,
+        pronouns
       }));
       commit("setFabled", { fabled: [] });
     }
