@@ -791,11 +791,11 @@ export default store => {
   const session = new LiveSession(store);
 
   // listen to mutations
-  store.subscribe(({ type, payload }) => {
+  store.subscribe(({ type, payload }, state) => {
     switch (type) {
       case "session/setSessionId":
-        if (payload) {
-          session.connect(payload);
+        if (state.session.sessionId) {
+          session.connect(state.session.sessionId);
         } else {
           window.location.hash = "";
           session.disconnect();

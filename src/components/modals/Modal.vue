@@ -73,9 +73,10 @@ export default {
   .characters & {
     overflow-y: auto;
   }
-  
+
   .roles & {
     max-height: 100%;
+    max-width: 60%;
   }
 
   ul {

@@ -179,6 +179,11 @@ export default new Vuex.Store({
               return role;
             }
           })
+          // clean up role.id
+          .map(role => {
+            role.id = role.id.toLocaleLowerCase().replace(/[^a-z0-9]/g, "");
+            return role;
+          })
           // map existing roles to base definition or pre-populate custom roles to ensure all properties
           .map(
             role =>
