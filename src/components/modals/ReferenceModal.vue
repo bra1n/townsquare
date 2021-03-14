@@ -235,4 +235,9 @@ ul {
     }
   }
 }
+
+/** hide players when town square is set to "public" **/
+#townsquare.public ~ .characters .modal .player {
+  display: none;
+}
 </style>
