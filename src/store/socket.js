@@ -489,13 +489,13 @@ class LiveSession {
    * Publish a player pronouns update
    * @param player
    * @param value
-   * @param fromSockets
+   * @param isFromSockets
    */
-  sendPlayerPronouns({ player, value, fromSockets }) {
+  sendPlayerPronouns({ player, value, isFromSockets }) {
     //send pronoun only for the seated player or storyteller
     //Do not re-send pronoun data for an update that was recieved from the sockets layer
     if (
-      fromSockets ||
+      isFromSockets ||
       (this._isSpectator && this._store.state.session.playerId !== player.id)
     )
       return;
@@ -516,7 +516,7 @@ class LiveSession {
       player,
       property: "pronouns",
       value,
-      fromSockets: true
+      isFromSockets: true
     });
   }
 
