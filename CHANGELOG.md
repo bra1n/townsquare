@@ -1,5 +1,9 @@
 # Release Notes
 
+### Version 2.9.2
+- fix issue where a player and storyteller updating the same players pronouns at around the same time causes an infinite loop disconnecting the session.
+
+---
 ### Version 2.9.1
 - fix gamestate JSON not showing (custom) roles and failing to load states with custom scripts properly
 - fix gamestate not stripping out special characters from role.id on load
