@@ -2,7 +2,7 @@
   <div id="controls">
     <span
       class="nomlog-summary"
-      v-show="session.voteHistory.length"
+      v-show="session.voteHistory.length && session.sessionId"
       @click="toggleModal('voteHistory')"
       :title="
         `${session.voteHistory.length} recent ${
@@ -381,8 +381,6 @@ export default {
 
   span.nomlog-summary {
     color: $townsfolk;
-    margin-top: 7px;
-    margin-left: 10px;
   }
 
   span.session {
