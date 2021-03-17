@@ -1,7 +1,7 @@
 <template>
   <div id="controls">
     <span
-      class="nomlogSummary"
+      class="nomlog-summary"
       v-show="session.voteHistory.length"
       @click="toggleModal('voteHistory')"
       :title="
@@ -379,7 +379,7 @@ export default {
     margin-left: 10px;
   }
 
-  span.nomlogSummary {
+  span.nomlog-summary {
     color: $townsfolk;
     margin-top: 7px;
     margin-left: 10px;
