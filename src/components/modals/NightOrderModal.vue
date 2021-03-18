@@ -25,7 +25,7 @@
         >
           <span class="name">
             {{ role.name }}
-            <template v-if="role.players.length">
+            <span class="player" v-if="role.players.length">
               <br />
               <small
                 v-for="(player, index) in role.players"
@@ -35,7 +35,7 @@
                   player.name + (role.players.length > index + 1 ? "," : "")
                 }}</small
               >
-            </template>
+            </span>
           </span>
           <span
             class="icon"
@@ -77,7 +77,7 @@
           ></span>
           <span class="name">
             {{ role.name }}
-            <template v-if="role.players.length">
+            <span class="player" v-if="role.players.length">
               <br />
               <small
                 v-for="(player, index) in role.players"
@@ -87,7 +87,7 @@
                   player.name + (role.players.length > index + 1 ? "," : "")
                 }}</small
               >
-            </template>
+            </span>
           </span>
           <span class="reminder" v-if="role.otherNightReminder">
             {{ role.otherNightReminder }}
@@ -180,7 +180,7 @@ export default {
 .toggle {
   position: absolute;
   left: 20px;
-  top: 20px;
+  top: 15px;
   cursor: pointer;
   &:hover {
     color: red;
@@ -361,5 +361,10 @@ ul {
       border-right: 0;
     }
   }
+}
+
+/** hide players when town square is set to "public" **/
+#townsquare.public ~ .night-reference .modal .player {
+  display: none;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <Modal
     class="vote-history"
-    v-show="modals.voteHistory && session.voteHistory"
+    v-if="modals.voteHistory && session.voteHistory"
     @close="toggleModal('voteHistory')"
   >
     <font-awesome-icon
@@ -91,7 +91,7 @@ export default {
 .clear {
   position: absolute;
   left: 20px;
-  top: 20px;
+  top: 15px;
   cursor: pointer;
   &:hover {
     color: red;
@@ -99,7 +99,7 @@ export default {
 }
 
 h3 {
-  margin: 0 40px;
+  margin: 0 40px 0 10px;
   svg {
     vertical-align: middle;
   }
@@ -107,6 +107,8 @@ h3 {
 
 table {
   border-spacing: 10px 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 thead td {

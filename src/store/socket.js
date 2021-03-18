@@ -189,6 +189,9 @@ class LiveSession {
       case "bye":
         this._handleBye(params);
         break;
+      case "pronouns":
+        this._updatePlayerPronouns(params);
+        break;
     }
   }
 
@@ -244,6 +247,7 @@ class LiveSession {
       id: player.id,
       isDead: player.isDead,
       isVoteless: player.isVoteless,
+      pronouns: player.pronouns,
       ...(player.role && player.role.team === "traveler"
         ? { roleId: player.role.id }
         : {})
@@ -304,7 +308,7 @@ class LiveSession {
       const player = players[x];
       const { roleId } = state;
       // update relevant properties
-      ["name", "id", "isDead", "isVoteless"].forEach(property => {
+      ["name", "id", "isDead", "isVoteless", "pronouns"].forEach(property => {
         const value = state[property];
         if (player[property] !== value) {
           this._store.commit("players/update", { player, property, value });
@@ -478,6 +482,41 @@ class LiveSession {
     } else {
       // just update the player otherwise
       this._store.commit("players/update", { player, property, value });
+    }
+  }
+
+  /**
+   * Publish a player pronouns update
+   * @param player
+   * @param value
+   */
+  sendPlayerPronouns({ player, value }) {
+    //send pronoun only for the seated player or storyteller
+    if (this._isSpectator && this._store.state.session.playerId !== player.id)
+      return;
+    const index = this._store.state.players.players.indexOf(player);
+    this._send("pronouns", [index, value, !this._isSpectator]);
+  }
+
+  /**
+   * Update a pronouns based on incoming data. Player only.
+   * @param index
+   * @param value
+   * @param fromSt
+   * @private
+   */
+  _updatePlayerPronouns([index, value, fromST]) {
+    const player = this._store.state.players.players[index];
+    if (
+      player &&
+      (fromST || this._store.state.session.playerId !== player.id) &&
+      player.pronouns !== value
+    ) {
+      this._store.commit("players/update", {
+        player,
+        property: "pronouns",
+        value
+      });
     }
   }
 
@@ -752,11 +791,11 @@ export default store => {
   const session = new LiveSession(store);
 
   // listen to mutations
-  store.subscribe(({ type, payload }) => {
+  store.subscribe(({ type, payload }, state) => {
     switch (type) {
       case "session/setSessionId":
-        if (payload) {
-          session.connect(payload);
+        if (state.session.sessionId) {
+          session.connect(state.session.sessionId);
         } else {
           window.location.hash = "";
           session.disconnect();
@@ -810,7 +849,11 @@ export default store => {
         session.sendGamestate("", true);
         break;
       case "players/update":
-        session.sendPlayer(payload);
+        if (payload.property === "pronouns") {
+          session.sendPlayerPronouns(payload);
+        } else {
+          session.sendPlayer(payload);
+        }
         break;
     }
   });

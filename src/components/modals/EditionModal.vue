@@ -163,19 +163,15 @@ export default {
       if (metaIndex > -1) {
         meta = roles.splice(metaIndex, 1).pop();
       }
-      const customRoles = roles.map(role => {
-        role.id = role.id.toLocaleLowerCase().replace(/[^a-z0-9]/g, "");
-        return role;
-      });
-      this.$store.commit("setCustomRoles", customRoles);
+      this.$store.commit("setCustomRoles", roles);
       this.$store.commit(
         "setEdition",
         Object.assign({}, meta, { id: "custom" })
       );
       // check for fabled and set those too, if present
-      if (customRoles.some(({ id }) => this.$store.state.fabled.has(id))) {
+      if (roles.some(({ id }) => this.$store.state.fabled.has(id))) {
         const fabled = [];
-        customRoles.forEach(({ id }) => {
+        roles.forEach(({ id }) => {
           if (this.$store.state.fabled.has(id)) {
             fabled.push(this.$store.state.fabled.get(id));
           }

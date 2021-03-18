@@ -264,7 +264,7 @@ export default {
         // open menu on the left
         .player > .menu {
           left: auto;
-          right: 100%;
+          right: 110%;
           margin-right: 15px;
           &:before {
             border-left-color: black;
@@ -290,6 +290,16 @@ export default {
             border-left-color: black;
             right: auto;
             left: 100%;
+          }
+        }
+        .pronouns {
+          left: 110%;
+          right: auto;
+          &:before {
+            border-left-color: transparent;
+            border-right-color: black;
+            left: auto;
+            right: 100%;
           }
         }
       } @else {

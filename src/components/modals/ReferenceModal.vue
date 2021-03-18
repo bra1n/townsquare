@@ -100,7 +100,7 @@ export default {
 .toggle {
   position: absolute;
   left: 20px;
-  top: 20px;
+  top: 15px;
   cursor: pointer;
   &:hover {
     color: red;
@@ -195,7 +195,7 @@ ul {
       &:after {
         content: " ";
         display: block;
-        padding-top: 66%;
+        padding-top: 65%;
       }
     }
     .name {
@@ -219,6 +219,7 @@ ul {
     }
   }
   &.legend {
+    width: 100%;
     font-weight: bold;
     height: 20px;
     margin-top: 10px;
@@ -233,5 +234,10 @@ ul {
       padding-top: 0;
     }
   }
+}
+
+/** hide players when town square is set to "public" **/
+#townsquare.public ~ .characters .modal .player {
+  display: none;
 }
 </style>

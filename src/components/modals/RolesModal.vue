@@ -168,8 +168,8 @@ ul.tokens {
   padding-left: 5%;
   li {
     border-radius: 50%;
-    width: 6vw;
-    margin: 1%;
+    width: 5vw;
+    margin: 5px;
     opacity: 0.5;
     transition: all 250ms;
     &.selected {

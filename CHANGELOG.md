@@ -2,6 +2,20 @@
 
 ### Version 2.9.1
 - added [nomination log indicator](https://fontawesome.com/icons/book-dead).  When a nomination log [v] is available, the number of currently visible entries is displayed. Clicking the indicator can reveal/hide the nomination log.
+- fix gamestate JSON not showing (custom) roles and failing to load states with custom scripts properly
+- fix gamestate not stripping out special characters from role.id on load
+- made character assignment modal a bit prettier
+- got rid of the extra pixels on the  Soldier icon
+- fixed lengthy live session channel names not being correctly cut off
+- hide player names in night order / character reference popup when town square is public
+- fix (pre-)vote calculation being off by one if the nominee votes
+
+---
+
+### Version 2.9.0
+- added support for assigning pronouns to players and display of the pronouns in a tooltip on the player name.
+- added button to modals that allows the user to maximize them
+- added Mephit and Snitch to roles.json
 
 ### Version 2.8.0
 - added hands-off live session support for homebrew / custom characters again!

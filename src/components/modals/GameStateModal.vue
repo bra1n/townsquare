@@ -37,7 +37,9 @@ export default {
         edition: this.edition.isOfficial
           ? { id: this.edition.id }
           : this.edition,
-        roles: this.edition.isOfficial ? "" : this.$store.getters.customRoles,
+        roles: this.edition.isOfficial
+          ? ""
+          : this.$store.getters.customRolesStripped,
         fabled: this.players.fabled.map(({ id }) => id),
         players: this.players.players.map(player => ({
           ...player,

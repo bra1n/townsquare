@@ -97,13 +97,16 @@
         @click="updatePlayer('isVoteless', true)"
         title="Ghost vote"
       />
-
       <div
         class="name"
         @click="isMenuOpen = !isMenuOpen"
         :class="{ active: isMenuOpen }"
       >
-        {{ player.name }}
+        <span>{{ player.name }}</span>
+        <font-awesome-icon icon="venus-mars" v-if="player.pronouns" />
+        <div class="pronouns" v-if="player.pronouns">
+          <span>{{ player.pronouns }}</span>
+        </div>
       </div>
 
       <transition name="fold">
@@ -149,6 +152,15 @@
               Vacate seat
             </template>
             <template v-else> Seat occupied</template>
+          </li>
+          <li
+            @click="changePronouns"
+            v-if="
+              !session.isSpectator ||
+                (session.isSpectator && player.id === session.playerId)
+            "
+          >
+            <font-awesome-icon icon="venus-mars" />Change Pronouns
           </li>
         </ul>
       </transition>
@@ -232,6 +244,15 @@ export default {
     };
   },
   methods: {
+    changePronouns() {
+      if (this.session.isSpectator && this.player.id !== this.session.playerId)
+        return;
+      const pronouns = prompt("Player pronouns", this.player.pronouns);
+      //Only update pronouns if not null (prompt was not cancelled)
+      if (pronouns !== null) {
+        this.updatePlayer("pronouns", pronouns, true);
+      }
+    },
     toggleStatus() {
       if (this.grimoire.isPublic) {
         if (!this.player.isDead) {
@@ -260,7 +281,12 @@ export default {
       this.updatePlayer("reminders", reminders, true);
     },
     updatePlayer(property, value, closeMenu = false) {
-      if (this.session.isSpectator && property !== "reminders") return;
+      if (
+        this.session.isSpectator &&
+        property !== "reminders" &&
+        property !== "pronouns"
+      )
+        return;
       this.$store.commit("players/update", {
         player: this.player,
         property,
@@ -629,24 +655,71 @@ li.move:not(.from) .player .overlay svg.move {
 
 /***** Player name *****/
 .player > .name {
-  text-align: center;
+  right: 10%;
+  display: flex;
+  justify-content: center;
   font-size: 120%;
   line-height: 120%;
   cursor: pointer;
   white-space: nowrap;
-  width: 100%;
+  width: 120%;
   background: rgba(0, 0, 0, 0.5);
   border: 3px solid black;
   border-radius: 10px;
   top: 5px;
   box-shadow: 0 0 5px black;
-  text-overflow: ellipsis;
-  overflow: hidden;
   padding: 0 4px;
+
+  svg {
+    top: 3px;
+    margin-right: 2px;
+  }
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    flex-grow: 1;
+  }
 
   #townsquare:not(.spectator) &:hover,
   &.active {
     color: red;
+  }
+
+  &:hover .pronouns {
+    opacity: 1;
+    color: white;
+  }
+
+  .pronouns {
+    display: flex;
+    position: absolute;
+    right: 110%;
+    max-width: 250px;
+    z-index: 25;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    border: 3px solid black;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+    padding: 0 4px;
+    bottom: -3px;
+
+    &:before {
+      content: " ";
+      border: 10px solid transparent;
+      width: 0;
+      height: 0;
+      border-left-color: black;
+      position: absolute;
+      margin-left: 2px;
+      left: 100%;
+    }
   }
 }
 
@@ -657,7 +730,7 @@ li.move:not(.from) .player .overlay svg.move {
 /***** Player menu *****/
 .player > .menu {
   position: absolute;
-  left: 100%;
+  left: 110%;
   bottom: -5px;
   text-align: left;
   white-space: nowrap;

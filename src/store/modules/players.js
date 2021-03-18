@@ -4,7 +4,8 @@ const NEWPLAYER = {
   role: {},
   reminders: [],
   isVoteless: false,
-  isDead: false
+  isDead: false,
+  pronouns: ""
 };
 
 const state = () => ({
@@ -79,10 +80,11 @@ const actions = {
         return player;
       });
     } else {
-      players = state.players.map(({ name, id }) => ({
+      players = state.players.map(({ name, id, pronouns }) => ({
         ...NEWPLAYER,
         name,
-        id
+        id,
+        pronouns
       }));
       commit("setFabled", { fabled: [] });
     }

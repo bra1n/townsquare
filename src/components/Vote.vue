@@ -10,17 +10,14 @@
       <em>{{ nominee.name }}</em
       >!
       <br />
-      <template v-if="nominee.role.team !== 'traveler'">
-        <em class="blue">
-          {{ voters.length }} vote{{ voters.length !== 1 ? "s" : "" }}
-        </em>
-        in favor
-        <em>(majority is {{ Math.ceil(alive / 2) }})</em>
-      </template>
-      <template v-else>
-        <em>{{ Math.ceil(players.length / 2) }} votes</em> required for a
-        <em>majority</em>.
-      </template>
+      <em class="blue">
+        {{ voters.length }} vote{{ voters.length !== 1 ? "s" : "" }}
+      </em>
+      in favor
+      <em v-if="nominee.role.team !== 'traveler'">
+        (majority is {{ Math.ceil(alive / 2) }})
+      </em>
+      <em v-else>(majority is {{ Math.ceil(players.length / 2) }})</em>
 
       <div v-if="session.isVoteInProgress || session.lockedVote > 1">
         <em class="blue" v-if="voters.length">{{ voters.join(", ") }} </em>
@@ -170,7 +167,10 @@ export default {
         ...voters.slice(nomination + 1),
         ...voters.slice(0, nomination + 1)
       ];
-      return reorder.slice(0, this.session.lockedVote - 1).filter(n => !!n);
+      return (this.session.lockedVote
+        ? reorder.slice(0, this.session.lockedVote - 1)
+        : reorder
+      ).filter(n => !!n);
     }
   },
   data() {
