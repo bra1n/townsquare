@@ -1,5 +1,8 @@
 # Release Notes
 
+### Version 2.9.1
+- added [nomination log indicator](https://fontawesome.com/icons/book-dead).  When a nomination log [v] is available, the number of currently visible entries is displayed. Clicking the indicator can reveal/hide the nomination log.
+
 ### Version 2.8.0
 - added hands-off live session support for homebrew / custom characters again!
 - added custom image opt-in that will prevent any (potentially malicious / harmful) images from loading until a player manually allows them to
