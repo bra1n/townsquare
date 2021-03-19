@@ -111,6 +111,15 @@
 
       <transition name="fold">
         <ul class="menu" v-if="isMenuOpen">
+          <li
+            @click="changePronouns"
+            v-if="
+              !session.isSpectator ||
+                (session.isSpectator && player.id === session.playerId)
+            "
+          >
+            <font-awesome-icon icon="venus-mars" />Change Pronouns
+          </li>
           <template v-if="!session.isSpectator">
             <li @click="changeName">
               <font-awesome-icon icon="user-edit" />Rename
@@ -127,16 +136,16 @@
               <font-awesome-icon icon="exchange-alt" />
               Swap seats
             </li>
-            <li @click="removePlayer">
-              <font-awesome-icon icon="times-circle" />
-              Remove
-            </li>
             <li
               @click="updatePlayer('id', '', true)"
               v-if="player.id && session.sessionId"
             >
               <font-awesome-icon icon="chair" />
               Empty seat
+            </li>
+            <li @click="removePlayer">
+              <font-awesome-icon icon="times-circle" />
+              Remove
             </li>
           </template>
           <li
@@ -152,15 +161,6 @@
               Vacate seat
             </template>
             <template v-else> Seat occupied</template>
-          </li>
-          <li
-            @click="changePronouns"
-            v-if="
-              !session.isSpectator ||
-                (session.isSpectator && player.id === session.playerId)
-            "
-          >
-            <font-awesome-icon icon="venus-mars" />Change Pronouns
           </li>
         </ul>
       </transition>

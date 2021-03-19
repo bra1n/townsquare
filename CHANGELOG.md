@@ -1,11 +1,12 @@
 # Release Notes
 
-### Version 2.9.2
+### Version 2.10.0
+- added [nomination log indicator](https://fontawesome.com/icons/book-dead).  When a nomination log [v] is available, the number of currently visible entries is displayed. Clicking the indicator can reveal/hide the nomination log.
 - fix issue where a player and storyteller updating the same players pronouns at around the same time causes an infinite loop disconnecting the session.
+- fix bug with shifting roles when the storyteller deletes a player
 
 ---
 ### Version 2.9.1
-- added [nomination log indicator](https://fontawesome.com/icons/book-dead).  When a nomination log [v] is available, the number of currently visible entries is displayed. Clicking the indicator can reveal/hide the nomination log.
 - fix gamestate JSON not showing (custom) roles and failing to load states with custom scripts properly
 - fix gamestate not stripping out special characters from role.id on load
 - made character assignment modal a bit prettier

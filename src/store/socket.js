@@ -164,6 +164,10 @@ class LiveSession {
         if (!this._isSpectator) return;
         this._store.commit("players/move", params);
         break;
+      case "remove":
+        if (!this._isSpectator) return;
+        this._store.commit("players/remove", params);
+        break;
       case "isNight":
         if (!this._isSpectator) return;
         this._store.commit("toggleNight", params);
@@ -784,6 +788,15 @@ class LiveSession {
     if (this._isSpectator) return;
     this._send("move", payload);
   }
+
+  /**
+   * Remove a player. ST only
+   * @param payload
+   */
+  removePlayer(payload) {
+    if (this._isSpectator) return;
+    this._send("remove", payload);
+  }
 }
 
 export default store => {
@@ -842,9 +855,11 @@ export default store => {
       case "players/move":
         session.movePlayer(payload);
         break;
+      case "players/remove":
+        session.removePlayer(payload);
+        break;
       case "players/set":
       case "players/clear":
-      case "players/remove":
       case "players/add":
         session.sendGamestate("", true);
         break;
