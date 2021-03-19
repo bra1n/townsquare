@@ -102,6 +102,14 @@ const mutations = {
   set(state, players = []) {
     state.players = players;
   },
+  /**
+  The update mutation also has a property for isFromSockets
+  this property can be addded to payload object for any mutations
+  then can be used to prevent infinite loops when a property is
+  able to be set from multiple different session on websockets.
+  An example of this is in the sendPlayerPronouns and _updatePlayerPronouns
+  in socket.js.
+   */
   update(state, { player, property, value }) {
     const index = state.players.indexOf(player);
     if (index >= 0) {

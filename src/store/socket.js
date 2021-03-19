@@ -489,35 +489,35 @@ class LiveSession {
    * Publish a player pronouns update
    * @param player
    * @param value
+   * @param isFromSockets
    */
-  sendPlayerPronouns({ player, value }) {
+  sendPlayerPronouns({ player, value, isFromSockets }) {
     //send pronoun only for the seated player or storyteller
-    if (this._isSpectator && this._store.state.session.playerId !== player.id)
+    //Do not re-send pronoun data for an update that was recieved from the sockets layer
+    if (
+      isFromSockets ||
+      (this._isSpectator && this._store.state.session.playerId !== player.id)
+    )
       return;
     const index = this._store.state.players.players.indexOf(player);
-    this._send("pronouns", [index, value, !this._isSpectator]);
+    this._send("pronouns", [index, value]);
   }
 
   /**
-   * Update a pronouns based on incoming data. Player only.
+   * Update a pronouns based on incoming data.
    * @param index
    * @param value
-   * @param fromSt
    * @private
    */
-  _updatePlayerPronouns([index, value, fromST]) {
+  _updatePlayerPronouns([index, value]) {
     const player = this._store.state.players.players[index];
-    if (
-      player &&
-      (fromST || this._store.state.session.playerId !== player.id) &&
-      player.pronouns !== value
-    ) {
-      this._store.commit("players/update", {
-        player,
-        property: "pronouns",
-        value
-      });
-    }
+
+    this._store.commit("players/update", {
+      player,
+      property: "pronouns",
+      value,
+      isFromSockets: true
+    });
   }
 
   /**
