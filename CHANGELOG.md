@@ -4,8 +4,10 @@
 - added [nomination log indicator](https://fontawesome.com/icons/book-dead).  When a nomination log [v] is available, the number of currently visible entries is displayed. Clicking the indicator can reveal/hide the nomination log.
 - fix issue where a player and storyteller updating the same players pronouns at around the same time causes an infinite loop disconnecting the session.
 - fix bug with shifting roles when the storyteller deletes a player
+- added Poppygrower to list of available characters
 
 ---
+
 ### Version 2.9.1
 - fix gamestate JSON not showing (custom) roles and failing to load states with custom scripts properly
 - fix gamestate not stripping out special characters from role.id on load
@@ -21,6 +23,8 @@
 - added support for assigning pronouns to players and display of the pronouns in a tooltip on the player name.
 - added button to modals that allows the user to maximize them
 - added Mephit and Snitch to roles.json
+
+---
 
 ### Version 2.8.0
 - added hands-off live session support for homebrew / custom characters again!
