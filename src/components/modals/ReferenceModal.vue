@@ -15,21 +15,16 @@
       <font-awesome-icon icon="address-card" />
       {{ edition.name || "Custom Script" }}
     </h3>
-    <ul class="legend">
-      <li>
-        <span class="name">Name</span>
-        <span class="icon">Icon</span>
-        <span class="ability">Ability</span>
-        <span class="player" v-if="Object.keys(playersByRole).length">
-          Player
-        </span>
-      </li>
-    </ul>
-    <div v-for="(teamRoles, team) in rolesGrouped" :key="team" :class="[team]">
-      <h4>{{ team }}</h4>
+    <div
+      v-for="(teamRoles, team) in rolesGrouped"
+      :key="team"
+      :class="['team', team]"
+    >
+      <aside>
+        <h4>{{ team }}</h4>
+      </aside>
       <ul>
         <li v-for="role in teamRoles" :class="[team]" :key="role.id">
-          <span class="name">{{ role.name }}</span>
           <span
             class="icon"
             v-if="role.id"
@@ -43,11 +38,15 @@
               })`
             }"
           ></span>
-          <span class="ability">{{ role.ability }}</span>
-          <span class="player" v-if="Object.keys(playersByRole).length">{{
-            playersByRole[role.id] ? playersByRole[role.id].join(", ") : ""
-          }}</span>
+          <div class="role">
+            <span class="player" v-if="Object.keys(playersByRole).length">{{
+              playersByRole[role.id] ? playersByRole[role.id].join(", ") : ""
+            }}</span>
+            <span class="name">{{ role.name }}</span>
+            <span class="ability">{{ role.ability }}</span>
+          </div>
         </li>
+        <li :class="[team]" v-if="teamRoles.length % 2"></li>
       </ul>
     </div>
   </Modal>
@@ -114,124 +113,112 @@ h3 {
   }
 }
 
-h4 {
-  text-transform: capitalize;
-  display: flex;
-  align-items: center;
-  height: 20px;
-  &:before,
-  &:after {
-    content: " ";
-    width: 100%;
-    height: 1px;
-    border-radius: 2px;
-  }
-  &:before {
-    margin-right: 15px;
-  }
-  &:after {
-    margin-left: 15px;
-  }
-}
-
 .townsfolk {
-  .name,
-  h4 {
+  .name {
     color: $townsfolk;
-    &:before,
-    &:after {
-      background-color: $townsfolk;
-    }
+  }
+  aside {
+    background: linear-gradient(-90deg, $townsfolk, transparent);
   }
 }
 .outsider {
-  .name,
-  h4 {
+  .name {
     color: $outsider;
-    &:before,
-    &:after {
-      background-color: $outsider;
-    }
+  }
+  aside {
+    background: linear-gradient(-90deg, $outsider, transparent);
   }
 }
 .minion {
-  .name,
-  h4 {
+  .name {
     color: $minion;
-    &:before,
-    &:after {
-      background-color: $minion;
-    }
+  }
+  aside {
+    background: linear-gradient(-90deg, $minion, transparent);
   }
 }
 .demon {
-  .name,
-  h4 {
+  .name {
     color: $demon;
-    &:before,
-    &:after {
-      background-color: $demon;
-    }
+  }
+  aside {
+    background: linear-gradient(-90deg, $demon, transparent);
   }
 }
+
+.team {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  &:not(:last-child):after {
+    content: " ";
+    display: block;
+    width: 25%;
+    height: 1px;
+    background: linear-gradient(90deg, #ffffffaa, transparent);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+  aside {
+    width: 30px;
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+  }
+
+  h4 {
+    text-transform: uppercase;
+    text-align: center;
+    transform: rotate(90deg);
+    transform-origin: center;
+    font-size: 80%;
+  }
+}
+
 ul {
+  column-count: 2;
+  flex-grow: 1;
+  display: block;
+  padding: 5px 0;
+
   li {
     display: flex;
-    width: 100%;
     align-items: center;
-    align-content: center;
-    /*background: linear-gradient(0deg, #ffffff0f, transparent);*/
-    border-radius: 10px;
+    width: 100%;
+    min-height: 6vh;
+    padding-right: 10px;
     .icon {
-      width: 6vh;
+      width: 8vh;
       background-size: cover;
       background-position: 0 -5px;
-      flex-grow: 0;
       flex-shrink: 0;
-      margin: 0 10px;
-      text-align: center;
-      border-left: 1px solid #ffffff1f;
-      border-right: 1px solid #ffffff1f;
+      flex-grow: 0;
       &:after {
         content: " ";
         display: block;
-        padding-top: 65%;
+        padding-top: 75%;
       }
     }
-    .name {
-      flex-grow: 0;
-      flex-shrink: 0;
-      width: 15%;
-      font-weight: bold;
-      text-align: right;
-      font-size: 110%;
-    }
-    .player {
-      flex-grow: 0;
-      flex-shrink: 1;
-      text-align: right;
-      margin: 0 10px;
-      color: #888;
-      font-size: smaller;
-    }
-    .ability {
+    .role {
+      line-height: 80%;
       flex-grow: 1;
     }
-  }
-  &.legend {
-    width: 100%;
-    font-weight: bold;
-    height: 20px;
-    margin-top: 10px;
-    li span {
-      background: none;
-      height: auto;
-      font-family: inherit;
-      font-size: inherit;
-      color: #fff;
+    .name {
+      font-weight: bold;
+      font-size: 75%;
+      display: block;
     }
-    .icon:after {
-      padding-top: 0;
+    .player {
+      color: #888;
+      float: right;
+      font-size: 60%;
+    }
+    .ability {
+      font-size: 70%;
     }
   }
 }
