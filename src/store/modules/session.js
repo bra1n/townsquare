@@ -1,8 +1,3 @@
-// helper functions
-const set = key => (state, val) => {
-  state[key] = val;
-};
-
 /**
  * Handle a vote request.
  * If the vote is from a seat that is already locked, ignore it.
@@ -36,6 +31,11 @@ const state = () => ({
 const getters = {};
 
 const actions = {};
+
+// mutations helper functions
+const set = key => (state, val) => {
+  state[key] = val;
+};
 
 const mutations = {
   setPlayerId: set("playerId"),

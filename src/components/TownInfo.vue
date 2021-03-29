@@ -4,8 +4,11 @@
       class="edition"
       :class="['edition-' + edition.id]"
       :style="{
-        backgroundImage: `url(${edition.logo ||
-          require('../assets/editions/' + edition.id + '.png')})`
+        backgroundImage: `url(${
+          edition.logo && grimoire.isImageOptIn
+            ? edition.logo
+            : require('../assets/editions/' + edition.id + '.png')
+        })`
       }"
     ></li>
     <li v-if="players.length - teams.traveler < 5">

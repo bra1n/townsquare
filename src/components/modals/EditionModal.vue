@@ -96,8 +96,8 @@ export default {
           "https://gist.githubusercontent.com/bra1n/0337cc44c6fd2c44f7589256ed5486d2/raw/16be38fa3c01aaf49827303ac80577bdb52c0b25/penanceday.json"
         ],
         [
-          "Catfishing 9.0",
-          "https://gist.githubusercontent.com/bra1n/8a5ec41a7bbf945f6b7dfc1cef72b569/raw/fed370d55554e0d83e9d56023c230099f41d0660/catfishing.json"
+          "Catfishing 11.1",
+          "https://gist.githubusercontent.com/bra1n/8a5ec41a7bbf945f6b7dfc1cef72b569/raw/a312ab93c2f302e0ef83c8b65a4e8e82760fda3a/catfishing.json"
         ],
         [
           "On Thin Ice (Teensyville)",
@@ -163,19 +163,15 @@ export default {
       if (metaIndex > -1) {
         meta = roles.splice(metaIndex, 1).pop();
       }
-      const customRoles = roles.map(role => {
-        role.id = role.id.toLocaleLowerCase().replace(/[^a-z0-9]/g, "");
-        return role;
-      });
-      this.$store.commit("setCustomRoles", customRoles);
+      this.$store.commit("setCustomRoles", roles);
       this.$store.commit(
         "setEdition",
         Object.assign({}, meta, { id: "custom" })
       );
       // check for fabled and set those too, if present
-      if (customRoles.some(({ id }) => this.$store.state.fabled.has(id))) {
+      if (roles.some(({ id }) => this.$store.state.fabled.has(id))) {
         const fabled = [];
-        customRoles.forEach(({ id }) => {
+        roles.forEach(({ id }) => {
           if (this.$store.state.fabled.has(id)) {
             fabled.push(this.$store.state.fabled.get(id));
           }

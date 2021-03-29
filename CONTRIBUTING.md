@@ -47,7 +47,9 @@ The development server can be started with `npm run serve`.
 
 Deploying a forked version to GitHub Pages or running your local
 development copy in a sub-path (instead of the web root) will require you to modify
-the `vue.config.js` and configure the path at which the website will be served.
+the `vue.config.js` and configure the path at which the website will be served, as well
+as removing the CNAME file and updating the GitHub pages configuration. Otherwise, your fork
+will think it should be served at clocktower.online instead of \<user\>.github.io/townsquare/.
 
 For example, deploying your forked `townsquare` project to GitHub pages would need the following
 `vue.config.js` changes: 

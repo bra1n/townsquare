@@ -10,12 +10,14 @@ import fabledJSON from "../fabled.json";
 
 Vue.use(Vuex);
 
+// global data maps
 const editionJSONbyId = new Map(
   editionJSON.map(edition => [edition.id, edition])
 );
 const rolesJSONbyId = new Map(rolesJSON.map(role => [role.id, role]));
 const fabled = new Map(fabledJSON.map(role => [role.id, role]));
 
+// helper functions
 const getRolesByEdition = (edition = editionJSON[0]) => {
   return new Map(
     rolesJSON
@@ -38,11 +40,24 @@ const getTravelersNotInEdition = (edition = editionJSON[0]) => {
   );
 };
 
+const set = key => ({ grimoire }, val) => {
+  grimoire[key] = val;
+};
+
+const toggle = key => ({ grimoire }, val) => {
+  if (val === true || val === false) {
+    grimoire[key] = val;
+  } else {
+    grimoire[key] = !grimoire[key];
+  }
+};
+
 // base definition for custom roles
-const imageBase =
-  "https://raw.githubusercontent.com/bra1n/townsquare/main/src/assets/icons/";
 const customRole = {
+  id: "",
+  name: "",
   image: "",
+  ability: "",
   edition: "custom",
   firstNight: 0,
   firstNightReminder: "",
@@ -67,6 +82,7 @@ export default new Vuex.Store({
       isPublic: true,
       isMenuOpen: false,
       isMuted: false,
+      isImageOptIn: false,
       zoom: 0,
       background: ""
     },
@@ -88,27 +104,31 @@ export default new Vuex.Store({
   },
   getters: {
     /**
-     * Return all custom roles, with default values stripped.
+     * Return all custom roles, with default values and non-essential data stripped.
+     * Role object keys will be replaced with a numerical index to conserve bandwidth.
      * @param roles
      * @returns {[]}
      */
-    customRoles: ({ roles }) => {
+    customRolesStripped: ({ roles }) => {
       const customRoles = [];
+      const customKeys = Object.keys(customRole);
+      const strippedProps = [
+        "firstNightReminder",
+        "otherNightReminder",
+        "isCustom"
+      ];
       roles.forEach(role => {
         if (!role.isCustom) {
           customRoles.push({ id: role.id });
         } else {
           const strippedRole = {};
           for (let prop in role) {
-            const value = role[prop];
-            if (
-              prop === "image" &&
-              value.toLocaleLowerCase().includes(imageBase)
-            ) {
+            if (strippedProps.includes(prop)) {
               continue;
             }
-            if (prop !== "isCustom" && value !== customRole[prop]) {
-              strippedRole[prop] = value;
+            const value = role[prop];
+            if (customKeys.includes(prop) && value !== customRole[prop]) {
+              strippedRole[customKeys.indexOf(prop)] = value;
             }
           }
           customRoles.push(strippedRole);
@@ -119,38 +139,14 @@ export default new Vuex.Store({
     rolesJSONbyId: () => rolesJSONbyId
   },
   mutations: {
-    toggleMenu({ grimoire }) {
-      grimoire.isMenuOpen = !grimoire.isMenuOpen;
-    },
-    toggleGrimoire({ grimoire }, isPublic) {
-      if (isPublic === true || isPublic === false) {
-        grimoire.isPublic = isPublic;
-      } else {
-        grimoire.isPublic = !grimoire.isPublic;
-      }
-      document.title = `Blood on the Clocktower ${
-        grimoire.isPublic ? "Town Square" : "Grimoire"
-      }`;
-    },
-    toggleNight({ grimoire }, isNight) {
-      if (isNight === true || isNight === false) {
-        grimoire.isNight = isNight;
-      } else {
-        grimoire.isNight = !grimoire.isNight;
-      }
-    },
-    toggleNightOrder({ grimoire }) {
-      grimoire.isNightOrder = !grimoire.isNightOrder;
-    },
-    setZoom({ grimoire }, zoom) {
-      grimoire.zoom = zoom;
-    },
-    setBackground({ grimoire }, background) {
-      grimoire.background = background;
-    },
-    setIsMuted({ grimoire }, isMuted) {
-      grimoire.isMuted = isMuted;
-    },
+    setZoom: set("zoom"),
+    setBackground: set("background"),
+    toggleMuted: toggle("isMuted"),
+    toggleMenu: toggle("isMenuOpen"),
+    toggleNightOrder: toggle("isNightOrder"),
+    toggleNight: toggle("isNight"),
+    toggleGrimoire: toggle("isPublic"),
+    toggleImageOptIn: toggle("isImageOptIn"),
     toggleModal({ modals }, name) {
       if (name) {
         modals[name] = !modals[name];
@@ -168,6 +164,26 @@ export default new Vuex.Store({
     setCustomRoles(state, roles) {
       state.roles = new Map(
         roles
+          // replace numerical role object keys with matching key names
+          .map(role => {
+            if (role[0]) {
+              const customKeys = Object.keys(customRole);
+              const mappedRole = {};
+              for (let prop in role) {
+                if (customKeys[prop]) {
+                  mappedRole[customKeys[prop]] = role[prop];
+                }
+              }
+              return mappedRole;
+            } else {
+              return role;
+            }
+          })
+          // clean up role.id
+          .map(role => {
+            role.id = role.id.toLocaleLowerCase().replace(/[^a-z0-9]/g, "");
+            return role;
+          })
           // map existing roles to base definition or pre-populate custom roles to ensure all properties
           .map(
             role =>
@@ -175,16 +191,16 @@ export default new Vuex.Store({
               state.roles.get(role.id) ||
               Object.assign({}, customRole, role)
           )
-          // default empty icons to good / evil / traveler
+          // default empty icons and placeholders
           .map(role => {
             if (rolesJSONbyId.get(role.id)) return role;
-            if (role.team === "townsfolk" || role.team === "outsider") {
-              role.image = role.image || imageBase + "good.png";
-            } else if (role.team === "demon" || role.team === "minion") {
-              role.image = role.image || imageBase + "evil.png";
-            } else {
-              role.image = role.image || imageBase + "custom.png";
-            }
+            role.imageAlt = // map team to generic icon
+              {
+                townsfolk: "good",
+                outsider: "outsider",
+                minion: "minion",
+                demon: "evil"
+              }[role.team] || "custom";
             return role;
           })
           // filter out roles that don't match an existing role and also don't have name/ability/team

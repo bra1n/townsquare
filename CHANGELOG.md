@@ -1,5 +1,48 @@
 # Release Notes
 
+### Version 2.10.0
+- added [nomination log indicator](https://fontawesome.com/icons/book-dead).  When a nomination log [v] is available, the number of currently visible entries is displayed. Clicking the indicator can reveal/hide the nomination log.
+- fix issue where a player and storyteller updating the same players pronouns at around the same time causes an infinite loop disconnecting the session.
+- fix bug with shifting roles when the storyteller deletes a player
+- added Poppygrower to list of available characters
+
+---
+
+### Version 2.9.1
+- fix gamestate JSON not showing (custom) roles and failing to load states with custom scripts properly
+- fix gamestate not stripping out special characters from role.id on load
+- made character assignment modal a bit prettier
+- got rid of the extra pixels on the  Soldier icon
+- fixed lengthy live session channel names not being correctly cut off
+- hide player names in night order / character reference popup when town square is public
+- fix (pre-)vote calculation being off by one if the nominee votes
+
+---
+
+### Version 2.9.0
+- added support for assigning pronouns to players and display of the pronouns in a tooltip on the player name.
+- added button to modals that allows the user to maximize them
+- added Mephit and Snitch to roles.json
+
+---
+
+### Version 2.8.0
+- added hands-off live session support for homebrew / custom characters again!
+- added custom image opt-in that will prevent any (potentially malicious / harmful) images from loading until a player manually allows them to
+
+---
+
+## Version 2.7.0
+- added support for assigning duplicate characters to more than one player (like Legion)
+- further live session bandwidth optimizations
+- sessions can now be joined by pasting the whole link into the popup (thanks @davotronic5000)
+- fabled night order bug fixed
+- added Legion to list of available characters (thanks @eddgabriel)
+- added support for mp4/webm video backgrounds
+- added tooltips to night order popup
+
+---
+
 ## Version 2.6.0
 - night mode can be toggeled with [S] now (thanks @davotronic5000)
 - night order shows which players are dead

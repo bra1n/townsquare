@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 const faIcons = [
   "AddressCard",
   "BookOpen",
+  "BookDead",
   "BroadcastTower",
   "Chair",
   "CheckSquare",
@@ -18,6 +19,7 @@ const faIcons = [
   "Dice",
   "Dragon",
   "ExchangeAlt",
+  "ExclamationTriangle",
   "FileCode",
   "FileUpload",
   "HandPaper",
@@ -43,6 +45,7 @@ const faIcons = [
   "UserEdit",
   "UserFriends",
   "Users",
+  "VenusMars",
   "VolumeUp",
   "VolumeMute",
   "VoteYea",

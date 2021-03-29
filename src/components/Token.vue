@@ -4,8 +4,11 @@
       class="icon"
       v-if="role.id"
       :style="{
-        backgroundImage: `url(${role.image ||
-          require('../assets/icons/' + role.id + '.png')})`
+        backgroundImage: `url(${
+          role.image && grimoire.isImageOptIn
+            ? role.image
+            : require('../assets/icons/' + (role.imageAlt || role.id) + '.png')
+        })`
       }"
     ></span>
     <span
@@ -47,6 +50,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "Token",
   props: {
@@ -54,6 +59,9 @@ export default {
       type: Object,
       default: () => ({})
     }
+  },
+  computed: {
+    ...mapState(["grimoire"])
   },
   data() {
     return {};

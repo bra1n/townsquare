@@ -74,6 +74,11 @@ export default {
     overflow-y: auto;
   }
 
+  .roles & {
+    max-height: 100%;
+    max-width: 60%;
+  }
+
   ul {
     list-style-type: none;
     margin: 0;
