@@ -46,7 +46,8 @@
             <span class="ability">{{ role.ability }}</span>
           </div>
         </li>
-        <li :class="[team]" v-if="teamRoles.length % 2"></li>
+        <li :class="[team]"></li>
+        <li :class="[team]"></li>
       </ul>
     </div>
   </Modal>
@@ -168,6 +169,8 @@ h3 {
     align-items: center;
     justify-content: center;
     align-content: center;
+    overflow: hidden;
+    text-shadow: 0 0 4px black;
   }
 
   h4 {
@@ -180,17 +183,15 @@ h3 {
 }
 
 ul {
-  column-count: 2;
   flex-grow: 1;
-  display: block;
+  display: flex;
   padding: 5px 0;
 
   li {
     display: flex;
     align-items: center;
-    width: 100%;
-    min-height: 6vh;
-    padding-right: 10px;
+    flex-grow: 1;
+    width: 420px;
     .icon {
       width: 8vh;
       background-size: cover;
@@ -219,6 +220,22 @@ ul {
     }
     .ability {
       font-size: 70%;
+    }
+  }
+}
+
+/** break into 1 column below 1200px **/
+@media screen and (max-width: 1199.98px) {
+  .modal {
+    max-width: 60%;
+  }
+  ul {
+    li {
+      .icon { width: 6vh; }
+      .role { line-height: 100%; }
+      .name { font-size: 100%; }
+      .player { font-size: 100%; }
+      .ability { font-size: 90%; }
     }
   }
 }
