@@ -74,7 +74,8 @@ export default {
     overflow-y: auto;
   }
 
-  .roles & {
+  .roles &,
+  .characters & {
     max-height: 100%;
     max-width: 60%;
   }
@@ -121,6 +122,11 @@ export default {
   display: flex;
   align-content: center;
   justify-content: center;
+  .roles &,
+  .characters & {
+    max-width: 100%;
+    padding: 10px;
+  }
 }
 
 .modal-fade-enter,

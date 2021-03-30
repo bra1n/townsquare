@@ -365,10 +365,6 @@ export default {
   transition: all 200ms ease-in-out;
   z-index: 50;
 
-  #townsquare.public &.bluffs {
-    opacity: 0;
-    transform: scale(0.1);
-  }
   > svg {
     position: absolute;
     top: 10px;
@@ -437,6 +433,11 @@ export default {
       }
     }
   }
+}
+
+#townsquare.public > .bluffs {
+  opacity: 0;
+  transform: scale(0.1);
 }
 
 .fabled ul li .token:before {
