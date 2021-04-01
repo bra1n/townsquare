@@ -231,12 +231,19 @@ ul {
   }
   ul {
     li {
-      .icon { width: 5.1vh; }
+      .icon { width: 6vh; }
       .role { line-height: 100%; }
       .name { font-size: 100%; }
       .player { font-size: 100%; }
       .ability { font-size: 90%; }
     }
+  }
+}
+
+/** trim icon size on maximized one-column sheet **/
+@media screen and (max-width: 991.98px) {
+  .characters .modal.maximized ul li .icon {
+    width: 5.1vh;
   }
 }
 
