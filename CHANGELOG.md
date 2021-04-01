@@ -1,5 +1,7 @@
 # Release Notes
 
+- tweak reference sheet to better fit screen in single column layout
+
 ### Version 2.11.0
 - new design for character reference sheet
 - automatically switch to grimoire view when joining a session through a link
