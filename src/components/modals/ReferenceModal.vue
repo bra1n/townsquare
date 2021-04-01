@@ -231,7 +231,7 @@ ul {
   }
   ul {
     li {
-      .icon { width: 6vh; }
+      .icon { width: 5.1vh; }
       .role { line-height: 100%; }
       .name { font-size: 100%; }
       .player { font-size: 100%; }
