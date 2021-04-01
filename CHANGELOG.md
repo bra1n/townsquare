@@ -1,5 +1,13 @@
 # Release Notes
 
+### Version 2.11.0
+- new design for character reference sheet
+- automatically switch to grimoire view when joining a session through a link
+- fixed demon bluffs showing on public town square
+- fixed a bug that prevented connecting to a session when previously being connected and joining through a link
+
+---
+
 ### Version 2.10.0
 - added [nomination log indicator](https://fontawesome.com/icons/book-dead).  When a nomination log [v] is available, the number of currently visible entries is displayed. Clicking the indicator can reveal/hide the nomination log.
 - fix issue where a player and storyteller updating the same players pronouns at around the same time causes an infinite loop disconnecting the session.
