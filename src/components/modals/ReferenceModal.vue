@@ -240,6 +240,13 @@ ul {
   }
 }
 
+/** trim icon size on maximized one-column sheet **/
+@media screen and (max-width: 991.98px) {
+  .characters .modal.maximized ul li .icon {
+    width: 5.1vh;
+  }
+}
+
 /** hide players when town square is set to "public" **/
 #townsquare.public ~ .characters .modal .player {
   display: none;
