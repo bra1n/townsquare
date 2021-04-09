@@ -17,6 +17,7 @@
         @click="role.selected = role.selected ? 0 : 1"
       >
         <Token :role="role" />
+        <font-awesome-icon icon="exclamation-triangle" v-if="role.setup" />
         <div class="buttons" v-if="allowMultiple">
           <font-awesome-icon
             icon="minus-circle"
@@ -177,6 +178,9 @@ ul.tokens {
       .buttons {
         display: flex;
       }
+      .fa-exclamation-triangle {
+        display: block;
+      }
     }
     &.townsfolk {
       box-shadow: 0 0 10px $townsfolk, 0 0 10px #004cff;
@@ -196,6 +200,15 @@ ul.tokens {
     &:hover {
       transform: scale(1.2);
       z-index: 10;
+    }
+    .fa-exclamation-triangle {
+      position: absolute;
+      color: red;
+      filter: drop-shadow(0 0 3px black) drop-shadow(0 0 3px black);
+      top: 5px;
+      right: -5px;
+      font-size: 150%;
+      display: none;
     }
     .buttons {
       display: none;
