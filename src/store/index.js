@@ -214,8 +214,8 @@ export default new Vuex.Store({
       );
       // update Fabled to include custom Fabled from this script
       state.fabled = new Map([
-        ...fabledJSON.map(role => [role.id, role]),
-        ...processedRoles.filter(r => r.team === "fabled").map(r => [r.id, r])
+        ...processedRoles.filter(r => r.team === "fabled").map(r => [r.id, r]),
+        ...fabledJSON.map(role => [role.id, role])
       ]);
       // update extraTravelers map to only show travelers not in this script
       state.otherTravelers = new Map(
