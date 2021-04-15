@@ -3,7 +3,7 @@
 ### Version 2.12.0
 - tweak reference sheet to better fit screen in single column layout
 - add warning icon overlay for setup roles on character assignment modal
-- added Heretic to list of available characters
+- added Heretic and Marionette to list of available characters
 
 ---
 
