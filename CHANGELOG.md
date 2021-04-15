@@ -1,5 +1,10 @@
 # Release Notes
 
+### Version 2.13.0
+- add support for custom Fabled characters
+
+---
+
 ### Version 2.12.0
 - tweak reference sheet to better fit screen in single column layout
 - add warning icon overlay for setup roles on character assignment modal

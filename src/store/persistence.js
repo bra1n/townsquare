@@ -39,8 +39,8 @@ module.exports = store => {
   }
   if (localStorage.fabled !== undefined) {
     store.commit("players/setFabled", {
-      fabled: JSON.parse(localStorage.fabled).map(id =>
-        store.state.fabled.get(id)
+      fabled: JSON.parse(localStorage.fabled).map(
+        fabled => store.state.fabled.get(fabled.id) || fabled
       )
     });
   }
@@ -127,7 +127,11 @@ module.exports = store => {
       case "players/setFabled":
         localStorage.setItem(
           "fabled",
-          JSON.stringify(state.players.fabled.map(({ id }) => id))
+          JSON.stringify(
+            state.players.fabled.map(fabled =>
+              fabled.isCustom ? fabled : { id: fabled.id }
+            )
+          )
         );
         break;
       case "players/add":
