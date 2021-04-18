@@ -22,9 +22,10 @@ const state = () => ({
   nomination: false,
   votes: [],
   lockedVote: 0,
-  votingSpeed: 3000,
+  votingSpeed: 1000,
   isVoteInProgress: false,
   voteHistory: [],
+  recordVoteHistory: true,
   isRolesDistributed: false
 });
 
@@ -87,6 +88,9 @@ const mutations = {
   },
   clearVoteHistory(state) {
     state.voteHistory = [];
+  },
+  toggleRecordVoteHistory(state) {
+    state.recordVoteHistory = !state.recordVoteHistory;
   },
   /**
    * Store a vote with and without syncing it to the live session.

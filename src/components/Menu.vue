@@ -60,13 +60,14 @@
           </li>
           <li @click="toggleNightOrder" v-if="players.length">
             Night order
-            <em
-              ><font-awesome-icon
+            <em>
+              <font-awesome-icon
                 :icon="[
                   'fas',
                   grimoire.isNightOrder ? 'check-square' : 'square'
                 ]"
-            /></em>
+              />
+            </em>
           </li>
           <li v-if="players.length">
             Zoom
@@ -134,7 +135,22 @@
               v-if="session.voteHistory.length"
               @click="toggleModal('voteHistory')"
             >
-              Nomination history<em>[V]</em>
+              Vote history<em>[V]</em>
+            </li>
+            <li @click="toggleRecordVoteHistory" v-if="!session.isSpectator">
+              Record vote history
+              <em>
+                <font-awesome-icon
+                  :icon="[
+                    'fas',
+                    session.recordVoteHistory ? 'check-square' : 'square'
+                  ]"
+                />
+              </em>
+            </li>
+            <li @click="clearVoteHistory" v-if="!session.isSpectator">
+              Clear vote history
+              <em><font-awesome-icon icon="trash-alt"/></em>
             </li>
             <li @click="leaveSession">
               Leave Session
@@ -326,6 +342,12 @@ export default {
       if (confirm("Are you sure you want to remove all player roles?")) {
         this.$store.dispatch("players/clearRoles");
       }
+    },
+    toggleRecordVoteHistory() {
+      this.$store.commit("session/toggleRecordVoteHistory");
+    },
+    clearVoteHistory() {
+      this.$store.commit("session/clearVoteHistory");
     },
     ...mapMutations([
       "toggleGrimoire",
