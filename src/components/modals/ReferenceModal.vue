@@ -231,11 +231,21 @@ ul {
   }
   ul {
     li {
-      .icon { width: 6vh; }
-      .role { line-height: 100%; }
-      .name { font-size: 100%; }
-      .player { font-size: 100%; }
-      .ability { font-size: 90%; }
+      .icon {
+        width: 6vh;
+      }
+      .role {
+        line-height: 100%;
+      }
+      .name {
+        font-size: 100%;
+      }
+      .player {
+        font-size: 100%;
+      }
+      .ability {
+        font-size: 90%;
+      }
     }
   }
 }

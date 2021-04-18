@@ -1,6 +1,11 @@
 # Release Notes
 
+### Version 2.12.0
 - tweak reference sheet to better fit screen in single column layout
+- add warning icon overlay for setup roles on character assignment modal
+- added Heretic and Marionette to list of available characters
+
+---
 
 ### Version 2.11.0
 - new design for character reference sheet
