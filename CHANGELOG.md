@@ -1,5 +1,7 @@
 # Release Notes
 
+- added record vote history toggle to session menu, and clear vote history button
+
 ### Version 2.12.0
 - tweak reference sheet to better fit screen in single column layout
 - add warning icon overlay for setup roles on character assignment modal
