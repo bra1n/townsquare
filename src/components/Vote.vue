@@ -220,9 +220,7 @@ export default {
     },
     finish() {
       clearInterval(this.voteTimer);
-      if (this.session.recordVoteHistory) {
-        this.$store.commit("session/addHistory", this.players);
-      }
+      this.$store.commit("session/addHistory", this.players);
       this.$store.commit("session/nomination");
     },
     vote(vote) {

@@ -71,6 +71,7 @@ const mutations = {
    * @param players
    */
   addHistory(state, players) {
+    if (!state.recordVoteHistory) return;
     if (!state.nomination || state.lockedVote <= players.length) return;
     const isBanishment = players[state.nomination[1]].role.team === "traveler";
     state.voteHistory.push({
@@ -88,9 +89,6 @@ const mutations = {
   },
   clearVoteHistory(state) {
     state.voteHistory = [];
-  },
-  toggleRecordVoteHistory(state) {
-    state.recordVoteHistory = !state.recordVoteHistory;
   },
   /**
    * Store a vote with and without syncing it to the live session.

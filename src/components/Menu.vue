@@ -343,9 +343,6 @@ export default {
         this.$store.dispatch("players/clearRoles");
       }
     },
-    toggleRecordVoteHistory() {
-      this.$store.commit("session/toggleRecordVoteHistory");
-    },
     clearVoteHistory() {
       this.$store.commit("session/clearVoteHistory");
     },
@@ -355,6 +352,7 @@ export default {
       "toggleImageOptIn",
       "toggleMuted",
       "toggleNight",
+      "toggleRecordVoteHistory",
       "toggleNightOrder",
       "setZoom",
       "toggleModal"

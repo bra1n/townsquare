@@ -172,6 +172,10 @@ class LiveSession {
         if (!this._isSpectator) return;
         this._store.commit("toggleNight", params);
         break;
+      case "recordVoteHistory":
+        if (!this._isSpectator) return;
+        this._store.commit("toggleRecordVoteHistory", params);
+        break;
       case "votingSpeed":
         if (!this._isSpectator) return;
         this._store.commit("session/setVotingSpeed", params);
@@ -268,6 +272,7 @@ class LiveSession {
       this._sendDirect(playerId, "gs", {
         gamestate: this._gamestate,
         isNight: grimoire.isNight,
+        recordVoteHistory: session.recordVoteHistory,
         nomination: session.nomination,
         votingSpeed: session.votingSpeed,
         lockedVote: session.lockedVote,
@@ -289,6 +294,7 @@ class LiveSession {
       gamestate,
       isLightweight,
       isNight,
+      recordVoteHistory,
       nomination,
       votingSpeed,
       votes,
@@ -340,6 +346,7 @@ class LiveSession {
     });
     if (!isLightweight) {
       this._store.commit("toggleNight", !!isNight);
+      this._store.commit("toggleRecordVoteHistory", recordVoteHistory);
       this._store.commit("session/nomination", {
         nomination,
         votes,
@@ -687,6 +694,17 @@ class LiveSession {
   }
 
   /**
+   * Send the recordVoteHistory state. ST only
+   */
+  setRecordVoteHistory() {
+    if (this._isSpectator) return;
+    this._send(
+      "recordVoteHistory",
+      this._store.state.session.recordVoteHistory
+    );
+  }
+
+  /**
    * Send the voting speed. ST only
    * @param votingSpeed voting speed in seconds, minimum 1
    */
@@ -842,6 +860,9 @@ export default store => {
         break;
       case "toggleNight":
         session.setIsNight();
+        break;
+      case "toggleRecordVoteHistory":
+        session.setRecordVoteHistory();
         break;
       case "setEdition":
         session.sendEdition();
