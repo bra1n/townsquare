@@ -96,6 +96,16 @@
             Background image
             <em><font-awesome-icon icon="image"/></em>
           </li>
+          <li @click="toggleNightAnimated">
+            Animated night
+            <em
+              ><font-awesome-icon
+                :icon="[
+                  'fas',
+                  grimoire.isNightAnimated ? 'check-square' : 'square'
+                ]"
+            /></em>
+          </li>
           <li @click="toggleMuted">
             Mute Sounds
             <em
@@ -334,6 +344,7 @@ export default {
       "toggleMuted",
       "toggleNight",
       "toggleNightOrder",
+      "toggleNightAnimated",
       "setZoom",
       "toggleModal"
     ])

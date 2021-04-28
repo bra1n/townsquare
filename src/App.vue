@@ -17,7 +17,8 @@
       autoplay
       loop
     ></video>
-    <div class="backdrop"></div>
+    <div v-if="grimoire.isNightAnimated" class="backdrop animated"></div>
+    <div v-else class="backdrop"></div>
     <transition name="blur">
       <Intro v-if="!players.length"></Intro>
       <TownInfo v-if="players.length && !session.nomination"></TownInfo>
@@ -339,9 +340,12 @@ video#background {
     height: 100%;
     background: url("assets/clouds.png") repeat;
     background-size: 2000px auto;
-    animation: move-background 120s linear infinite;
     opacity: 0.3;
   }
+}
+
+#app > .backdrop.animated:after {
+  animation: move-background 120s linear infinite;
 }
 
 @keyframes move-background {
