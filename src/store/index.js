@@ -79,6 +79,7 @@ export default new Vuex.Store({
     grimoire: {
       isNight: false,
       isNightOrder: true,
+      isNightAnimated: true,
       isPublic: true,
       isMenuOpen: false,
       isMuted: false,
@@ -144,6 +145,7 @@ export default new Vuex.Store({
     toggleMuted: toggle("isMuted"),
     toggleMenu: toggle("isMenuOpen"),
     toggleNightOrder: toggle("isNightOrder"),
+    toggleNightAnimated: toggle("isNightAnimated"),
     toggleNight: toggle("isNight"),
     toggleGrimoire: toggle("isPublic"),
     toggleImageOptIn: toggle("isImageOptIn"),
