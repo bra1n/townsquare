@@ -89,7 +89,7 @@
           <li v-if="!edition.isOfficial" @click="imageOptIn">
             <small>Show Custom Images</small>
             <em
-            ><font-awesome-icon
+              ><font-awesome-icon
                 :icon="[
                   'fas',
                   grimoire.isImageOptIn ? 'check-square' : 'square'
