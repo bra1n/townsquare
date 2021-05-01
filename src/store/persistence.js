@@ -11,6 +11,9 @@ module.exports = store => {
   if (localStorage.getItem("muted")) {
     store.commit("toggleMuted", true);
   }
+  if (localStorage.getItem("static")) {
+    store.commit("toggleStatic", true);
+  }
   if (localStorage.getItem("imageOptIn")) {
     store.commit("toggleImageOptIn", true);
   }
@@ -89,6 +92,13 @@ module.exports = store => {
           localStorage.setItem("muted", 1);
         } else {
           localStorage.removeItem("muted");
+        }
+        break;
+      case "toggleStatic":
+        if (state.grimoire.isStatic) {
+          localStorage.setItem("static", 1);
+        } else {
+          localStorage.removeItem("static");
         }
         break;
       case "toggleImageOptIn":

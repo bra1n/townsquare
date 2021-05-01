@@ -3,7 +3,10 @@
     id="app"
     @keyup="keyup"
     tabindex="-1"
-    :class="{ night: grimoire.isNight }"
+    :class="{
+      night: grimoire.isNight,
+      static: grimoire.isStatic
+    }"
     :style="{
       backgroundImage: grimoire.background
         ? `url('${grimoire.background}')`
@@ -17,8 +20,7 @@
       autoplay
       loop
     ></video>
-    <div v-if="grimoire.isNightAnimated" class="backdrop animated"></div>
-    <div v-else class="backdrop"></div>
+    <div class="backdrop"></div>
     <transition name="blur">
       <Intro v-if="!players.length"></Intro>
       <TownInfo v-if="players.length && !session.nomination"></TownInfo>
@@ -203,6 +205,14 @@ ul {
   align-items: center;
   align-content: center;
   justify-content: center;
+
+  // disable all animations
+  &.static *,
+  &.static *:after,
+  &.static *:before {
+    transition: none !important;
+    animation: none !important;
+  }
 }
 
 #version {
@@ -340,12 +350,9 @@ video#background {
     height: 100%;
     background: url("assets/clouds.png") repeat;
     background-size: 2000px auto;
+    animation: move-background 120s linear infinite;
     opacity: 0.3;
   }
-}
-
-#app > .backdrop.animated:after {
-  animation: move-background 120s linear infinite;
 }
 
 @keyframes move-background {

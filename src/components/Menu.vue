@@ -82,28 +82,25 @@
               />
             </em>
           </li>
+          <li @click="setBackground">
+            Background image
+            <em><font-awesome-icon icon="image"/></em>
+          </li>
           <li v-if="!edition.isOfficial" @click="imageOptIn">
             <small>Show Custom Images</small>
             <em
-              ><font-awesome-icon
+            ><font-awesome-icon
                 :icon="[
                   'fas',
                   grimoire.isImageOptIn ? 'check-square' : 'square'
                 ]"
             /></em>
           </li>
-          <li @click="setBackground">
-            Background image
-            <em><font-awesome-icon icon="image"/></em>
-          </li>
-          <li @click="toggleNightAnimated">
-            Animated night
+          <li @click="toggleStatic">
+            Disable Animations
             <em
               ><font-awesome-icon
-                :icon="[
-                  'fas',
-                  grimoire.isNightAnimated ? 'check-square' : 'square'
-                ]"
+                :icon="['fas', grimoire.isStatic ? 'check-square' : 'square']"
             /></em>
           </li>
           <li @click="toggleMuted">
@@ -344,7 +341,7 @@ export default {
       "toggleMuted",
       "toggleNight",
       "toggleNightOrder",
-      "toggleNightAnimated",
+      "toggleStatic",
       "setZoom",
       "toggleModal"
     ])
