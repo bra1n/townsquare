@@ -198,7 +198,8 @@ export default new Vuex.Store({
               townsfolk: "good",
               outsider: "outsider",
               minion: "minion",
-              demon: "evil"
+              demon: "evil",
+              fabled: "fabled"
             }[role.team] || "custom";
           return role;
         })
