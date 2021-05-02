@@ -62,6 +62,19 @@
           <div class="button demon" @click="finish">Close</div>
         </div>
       </template>
+      <template v-if="!session.isSpectator">
+        <div
+          class="button-group"
+          v-if="session.lockedVote && !session.isVoteInProgress"
+        >
+          <div class="button demon" @click="setOnBlock">
+            Put on block
+          </div>
+          <div class="button demon" @click="emptyBlock">
+            Empty block
+          </div>
+        </div>
+      </template>
       <template v-else-if="canVote">
         <div v-if="!session.isVoteInProgress">
           {{ session.votingSpeed / 1000 }} seconds between votes
@@ -235,6 +248,14 @@ export default {
       if (speed > 0) {
         this.$store.commit("session/setVotingSpeed", speed);
       }
+    },
+    setOnBlock() {
+      this.$store.commit("players/setOnBlock", this.session.nomination[1]);
+      this.finish();
+    },
+    emptyBlock() {
+      this.$store.commit("players/setOnBlock", -1);
+      this.finish();
     }
   }
 };

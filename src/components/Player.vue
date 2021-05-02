@@ -97,6 +97,11 @@
         @click="updatePlayer('isVoteless', true)"
         title="Ghost vote"
       />
+      <font-awesome-icon
+        icon="crosshairs"
+        v-if="player.isOnBlock"
+        class="on-block"
+      />
       <div
         class="name"
         @click="isMenuOpen = !isMenuOpen"
@@ -124,28 +129,34 @@
             <li @click="changeName">
               <font-awesome-icon icon="user-edit" />Rename
             </li>
-            <li v-if="!session.nomination" @click="nominatePlayer()">
-              <font-awesome-icon icon="hand-point-right" />
-              Nomination
+            <li v-if="!session.nomination" @click="removePlayer">
+              <font-awesome-icon icon="times-circle" />
+              Remove
             </li>
-            <li @click="movePlayer()">
-              <font-awesome-icon icon="redo-alt" />
-              Move player
-            </li>
-            <li @click="swapPlayer()">
-              <font-awesome-icon icon="exchange-alt" />
-              Swap seats
-            </li>
+            <template v-if="!session.nomination">
+              <li @click="movePlayer()">
+                <font-awesome-icon icon="redo-alt" />
+                Move player
+              </li>
+              <li @click="swapPlayer()">
+                <font-awesome-icon icon="exchange-alt" />
+                Swap seats
+              </li>
+              <li @click="toggleOnBlock()">
+                <font-awesome-icon icon="crosshairs" />
+                {{ player.isOnBlock ? "Take off block" : "Put on block" }}
+              </li>
+              <li @click="nominatePlayer()">
+                <font-awesome-icon icon="hand-point-right" />
+                Nomination
+              </li>
+            </template>
             <li
               @click="updatePlayer('id', '', true)"
               v-if="player.id && session.sessionId"
             >
               <font-awesome-icon icon="chair" />
               Empty seat
-            </li>
-            <li @click="removePlayer">
-              <font-awesome-icon icon="times-circle" />
-              Remove
             </li>
           </template>
           <li
@@ -257,6 +268,9 @@ export default {
       if (this.grimoire.isPublic) {
         if (!this.player.isDead) {
           this.updatePlayer("isDead", true);
+          if (this.player.isOnBlock) {
+            this.toggleOnBlock();
+          }
         } else if (this.player.isVoteless) {
           this.updatePlayer("isVoteless", false);
           this.updatePlayer("isDead", false);
@@ -265,6 +279,9 @@ export default {
         }
       } else {
         this.updatePlayer("isDead", !this.player.isDead);
+        if (this.player.isOnBlock) {
+          this.toggleOnBlock();
+        }
         if (this.player.isVoteless) {
           this.updatePlayer("isVoteless", false);
         }
@@ -318,6 +335,10 @@ export default {
     claimSeat() {
       this.isMenuOpen = false;
       this.$emit("trigger", ["claimSeat"]);
+    },
+    toggleOnBlock() {
+      this.isMenuOpen = false;
+      this.$emit("trigger", ["toggleOnBlock"]);
     },
     /**
      * Allow the ST to override a locked vote.
@@ -578,10 +599,7 @@ li.move:not(.from) .player .overlay svg.move {
 }
 
 /****** Vote icon ********/
-.player .has-vote {
-  position: absolute;
-  right: 2px;
-  margin-top: -15%;
+.player .has-vote .on-block {
   color: #fff;
   filter: drop-shadow(0 0 3px black);
   transition: opacity 250ms;
@@ -591,6 +609,19 @@ li.move:not(.from) .player .overlay svg.move {
     opacity: 0;
     pointer-events: none;
   }
+}
+
+.has-vote {
+  position: absolute;
+  margin-top: -15%;
+  right: 2px;
+}
+
+.on-block {
+  position: absolute;
+  margin-top: -15%;
+  left: 3px;
+  color: darkred;
 }
 
 /****** Session seat glow *****/

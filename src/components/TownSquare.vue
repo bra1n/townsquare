@@ -201,6 +201,13 @@ export default {
       this.move = -1;
       this.swap = -1;
       this.nominate = -1;
+    },
+    toggleOnBlock(playerIndex) {
+      if (this.players[playerIndex].isOnBlock) {
+        this.$store.commit("players/setOnBlock", -1);
+      } else {
+        this.$store.commit("players/setOnBlock", playerIndex);
+      }
     }
   }
 };

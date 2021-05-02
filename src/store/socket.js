@@ -168,6 +168,10 @@ class LiveSession {
         if (!this._isSpectator) return;
         this._store.commit("players/remove", params);
         break;
+      case "onBlock":
+        if (!this._isSpectator) return;
+        this._store.commit("players/setOnBlock", params);
+        break;
       case "isNight":
         if (!this._isSpectator) return;
         this._store.commit("toggleNight", params);
@@ -251,6 +255,7 @@ class LiveSession {
       id: player.id,
       isDead: player.isDead,
       isVoteless: player.isVoteless,
+      isOnBlock: player.isOnBlock,
       pronouns: player.pronouns,
       ...(player.role && player.role.team === "traveler"
         ? { roleId: player.role.id }
@@ -312,12 +317,14 @@ class LiveSession {
       const player = players[x];
       const { roleId } = state;
       // update relevant properties
-      ["name", "id", "isDead", "isVoteless", "pronouns"].forEach(property => {
-        const value = state[property];
-        if (player[property] !== value) {
-          this._store.commit("players/update", { player, property, value });
+      ["name", "id", "isDead", "isVoteless", "isOnBlock", "pronouns"].forEach(
+        property => {
+          const value = state[property];
+          if (player[property] !== value) {
+            this._store.commit("players/update", { player, property, value });
+          }
         }
-      });
+      );
       // roles are special, because of travelers
       if (roleId && player.role.id !== roleId) {
         const role =
@@ -698,6 +705,15 @@ class LiveSession {
   }
 
   /**
+   * Set which player is on the block. ST only
+   * @param id, player id or -1 for empty
+   */
+  setOnBlock(playerIndex) {
+    if (this._isSpectator) return;
+    this._send("onBlock", playerIndex);
+  }
+
+  /**
    * Clear the vote history for everyone. ST only
    */
   clearVoteHistory() {
@@ -848,6 +864,9 @@ export default store => {
         break;
       case "players/setFabled":
         session.sendFabled();
+        break;
+      case "players/setOnBlock":
+        session.setOnBlock(payload);
         break;
       case "players/swap":
         session.swapPlayer(payload);
