@@ -49,7 +49,7 @@ const mutations = {
   claimSeat: set("claimedSeat"),
   distributeRoles: set("isRolesDistributed"),
   revealPlayer(state) {
-	  state.isRevealPlayerOK = true;
+    state.isRevealPlayerOK = true;
   },
   setSessionId(state, sessionId) {
     state.sessionId = sessionId

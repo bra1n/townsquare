@@ -639,7 +639,7 @@ class LiveSession {
    */
   distributeRoles() {
     if (this._isSpectator) return;
-	this._store.state.session.isRevealPlayerOK = false;
+    this._store.state.session.isRevealPlayerOK = false;
     const message = {};
     this._store.state.players.players.forEach((player, index) => {
       if (player.id && player.role) {
