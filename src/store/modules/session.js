@@ -38,6 +38,14 @@ const set = key => (state, val) => {
   state[key] = val;
 };
 
+const toggle = key => (state, val) => {
+  if (val === true || val === false) {
+    state[key] = val;
+  } else {
+    state[key] = !state[key];
+  }
+};
+
 const mutations = {
   setPlayerId: set("playerId"),
   setSpectator: set("isSpectator"),
@@ -46,6 +54,7 @@ const mutations = {
   setPing: set("ping"),
   setVotingSpeed: set("votingSpeed"),
   setVoteInProgress: set("isVoteInProgress"),
+  toggleRecordVoteHistory: toggle("recordVoteHistory"),
   claimSeat: set("claimedSeat"),
   distributeRoles: set("isRolesDistributed"),
   setSessionId(state, sessionId) {

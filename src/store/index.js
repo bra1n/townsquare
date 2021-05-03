@@ -147,13 +147,6 @@ export default new Vuex.Store({
     toggleNight: toggle("isNight"),
     toggleGrimoire: toggle("isPublic"),
     toggleImageOptIn: toggle("isImageOptIn"),
-    toggleRecordVoteHistory(state, param) {
-      if (param === true || param === false) {
-        state.session.recordVoteHistory = param;
-      } else {
-        state.session.recordVoteHistory = !state.session.recordVoteHistory;
-      }
-    },
     toggleModal({ modals }, name) {
       if (name) {
         modals[name] = !modals[name];

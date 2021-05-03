@@ -346,13 +346,15 @@ export default {
     clearVoteHistory() {
       this.$store.commit("session/clearVoteHistory");
     },
+    toggleRecordVoteHistory() {
+      this.$store.commit("session/toggleRecordVoteHistory");
+    },
     ...mapMutations([
       "toggleGrimoire",
       "toggleMenu",
       "toggleImageOptIn",
       "toggleMuted",
       "toggleNight",
-      "toggleRecordVoteHistory",
       "toggleNightOrder",
       "setZoom",
       "toggleModal"

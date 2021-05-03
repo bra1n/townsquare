@@ -174,7 +174,7 @@ class LiveSession {
         break;
       case "recordVoteHistory":
         if (!this._isSpectator) return;
-        this._store.commit("toggleRecordVoteHistory", params);
+        this._store.commit("session/toggleRecordVoteHistory", params);
         break;
       case "votingSpeed":
         if (!this._isSpectator) return;
@@ -346,7 +346,7 @@ class LiveSession {
     });
     if (!isLightweight) {
       this._store.commit("toggleNight", !!isNight);
-      this._store.commit("toggleRecordVoteHistory", recordVoteHistory);
+      this._store.commit("session/toggleRecordVoteHistory", recordVoteHistory);
       this._store.commit("session/nomination", {
         nomination,
         votes,
@@ -858,11 +858,11 @@ export default store => {
       case "session/clearVoteHistory":
         session.clearVoteHistory();
         break;
+      case "session/toggleRecordVoteHistory":
+        session.setRecordVoteHistory();
+        break;
       case "toggleNight":
         session.setIsNight();
-        break;
-      case "toggleRecordVoteHistory":
-        session.setRecordVoteHistory();
         break;
       case "setEdition":
         session.sendEdition();
