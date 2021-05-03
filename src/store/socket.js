@@ -634,11 +634,12 @@ class LiveSession {
   }
 
   /**
-   * Distribute player roles to all seated players in a direct message.
+   * Distribute player roles to all seated players in a direct message. ST only
    * This will be split server side so that each player only receives their own (sub)message.
    */
   distributeRoles() {
     if (this._isSpectator) return;
+	this._store.state.session.isRevealPlayerOK = false;
     const message = {};
     this._store.state.players.players.forEach((player, index) => {
       if (player.id && player.role) {
@@ -650,6 +651,19 @@ class LiveSession {
     });
     if (Object.keys(message).length) {
       this._send("direct", message);
+    }
+  }
+
+  /**
+   * Announce a single players role to all other players. ST only
+   * @param playerIndex
+   */
+  revealPlayer(index) {
+    if (this._isSpectator) return;
+    const player = this._store.state.players.players[index];
+    if (player && player.role) {
+      const message = { index, property: "role", value: player.role.id };
+      this._send("player", message);
     }
   }
 
@@ -821,6 +835,9 @@ export default store => {
         if (payload) {
           session.distributeRoles();
         }
+        break;
+      case "session/revealPlayer":
+        session.revealPlayer(payload);
         break;
       case "session/nomination":
         session.nomination(payload);

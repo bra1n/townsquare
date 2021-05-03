@@ -33,6 +33,7 @@ const faIcons = [
   "Question",
   "Random",
   "RedoAlt",
+  "SatelliteDish",
   "SearchMinus",
   "SearchPlus",
   "Square",

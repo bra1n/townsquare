@@ -128,6 +128,10 @@
               <font-awesome-icon icon="hand-point-right" />
               Nomination
             </li>
+            <li @click="revealPlayer(player)">
+              <font-awesome-icon icon="satellite-dish" />
+              Reveal role to all
+            </li>
             <li @click="movePlayer()">
               <font-awesome-icon icon="redo-alt" />
               Move player
@@ -295,6 +299,9 @@ export default {
       if (closeMenu) {
         this.isMenuOpen = false;
       }
+    },
+    revealPlayer() {
+      this.$emit("trigger", ["revealPlayer"]);
     },
     removePlayer() {
       this.isMenuOpen = false;

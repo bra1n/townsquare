@@ -161,6 +161,17 @@ export default {
         this.$store.commit("players/remove", playerIndex);
       }
     },
+    revealPlayer(playerIndex) {
+      if (!this.session.isRevealPlayerOK) {
+        if (
+          !confirm(
+            `Do you really want to reveal this players role to ALL other players?\n\nYou won't be asked to confirm again this game.`
+          )
+        )
+          return;
+      }
+      this.$store.commit("session/revealPlayer", playerIndex);
+    },
     swapPlayer(from, to) {
       if (to === undefined) {
         this.cancel();
