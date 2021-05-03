@@ -97,11 +97,14 @@
         @click="updatePlayer('isVoteless', true)"
         title="Ghost vote"
       />
+
+      <!-- On block icon -->
       <font-awesome-icon
-        icon="crosshairs"
+        icon="skull"
         v-if="player.isOnBlock"
         class="on-block"
       />
+
       <div
         class="name"
         @click="isMenuOpen = !isMenuOpen"
@@ -143,7 +146,7 @@
                 Swap seats
               </li>
               <li @click="toggleOnBlock()">
-                <font-awesome-icon icon="crosshairs" />
+                <font-awesome-icon icon="skull" />
                 {{ player.isOnBlock ? "Take off block" : "Put on block" }}
               </li>
               <li @click="nominatePlayer()">
@@ -619,8 +622,8 @@ li.move:not(.from) .player .overlay svg.move {
 
 .on-block {
   position: absolute;
-  margin-top: -15%;
-  left: 3px;
+  margin-top: -95%;
+  right: 2px;
   color: darkred;
 }
 
