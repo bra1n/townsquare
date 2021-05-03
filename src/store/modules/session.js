@@ -71,7 +71,7 @@ const mutations = {
    * @param players
    */
   addHistory(state, players) {
-    if (!state.recordVoteHistory) return;
+    if (!state.recordVoteHistory && state.isSpectator) return;
     if (!state.nomination || state.lockedVote <= players.length) return;
     const isBanishment = players[state.nomination[1]].role.team === "traveler";
     state.voteHistory.push({

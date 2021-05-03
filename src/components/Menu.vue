@@ -138,7 +138,7 @@
               Vote history<em>[V]</em>
             </li>
             <li @click="toggleRecordVoteHistory" v-if="!session.isSpectator">
-              Record vote history
+              Permit vote history
               <em>
                 <font-awesome-icon
                   :icon="[
