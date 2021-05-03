@@ -1484,6 +1484,19 @@
         "Good player executed"],
     "setup": false,
     "ability": "If more than 1 good player is executed, you win. All players know you are in play. After day 5, evil wins."
+  },
+  {
+    "id": "gangster",
+    "name": "Gangster",
+    "edition": "",
+    "team": "traveler",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "ability": "Once per day, you may choose to kill a living neighbour, if your other living neighbour agrees."
   }
 ]
 
