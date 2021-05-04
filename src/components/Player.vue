@@ -602,7 +602,7 @@ li.move:not(.from) .player .overlay svg.move {
 }
 
 /****** Vote icon ********/
-.player .has-vote .on-block {
+.player .has-vote, .player .on-block {
   color: #fff;
   filter: drop-shadow(0 0 3px black);
   transition: opacity 250ms;

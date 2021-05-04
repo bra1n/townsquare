@@ -145,7 +145,7 @@
 
         <template
           v-if="
-            tab === 'players' && !session.isSpectator && !session.nomination
+            tab === 'players' && !session.isSpectator
           "
         >
           <!-- Users -->
