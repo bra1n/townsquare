@@ -175,6 +175,7 @@ class LiveSession {
       case "isVoteHistoryAllowed":
         if (!this._isSpectator) return;
         this._store.commit("session/setVoteHistoryAllowed", params);
+        this._store.commit("session/clearVoteHistory");
         break;
       case "votingSpeed":
         if (!this._isSpectator) return;
@@ -346,10 +347,7 @@ class LiveSession {
     });
     if (!isLightweight) {
       this._store.commit("toggleNight", !!isNight);
-      this._store.commit(
-        "session/setVoteHistoryAllowed",
-        isVoteHistoryAllowed
-      );
+      this._store.commit("session/setVoteHistoryAllowed", isVoteHistoryAllowed);
       this._store.commit("session/nomination", {
         nomination,
         votes,

@@ -8,35 +8,28 @@
       @click="clearVoteHistory"
       icon="trash-alt"
       class="clear"
-      title="Clear history"
+      title="Clear vote history"
       v-if="session.isSpectator"
     />
 
-    <h3>Nomination history</h3>
+    <h3>Vote history</h3>
 
     <template v-if="!session.isSpectator">
-      <table>
-        <tr>
-          <td class="option">
-            <div class="option" @click="setRecordVoteHistory">
-              <font-awesome-icon
-                :icon="[
-                  'fas',
-                  session.isVoteHistoryAllowed ? 'check-square' : 'square'
-                ]"
-              />
-              Allow players to view this?
-            </div>
-          </td>
-          <td></td>
-          <td>
-            <div class="option" @click="clearVoteHistory">
-              <font-awesome-icon icon="trash-alt" />
-              Clear players vote histories
-            </div>
-          </td>
-        </tr>
-      </table>
+      <div class="options">
+        <div class="option" @click="setRecordVoteHistory">
+          <font-awesome-icon
+            :icon="[
+              'fas',
+              session.isVoteHistoryAllowed ? 'check-square' : 'square'
+            ]"
+          />
+          Accessible to players
+        </div>
+        <div class="option" @click="clearVoteHistory">
+          <font-awesome-icon icon="trash-alt" />
+          Clear for everyone
+        </div>
+      </div>
     </template>
     <table>
       <thead>
@@ -114,8 +107,7 @@ export default {
         !this.session.isVoteHistoryAllowed
       );
     },
-    ...mapMutations(["toggleModal"]),
-    ...mapMutations("session", ["clearVoteHistory"])
+    ...mapMutations(["toggleModal"])
   }
 };
 </script>
@@ -133,11 +125,21 @@ export default {
   }
 }
 
+.options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
 .option {
   color: white;
   text-decoration: none;
+  margin: 0 15px 0 15px;
   &:hover {
     color: red;
+    cursor: pointer;
   }
 }
 
