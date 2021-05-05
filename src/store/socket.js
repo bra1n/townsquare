@@ -347,7 +347,7 @@ class LiveSession {
     if (!isLightweight) {
       this._store.commit("toggleNight", !!isNight);
       this._store.commit(
-        "session/toggleRecordVoteHistory",
+        "session/setVoteHistoryAllowed",
         isVoteHistoryAllowed
       );
       this._store.commit("session/nomination", {
