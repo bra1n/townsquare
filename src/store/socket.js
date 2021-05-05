@@ -170,7 +170,7 @@ class LiveSession {
         break;
       case "onBlock":
         if (!this._isSpectator) return;
-        this._store.commit("players/setOnBlock", params);
+        this._store.commit("players/setMarked", params);
         break;
       case "isNight":
         if (!this._isSpectator) return;
@@ -255,7 +255,7 @@ class LiveSession {
       id: player.id,
       isDead: player.isDead,
       isVoteless: player.isVoteless,
-      isOnBlock: player.isOnBlock,
+      isMarked: player.isMarked,
       pronouns: player.pronouns,
       ...(player.role && player.role.team === "traveler"
         ? { roleId: player.role.id }
@@ -317,7 +317,7 @@ class LiveSession {
       const player = players[x];
       const { roleId } = state;
       // update relevant properties
-      ["name", "id", "isDead", "isVoteless", "isOnBlock", "pronouns"].forEach(
+      ["name", "id", "isDead", "isVoteless", "isMarked", "pronouns"].forEach(
         property => {
           const value = state[property];
           if (player[property] !== value) {
@@ -708,7 +708,7 @@ class LiveSession {
    * Set which player is on the block. ST only
    * @param id, player id or -1 for empty
    */
-  setOnBlock(playerIndex) {
+  setMarked(playerIndex) {
     if (this._isSpectator) return;
     this._send("onBlock", playerIndex);
   }
@@ -865,8 +865,8 @@ export default store => {
       case "players/setFabled":
         session.sendFabled();
         break;
-      case "players/setOnBlock":
-        session.setOnBlock(payload);
+      case "players/setMarked":
+        session.setMarked(payload);
         break;
       case "players/swap":
         session.swapPlayer(payload);

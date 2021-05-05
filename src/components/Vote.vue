@@ -67,11 +67,11 @@
           class="button-group"
           v-if="session.lockedVote && !session.isVoteInProgress"
         >
-          <div class="button demon" @click="setOnBlock">
-            Put on block
+          <div class="button demon" @click="setMarked">
+            Mark nominee
           </div>
-          <div class="button demon" @click="emptyBlock">
-            Empty block
+          <div class="button demon" @click="removeMarked">
+            Clear mark
           </div>
         </div>
       </template>
@@ -249,12 +249,12 @@ export default {
         this.$store.commit("session/setVotingSpeed", speed);
       }
     },
-    setOnBlock() {
-      this.$store.commit("players/setOnBlock", this.session.nomination[1]);
+    setMarked() {
+      this.$store.commit("players/setMarked", this.session.nomination[1]);
       this.finish();
     },
-    emptyBlock() {
-      this.$store.commit("players/setOnBlock", -1);
+    removeMarked() {
+      this.$store.commit("players/setMarked", -1);
       this.finish();
     }
   }

@@ -101,7 +101,7 @@
       <!-- On block icon -->
       <font-awesome-icon
         icon="skull"
-        v-if="player.isOnBlock"
+        v-if="player.isMarked"
         class="on-block"
       />
 
@@ -267,8 +267,8 @@ export default {
       if (this.grimoire.isPublic) {
         if (!this.player.isDead) {
           this.updatePlayer("isDead", true);
-          if (this.player.isOnBlock) {
-            this.updatePlayer("isOnBlock", false);
+          if (this.player.isMarked) {
+            this.updatePlayer("isMarked", false);
           }
         } else if (this.player.isVoteless) {
           this.updatePlayer("isVoteless", false);
@@ -278,8 +278,8 @@ export default {
         }
       } else {
         this.updatePlayer("isDead", !this.player.isDead);
-        if (this.player.isOnBlock) {
-          this.updatePlayer("isOnBlock", false);
+        if (this.player.isMarked) {
+          this.updatePlayer("isMarked", false);
         }
         if (this.player.isVoteless) {
           this.updatePlayer("isVoteless", false);

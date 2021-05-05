@@ -203,10 +203,10 @@ export default {
       this.nominate = -1;
     },
     toggleOnBlock(playerIndex) {
-      if (this.players[playerIndex].isOnBlock) {
-        this.$store.commit("players/setOnBlock", -1);
+      if (this.players[playerIndex].isMarked) {
+        this.$store.commit("players/setMarked", -1);
       } else {
-        this.$store.commit("players/setOnBlock", playerIndex);
+        this.$store.commit("players/setMarked", playerIndex);
       }
     }
   }

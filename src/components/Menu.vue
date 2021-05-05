@@ -330,7 +330,7 @@ export default {
     toggleNight() {
       this.$store.commit("toggleNight");
       if (this.grimoire.isNight) {
-        this.$store.commit("players/setOnBlock", -1);
+        this.$store.commit("players/setMarked", -1);
       }
     },
     ...mapMutations([
