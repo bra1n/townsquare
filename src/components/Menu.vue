@@ -143,11 +143,7 @@
           </template>
         </template>
 
-        <template
-          v-if="
-            tab === 'players' && !session.isSpectator
-          "
-        >
+        <template v-if="tab === 'players' && !session.isSpectator">
           <!-- Users -->
           <li class="headline">Players</li>
           <li @click="addPlayer" v-if="players.length < 20">Add<em>[A]</em></li>

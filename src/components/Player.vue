@@ -132,18 +132,18 @@
             <li @click="changeName">
               <font-awesome-icon icon="user-edit" />Rename
             </li>
+            <li @click="movePlayer()">
+              <font-awesome-icon icon="redo-alt" />
+              Move player
+            </li>
+            <li @click="swapPlayer()">
+              <font-awesome-icon icon="exchange-alt" />
+              Swap seats
+            </li>
             <li @click="removePlayer">
               <font-awesome-icon icon="times-circle" />
               Remove
             </li>
-              <li @click="movePlayer()">
-                <font-awesome-icon icon="redo-alt" />
-                Move player
-              </li>
-              <li @click="swapPlayer()">
-                <font-awesome-icon icon="exchange-alt" />
-                Swap seats
-              </li>
             <template v-if="!session.nomination">
               <li @click="nominatePlayer()">
                 <font-awesome-icon icon="hand-point-right" />
@@ -594,7 +594,8 @@ li.move:not(.from) .player .overlay svg.move {
 }
 
 /****** Vote icon ********/
-.player .has-vote, .player .on-block {
+.player .has-vote,
+.player .on-block {
   color: #fff;
   filter: drop-shadow(0 0 3px black);
   transition: opacity 250ms;
