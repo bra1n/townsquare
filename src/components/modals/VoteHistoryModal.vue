@@ -1,7 +1,7 @@
 <template>
   <Modal
     class="vote-history"
-    v-if="modals.voteHistory && session.voteHistory"
+    v-if="modals.voteHistory && (session.voteHistory || !session.isSpectator)"
     @close="toggleModal('voteHistory')"
   >
     <font-awesome-icon
@@ -9,9 +9,35 @@
       icon="trash-alt"
       class="clear"
       title="Clear history"
+      v-if="session.isSpectator"
     />
 
     <h3>Nomination history</h3>
+
+    <template v-if="!session.isSpectator">
+      <table>
+        <tr>
+          <td class="option">
+            <div class="option" @click="setRecordVoteHistory">
+              <font-awesome-icon
+                :icon="[
+                  'fas',
+                  session.isVoteHistoryAllowed ? 'check-square' : 'square'
+                ]"
+              />
+              Allow players to view this?
+            </div>
+          </td>
+          <td></td>
+          <td>
+            <div class="option" @click="clearVoteHistory">
+              <font-awesome-icon icon="trash-alt" />
+              Clear players vote histories
+            </div>
+          </td>
+        </tr>
+      </table>
+    </template>
     <table>
       <thead>
         <tr>
@@ -79,6 +105,15 @@ export default {
     ...mapState(["session", "modals"])
   },
   methods: {
+    clearVoteHistory() {
+      this.$store.commit("session/clearVoteHistory");
+    },
+    setRecordVoteHistory() {
+      this.$store.commit(
+        "session/setVoteHistoryAllowed",
+        !this.session.isVoteHistoryAllowed
+      );
+    },
     ...mapMutations(["toggleModal"]),
     ...mapMutations("session", ["clearVoteHistory"])
   }
@@ -93,6 +128,14 @@ export default {
   left: 20px;
   top: 15px;
   cursor: pointer;
+  &:hover {
+    color: red;
+  }
+}
+
+.option {
+  color: white;
+  text-decoration: none;
   &:hover {
     color: red;
   }

@@ -22,10 +22,10 @@ const state = () => ({
   nomination: false,
   votes: [],
   lockedVote: 0,
-  votingSpeed: 1000,
+  votingSpeed: 3000,
   isVoteInProgress: false,
   voteHistory: [],
-  recordVoteHistory: true,
+  isVoteHistoryAllowed: true,
   isRolesDistributed: false
 });
 
@@ -38,14 +38,6 @@ const set = key => (state, val) => {
   state[key] = val;
 };
 
-const toggle = key => (state, val) => {
-  if (val === true || val === false) {
-    state[key] = val;
-  } else {
-    state[key] = !state[key];
-  }
-};
-
 const mutations = {
   setPlayerId: set("playerId"),
   setSpectator: set("isSpectator"),
@@ -54,7 +46,7 @@ const mutations = {
   setPing: set("ping"),
   setVotingSpeed: set("votingSpeed"),
   setVoteInProgress: set("isVoteInProgress"),
-  toggleRecordVoteHistory: toggle("recordVoteHistory"),
+  setVoteHistoryAllowed: set("isVoteHistoryAllowed"),
   claimSeat: set("claimedSeat"),
   distributeRoles: set("isRolesDistributed"),
   setSessionId(state, sessionId) {
@@ -80,7 +72,7 @@ const mutations = {
    * @param players
    */
   addHistory(state, players) {
-    if (!state.recordVoteHistory && state.isSpectator) return;
+    if (!state.isVoteHistoryAllowed && state.isSpectator) return;
     if (!state.nomination || state.lockedVote <= players.length) return;
     const isBanishment = players[state.nomination[1]].role.team === "traveler";
     state.voteHistory.push({

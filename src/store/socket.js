@@ -172,9 +172,9 @@ class LiveSession {
         if (!this._isSpectator) return;
         this._store.commit("toggleNight", params);
         break;
-      case "recordVoteHistory":
+      case "isVoteHistoryAllowed":
         if (!this._isSpectator) return;
-        this._store.commit("session/toggleRecordVoteHistory", params);
+        this._store.commit("session/setVoteHistoryAllowed", params);
         break;
       case "votingSpeed":
         if (!this._isSpectator) return;
@@ -272,7 +272,7 @@ class LiveSession {
       this._sendDirect(playerId, "gs", {
         gamestate: this._gamestate,
         isNight: grimoire.isNight,
-        recordVoteHistory: session.recordVoteHistory,
+        isVoteHistoryAllowed: session.isVoteHistoryAllowed,
         nomination: session.nomination,
         votingSpeed: session.votingSpeed,
         lockedVote: session.lockedVote,
@@ -294,7 +294,7 @@ class LiveSession {
       gamestate,
       isLightweight,
       isNight,
-      recordVoteHistory,
+      isVoteHistoryAllowed,
       nomination,
       votingSpeed,
       votes,
@@ -346,7 +346,10 @@ class LiveSession {
     });
     if (!isLightweight) {
       this._store.commit("toggleNight", !!isNight);
-      this._store.commit("session/toggleRecordVoteHistory", recordVoteHistory);
+      this._store.commit(
+        "session/toggleRecordVoteHistory",
+        isVoteHistoryAllowed
+      );
       this._store.commit("session/nomination", {
         nomination,
         votes,
@@ -694,13 +697,13 @@ class LiveSession {
   }
 
   /**
-   * Send the recordVoteHistory state. ST only
+   * Send the isVoteHistoryAllowed state. ST only
    */
-  setRecordVoteHistory() {
+  setVoteHistoryAllowed() {
     if (this._isSpectator) return;
     this._send(
-      "recordVoteHistory",
-      this._store.state.session.recordVoteHistory
+      "isVoteHistoryAllowed",
+      this._store.state.session.isVoteHistoryAllowed
     );
   }
 
@@ -858,8 +861,8 @@ export default store => {
       case "session/clearVoteHistory":
         session.clearVoteHistory();
         break;
-      case "session/toggleRecordVoteHistory":
-        session.setRecordVoteHistory();
+      case "session/setVoteHistoryAllowed":
+        session.setVoteHistoryAllowed();
         break;
       case "toggleNight":
         session.setIsNight();

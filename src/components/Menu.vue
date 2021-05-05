@@ -132,25 +132,10 @@
               <em><font-awesome-icon icon="theater-masks"/></em>
             </li>
             <li
-              v-if="session.voteHistory.length"
+              v-if="session.voteHistory.length || !session.isSpectator"
               @click="toggleModal('voteHistory')"
             >
               Vote history<em>[V]</em>
-            </li>
-            <li @click="toggleRecordVoteHistory" v-if="!session.isSpectator">
-              Permit vote history
-              <em>
-                <font-awesome-icon
-                  :icon="[
-                    'fas',
-                    session.recordVoteHistory ? 'check-square' : 'square'
-                  ]"
-                />
-              </em>
-            </li>
-            <li @click="clearVoteHistory" v-if="!session.isSpectator">
-              Clear vote history
-              <em><font-awesome-icon icon="trash-alt"/></em>
             </li>
             <li @click="leaveSession">
               Leave Session
@@ -342,12 +327,6 @@ export default {
       if (confirm("Are you sure you want to remove all player roles?")) {
         this.$store.dispatch("players/clearRoles");
       }
-    },
-    clearVoteHistory() {
-      this.$store.commit("session/clearVoteHistory");
-    },
-    toggleRecordVoteHistory() {
-      this.$store.commit("session/toggleRecordVoteHistory");
     },
     ...mapMutations([
       "toggleGrimoire",
