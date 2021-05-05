@@ -327,12 +327,17 @@ export default {
         this.$store.dispatch("players/clearRoles");
       }
     },
+    toggleNight() {
+      this.$store.commit("toggleNight");
+      if (this.grimoire.isNight) {
+        this.$store.commit("players/setOnBlock", -1);
+      }
+    },
     ...mapMutations([
       "toggleGrimoire",
       "toggleMenu",
       "toggleImageOptIn",
       "toggleMuted",
-      "toggleNight",
       "toggleNightOrder",
       "setZoom",
       "toggleModal"

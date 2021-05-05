@@ -691,9 +691,6 @@ class LiveSession {
   setIsNight() {
     if (this._isSpectator) return;
     this._send("isNight", this._store.state.grimoire.isNight);
-    if (this._store.state.grimoire.isNight) {
-      this._store.commit("players/setOnBlock", -1);
-    }
   }
 
   /**
