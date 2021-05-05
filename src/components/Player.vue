@@ -132,11 +132,10 @@
             <li @click="changeName">
               <font-awesome-icon icon="user-edit" />Rename
             </li>
-            <li v-if="!session.nomination" @click="removePlayer">
+            <li @click="removePlayer">
               <font-awesome-icon icon="times-circle" />
               Remove
             </li>
-            <template v-if="!session.nomination">
               <li @click="movePlayer()">
                 <font-awesome-icon icon="redo-alt" />
                 Move player
@@ -145,10 +144,7 @@
                 <font-awesome-icon icon="exchange-alt" />
                 Swap seats
               </li>
-              <li @click="toggleOnBlock()">
-                <font-awesome-icon icon="skull" />
-                {{ player.isOnBlock ? "Take off block" : "Put on block" }}
-              </li>
+            <template v-if="!session.nomination">
               <li @click="nominatePlayer()">
                 <font-awesome-icon icon="hand-point-right" />
                 Nomination
@@ -272,7 +268,7 @@ export default {
         if (!this.player.isDead) {
           this.updatePlayer("isDead", true);
           if (this.player.isOnBlock) {
-            this.toggleOnBlock();
+            this.updatePlayer("isOnBlock", false);
           }
         } else if (this.player.isVoteless) {
           this.updatePlayer("isVoteless", false);
@@ -283,7 +279,7 @@ export default {
       } else {
         this.updatePlayer("isDead", !this.player.isDead);
         if (this.player.isOnBlock) {
-          this.toggleOnBlock();
+          this.updatePlayer("isOnBlock", false);
         }
         if (this.player.isVoteless) {
           this.updatePlayer("isVoteless", false);
@@ -338,10 +334,6 @@ export default {
     claimSeat() {
       this.isMenuOpen = false;
       this.$emit("trigger", ["claimSeat"]);
-    },
-    toggleOnBlock() {
-      this.isMenuOpen = false;
-      this.$emit("trigger", ["toggleOnBlock"]);
     },
     /**
      * Allow the ST to override a locked vote.
