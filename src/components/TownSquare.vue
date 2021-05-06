@@ -163,7 +163,10 @@ export default {
           if (nomination.includes(playerIndex)) {
             // abort vote if removed player is either nominator or nominee
             this.$store.commit("session/nomination");
-          } else if (nomination[0] > playerIndex || nomination[1] > playerIndex) {
+          } else if (
+            nomination[0] > playerIndex ||
+            nomination[1] > playerIndex
+          ) {
             // update nomination array if removed player has lower index
             this.$store.commit("session/setNomination", [
               nomination[0] > playerIndex ? nomination[0] - 1 : nomination[0],
