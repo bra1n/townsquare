@@ -136,7 +136,7 @@ export default {
 .option {
   color: white;
   text-decoration: none;
-  margin: 0 15px 0 15px;
+  margin: 0 15px;
   &:hover {
     color: red;
     cursor: pointer;
