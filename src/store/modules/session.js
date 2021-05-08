@@ -25,7 +25,8 @@ const state = () => ({
   votingSpeed: 3000,
   isVoteInProgress: false,
   voteHistory: [],
-  isRolesDistributed: false
+  isRolesDistributed: false,
+  isGrimoireRevealed: false
 });
 
 const getters = {};
@@ -47,6 +48,7 @@ const mutations = {
   setVoteInProgress: set("isVoteInProgress"),
   claimSeat: set("claimedSeat"),
   distributeRoles: set("isRolesDistributed"),
+  revealGrimoire: set("isGrimoireRevealed"),
   setSessionId(state, sessionId) {
     state.sessionId = sessionId
       .toLocaleLowerCase()

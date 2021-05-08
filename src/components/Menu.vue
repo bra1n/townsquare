@@ -130,6 +130,10 @@
               Send Characters
               <em><font-awesome-icon icon="theater-masks"/></em>
             </li>
+            <li v-if="!session.isSpectator" @click="revealGrimoire">
+              Reveal Grimoire
+              <em><font-awesome-icon icon="satellite-dish"/></em>
+            </li>
             <li
               v-if="session.voteHistory.length"
               @click="toggleModal('voteHistory')"
@@ -272,6 +276,13 @@ export default {
           }).bind(this),
           2000
         );
+      }
+    },
+    revealGrimoire() {
+      if (this.session.isSpectator) return;
+      const popup = "Do you want to reveal the GRIMOIRE to players?";
+      if (confirm(popup)) {
+        this.$store.commit("session/revealGrimoire", true);
       }
     },
     imageOptIn() {

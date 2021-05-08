@@ -240,11 +240,17 @@ class LiveSession {
 
   /**
    * Publish the current gamestate.
-   * Optional param to reduce traffic. (send only player data)
+   * Optional param isLightweight to reduce traffic (=send only player data)
+   * Optional param isRevealGrimoire to reveal grimoire (=include ALL player roles, reminders & bluffs), overrides isLightweight
    * @param playerId
    * @param isLightweight
+   * @param isRevealGrimoire
    */
-  sendGamestate(playerId = "", isLightweight = false) {
+  sendGamestate(
+    playerId = "",
+    isLightweight = false,
+    isRevealGrimoire = false
+  ) {
     if (this._isSpectator) return;
     this._gamestate = this._store.state.players.players.map(player => ({
       name: player.name,
@@ -252,28 +258,39 @@ class LiveSession {
       isDead: player.isDead,
       isVoteless: player.isVoteless,
       pronouns: player.pronouns,
-      ...(player.role && player.role.team === "traveler"
+      ...(player.role && (player.role.team === "traveler" || isRevealGrimoire)
         ? { roleId: player.role.id }
-        : {})
+        : {}),
+      reminders: isRevealGrimoire
+        ? player.reminders.map(reminder => ({
+            name: reminder.name,
+            role: reminder.role
+          }))
+        : {}
     }));
-    if (isLightweight) {
+    if (isLightweight && !isRevealGrimoire) {
       this._sendDirect(playerId, "gs", {
         gamestate: this._gamestate,
         isLightweight
       });
     } else {
       const { session, grimoire } = this._store.state;
-      const { fabled } = this._store.state.players;
+      const { fabled, bluffs } = this._store.state.players;
       this.sendEdition(playerId);
       this._sendDirect(playerId, "gs", {
         gamestate: this._gamestate,
+        isLightweight: isLightweight,
+        isRevealGrimoire: isRevealGrimoire,
         isNight: grimoire.isNight,
         nomination: session.nomination,
         votingSpeed: session.votingSpeed,
         lockedVote: session.lockedVote,
         isVoteInProgress: session.isVoteInProgress,
         fabled: fabled.map(({ id }) => id),
-        ...(session.nomination ? { votes: session.votes } : {})
+        ...(session.nomination ? { votes: session.votes } : {}),
+        bluffs: isRevealGrimoire
+          ? bluffs.map(bluff => ({ roleId: bluff.id }))
+          : []
       });
     }
   }
@@ -288,14 +305,24 @@ class LiveSession {
     const {
       gamestate,
       isLightweight,
+      isRevealGrimoire,
       isNight,
       nomination,
       votingSpeed,
       votes,
       lockedVote,
       isVoteInProgress,
-      fabled
+      fabled,
+      bluffs
     } = data;
+    if (isRevealGrimoire) {
+      // includes ALL roles, reminders & bluffs
+      const popup =
+        "Reveal the Storyteller's grimoire? This will overwrite your grimoire.";
+      if (!confirm(popup)) {
+        return;
+      }
+    }
     const players = this._store.state.players.players;
     // adjust number of players
     if (players.length < gamestate.length) {
@@ -337,6 +364,14 @@ class LiveSession {
           value: {}
         });
       }
+      // reminder tokens
+      if (isRevealGrimoire) {
+        this._store.commit("players/update", {
+          player,
+          property: "reminders",
+          value: state.reminders
+        });
+      }
     });
     if (!isLightweight) {
       this._store.commit("toggleNight", !!isNight);
@@ -350,6 +385,18 @@ class LiveSession {
       this._store.commit("players/setFabled", {
         fabled: fabled.map(id => this._store.state.fabled.get(id))
       });
+      if (isRevealGrimoire) {
+        this._store.commit("session/revealGrimoire", true);
+        bluffs.forEach((bluff, i) => {
+          const role =
+            this._store.state.roles.get(bluff.roleId) ||
+            this._store.getters.rolesJSONbyId.get(bluff.roleId) || {};
+          this._store.commit("players/setBluff", {
+            index: i,
+            role
+          });
+        });
+      }
     }
   }
 
@@ -462,8 +509,8 @@ class LiveSession {
     if (!this._isSpectator) return;
     const player = this._store.state.players.players[index];
     if (!player) return;
-    // special case where a player stops being a traveler
     if (property === "role") {
+      // special case where a player stops being a traveler
       if (!value && player.role.team === "traveler") {
         // reset to an unknown role
         this._store.commit("players/update", {
@@ -472,7 +519,7 @@ class LiveSession {
           value: {}
         });
       } else {
-        // load role, first from session, the global, then fail gracefully
+        // load role, first from session, then global, then fail gracefully
         const role =
           this._store.state.roles.get(value) ||
           this._store.getters.rolesJSONbyId.get(value) ||
@@ -821,6 +868,9 @@ export default store => {
         if (payload) {
           session.distributeRoles();
         }
+        break;
+      case "session/revealGrimoire":
+        session.sendGamestate("", false, true);
         break;
       case "session/nomination":
         session.nomination(payload);
