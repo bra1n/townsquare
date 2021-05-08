@@ -1,6 +1,6 @@
 # Release Notes
 
-- add ST reveal grimoire1
+- add ST reveal grimoire
 
 ### Version 2.12.0
 - tweak reference sheet to better fit screen in single column layout

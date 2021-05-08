@@ -390,7 +390,8 @@ class LiveSession {
         bluffs.forEach((bluff, i) => {
           const role =
             this._store.state.roles.get(bluff.roleId) ||
-            this._store.getters.rolesJSONbyId.get(bluff.roleId) || {};
+            this._store.getters.rolesJSONbyId.get(bluff.roleId) ||
+            {};
           this._store.commit("players/setBluff", {
             index: i,
             role
