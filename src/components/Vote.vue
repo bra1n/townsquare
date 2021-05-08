@@ -250,11 +250,11 @@ export default {
       }
     },
     setMarked() {
-      this.$store.commit("players/setMarked", this.session.nomination[1]);
+      this.$store.commit("session/setMarkedPlayerId", this.session.nomination[1]);
       this.finish();
     },
     removeMarked() {
-      this.$store.commit("players/setMarked", -1);
+      this.$store.commit("session/setMarkedPlayerId", -1);
       this.finish();
     }
   }

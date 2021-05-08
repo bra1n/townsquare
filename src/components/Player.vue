@@ -101,7 +101,7 @@
       <!-- On block icon -->
       <font-awesome-icon
         icon="skull"
-        v-if="player.isMarked"
+        v-if="session.markedPlayerId === index"
         class="on-block"
       />
 

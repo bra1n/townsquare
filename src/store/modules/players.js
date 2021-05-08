@@ -5,7 +5,6 @@ const NEWPLAYER = {
   reminders: [],
   isVoteless: false,
   isDead: false,
-  isMarked: false,
   pronouns: ""
 };
 
@@ -136,14 +135,6 @@ const mutations = {
   },
   move(state, [from, to]) {
     state.players.splice(to, 0, state.players.splice(from, 1)[0]);
-  },
-  setMarked(state, playerIndex) {
-    state.players.forEach(player => {
-      player.isMarked = false;
-    });
-    if (playerIndex >= 0) {
-      state.players[playerIndex].isMarked = true;
-    }
   },
   setBluff(state, { index, role } = {}) {
     if (index !== undefined) {

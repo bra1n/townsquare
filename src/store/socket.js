@@ -168,9 +168,9 @@ class LiveSession {
         if (!this._isSpectator) return;
         this._store.commit("players/remove", params);
         break;
-      case "onBlock":
+      case "marked":
         if (!this._isSpectator) return;
-        this._store.commit("players/setMarked", params);
+        this._store.commit("session/setMarkedPlayerId", params);
         break;
       case "isNight":
         if (!this._isSpectator) return;
@@ -255,7 +255,6 @@ class LiveSession {
       id: player.id,
       isDead: player.isDead,
       isVoteless: player.isVoteless,
-      isMarked: player.isMarked,
       pronouns: player.pronouns,
       ...(player.role && player.role.team === "traveler"
         ? { roleId: player.role.id }
@@ -277,6 +276,7 @@ class LiveSession {
         votingSpeed: session.votingSpeed,
         lockedVote: session.lockedVote,
         isVoteInProgress: session.isVoteInProgress,
+		markedPlayerId: session.markedPlayerId,
         fabled: fabled.map(({ id }) => id),
         ...(session.nomination ? { votes: session.votes } : {})
       });
@@ -299,6 +299,7 @@ class LiveSession {
       votes,
       lockedVote,
       isVoteInProgress,
+	  markedPlayerId,
       fabled
     } = data;
     const players = this._store.state.players.players;
@@ -317,7 +318,7 @@ class LiveSession {
       const player = players[x];
       const { roleId } = state;
       // update relevant properties
-      ["name", "id", "isDead", "isVoteless", "isMarked", "pronouns"].forEach(
+      ["name", "id", "isDead", "isVoteless", "pronouns"].forEach(
         property => {
           const value = state[property];
           if (player[property] !== value) {
@@ -352,9 +353,10 @@ class LiveSession {
         votes,
         votingSpeed,
         lockedVote,
-        isVoteInProgress
+        isVoteInProgress,
       });
-      this._store.commit("players/setFabled", {
+      this._store.commit("session/setMarkedPlayerId", markedPlayerId);
+	  this._store.commit("players/setFabled", {
         fabled: fabled.map(id => this._store.state.fabled.get(id))
       });
     }
@@ -710,7 +712,7 @@ class LiveSession {
    */
   setMarked(playerIndex) {
     if (this._isSpectator) return;
-    this._send("onBlock", playerIndex);
+    this._send("marked", playerIndex);
   }
 
   /**
@@ -865,7 +867,7 @@ export default store => {
       case "players/setFabled":
         session.sendFabled();
         break;
-      case "players/setMarked":
+      case "session/setMarkedPlayerId":
         session.setMarked(payload);
         break;
       case "players/swap":
