@@ -11,6 +11,9 @@ module.exports = store => {
   if (localStorage.getItem("muted")) {
     store.commit("toggleMuted", true);
   }
+  if (localStorage.getItem("static")) {
+    store.commit("toggleStatic", true);
+  }
   if (localStorage.getItem("imageOptIn")) {
     store.commit("toggleImageOptIn", true);
   }
@@ -39,8 +42,8 @@ module.exports = store => {
   }
   if (localStorage.fabled !== undefined) {
     store.commit("players/setFabled", {
-      fabled: JSON.parse(localStorage.fabled).map(id =>
-        store.state.fabled.get(id)
+      fabled: JSON.parse(localStorage.fabled).map(
+        fabled => store.state.fabled.get(fabled.id) || fabled
       )
     });
   }
@@ -91,6 +94,13 @@ module.exports = store => {
           localStorage.removeItem("muted");
         }
         break;
+      case "toggleStatic":
+        if (state.grimoire.isStatic) {
+          localStorage.setItem("static", 1);
+        } else {
+          localStorage.removeItem("static");
+        }
+        break;
       case "toggleImageOptIn":
         if (state.grimoire.isImageOptIn) {
           localStorage.setItem("imageOptIn", 1);
@@ -127,7 +137,11 @@ module.exports = store => {
       case "players/setFabled":
         localStorage.setItem(
           "fabled",
-          JSON.stringify(state.players.fabled.map(({ id }) => id))
+          JSON.stringify(
+            state.players.fabled.map(fabled =>
+              fabled.isCustom ? fabled : { id: fabled.id }
+            )
+          )
         );
         break;
       case "players/add":

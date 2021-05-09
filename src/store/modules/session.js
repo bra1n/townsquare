@@ -25,6 +25,7 @@ const state = () => ({
   votingSpeed: 3000,
   isVoteInProgress: false,
   voteHistory: [],
+  isVoteHistoryAllowed: true,
   isRolesDistributed: false
 });
 
@@ -45,6 +46,7 @@ const mutations = {
   setPing: set("ping"),
   setVotingSpeed: set("votingSpeed"),
   setVoteInProgress: set("isVoteInProgress"),
+  setVoteHistoryAllowed: set("isVoteHistoryAllowed"),
   claimSeat: set("claimedSeat"),
   distributeRoles: set("isRolesDistributed"),
   setSessionId(state, sessionId) {
@@ -70,6 +72,7 @@ const mutations = {
    * @param players
    */
   addHistory(state, players) {
+    if (!state.isVoteHistoryAllowed && state.isSpectator) return;
     if (!state.nomination || state.lockedVote <= players.length) return;
     const isExile = players[state.nomination[1]].role.team === "traveler";
     state.voteHistory.push({
