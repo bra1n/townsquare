@@ -68,6 +68,18 @@ module.exports = store => {
     store.commit("session/setSpectator", spectator);
     store.commit("session/setSessionId", sessionId);
   }
+  if (localStorage.getItem("votingSpeed")) {
+    store.commit(
+      "session/setVotingSpeed",
+      parseInt(localStorage.getItem("votingSpeed"))
+    );
+  }
+  if (localStorage.getItem("isVoteHistoryAllowed") !== undefined) {
+    store.commit(
+      "session/setVoteHistoryAllowed",
+      JSON.parse(localStorage.getItem("isVoteHistoryAllowed"))
+    );
+  }
 
   // listen to mutations
   store.subscribe(({ type, payload }, state) => {
@@ -181,6 +193,16 @@ module.exports = store => {
           localStorage.setItem("playerId", payload);
         } else {
           localStorage.removeItem("playerId");
+        }
+        break;
+      case "session/setVotingSpeed":
+        if (payload && !state.session.isSpectator) {
+          localStorage.setItem("votingSpeed", payload);
+        }
+        break;
+      case "session/setVoteHistoryAllowed":
+        if (payload !== undefined && !state.session.isSpectator) {
+          localStorage.setItem("isVoteHistoryAllowed", payload);
         }
         break;
     }

@@ -4,8 +4,9 @@
 - add vue linter
 - use "Exile" rather than "Banishment" for exiles
 - added global animation toggle for better performance
-- added record vote history toggle to session menu, and clear vote history button
 - add support for custom Fabled characters
+- add storyteller choice to allow player vote history
+- add persistence for vote speed and vote history allowed, when storyteller
 
 ---
 
