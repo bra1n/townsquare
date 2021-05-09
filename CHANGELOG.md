@@ -1,5 +1,11 @@
 # Release Notes
 
+- fix players being moved or removed during nomination
+- add vue linter
+- use "Exile" rather than "Banishment" for exiles
+- added global animation toggle for better performance
+- added record vote history toggle to session menu, and clear vote history button
+- add support for custom Fabled characters
 - add ST reveal grimoire
 
 ### Version 2.12.0

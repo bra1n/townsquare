@@ -172,6 +172,11 @@ class LiveSession {
         if (!this._isSpectator) return;
         this._store.commit("toggleNight", params);
         break;
+      case "isVoteHistoryAllowed":
+        if (!this._isSpectator) return;
+        this._store.commit("session/setVoteHistoryAllowed", params);
+        this._store.commit("session/clearVoteHistory");
+        break;
       case "votingSpeed":
         if (!this._isSpectator) return;
         this._store.commit("session/setVotingSpeed", params);
@@ -282,15 +287,13 @@ class LiveSession {
         isLightweight: isLightweight,
         isRevealGrimoire: isRevealGrimoire,
         isNight: grimoire.isNight,
+        isVoteHistoryAllowed: session.isVoteHistoryAllowed,
         nomination: session.nomination,
         votingSpeed: session.votingSpeed,
         lockedVote: session.lockedVote,
         isVoteInProgress: session.isVoteInProgress,
-        fabled: fabled.map(({ id }) => id),
-        ...(session.nomination ? { votes: session.votes } : {}),
-        bluffs: isRevealGrimoire
-          ? bluffs.map(bluff => ({ roleId: bluff.id }))
-          : []
+        fabled: fabled.map(f => (f.isCustom ? f : { id: f.id })),
+        ...(session.nomination ? { votes: session.votes } : {})
       });
     }
   }
@@ -307,6 +310,7 @@ class LiveSession {
       isLightweight,
       isRevealGrimoire,
       isNight,
+      isVoteHistoryAllowed,
       nomination,
       votingSpeed,
       votes,
@@ -375,6 +379,7 @@ class LiveSession {
     });
     if (!isLightweight) {
       this._store.commit("toggleNight", !!isNight);
+      this._store.commit("session/setVoteHistoryAllowed", isVoteHistoryAllowed);
       this._store.commit("session/nomination", {
         nomination,
         votes,
@@ -383,7 +388,7 @@ class LiveSession {
         isVoteInProgress
       });
       this._store.commit("players/setFabled", {
-        fabled: fabled.map(id => this._store.state.fabled.get(id))
+        fabled: fabled.map(f => this._store.state.fabled.get(f.id) || f)
       });
       if (isRevealGrimoire) {
         this._store.commit("session/revealGrimoire", true);
@@ -455,7 +460,7 @@ class LiveSession {
     const { fabled } = this._store.state.players;
     this._send(
       "fabled",
-      fabled.map(({ id }) => id)
+      fabled.map(f => (f.isCustom ? f : { id: f.id }))
     );
   }
 
@@ -467,7 +472,7 @@ class LiveSession {
   _updateFabled(fabled) {
     if (!this._isSpectator) return;
     this._store.commit("players/setFabled", {
-      fabled: fabled.map(id => this._store.state.fabled.get(id))
+      fabled: fabled.map(f => this._store.state.fabled.get(f.id) || f)
     });
   }
 
@@ -704,10 +709,12 @@ class LiveSession {
   /**
    * A player nomination. ST only
    * This also syncs the voting speed to the players.
-   * @param nomination [nominator, nominee]
+   * Payload can be an object with {nomination} property or just the nomination itself, or undefined.
+   * @param payload [nominator, nominee]|{nomination}
    */
-  nomination({ nomination } = {}) {
+  nomination(payload) {
     if (this._isSpectator) return;
+    const nomination = payload ? payload.nomination || payload : payload;
     const players = this._store.state.players.players;
     if (
       !nomination ||
@@ -732,6 +739,17 @@ class LiveSession {
   setIsNight() {
     if (this._isSpectator) return;
     this._send("isNight", this._store.state.grimoire.isNight);
+  }
+
+  /**
+   * Send the isVoteHistoryAllowed state. ST only
+   */
+  setVoteHistoryAllowed() {
+    if (this._isSpectator) return;
+    this._send(
+      "isVoteHistoryAllowed",
+      this._store.state.session.isVoteHistoryAllowed
+    );
   }
 
   /**
@@ -874,6 +892,7 @@ export default store => {
         session.sendGamestate("", false, true);
         break;
       case "session/nomination":
+      case "session/setNomination":
         session.nomination(payload);
         break;
       case "session/setVoteInProgress":
@@ -890,6 +909,9 @@ export default store => {
         break;
       case "session/clearVoteHistory":
         session.clearVoteHistory();
+        break;
+      case "session/setVoteHistoryAllowed":
+        session.setVoteHistoryAllowed();
         break;
       case "toggleNight":
         session.setIsNight();

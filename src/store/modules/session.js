@@ -27,6 +27,7 @@ const state = () => ({
   voteHistory: [],
   isRolesDistributed: false,
   isGrimoireRevealed: false
+  isVoteHistoryAllowed: true,
 });
 
 const getters = {};
@@ -46,6 +47,8 @@ const mutations = {
   setPing: set("ping"),
   setVotingSpeed: set("votingSpeed"),
   setVoteInProgress: set("isVoteInProgress"),
+  setNomination: set("nomination"),
+  setVoteHistoryAllowed: set("isVoteHistoryAllowed"),
   claimSeat: set("claimedSeat"),
   distributeRoles: set("isRolesDistributed"),
   revealGrimoire: set("isGrimoireRevealed"),
@@ -72,15 +75,16 @@ const mutations = {
    * @param players
    */
   addHistory(state, players) {
+    if (!state.isVoteHistoryAllowed && state.isSpectator) return;
     if (!state.nomination || state.lockedVote <= players.length) return;
-    const isBanishment = players[state.nomination[1]].role.team === "traveler";
+    const isExile = players[state.nomination[1]].role.team === "traveler";
     state.voteHistory.push({
       timestamp: new Date(),
       nominator: players[state.nomination[0]].name,
       nominee: players[state.nomination[1]].name,
-      type: isBanishment ? "Banishment" : "Execution",
+      type: isExile ? "Exile" : "Execution",
       majority: Math.ceil(
-        players.filter(player => !player.isDead || isBanishment).length / 2
+        players.filter(player => !player.isDead || isExile).length / 2
       ),
       votes: players
         .filter((player, index) => state.votes[index])
