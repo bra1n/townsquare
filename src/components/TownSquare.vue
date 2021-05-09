@@ -152,20 +152,52 @@ export default {
       this.$store.commit("toggleModal", "role");
     },
     removePlayer(playerIndex) {
-      if (this.session.isSpectator) return;
+      if (this.session.isSpectator || this.session.lockedVote) return;
       if (
         confirm(
           `Do you really want to remove ${this.players[playerIndex].name}?`
         )
       ) {
+        const { nomination } = this.session;
+        if (nomination) {
+          if (nomination.includes(playerIndex)) {
+            // abort vote if removed player is either nominator or nominee
+            this.$store.commit("session/nomination");
+          } else if (
+            nomination[0] > playerIndex ||
+            nomination[1] > playerIndex
+          ) {
+            // update nomination array if removed player has lower index
+            this.$store.commit("session/setNomination", [
+              nomination[0] > playerIndex ? nomination[0] - 1 : nomination[0],
+              nomination[1] > playerIndex ? nomination[1] - 1 : nomination[1]
+            ]);
+          }
+        }
         this.$store.commit("players/remove", playerIndex);
       }
     },
     swapPlayer(from, to) {
+      if (this.session.isSpectator || this.session.lockedVote) return;
       if (to === undefined) {
         this.cancel();
         this.swap = from;
       } else {
+        if (this.session.nomination) {
+          // update nomination if one of the involved players is swapped
+          const swapTo = this.players.indexOf(to);
+          const updatedNomination = this.session.nomination.map(nom => {
+            if (nom === this.swap) return swapTo;
+            if (nom === swapTo) return this.swap;
+            return nom;
+          });
+          if (
+            this.session.nomination[0] !== updatedNomination[0] ||
+            this.session.nomination[1] !== updatedNomination[1]
+          ) {
+            this.$store.commit("session/setNomination", updatedNomination);
+          }
+        }
         this.$store.commit("players/swap", [
           this.swap,
           this.players.indexOf(to)
@@ -174,10 +206,27 @@ export default {
       }
     },
     movePlayer(from, to) {
+      if (this.session.isSpectator || this.session.lockedVote) return;
       if (to === undefined) {
         this.cancel();
         this.move = from;
       } else {
+        if (this.session.nomination) {
+          // update nomination if it is affected by the move
+          const moveTo = this.players.indexOf(to);
+          const updatedNomination = this.session.nomination.map(nom => {
+            if (nom === this.move) return moveTo;
+            if (nom > this.move && nom <= moveTo) return nom - 1;
+            if (nom < this.move && nom >= moveTo) return nom + 1;
+            return nom;
+          });
+          if (
+            this.session.nomination[0] !== updatedNomination[0] ||
+            this.session.nomination[1] !== updatedNomination[1]
+          ) {
+            this.$store.commit("session/setNomination", updatedNomination);
+          }
+        }
         this.$store.commit("players/move", [
           this.move,
           this.players.indexOf(to)
@@ -186,6 +235,7 @@ export default {
       }
     },
     nominatePlayer(from, to) {
+      if (this.session.isSpectator || this.session.lockedVote) return;
       if (to === undefined) {
         this.cancel();
         if (from !== this.nominate) {

@@ -132,15 +132,15 @@
             <li @click="changeName">
               <font-awesome-icon icon="user-edit" />Rename
             </li>
-            <li @click="movePlayer()">
+            <li @click="movePlayer()" :class="{ disabled: session.lockedVote }">
               <font-awesome-icon icon="redo-alt" />
               Move player
             </li>
-            <li @click="swapPlayer()">
+            <li @click="swapPlayer()" :class="{ disabled: session.lockedVote }">
               <font-awesome-icon icon="exchange-alt" />
               Swap seats
             </li>
-            <li @click="removePlayer">
+            <li @click="removePlayer" :class="{ disabled: session.lockedVote }">
               <font-awesome-icon icon="times-circle" />
               Remove
             </li>
@@ -786,7 +786,8 @@ li.move:not(.from) .player .overlay svg.move {
   }
 
   li.disabled {
-    cursor: default;
+    cursor: not-allowed;
+    opacity: 0.5;
     &:hover {
       color: white;
     }

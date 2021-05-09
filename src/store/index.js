@@ -81,6 +81,7 @@ export default new Vuex.Store({
       isNightOrder: true,
       isPublic: true,
       isMenuOpen: false,
+      isStatic: false,
       isMuted: false,
       isImageOptIn: false,
       zoom: 0,
@@ -144,6 +145,7 @@ export default new Vuex.Store({
     toggleMuted: toggle("isMuted"),
     toggleMenu: toggle("isMenuOpen"),
     toggleNightOrder: toggle("isNightOrder"),
+    toggleStatic: toggle("isStatic"),
     toggleNight: toggle("isNight"),
     toggleGrimoire: toggle("isPublic"),
     toggleImageOptIn: toggle("isImageOptIn"),
@@ -162,54 +164,62 @@ export default new Vuex.Store({
      * @param roles Array of role IDs or full role definitions
      */
     setCustomRoles(state, roles) {
-      state.roles = new Map(
-        roles
-          // replace numerical role object keys with matching key names
-          .map(role => {
-            if (role[0]) {
-              const customKeys = Object.keys(customRole);
-              const mappedRole = {};
-              for (let prop in role) {
-                if (customKeys[prop]) {
-                  mappedRole[customKeys[prop]] = role[prop];
-                }
+      const processedRoles = roles
+        // replace numerical role object keys with matching key names
+        .map(role => {
+          if (role[0]) {
+            const customKeys = Object.keys(customRole);
+            const mappedRole = {};
+            for (let prop in role) {
+              if (customKeys[prop]) {
+                mappedRole[customKeys[prop]] = role[prop];
               }
-              return mappedRole;
-            } else {
-              return role;
             }
-          })
-          // clean up role.id
-          .map(role => {
-            role.id = role.id.toLocaleLowerCase().replace(/[^a-z0-9]/g, "");
+            return mappedRole;
+          } else {
             return role;
-          })
-          // map existing roles to base definition or pre-populate custom roles to ensure all properties
-          .map(
-            role =>
-              rolesJSONbyId.get(role.id) ||
-              state.roles.get(role.id) ||
-              Object.assign({}, customRole, role)
-          )
-          // default empty icons and placeholders
-          .map(role => {
-            if (rolesJSONbyId.get(role.id)) return role;
-            role.imageAlt = // map team to generic icon
-              {
-                townsfolk: "good",
-                outsider: "outsider",
-                minion: "minion",
-                demon: "evil"
-              }[role.team] || "custom";
-            return role;
-          })
-          // filter out roles that don't match an existing role and also don't have name/ability/team
-          .filter(role => role.name && role.ability && role.team)
-          // sort by team
-          .sort((a, b) => b.team.localeCompare(a.team))
-          // convert to Map
+          }
+        })
+        // clean up role.id
+        .map(role => {
+          role.id = role.id.toLocaleLowerCase().replace(/[^a-z0-9]/g, "");
+          return role;
+        })
+        // map existing roles to base definition or pre-populate custom roles to ensure all properties
+        .map(
+          role =>
+            rolesJSONbyId.get(role.id) ||
+            state.roles.get(role.id) ||
+            Object.assign({}, customRole, role)
+        )
+        // default empty icons and placeholders
+        .map(role => {
+          if (rolesJSONbyId.get(role.id)) return role;
+          role.imageAlt = // map team to generic icon
+            {
+              townsfolk: "good",
+              outsider: "outsider",
+              minion: "minion",
+              demon: "evil",
+              fabled: "fabled"
+            }[role.team] || "custom";
+          return role;
+        })
+        // filter out roles that don't match an existing role and also don't have name/ability/team
+        .filter(role => role.name && role.ability && role.team)
+        // sort by team
+        .sort((a, b) => b.team.localeCompare(a.team));
+      // convert to Map without Fabled
+      state.roles = new Map(
+        processedRoles
+          .filter(role => role.team !== "fabled")
           .map(role => [role.id, role])
       );
+      // update Fabled to include custom Fabled from this script
+      state.fabled = new Map([
+        ...processedRoles.filter(r => r.team === "fabled").map(r => [r.id, r]),
+        ...fabledJSON.map(role => [role.id, role])
+      ]);
       // update extraTravelers map to only show travelers not in this script
       state.otherTravelers = new Map(
         rolesJSON
