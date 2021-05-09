@@ -19,12 +19,6 @@
       </em>
       <em v-else>(majority is {{ Math.ceil(players.length / 2) }})</em>
 
-      <div v-if="session.isVoteInProgress || session.lockedVote > 1">
-        <em class="blue" v-if="voters.length">{{ voters.join(", ") }} </em>
-        <span v-else>nobody</span>
-        had their hand <em>UP</em>
-      </div>
-
       <template v-if="!session.isSpectator">
         <div v-if="!session.isVoteInProgress && session.lockedVote < 1">
           Time per player:
@@ -61,16 +55,17 @@
           </template>
           <div class="button demon" @click="finish">Close</div>
         </div>
-      </template>
-      <template v-if="!session.isSpectator">
-        <div
-          class="button-group"
-          v-if="session.lockedVote && !session.isVoteInProgress"
-        >
-          <div class="button demon" @click="setMarked">
-            Mark nominee
+        <div class="button-group mark" v-if="nominee.role.team !== 'traveler'">
+          <div
+            class="button"
+            :class="{
+              disabled: session.nomination[1] === session.markedPlayer
+            }"
+            @click="setMarked"
+          >
+            Mark for execution
           </div>
-          <div class="button demon" @click="removeMarked">
+          <div class="button" @click="removeMarked">
             Clear mark
           </div>
         </div>
@@ -250,12 +245,10 @@ export default {
       }
     },
     setMarked() {
-      this.$store.commit("session/setMarkedPlayerId", this.session.nomination[1]);
-      this.finish();
+      this.$store.commit("session/setMarkedPlayer", this.session.nomination[1]);
     },
     removeMarked() {
-      this.$store.commit("session/setMarkedPlayerId", -1);
-      this.finish();
+      this.$store.commit("session/setMarkedPlayer", -1);
     }
   }
 };
@@ -277,6 +270,11 @@ export default {
   text-align: center;
   text-shadow: 0 1px 2px #000000, 0 -1px 2px #000000, 1px 0 2px #000000,
     -1px 0 2px #000000;
+
+  .mark .button {
+    font-size: 75%;
+    margin: 0;
+  }
 
   &:after {
     content: " ";

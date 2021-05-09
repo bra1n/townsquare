@@ -251,13 +251,6 @@ export default {
       this.move = -1;
       this.swap = -1;
       this.nominate = -1;
-    },
-    toggleOnBlock(playerIndex) {
-      if (this.players[playerIndex].isMarked) {
-        this.$store.commit("players/setMarked", -1);
-      } else {
-        this.$store.commit("players/setMarked", playerIndex);
-      }
     }
   }
 };

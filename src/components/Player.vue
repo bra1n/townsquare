@@ -6,6 +6,7 @@
       :class="[
         {
           dead: player.isDead,
+          marked: session.markedPlayer === index,
           'no-vote': player.isVoteless,
           you: session.sessionId && player.id && player.id === session.playerId,
           'vote-yes': session.votes[index],
@@ -99,12 +100,9 @@
       />
 
       <!-- On block icon -->
-      <font-awesome-icon
-        icon="skull"
-        v-if="session.markedPlayerId === index"
-        class="on-block"
-      />
-
+      <div class="marked">
+        <font-awesome-icon icon="skull" />
+      </div>
       <div
         class="name"
         @click="isMenuOpen = !isMenuOpen"
@@ -144,12 +142,6 @@
               <font-awesome-icon icon="times-circle" />
               Remove
             </li>
-            <template v-if="!session.nomination">
-              <li @click="nominatePlayer()">
-                <font-awesome-icon icon="hand-point-right" />
-                Nomination
-              </li>
-            </template>
             <li
               @click="updatePlayer('id', '', true)"
               v-if="player.id && session.sessionId"
@@ -157,6 +149,12 @@
               <font-awesome-icon icon="chair" />
               Empty seat
             </li>
+            <template v-if="!session.nomination">
+              <li @click="nominatePlayer()">
+                <font-awesome-icon icon="hand-point-right" />
+                Nomination
+              </li>
+            </template>
           </template>
           <li
             @click="claimSeat"
@@ -594,8 +592,7 @@ li.move:not(.from) .player .overlay svg.move {
 }
 
 /****** Vote icon ********/
-.player .has-vote,
-.player .on-block {
+.player .has-vote {
   color: #fff;
   filter: drop-shadow(0 0 3px black);
   transition: opacity 250ms;
@@ -611,13 +608,6 @@ li.move:not(.from) .player .overlay svg.move {
   position: absolute;
   margin-top: -15%;
   right: 2px;
-}
-
-.on-block {
-  position: absolute;
-  margin-top: -95%;
-  right: 2px;
-  color: darkred;
 }
 
 /****** Session seat glow *****/
@@ -649,6 +639,38 @@ li.move:not(.from) .player .overlay svg.move {
 
 .player.you .token {
   animation: townsfolk-glow 5s ease-in-out infinite;
+}
+
+/****** Marked icon ******/
+.player .marked {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  filter: drop-shadow(0px 0px 6px black);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 250ms;
+  opacity: 0;
+  &:before {
+    content: " ";
+    padding-top: 100%;
+    display: block;
+  }
+  svg {
+    height: 60%;
+    width: 60%;
+    position: absolute;
+    stroke: white;
+    stroke-width: 15px;
+    path {
+      fill: white;
+    }
+  }
+}
+.player.marked .marked {
+  opacity: 0.5;
 }
 
 /****** Seat icon ********/
