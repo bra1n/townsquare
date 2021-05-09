@@ -46,6 +46,7 @@ const mutations = {
   setPing: set("ping"),
   setVotingSpeed: set("votingSpeed"),
   setVoteInProgress: set("isVoteInProgress"),
+  setNomination: set("nomination"),
   setVoteHistoryAllowed: set("isVoteHistoryAllowed"),
   claimSeat: set("claimedSeat"),
   distributeRoles: set("isRolesDistributed"),

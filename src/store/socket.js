@@ -664,10 +664,12 @@ class LiveSession {
   /**
    * A player nomination. ST only
    * This also syncs the voting speed to the players.
-   * @param nomination [nominator, nominee]
+   * Payload can be an object with {nomination} property or just the nomination itself, or undefined.
+   * @param payload [nominator, nominee]|{nomination}
    */
-  nomination({ nomination } = {}) {
+  nomination(payload) {
     if (this._isSpectator) return;
+    const nomination = payload ? payload.nomination || payload : payload;
     const players = this._store.state.players.players;
     if (
       !nomination ||
@@ -842,6 +844,7 @@ export default store => {
         }
         break;
       case "session/nomination":
+      case "session/setNomination":
         session.nomination(payload);
         break;
       case "session/setVoteInProgress":

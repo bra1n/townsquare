@@ -122,7 +122,7 @@ export default {
       const nomination = this.session.nomination[0];
       return {
         transform: `rotate(${Math.round((nomination / players) * 360)}deg)`,
-        transitionDuration: this.session.votingSpeed - 0.1 + "s"
+        transitionDuration: this.session.votingSpeed - 100 + "ms"
       };
     },
     nominee: function() {

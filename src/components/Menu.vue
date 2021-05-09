@@ -327,6 +327,10 @@ export default {
     clearPlayers() {
       if (this.session.isSpectator) return;
       if (confirm("Are you sure you want to remove all players?")) {
+        // abort vote if in progress
+        if (this.session.nomination) {
+          this.$store.commit("session/nomination");
+        }
         this.$store.commit("players/clear");
       }
     },
