@@ -1,5 +1,6 @@
 # Release Notes
 
+- added global animation toggle for better performance
 - added record vote history toggle to session menu, and clear vote history button
 - add support for custom Fabled characters
 

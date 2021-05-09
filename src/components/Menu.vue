@@ -83,6 +83,10 @@
               />
             </em>
           </li>
+          <li @click="setBackground">
+            Background image
+            <em><font-awesome-icon icon="image"/></em>
+          </li>
           <li v-if="!edition.isOfficial" @click="imageOptIn">
             <small>Show Custom Images</small>
             <em
@@ -93,9 +97,12 @@
                 ]"
             /></em>
           </li>
-          <li @click="setBackground">
-            Background image
-            <em><font-awesome-icon icon="image"/></em>
+          <li @click="toggleStatic">
+            Disable Animations
+            <em
+              ><font-awesome-icon
+                :icon="['fas', grimoire.isStatic ? 'check-square' : 'square']"
+            /></em>
           </li>
           <li @click="toggleMuted">
             Mute Sounds
@@ -335,6 +342,7 @@ export default {
       "toggleMuted",
       "toggleNight",
       "toggleNightOrder",
+      "toggleStatic",
       "setZoom",
       "toggleModal"
     ])
