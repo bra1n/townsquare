@@ -110,7 +110,7 @@ export default {
           this.$store.commit("toggleModal", "roles");
           break;
         case "v":
-          if (this.session.voteHistory.length) {
+          if (this.session.voteHistory.length || !this.session.isSpectator) {
             this.$store.commit("toggleModal", "voteHistory");
           }
           break;

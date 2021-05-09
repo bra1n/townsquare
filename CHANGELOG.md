@@ -1,6 +1,6 @@
 # Release Notes
 
-### Version 2.13.0
+- added record vote history toggle to session menu, and clear vote history button
 - add support for custom Fabled characters
 
 ---

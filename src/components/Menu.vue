@@ -60,13 +60,14 @@
           </li>
           <li @click="toggleNightOrder" v-if="players.length">
             Night order
-            <em
-              ><font-awesome-icon
+            <em>
+              <font-awesome-icon
                 :icon="[
                   'fas',
                   grimoire.isNightOrder ? 'check-square' : 'square'
                 ]"
-            /></em>
+              />
+            </em>
           </li>
           <li v-if="players.length">
             Zoom
@@ -131,10 +132,10 @@
               <em><font-awesome-icon icon="theater-masks"/></em>
             </li>
             <li
-              v-if="session.voteHistory.length"
+              v-if="session.voteHistory.length || !session.isSpectator"
               @click="toggleModal('voteHistory')"
             >
-              Nomination history<em>[V]</em>
+              Vote history<em>[V]</em>
             </li>
             <li @click="leaveSession">
               Leave Session
