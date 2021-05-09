@@ -32,7 +32,7 @@
             @mousedown.prevent="setVotingSpeed(-500)"
             icon="minus-circle"
           />
-          {{ session.votingSpeed / 1000 }}s
+          {{ (session.votingSpeed / 1000).toFixed(1) }}s
           <font-awesome-icon
             @mousedown.prevent="setVotingSpeed(500)"
             icon="plus-circle"
