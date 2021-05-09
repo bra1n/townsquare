@@ -1,11 +1,14 @@
 # Release Notes
 
 - added record vote history toggle to session menu, and clear vote history button
+- add support for custom Fabled characters
+
+---
 
 ### Version 2.12.0
 - tweak reference sheet to better fit screen in single column layout
 - add warning icon overlay for setup roles on character assignment modal
-- added Heretic and Marionette to list of available characters
+- added Heretic and Marionette plus King/Choirboy and the Gangster to list of available characters
 
 ---
 
