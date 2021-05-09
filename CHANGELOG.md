@@ -1,6 +1,7 @@
 # Release Notes
 
-- added record vote history toggle to session menu, and clear vote history button
+- storyteller can set if vote history is allowed for players
+- vote history allowed state & voting speed are remembered while storytelling
 
 ### Version 2.12.0
 - tweak reference sheet to better fit screen in single column layout
