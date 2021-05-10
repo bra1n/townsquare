@@ -25,6 +25,7 @@ const state = () => ({
   votingSpeed: 3000,
   isVoteInProgress: false,
   voteHistory: [],
+  markedPlayer: -1,
   isVoteHistoryAllowed: true,
   isRolesDistributed: false
 });
@@ -46,6 +47,7 @@ const mutations = {
   setPing: set("ping"),
   setVotingSpeed: set("votingSpeed"),
   setVoteInProgress: set("isVoteInProgress"),
+  setMarkedPlayer: set("markedPlayer"),
   setNomination: set("nomination"),
   setVoteHistoryAllowed: set("isVoteHistoryAllowed"),
   claimSeat: set("claimedSeat"),
