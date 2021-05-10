@@ -7,15 +7,9 @@ import session from "./modules/session";
 import editionJSON from "../editions.json";
 import rolesJSON from "../roles.json";
 import fabledJSON from "../fabled.json";
+import jinxesJSON from "../hatred.json";
 
 Vue.use(Vuex);
-
-// global data maps
-const editionJSONbyId = new Map(
-  editionJSON.map(edition => [edition.id, edition])
-);
-const rolesJSONbyId = new Map(rolesJSON.map(role => [role.id, role]));
-const fabled = new Map(fabledJSON.map(role => [role.id, role]));
 
 // helper functions
 const getRolesByEdition = (edition = editionJSON[0]) => {
@@ -51,6 +45,33 @@ const toggle = key => ({ grimoire }, val) => {
     grimoire[key] = !grimoire[key];
   }
 };
+
+const clean = id => id.toLocaleLowerCase().replace(/[^a-z0-9]/g, "");
+
+// global data maps
+const editionJSONbyId = new Map(
+  editionJSON.map(edition => [edition.id, edition])
+);
+const rolesJSONbyId = new Map(rolesJSON.map(role => [role.id, role]));
+const fabled = new Map(fabledJSON.map(role => [role.id, role]));
+
+// jinxes
+let jinxes = {};
+try {
+  // Note: can't fetch live list due to lack of CORS headers
+  // fetch("https://bloodontheclocktower.com/script/data/hatred.json")
+  //   .then(res => res.json())
+  //   .then(jinxesJSON => {
+  jinxes = new Map(
+    jinxesJSON.map(({ id, hatred }) => [
+      clean(id),
+      new Map(hatred.map(({ id, reason }) => [clean(id), reason]))
+    ])
+  );
+  // });
+} catch (e) {
+  console.error("couldn't load jinxes", e);
+}
 
 // base definition for custom roles
 const customRole = {
@@ -101,7 +122,8 @@ export default new Vuex.Store({
     edition: editionJSONbyId.get("tb"),
     roles: getRolesByEdition(),
     otherTravelers: getTravelersNotInEdition(),
-    fabled
+    fabled,
+    jinxes
   },
   getters: {
     /**
@@ -182,7 +204,7 @@ export default new Vuex.Store({
         })
         // clean up role.id
         .map(role => {
-          role.id = role.id.toLocaleLowerCase().replace(/[^a-z0-9]/g, "");
+          role.id = clean(role.id);
           return role;
         })
         // map existing roles to base definition or pre-populate custom roles to ensure all properties
