@@ -168,6 +168,10 @@ class LiveSession {
         if (!this._isSpectator) return;
         this._store.commit("players/remove", params);
         break;
+      case "marked":
+        if (!this._isSpectator) return;
+        this._store.commit("session/setMarkedPlayer", params);
+        break;
       case "isNight":
         if (!this._isSpectator) return;
         this._store.commit("toggleNight", params);
@@ -278,6 +282,7 @@ class LiveSession {
         votingSpeed: session.votingSpeed,
         lockedVote: session.lockedVote,
         isVoteInProgress: session.isVoteInProgress,
+        markedPlayer: session.markedPlayer,
         fabled: fabled.map(f => (f.isCustom ? f : { id: f.id })),
         ...(session.nomination ? { votes: session.votes } : {})
       });
@@ -301,6 +306,7 @@ class LiveSession {
       votes,
       lockedVote,
       isVoteInProgress,
+      markedPlayer,
       fabled
     } = data;
     const players = this._store.state.players.players;
@@ -355,6 +361,7 @@ class LiveSession {
         lockedVote,
         isVoteInProgress
       });
+      this._store.commit("session/setMarkedPlayer", markedPlayer);
       this._store.commit("players/setFabled", {
         fabled: fabled.map(f => this._store.state.fabled.get(f.id) || f)
       });
@@ -719,6 +726,15 @@ class LiveSession {
   }
 
   /**
+   * Set which player is on the block. ST only
+   * @param playerIndex, player id or -1 for empty
+   */
+  setMarked(playerIndex) {
+    if (this._isSpectator) return;
+    this._send("marked", playerIndex);
+  }
+
+  /**
    * Clear the vote history for everyone. ST only
    */
   clearVoteHistory() {
@@ -873,6 +889,9 @@ export default store => {
         break;
       case "players/setFabled":
         session.sendFabled();
+        break;
+      case "session/setMarkedPlayer":
+        session.setMarked(payload);
         break;
       case "players/swap":
         session.swapPlayer(payload);

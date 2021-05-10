@@ -6,6 +6,7 @@
       :class="[
         {
           dead: player.isDead,
+          marked: session.markedPlayer === index,
           'no-vote': player.isVoteless,
           you: session.sessionId && player.id && player.id === session.playerId,
           'vote-yes': session.votes[index],
@@ -97,6 +98,11 @@
         @click="updatePlayer('isVoteless', true)"
         title="Ghost vote"
       />
+
+      <!-- On block icon -->
+      <div class="marked">
+        <font-awesome-icon icon="skull" />
+      </div>
       <div
         class="name"
         @click="isMenuOpen = !isMenuOpen"
@@ -124,10 +130,6 @@
             <li @click="changeName">
               <font-awesome-icon icon="user-edit" />Rename
             </li>
-            <li v-if="!session.nomination" @click="nominatePlayer()">
-              <font-awesome-icon icon="hand-point-right" />
-              Nomination
-            </li>
             <li @click="movePlayer()" :class="{ disabled: session.lockedVote }">
               <font-awesome-icon icon="redo-alt" />
               Move player
@@ -136,6 +138,10 @@
               <font-awesome-icon icon="exchange-alt" />
               Swap seats
             </li>
+            <li @click="removePlayer" :class="{ disabled: session.lockedVote }">
+              <font-awesome-icon icon="times-circle" />
+              Remove
+            </li>
             <li
               @click="updatePlayer('id', '', true)"
               v-if="player.id && session.sessionId"
@@ -143,10 +149,12 @@
               <font-awesome-icon icon="chair" />
               Empty seat
             </li>
-            <li @click="removePlayer" :class="{ disabled: session.lockedVote }">
-              <font-awesome-icon icon="times-circle" />
-              Remove
-            </li>
+            <template v-if="!session.nomination">
+              <li @click="nominatePlayer()">
+                <font-awesome-icon icon="hand-point-right" />
+                Nomination
+              </li>
+            </template>
           </template>
           <li
             @click="claimSeat"
@@ -257,6 +265,9 @@ export default {
       if (this.grimoire.isPublic) {
         if (!this.player.isDead) {
           this.updatePlayer("isDead", true);
+          if (this.player.isMarked) {
+            this.updatePlayer("isMarked", false);
+          }
         } else if (this.player.isVoteless) {
           this.updatePlayer("isVoteless", false);
           this.updatePlayer("isDead", false);
@@ -265,6 +276,9 @@ export default {
         }
       } else {
         this.updatePlayer("isDead", !this.player.isDead);
+        if (this.player.isMarked) {
+          this.updatePlayer("isMarked", false);
+        }
         if (this.player.isVoteless) {
           this.updatePlayer("isVoteless", false);
         }
@@ -579,9 +593,6 @@ li.move:not(.from) .player .overlay svg.move {
 
 /****** Vote icon ********/
 .player .has-vote {
-  position: absolute;
-  right: 2px;
-  margin-top: -15%;
   color: #fff;
   filter: drop-shadow(0 0 3px black);
   transition: opacity 250ms;
@@ -591,6 +602,12 @@ li.move:not(.from) .player .overlay svg.move {
     opacity: 0;
     pointer-events: none;
   }
+}
+
+.has-vote {
+  position: absolute;
+  margin-top: -15%;
+  right: 2px;
 }
 
 /****** Session seat glow *****/
@@ -622,6 +639,38 @@ li.move:not(.from) .player .overlay svg.move {
 
 .player.you .token {
   animation: townsfolk-glow 5s ease-in-out infinite;
+}
+
+/****** Marked icon ******/
+.player .marked {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  filter: drop-shadow(0px 0px 6px black);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 250ms;
+  opacity: 0;
+  &:before {
+    content: " ";
+    padding-top: 100%;
+    display: block;
+  }
+  svg {
+    height: 60%;
+    width: 60%;
+    position: absolute;
+    stroke: white;
+    stroke-width: 15px;
+    path {
+      fill: white;
+    }
+  }
+}
+.player.marked .marked {
+  opacity: 0.5;
 }
 
 /****** Seat icon ********/
