@@ -23,6 +23,11 @@
       ></Player>
     </ul>
 
+    <div class="st-reveal" v-if="session.revealedGrimoire !== null">
+      <div class="button" v-if="players.length" @click="applyRevealedGrimoire">
+        Reveal storyteller grimoire?
+      </div>
+    </div>
     <div
       class="bluffs"
       v-if="players.length"
@@ -246,6 +251,11 @@ export default {
         this.$store.commit("session/nomination", { nomination });
         this.cancel();
       }
+    },
+    applyRevealedGrimoire() {
+      console.log("APPLY");
+      const {func, data} = this.session.revealedGrimoire;
+	  func(data);
     },
     cancel() {
       this.move = -1;

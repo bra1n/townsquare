@@ -290,7 +290,7 @@ export default {
       if (this.session.isSpectator) return;
       const popup = "Do you want to reveal the GRIMOIRE to players?";
       if (confirm(popup)) {
-        this.$store.commit("session/revealGrimoire", true);
+        this.$store.commit("session/setRevealedGrimoire", null);
       }
     },
     imageOptIn() {

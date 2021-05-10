@@ -246,7 +246,7 @@ class LiveSession {
   /**
    * Publish the current gamestate.
    * Optional param isLightweight to reduce traffic (=send only player data)
-   * Optional param isRevealGrimoire to reveal grimoire (=include ALL player roles, reminders & bluffs), overrides isLightweight
+   * Optional param isRevealGrimoire to reveal grimoire (=include ALL player roles, reminders & bluffs)
    * @param playerId
    * @param isLightweight
    * @param isRevealGrimoire
@@ -254,26 +254,27 @@ class LiveSession {
   sendGamestate(
     playerId = "",
     isLightweight = false,
-    isRevealGrimoire = false
+    isRevealedGrimoire = false
   ) {
     if (this._isSpectator) return;
+    if (isLightweight && isRevealedGrimoire) return; // incompatible
     this._gamestate = this._store.state.players.players.map(player => ({
       name: player.name,
       id: player.id,
       isDead: player.isDead,
       isVoteless: player.isVoteless,
       pronouns: player.pronouns,
-      ...(player.role && (player.role.team === "traveler" || isRevealGrimoire)
+      ...(isRevealedGrimoire || (player.role && player.role.team === "traveler")
         ? { roleId: player.role.id }
-        : {}),
-      reminders: isRevealGrimoire
+        : { roleId: -1 }),
+      reminders: isRevealedGrimoire
         ? player.reminders.map(reminder => ({
             name: reminder.name,
             role: reminder.role
           }))
-        : {}
+        : -1
     }));
-    if (isLightweight && !isRevealGrimoire) {
+    if (isLightweight) {
       this._sendDirect(playerId, "gs", {
         gamestate: this._gamestate,
         isLightweight
@@ -285,7 +286,7 @@ class LiveSession {
       this._sendDirect(playerId, "gs", {
         gamestate: this._gamestate,
         isLightweight: isLightweight,
-        isRevealGrimoire: isRevealGrimoire,
+        isRevealedGrimoire: isRevealedGrimoire,
         isNight: grimoire.isNight,
         isVoteHistoryAllowed: session.isVoteHistoryAllowed,
         nomination: session.nomination,
@@ -294,6 +295,9 @@ class LiveSession {
         isVoteInProgress: session.isVoteInProgress,
         fabled: fabled.map(f => (f.isCustom ? f : { id: f.id })),
         ...(session.nomination ? { votes: session.votes } : {})
+        bluffs: isRevealedGrimoire
+          ? bluffs.map(bluff => ({ roleId: bluff.id }))
+          : -1
       });
     }
   }
@@ -308,7 +312,7 @@ class LiveSession {
     const {
       gamestate,
       isLightweight,
-      isRevealGrimoire,
+      isRevealedGrimoire,
       isNight,
       isVoteHistoryAllowed,
       nomination,
@@ -319,14 +323,14 @@ class LiveSession {
       fabled,
       bluffs
     } = data;
-    if (isRevealGrimoire) {
-      // includes ALL roles, reminders & bluffs
-      const popup =
-        "Reveal the Storyteller's grimoire? This will overwrite your grimoire.";
-      if (!confirm(popup)) {
-        return;
-      }
+    if (isRevealedGrimoire) {
+      // special case: this includes ALL roles, reminders & bluffs
+      // would overwrite users notes, so we have to (store and) ask before applying
+      this._store.commit("session/setRevealedGrimoire", data );
+      return;
     }
+	
+	
     const players = this._store.state.players.players;
     // adjust number of players
     if (players.length < gamestate.length) {
@@ -341,19 +345,26 @@ class LiveSession {
     // update status for each player
     gamestate.forEach((state, x) => {
       const player = players[x];
-      const { roleId } = state;
-      // update relevant properties
+      // properties we always update
       ["name", "id", "isDead", "isVoteless", "pronouns"].forEach(property => {
         const value = state[property];
         if (player[property] !== value) {
           this._store.commit("players/update", { player, property, value });
         }
       });
-      // roles are special, because of travelers
-      if (roleId && player.role.id !== roleId) {
+	  // roles
+      const { roleId } = state;
+      if ((roleId == {} || roleId !== -1) && player.role.team === "traveler") {
+        // special case for when a player stopped being a traveler
+        this._store.commit("players/update", {
+          player,
+          property: "role",
+          value: {}
+        });
+      } else if (roleId !== -1 && player.role.id !== roleId) {
         const role =
           this._store.state.roles.get(roleId) ||
-          this._store.getters.rolesJSONbyId.get(roleId);
+          this._store.getters.rolesJSONbyId.get(roleId) || {};
         if (role) {
           this._store.commit("players/update", {
             player,
@@ -361,15 +372,9 @@ class LiveSession {
             value: role
           });
         }
-      } else if (!roleId && player.role.team === "traveler") {
-        this._store.commit("players/update", {
-          player,
-          property: "role",
-          value: {}
-        });
       }
       // reminder tokens
-      if (isRevealGrimoire) {
+      if (state.reminders !== -1) {
         this._store.commit("players/update", {
           player,
           property: "reminders",
@@ -378,6 +383,7 @@ class LiveSession {
       }
     });
     if (!isLightweight) {
+      // properties we always update
       this._store.commit("toggleNight", !!isNight);
       this._store.commit("session/setVoteHistoryAllowed", isVoteHistoryAllowed);
       this._store.commit("session/nomination", {
@@ -390,8 +396,8 @@ class LiveSession {
       this._store.commit("players/setFabled", {
         fabled: fabled.map(f => this._store.state.fabled.get(f.id) || f)
       });
-      if (isRevealGrimoire) {
-        this._store.commit("session/revealGrimoire", true);
+      // bluffs
+	  if (bluffs !== -1) {
         bluffs.forEach((bluff, i) => {
           const role =
             this._store.state.roles.get(bluff.roleId) ||
@@ -888,7 +894,7 @@ export default store => {
           session.distributeRoles();
         }
         break;
-      case "session/revealGrimoire":
+      case "session/setRevealedGrimoire":
         session.sendGamestate("", false, true);
         break;
       case "session/nomination":
