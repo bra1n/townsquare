@@ -252,15 +252,13 @@ export default {
         this.cancel();
       }
     },
-    applyRevealedGrimoire() {
-      console.log("APPLY");
-      const {func, data} = this.session.revealedGrimoire;
-	  func(data);
-    },
     cancel() {
       this.move = -1;
       this.swap = -1;
       this.nominate = -1;
+    },
+    applyRevealedGrimoire() {
+      this.$store.commit("updateGameState", this.session.revealedGrimoire);
     }
   }
 };
@@ -649,6 +647,12 @@ export default {
       }
     }
   }
+}
+
+.st-reveal {
+  position: absolute;
+  margin: 0 auto;
+  bottom: 30%;
 }
 
 #townsquare:not(.spectator) .fabled ul li:hover .token:before {
