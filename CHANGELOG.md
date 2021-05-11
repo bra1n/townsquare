@@ -4,9 +4,11 @@
 - add vue linter
 - use "Exile" rather than "Banishment" for exiles
 - added global animation toggle for better performance
-- added record vote history toggle to session menu, and clear vote history button
+- add storyteller toggle to allow vote history
+- add storyteller persistence for vote speed and allow vote history
+- add storyteller grimoire reveal to main menu
 - add support for custom Fabled characters
-- add ST reveal grimoire
+- add 'marked for execution' indicator
 
 ### Version 2.12.0
 - tweak reference sheet to better fit screen in single column layout
