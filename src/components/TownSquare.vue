@@ -23,7 +23,10 @@
       ></Player>
     </ul>
 
-    <div class="button-group st-reveal" v-if="session.revealedGrimoire !== null">
+    <div
+      class="button-group st-reveal"
+      v-if="session.revealedGrimoire !== null"
+    >
       <div class="button" @click="applyRevealedGrimoire">
         Reveal grimoire
       </div>
