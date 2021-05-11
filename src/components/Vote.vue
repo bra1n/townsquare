@@ -19,12 +19,6 @@
       </em>
       <em v-else>(majority is {{ Math.ceil(players.length / 2) }})</em>
 
-      <div v-if="session.isVoteInProgress || session.lockedVote > 1">
-        <em class="blue" v-if="voters.length">{{ voters.join(", ") }} </em>
-        <span v-else>nobody</span>
-        had their hand <em>UP</em>
-      </div>
-
       <template v-if="!session.isSpectator">
         <div v-if="!session.isVoteInProgress && session.lockedVote < 1">
           Time per player:
@@ -60,6 +54,20 @@
             <div class="button" @click="stop">Reset</div>
           </template>
           <div class="button demon" @click="finish">Close</div>
+        </div>
+        <div class="button-group mark" v-if="nominee.role.team !== 'traveler'">
+          <div
+            class="button"
+            :class="{
+              disabled: session.nomination[1] === session.markedPlayer
+            }"
+            @click="setMarked"
+          >
+            Mark for execution
+          </div>
+          <div class="button" @click="removeMarked">
+            Clear mark
+          </div>
         </div>
       </template>
       <template v-else-if="canVote">
@@ -235,6 +243,12 @@ export default {
       if (speed > 0) {
         this.$store.commit("session/setVotingSpeed", speed);
       }
+    },
+    setMarked() {
+      this.$store.commit("session/setMarkedPlayer", this.session.nomination[1]);
+    },
+    removeMarked() {
+      this.$store.commit("session/setMarkedPlayer", -1);
     }
   }
 };
@@ -256,6 +270,11 @@ export default {
   text-align: center;
   text-shadow: 0 1px 2px #000000, 0 -1px 2px #000000, 1px 0 2px #000000,
     -1px 0 2px #000000;
+
+  .mark .button {
+    font-size: 75%;
+    margin: 0;
+  }
 
   &:after {
     content: " ";

@@ -16,5 +16,5 @@ jobs:
         with:
           node-version: '14'
       - run: npm install
-      - run: npm run lint
+      - run: npm run lint-ci
 

@@ -6,7 +6,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build ./src/main.js",
-    "lint": "vue-cli-service lint --no-fix --max-warnings=0"
+    "lint": "vue-cli-service lint",
+    "lint-ci": "vue-cli-service lint --no-fix --max-warnings=0"
   },
   "main": "App.vue",
   "dependencies": {

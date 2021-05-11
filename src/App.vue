@@ -119,7 +119,7 @@ export default {
           break;
         case "s":
           if (this.session.isSpectator) return;
-          this.$store.commit("toggleNight");
+          this.$refs.menu.toggleNight();
           break;
         case "escape":
           this.$store.commit("toggleModal");
