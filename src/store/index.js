@@ -249,6 +249,7 @@ export default new Vuex.Store({
         votes,
         lockedVote,
         isVoteInProgress,
+		markedPlayer,
         fabled,
         bluffs
       } = data;
@@ -317,6 +318,7 @@ export default new Vuex.Store({
           lockedVote,
           isVoteInProgress
         });
+        this.commit("session/setMarkedPlayer", markedPlayer);
         this.commit("players/setFabled", {
           fabled: fabled.map(f => this._store.state.fabled.get(f.id) || f)
         });
