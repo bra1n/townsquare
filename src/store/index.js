@@ -306,35 +306,35 @@ export default new Vuex.Store({
           });
         }
       });
-      if (!isLightweight) {
-        this.commit("toggleNight", !!isNight);
-        this.commit("session/setVoteHistoryAllowed", isVoteHistoryAllowed);
-        if (nomination !== -1) {
-          this.commit("session/nomination", {
-            nomination,
-            votes,
-            votingSpeed,
-            lockedVote,
-            isVoteInProgress
-          });
-        }
-        this.commit("session/setMarkedPlayer", markedPlayer);
-        this.commit("players/setFabled", {
-          fabled: fabled.map(f => state.fabled.get(f.id) || f)
+      if (isLightweight) return;
+      // townsquare
+      this.commit("toggleNight", !!isNight);
+      this.commit("session/setVoteHistoryAllowed", isVoteHistoryAllowed);
+      if (nomination !== -1) {
+        this.commit("session/nomination", {
+          nomination,
+          votes,
+          votingSpeed,
+          lockedVote,
+          isVoteInProgress
         });
-        // bluffs
-        if (bluffs !== -1) {
-          bluffs.forEach((bluff, i) => {
-            const role =
-              this.state.roles.get(bluff.roleId) ||
-              this.getters.rolesJSONbyId.get(bluff.roleId) ||
-              {};
-            this.commit("players/setBluff", {
-              index: i,
-              role
-            });
+      }
+      this.commit("session/setMarkedPlayer", markedPlayer);
+      this.commit("players/setFabled", {
+        fabled: fabled.map(f => state.fabled.get(f.id) || f)
+      });
+      // bluffs
+      if (bluffs !== -1) {
+        bluffs.forEach((bluff, i) => {
+          const role =
+            this.state.roles.get(bluff.roleId) ||
+            this.getters.rolesJSONbyId.get(bluff.roleId) ||
+            {};
+          this.commit("players/setBluff", {
+            index: i,
+            role
           });
-        }
+        });
       }
       if (isRevealedGrimoire) {
         this.commit("session/setRevealedGrimoire", null);

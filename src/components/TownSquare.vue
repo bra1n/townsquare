@@ -23,9 +23,12 @@
       ></Player>
     </ul>
 
-    <div class="st-reveal" v-if="session.revealedGrimoire !== null">
-      <div class="button" v-if="players.length" @click="applyRevealedGrimoire">
-        Reveal storyteller grimoire?
+    <div class="button-group st-reveal" v-if="session.revealedGrimoire !== null">
+      <div class="button" @click="applyRevealedGrimoire">
+        Reveal grimoire
+      </div>
+      <div class="button" @click="dismissRevealedGrimoire">
+        Dismiss
       </div>
     </div>
     <div
@@ -259,6 +262,9 @@ export default {
     },
     applyRevealedGrimoire() {
       this.$store.commit("updateGameState", this.session.revealedGrimoire);
+    },
+    dismissRevealedGrimoire() {
+      this.$store.commit("session/setRevealedGrimoire", null);
     }
   }
 };
@@ -652,7 +658,8 @@ export default {
 .st-reveal {
   position: absolute;
   margin: 0 auto;
-  bottom: 30%;
+  bottom: 35%;
+  z-index: 10;
 }
 
 #townsquare:not(.spectator) .fabled ul li:hover .token:before {
