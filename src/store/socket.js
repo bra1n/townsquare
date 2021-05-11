@@ -315,7 +315,7 @@ class LiveSession {
   _updateGamestate(data) {
     if (!this._isSpectator) return;
     if (data.isRevealedGrimoire) {
-      // special case: this includes ALL roles, reminders & bluffs
+      // special case: includes ALL roles, reminders & bluffs
       // would overwrite users notes, so we have to (store and) ask before applying
       this._store.commit("session/setRevealedGrimoire", data);
       return;

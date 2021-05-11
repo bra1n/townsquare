@@ -238,6 +238,7 @@ export default new Vuex.Store({
       state.modals.edition = false;
     },
     updateGameState(state, data) {
+      // data from socket _sendGameState
       const {
         playerState,
         isLightweight,
@@ -249,7 +250,7 @@ export default new Vuex.Store({
         votes,
         lockedVote,
         isVoteInProgress,
-		markedPlayer,
+        markedPlayer,
         fabled,
         bluffs
       } = data;
@@ -278,7 +279,6 @@ export default new Vuex.Store({
         const { roleId } = state;
         if (roleId == {} && player.role.team === "traveler" && roleId !== -1) {
           // special case for when a player stopped being a traveler
-          console.log("special case", roleId);
           this.commit("players/update", {
             player,
             property: "role",
@@ -290,7 +290,6 @@ export default new Vuex.Store({
             this.getters.rolesJSONbyId.get(roleId) ||
             {};
           if (role) {
-            console.log("normal case", roleId);
             this.commit("players/update", {
               player,
               property: "role",
@@ -320,7 +319,7 @@ export default new Vuex.Store({
         });
         this.commit("session/setMarkedPlayer", markedPlayer);
         this.commit("players/setFabled", {
-          fabled: fabled.map(f => this._store.state.fabled.get(f.id) || f)
+          fabled: fabled.map(f => state.fabled.get(f.id) || f)
         });
         // bluffs
         if (bluffs !== -1) {
