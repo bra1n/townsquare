@@ -248,7 +248,7 @@ class LiveSession {
   }
 
   /**
-   * Publish the current game state.
+   * Publish the current game state, as seen by a player
    * Optional param isLightweight to reduce traffic (=send only player data)
    * Optional param isRevealGrimoire to reveal grimoire (=include ALL player roles, reminders & bluffs)
    * @param playerId
@@ -294,7 +294,7 @@ class LiveSession {
       isRevealedGrimoire: isRevealedGrimoire,
       isNight: grimoire.isNight,
       isVoteHistoryAllowed: session.isVoteHistoryAllowed,
-      nomination: session.nomination,
+      nomination: isRevealedGrimoire ? -1 : session.nomination,
       votingSpeed: session.votingSpeed,
       lockedVote: session.lockedVote,
       isVoteInProgress: session.isVoteInProgress,

@@ -307,16 +307,17 @@ export default new Vuex.Store({
         }
       });
       if (!isLightweight) {
-        // properties we always update
         this.commit("toggleNight", !!isNight);
         this.commit("session/setVoteHistoryAllowed", isVoteHistoryAllowed);
-        this.commit("session/nomination", {
-          nomination,
-          votes,
-          votingSpeed,
-          lockedVote,
-          isVoteInProgress
-        });
+        if (nomination !== -1) {
+          this.commit("session/nomination", {
+            nomination,
+            votes,
+            votingSpeed,
+            lockedVote,
+            isVoteInProgress
+          });
+        }
         this.commit("session/setMarkedPlayer", markedPlayer);
         this.commit("players/setFabled", {
           fabled: fabled.map(f => state.fabled.get(f.id) || f)
