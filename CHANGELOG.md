@@ -7,6 +7,7 @@
 - add support for custom Fabled characters
 - add storyteller choice to allow player vote history
 - add persistence for vote speed and vote history allowed, when storyteller
+- show Jinxed interactions on character reference list
 - add 'marked for execution' indicator
 
 ---
