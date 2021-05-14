@@ -1,5 +1,8 @@
 # Release Notes
 
+---
+
+### Version 2.13.0
 - fix players being moved or removed during nomination
 - add vue linter
 - use "Exile" rather than "Banishment" for exiles
