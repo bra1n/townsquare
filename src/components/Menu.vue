@@ -60,13 +60,14 @@
           </li>
           <li @click="toggleNightOrder" v-if="players.length">
             Night order
-            <em
-              ><font-awesome-icon
+            <em>
+              <font-awesome-icon
                 :icon="[
                   'fas',
                   grimoire.isNightOrder ? 'check-square' : 'square'
                 ]"
-            /></em>
+              />
+            </em>
           </li>
           <li v-if="players.length">
             Zoom
@@ -82,6 +83,10 @@
               />
             </em>
           </li>
+          <li @click="setBackground">
+            Background image
+            <em><font-awesome-icon icon="image"/></em>
+          </li>
           <li v-if="!edition.isOfficial" @click="imageOptIn">
             <small>Show Custom Images</small>
             <em
@@ -92,9 +97,12 @@
                 ]"
             /></em>
           </li>
-          <li @click="setBackground">
-            Background image
-            <em><font-awesome-icon icon="image"/></em>
+          <li @click="toggleStatic">
+            Disable Animations
+            <em
+              ><font-awesome-icon
+                :icon="['fas', grimoire.isStatic ? 'check-square' : 'square']"
+            /></em>
           </li>
           <li @click="toggleMuted">
             Mute Sounds
@@ -131,10 +139,10 @@
               <em><font-awesome-icon icon="theater-masks"/></em>
             </li>
             <li
-              v-if="session.voteHistory.length"
+              v-if="session.voteHistory.length || !session.isSpectator"
               @click="toggleModal('voteHistory')"
             >
-              Nomination history<em>[V]</em>
+              Vote history<em>[V]</em>
             </li>
             <li @click="leaveSession">
               Leave Session
@@ -319,6 +327,10 @@ export default {
     clearPlayers() {
       if (this.session.isSpectator) return;
       if (confirm("Are you sure you want to remove all players?")) {
+        // abort vote if in progress
+        if (this.session.nomination) {
+          this.$store.commit("session/nomination");
+        }
         this.$store.commit("players/clear");
       }
     },
@@ -327,13 +339,19 @@ export default {
         this.$store.dispatch("players/clearRoles");
       }
     },
+    toggleNight() {
+      this.$store.commit("toggleNight");
+      if (this.grimoire.isNight) {
+        this.$store.commit("session/setMarkedPlayer", -1);
+      }
+    },
     ...mapMutations([
       "toggleGrimoire",
       "toggleMenu",
       "toggleImageOptIn",
       "toggleMuted",
-      "toggleNight",
       "toggleNightOrder",
+      "toggleStatic",
       "setZoom",
       "toggleModal"
     ])

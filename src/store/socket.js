@@ -168,9 +168,18 @@ class LiveSession {
         if (!this._isSpectator) return;
         this._store.commit("players/remove", params);
         break;
+      case "marked":
+        if (!this._isSpectator) return;
+        this._store.commit("session/setMarkedPlayer", params);
+        break;
       case "isNight":
         if (!this._isSpectator) return;
         this._store.commit("toggleNight", params);
+        break;
+      case "isVoteHistoryAllowed":
+        if (!this._isSpectator) return;
+        this._store.commit("session/setVoteHistoryAllowed", params);
+        this._store.commit("session/clearVoteHistory");
         break;
       case "votingSpeed":
         if (!this._isSpectator) return;
@@ -268,11 +277,13 @@ class LiveSession {
       this._sendDirect(playerId, "gs", {
         gamestate: this._gamestate,
         isNight: grimoire.isNight,
+        isVoteHistoryAllowed: session.isVoteHistoryAllowed,
         nomination: session.nomination,
         votingSpeed: session.votingSpeed,
         lockedVote: session.lockedVote,
         isVoteInProgress: session.isVoteInProgress,
-        fabled: fabled.map(({ id }) => id),
+        markedPlayer: session.markedPlayer,
+        fabled: fabled.map(f => (f.isCustom ? f : { id: f.id })),
         ...(session.nomination ? { votes: session.votes } : {})
       });
     }
@@ -289,11 +300,13 @@ class LiveSession {
       gamestate,
       isLightweight,
       isNight,
+      isVoteHistoryAllowed,
       nomination,
       votingSpeed,
       votes,
       lockedVote,
       isVoteInProgress,
+      markedPlayer,
       fabled
     } = data;
     const players = this._store.state.players.players;
@@ -340,6 +353,7 @@ class LiveSession {
     });
     if (!isLightweight) {
       this._store.commit("toggleNight", !!isNight);
+      this._store.commit("session/setVoteHistoryAllowed", isVoteHistoryAllowed);
       this._store.commit("session/nomination", {
         nomination,
         votes,
@@ -347,8 +361,9 @@ class LiveSession {
         lockedVote,
         isVoteInProgress
       });
+      this._store.commit("session/setMarkedPlayer", markedPlayer);
       this._store.commit("players/setFabled", {
-        fabled: fabled.map(id => this._store.state.fabled.get(id))
+        fabled: fabled.map(f => this._store.state.fabled.get(f.id) || f)
       });
     }
   }
@@ -407,7 +422,7 @@ class LiveSession {
     const { fabled } = this._store.state.players;
     this._send(
       "fabled",
-      fabled.map(({ id }) => id)
+      fabled.map(f => (f.isCustom ? f : { id: f.id }))
     );
   }
 
@@ -419,7 +434,7 @@ class LiveSession {
   _updateFabled(fabled) {
     if (!this._isSpectator) return;
     this._store.commit("players/setFabled", {
-      fabled: fabled.map(id => this._store.state.fabled.get(id))
+      fabled: fabled.map(f => this._store.state.fabled.get(f.id) || f)
     });
   }
 
@@ -656,10 +671,12 @@ class LiveSession {
   /**
    * A player nomination. ST only
    * This also syncs the voting speed to the players.
-   * @param nomination [nominator, nominee]
+   * Payload can be an object with {nomination} property or just the nomination itself, or undefined.
+   * @param payload [nominator, nominee]|{nomination}
    */
-  nomination({ nomination } = {}) {
+  nomination(payload) {
     if (this._isSpectator) return;
+    const nomination = payload ? payload.nomination || payload : payload;
     const players = this._store.state.players.players;
     if (
       !nomination ||
@@ -687,6 +704,17 @@ class LiveSession {
   }
 
   /**
+   * Send the isVoteHistoryAllowed state. ST only
+   */
+  setVoteHistoryAllowed() {
+    if (this._isSpectator) return;
+    this._send(
+      "isVoteHistoryAllowed",
+      this._store.state.session.isVoteHistoryAllowed
+    );
+  }
+
+  /**
    * Send the voting speed. ST only
    * @param votingSpeed voting speed in seconds, minimum 1
    */
@@ -695,6 +723,15 @@ class LiveSession {
     if (votingSpeed) {
       this._send("votingSpeed", votingSpeed);
     }
+  }
+
+  /**
+   * Set which player is on the block. ST only
+   * @param playerIndex, player id or -1 for empty
+   */
+  setMarked(playerIndex) {
+    if (this._isSpectator) return;
+    this._send("marked", playerIndex);
   }
 
   /**
@@ -823,6 +860,7 @@ export default store => {
         }
         break;
       case "session/nomination":
+      case "session/setNomination":
         session.nomination(payload);
         break;
       case "session/setVoteInProgress":
@@ -840,6 +878,9 @@ export default store => {
       case "session/clearVoteHistory":
         session.clearVoteHistory();
         break;
+      case "session/setVoteHistoryAllowed":
+        session.setVoteHistoryAllowed();
+        break;
       case "toggleNight":
         session.setIsNight();
         break;
@@ -848,6 +889,9 @@ export default store => {
         break;
       case "players/setFabled":
         session.sendFabled();
+        break;
+      case "session/setMarkedPlayer":
+        session.setMarked(payload);
         break;
       case "players/swap":
         session.swapPlayer(payload);

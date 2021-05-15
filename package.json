@@ -1,12 +1,13 @@
 {
   "name": "townsquare",
-  "version": "2.12.0",
+  "version": "2.13.0",
   "description": "Blood on the Clocktower Town Square",
   "author": "Steffen Baumgart",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build ./src/main.js",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lint-ci": "vue-cli-service lint --no-fix --max-warnings=0"
   },
   "main": "App.vue",
   "dependencies": {
