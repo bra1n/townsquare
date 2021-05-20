@@ -1,5 +1,7 @@
 # Release Notes
 
+- added Farmer to list of available characters
+
 ---
 
 ### Version 2.13.0
