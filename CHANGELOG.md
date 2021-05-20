@@ -11,6 +11,7 @@
 - add support for custom Fabled characters
 - show Jinxed interactions on character reference list
 - add 'marked for execution' indicator
+- added Farmer to list of available characters
 
 ---
 
