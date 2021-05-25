@@ -2,6 +2,11 @@
 
 ---
 
+### Version 2.14.0
+- added Farmer to list of available characters
+
+---
+
 ### Version 2.13.0
 - fix players being moved or removed during nomination
 - add vue linter
