@@ -50,6 +50,40 @@
         <li :class="[team]"></li>
       </ul>
     </div>
+
+    <div class="team jinxed" v-if="jinxed.length">
+      <aside>
+        <h4>Jinxed</h4>
+      </aside>
+      <ul>
+        <li v-for="(jinx, index) in jinxed" :key="index">
+          <span
+            class="icon"
+            :style="{
+              backgroundImage: `url(${require('../../assets/icons/' +
+                jinx.first.id +
+                '.png')})`
+            }"
+          ></span>
+          <span
+            class="icon"
+            :style="{
+              backgroundImage: `url(${require('../../assets/icons/' +
+                jinx.second.id +
+                '.png')})`
+            }"
+          ></span>
+          <div class="role">
+            <span class="name"
+              >{{ jinx.first.name }} & {{ jinx.second.name }}</span
+            >
+            <span class="ability">{{ jinx.reason }}</span>
+          </div>
+        </li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
   </Modal>
 </template>
 
@@ -62,6 +96,27 @@ export default {
     Modal
   },
   computed: {
+    /**
+     * Return a list of jinxes in the form of role IDs and a reason
+     * @returns {*[]} [{first, second, reason}]
+     */
+    jinxed: function() {
+      const jinxed = [];
+      this.roles.forEach(role => {
+        if (this.jinxes.get(role.id)) {
+          this.jinxes.get(role.id).forEach((reason, second) => {
+            if (this.roles.get(second)) {
+              jinxed.push({
+                first: role,
+                second: this.roles.get(second),
+                reason
+              });
+            }
+          });
+        }
+      });
+      return jinxed;
+    },
     rolesGrouped: function() {
       const rolesGrouped = {};
       this.roles.forEach(role => {
@@ -85,7 +140,7 @@ export default {
       });
       return players;
     },
-    ...mapState(["roles", "modals", "edition", "grimoire"]),
+    ...mapState(["roles", "modals", "edition", "grimoire", "jinxes"]),
     ...mapState("players", ["players"])
   },
   methods: {
@@ -147,6 +202,15 @@ h3 {
   }
 }
 
+.jinxed {
+  .name {
+    color: $fabled;
+  }
+  aside {
+    background: linear-gradient(-90deg, $fabled, transparent);
+  }
+}
+
 .team {
   display: flex;
   align-items: stretch;
@@ -179,6 +243,12 @@ h3 {
     transform: rotate(90deg);
     transform-origin: center;
     font-size: 80%;
+  }
+
+  &.jinxed {
+    .icon {
+      margin: 0 -5px;
+    }
   }
 }
 
