@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import Vue from "vue";
 import VueI18n from "vue-i18n";
 import App from "./App";
+import translations from "./assets/translations/en.json";
 import store from "./store";
-import en from "./assets/translations/en.json";
 
 const faIcons = [
   "AddressCard",
@@ -66,6 +66,10 @@ Vue.use(VueI18n);
 
 new Vue({
   render: h => h(App),
-  i18n: new VueI18n({ locale: "en", fallbackLocale: "en", messages: { en } }),
+  i18n: new VueI18n({
+    locale: navigator.language || navigator.userLanguage,
+    fallbackLocale: "en-US",
+    messages: { "en-US": translations }
+  }),
   store
 }).$mount("#app");
