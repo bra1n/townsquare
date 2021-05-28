@@ -8,16 +8,16 @@
       @click="toggleModal('reference')"
       icon="address-card"
       class="toggle"
-      :title="this.$t('show-reference')"
+      :title="this.$t('Show Character Reference')"
     />
     <h3>
-      {{ $t("night-order-modal.night-order") }}
+      {{ $t("Night Order") }}
       <font-awesome-icon icon="cloud-moon" />
       {{ edition.name || "Custom Script" }}
     </h3>
     <div class="night">
       <ul class="first">
-        <li class="headline">{{ $t("night-order-modal.first-night") }}</li>
+        <li class="headline">{{ $t("First Night") }}</li>
         <li
           v-for="role in rolesFirstNight"
           :key="role.name"
@@ -56,7 +56,7 @@
         </li>
       </ul>
       <ul class="other">
-        <li class="headline">{{ $t("night-order-modal.other-nights") }}</li>
+        <li class="headline">{{ $t("Other Nights") }}</li>
         <li
           v-for="role in rolesOtherNight"
           :key="role.name"
@@ -114,19 +114,23 @@ export default {
         rolesFirstNight.push(
           {
             id: "evil",
-            name: this.$t("night-order-modal.minion-info"),
+            name: this.$t("Minion info"),
             firstNight: 4,
             team: "minion",
             players: this.players.filter(p => p.role.team === "minion"),
-            firstNightReminder: this.$t("night-order-modal.minion-reminder")
+            firstNightReminder: this.$t(
+              "• If more than one Minion, they all make eye contact with each other. • Show the “This is the Demon” card. Point to the Demon."
+            )
           },
           {
             id: "evil",
-            name: this.$t("night-order-modal.demon-info"),
+            name: this.$t("Demon info & bluffs"),
             firstNight: 7,
             team: "demon",
             players: this.players.filter(p => p.role.team === "demon"),
-            firstNightReminder: this.$t("night-order-modal.demon-reminder")
+            firstNightReminder: this.$t(
+              "• Show the “These are your minions” card. Point to each Minion. • Show the “These characters are not in play” card. Show 3 character tokens of good characters not in play."
+            )
           }
         );
       }

@@ -31,10 +31,10 @@
     >
       <h3>
         <span v-if="session.isSpectator">
-          {{ $t("townsquare.other-characters") }}
+          {{ $t("Other characters") }}
         </span>
         <span v-else>
-          {{ $t("townsquare.demon-bluffs") }}
+          {{ $t("Demon bluffs") }}
         </span>
         <font-awesome-icon icon="times-circle" @click.stop="toggleBluffs" />
         <font-awesome-icon icon="plus-circle" @click.stop="toggleBluffs" />
@@ -53,7 +53,7 @@
     <div class="fabled" :class="{ closed: !isFabledOpen }" v-if="fabled.length">
       <h3>
         <span>
-          {{ $t("townsquare.fabled") }}
+          {{ $t("Fabled") }}
         </span>
         <font-awesome-icon icon="times-circle" @click.stop="toggleFabled" />
         <font-awesome-icon icon="plus-circle" @click.stop="toggleFabled" />

@@ -8,10 +8,10 @@
       @click="toggleModal('nightOrder')"
       icon="cloud-moon"
       class="toggle"
-      :title="this.$t('show-night-order')"
+      :title="this.$t('Show Night Order')"
     />
     <h3>
-      {{ $t("reference-modal.character-reference") }}
+      {{ $t("Character Reference") }}
       <font-awesome-icon icon="address-card" />
       {{ edition.name || "Custom Script" }}
     </h3>
@@ -53,7 +53,7 @@
 
     <div class="team jinxed" v-if="jinxed.length">
       <aside>
-        <h4>{{ $t("reference-modal.jinxed") }}</h4>
+        <h4>{{ $t("Jinxed") }}</h4>
       </aside>
       <ul>
         <li v-for="(jinx, index) in jinxed" :key="index">

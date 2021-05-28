@@ -1,14 +1,16 @@
 <template>
   <div class="intro">
     <img src="static/apple-icon.png" alt="" />
-    <i18n path="intro.welcome">
+    <i18n
+      path="Welcome to the (unofficial) {grimoire} for Blood on the Clocktower ! Please add more players through the {menu} on the top right or by pressing {a-key}. You can also join a game session by pressing {j-key}."
+    >
       <template #menu>
         <span class="button" @click="toggleMenu">
-          <font-awesome-icon icon="cog" /> {{ $t("intro.menu") }}</span
+          <font-awesome-icon icon="cog" /> {{ $t("Menu") }}</span
         >
       </template>
       <template #grimoire>
-        <b>{{ $t("intro.townsquare-grimoire") }}</b>
+        <b>{{ $t("Virtual Town Square and Grimoire") }}</b>
       </template>
       <template #a-key>
         <b>[A]</b>
@@ -19,7 +21,9 @@
     </i18n>
     <br />
     <div class="footer">
-      <i18n path="intro.project-notice">
+      <i18n
+        path='This project is free and open source and can be found on {github}. It is not affiliated with The Pandemonium Institute. "Blood on the Clocktower" is a trademark of Steven Medway and The Pandemonium Institute.'
+      >
         <template #github>
           <a href="https://github.com/bra1n/townsquare" target="_blank"
             >GitHub</a

@@ -125,36 +125,36 @@
             "
           >
             <font-awesome-icon icon="venus-mars" />
-            {{ $t("player.change-pronouns") }}
+            {{ $t("Change Pronouns") }}
           </li>
           <template v-if="!session.isSpectator">
             <li @click="changeName">
               <font-awesome-icon icon="user-edit" />
-              {{ $t("player.rename") }}
+              {{ $t("Rename") }}
             </li>
             <li @click="movePlayer()" :class="{ disabled: session.lockedVote }">
               <font-awesome-icon icon="redo-alt" />
-              {{ $t("player.move-player") }}
+              {{ $t("Move player") }}
             </li>
             <li @click="swapPlayer()" :class="{ disabled: session.lockedVote }">
               <font-awesome-icon icon="exchange-alt" />
-              {{ $t("player.swap-seats") }}
+              {{ $t("Swap seats") }}
             </li>
             <li @click="removePlayer" :class="{ disabled: session.lockedVote }">
               <font-awesome-icon icon="times-circle" />
-              {{ $t("player.remove") }}
+              {{ $t("Remove") }}
             </li>
             <li
               @click="updatePlayer('id', '', true)"
               v-if="player.id && session.sessionId"
             >
               <font-awesome-icon icon="chair" />
-              {{ $t("player.empty-seat") }}
+              {{ $t("Empty seat") }}
             </li>
             <template v-if="!session.nomination">
               <li @click="nominatePlayer()">
                 <font-awesome-icon icon="hand-point-right" />
-                {{ $t("player.nomination") }}
+                {{ $t("Nomination") }}
               </li>
             </template>
           </template>
@@ -165,12 +165,12 @@
           >
             <font-awesome-icon icon="chair" />
             <template v-if="!player.id">
-              {{ $t("player.claim-seat") }}
+              {{ $t("Claim seat") }}
             </template>
             <template v-else-if="player.id === session.playerId">
-              {{ $t("player.vacate-seat") }}
+              {{ $t("Vacate seat") }}
             </template>
-            <template v-else> {{ $t("player.seat-occupied") }}</template>
+            <template v-else> {{ $t("Seat occupied") }}</template>
           </li>
         </ul>
       </transition>
@@ -289,7 +289,7 @@ export default {
     changeName() {
       if (this.session.isSpectator) return;
       const name =
-        prompt(this.$t("player.player-name"), this.player.name) || this.player.name;
+        prompt(this.$t("Player name"), this.player.name) || this.player.name;
       this.updatePlayer("name", name, true);
     },
     removeReminder(reminder) {

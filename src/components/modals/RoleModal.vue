@@ -2,11 +2,11 @@
   <Modal v-if="modals.role && availableRoles.length" @close="close">
     <h3>
       {{
-        $t("role-modal.choose-character", {
+        $t("Choose a new character for {player}", {
           player:
             playerIndex >= 0 && players.length
               ? players[playerIndex].name
-              : $t("role-modal.bluffing")
+              : $t("bluffing")
         })
       }}
     </h3>
@@ -39,14 +39,14 @@
         :class="{ townsfolk: tab === 'editionRoles' }"
         @click="tab = 'editionRoles'"
       >
-        {{ $t("role-modal.edition-roles") }}
+        {{ $t("Edition Roles") }}
       </span>
       <span
         class="button"
         :class="{ townsfolk: tab === 'otherTravelers' }"
         @click="tab = 'otherTravelers'"
       >
-        {{ $t("role-modal.other-travelers") }}
+        {{ $t("Other Travelers") }}
       </span>
     </div>
   </Modal>

@@ -12,7 +12,7 @@
       v-if="session.isSpectator"
     />
 
-    <h3>{{ $t("vote-history-modal.vote-history") }}</h3>
+    <h3>{{ $t("Vote history") }}</h3>
 
     <template v-if="!session.isSpectator">
       <div class="options">
@@ -23,26 +23,26 @@
               session.isVoteHistoryAllowed ? 'check-square' : 'square'
             ]"
           />
-          {{ $t("vote-history-modal.accessible-players") }}
+          {{ $t("Accessible to players") }}
         </div>
         <div class="option" @click="clearVoteHistory">
           <font-awesome-icon icon="trash-alt" />
-          {{ $t("vote-history-modal.clear") }}
+          {{ $t("Clear for everyone") }}
         </div>
       </div>
     </template>
     <table>
       <thead>
         <tr>
-          <td>{{ $t("vote-history-modal.time") }}</td>
-          <td>{{ $t("vote-history-modal.nominator") }}</td>
-          <td>{{ $t("vote-history-modal.nominee") }}</td>
-          <td>{{ $t("vote-history-modal.type") }}</td>
-          <td>{{ $t("vote-history-modal.votes") }}</td>
-          <td>{{ $t("vote-history-modal.majority") }}</td>
+          <td>{{ $t("Time") }}</td>
+          <td>{{ $t("Nominator") }}</td>
+          <td>{{ $t("Nominee") }}</td>
+          <td>{{ $t("Type") }}</td>
+          <td>{{ $t("Votes") }}</td>
+          <td>{{ $t("Majority") }}</td>
           <td>
             <font-awesome-icon icon="user-friends" />
-            {{ $t("vote-history-modal.voters") }}
+            {{ $t("Voters") }}
           </td>
         </tr>
       </thead>

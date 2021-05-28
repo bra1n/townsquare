@@ -69,6 +69,7 @@ new Vue({
   i18n: new VueI18n({
     locale: navigator.language || navigator.userLanguage,
     fallbackLocale: "en-US",
+    formatFallbackMessages: true,
     messages: { "en-US": translations }
   }),
   store

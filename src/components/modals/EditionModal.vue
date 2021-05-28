@@ -1,7 +1,7 @@
 <template>
   <Modal class="editions" v-if="modals.edition" @close="toggleModal('edition')">
     <div v-if="!isCustom">
-      <h3>{{ $t("edition-modal.select-edition") }}</h3>
+      <h3>{{ $t("Select an edition:") }}</h3>
       <ul class="editions">
         <li
           v-for="edition in editions"
@@ -24,34 +24,41 @@
             backgroundImage: `url(${require('../../assets/editions/custom.png')})`
           }"
         >
-          {{ $t("edition-modal.custom-script") }}
+          {{ $t("Custom Script / Characters") }}
         </li>
       </ul>
     </div>
     <div class="custom" v-else>
-      <h3>{{ $t("edition-modal.load-script-title") }}</h3>
-      <i18n path="edition-modal.load-script-help" tag="span">
+      <h3>{{ $t("Load custom script / characters") }}</h3>
+      <i18n
+        path='To play with a custom script, you need to select the characters you want to play with in the official {link} and then upload the generated "custom-list.json" either directly here or provide a URL to such a hosted JSON file.'
+        tag="span"
+      >
         <template #link>
           <a
             href="https://bloodontheclocktower.com/script-tool/"
             target="_blank"
-            >{{ $t("edition-modal.script-tool") }}</a
+            >{{ $t("Script Tool") }}</a
           >
         </template>
       </i18n>
       <br />
       <br />
-      <i18n path="edition-modal.custom-characters-notice">
+      <i18n
+        path="To play with custom characters, please read {documentation} on how to write a custom character definition file."
+      >
         <template #documentation>
           <a
             href="https://github.com/bra1n/townsquare#custom-characters"
             target="_blank"
-            >{{ $t("edition-modal.documentation") }}</a
+            >{{ $t("the documentation") }}</a
           >
         </template>
       </i18n>
-      <b> {{ $t("edition-modal.trusted-sources") }}</b>
-      <h3>{{ $t("edition-modal.popular-scripts") }}</h3>
+      <b>
+        {{ $t("Only load custom JSON files from sources that you trust!") }}</b
+      >
+      <h3>{{ $t("Some popular custom scripts:") }}</h3>
       <ul class="scripts">
         <li
           v-for="(script, index) in scripts"
@@ -69,13 +76,13 @@
       />
       <div class="button-group">
         <div class="button" @click="openUpload">
-          <font-awesome-icon icon="file-upload" /> {{ $t("edition-modal.upload-json") }}
+          <font-awesome-icon icon="file-upload" /> {{ $t("Upload JSON") }}
         </div>
         <div class="button" @click="promptURL">
-          <font-awesome-icon icon="link" /> {{ $t("edition-modal.enter-url") }}
+          <font-awesome-icon icon="link" /> {{ $t("Enter URL") }}
         </div>
         <div class="button" @click="isCustom = false">
-          <font-awesome-icon icon="undo" /> {{ $t("edition-modal.back") }}
+          <font-awesome-icon icon="undo" /> {{ $t("Back") }}
         </div>
       </div>
     </div>
