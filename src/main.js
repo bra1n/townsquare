@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import Vue from "vue";
 import VueI18n from "vue-i18n";
 import App from "./App";
-import translations from "./assets/translations/en.json";
 import store from "./store";
 
 const faIcons = [
@@ -64,13 +63,30 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.config.productionTip = false;
 Vue.use(VueI18n);
 
+const i18n = new VueI18n({ formatFallbackMessages: true });
+
 new Vue({
   render: h => h(App),
-  i18n: new VueI18n({
-    locale: navigator.language || navigator.userLanguage,
-    fallbackLocale: "en-US",
-    formatFallbackMessages: true,
-    messages: { "en-US": translations }
-  }),
+  i18n: i18n,
   store
 }).$mount("#app");
+
+function setI18nLanguage(lang) {
+  i18n.locale = lang;
+  document.querySelector("html").setAttribute("lang", lang);
+  return lang;
+}
+
+const loadedLanguages = [];
+
+function loadLanguageAsync(lang) {
+  return loadedLanguages.includes(lang)
+    ? Promise.resolve(setI18nLanguage(lang))
+    : import(`./assets/translations/${lang}.json`).then(messages => {
+        i18n.setLocaleMessage(lang, messages.default);
+        loadedLanguages.push(lang);
+        return setI18nLanguage(lang);
+      });
+}
+
+loadLanguageAsync(navigator.language || navigator.userLanguage);
