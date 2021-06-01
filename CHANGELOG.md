@@ -2,6 +2,11 @@
 
 ---
 
+### Version 2.15.0
+- clean up transparent portions of icons
+
+---
+
 ### Version 2.14.0
 - added Farmer to list of available characters
 
