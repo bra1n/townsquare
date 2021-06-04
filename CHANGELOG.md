@@ -4,6 +4,7 @@
 
 ### Version 2.15.0
 - clean up transparent portions of icons
+- add Magician to list of available characters
 
 ---
 
