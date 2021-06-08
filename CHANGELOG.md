@@ -2,6 +2,12 @@
 
 ---
 
+### Version 2.15.0
+- clean up transparent portions of icons
+- add Magician to list of available characters
+
+---
+
 ### Version 2.14.0
 - added Farmer to list of available characters
 

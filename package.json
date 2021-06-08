@@ -22,7 +22,7 @@
     "vue": "^2.6.12",
     "vue-template-compiler": "^2.6.12",
     "vuex": "^3.6.0",
-    "ws": "^7.4.1"
+    "ws": "^7.4.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-eslint": "^4.5.9",

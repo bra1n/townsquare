@@ -1305,6 +1305,19 @@
     "ability": "If you die at night, an alive good player becomes a Farmer."
   },
   {
+    "id": "magician",
+    "name": "Magician",
+    "edition": "",
+    "team": "townsfolk",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "ability": "The Demon thinks you are a Minion. Minions think you are a Demon."
+  },
+  {
     "id": "choirboy",
     "name": "Choirboy",
     "edition": "",
