@@ -76,6 +76,10 @@
 			{
 				"id": "Mayor",
 				"reason": "If Leviathan is in play & no execution occurs on day 5, good wins."
+			},
+			{
+				"id": "Farmer",
+				"reason": "If Leviathan is in play & a Farmer dies by execution, a good player becomes a Farmer that night."
 			}
 		]
 	},
@@ -88,6 +92,10 @@
 			{
 				"id": "Poppy Grower",
 				"reason": "If the Poppy Grower is in play, Minions don't wake together. They are woken one by one, until one of them chooses to take the Lil' Monsta token."
+			},
+			{
+				"id": "Magician",
+				"reason": "Only 1 jinxed character can be in play. "
 			}
 		]
 	},
@@ -121,6 +129,10 @@
 			{
 				"id": "Heretic",
 				"reason": "Only 1 jinxed character can be in play."
+			},
+			{
+				"id": "Magician",
+				"reason": "When the Spy sees the Grimoire, the Demon and Magician's character tokens are removed."
 			}
 		]
 	},
@@ -133,31 +145,45 @@
 			{
 				"id": "Heretic",
 				"reason": "Only 1 jinxed character can be in play."
+			},
+			{
+				"id": "Magician",
+				"reason": "When the Widow sees the Grimoire, the Demon and Magician's character tokens are removed."
 			}
 		]
-	},
-	{
+	}, {
 		"id": "Godfather",
 		"hatred": [{
 			"id": "Heretic",
 			"reason": "Only 1 jinxed character can be in play."
 		}]
-	},
-	{
+	}, {
 		"id": "Marionette",
-		"hatred": [
-		  {
-			"id": "Lil' Monsta",
-			"reason": "The Marionette neighbors a Minion, not the Demon. The Marionette is not woken to choose who takes the Lil' Monsta token."
-		  },
-		  {
-			"id": "Poppy Grower",
-			"reason": "When the Poppy Grower dies, the Demon learns the Marionette but the Marionette learns nothing."
-		  },
-		  {
-			"id": "Balloonist",
-			"reason": "If the Marionette thinks that they are the Balloonist, +1 Outsider was added."
-		  }
+		"hatred": [{
+				"id": "Lil' Monsta",
+				"reason": "The Marionette neighbors a Minion, not the Demon. The Marionette is not woken to choose who takes the Lil' Monsta token."
+			},
+			{
+				"id": "Poppy Grower",
+				"reason": "When the Poppy Grower dies, the Demon learns the Marionette but the Marionette learns nothing."
+			},
+			{
+				"id": "Balloonist",
+				"reason": "If the Marionette thinks that they are the Balloonist, +1 Outsider was added."
+			}
 		]
-	}
+	},
+  {
+    "id": "Lleech",
+    "hatred": [
+      {
+        "id": "Mastermind",
+        "reason": "If the Mastermind is alive and the Lleech's host dies by execution, the Lleech lives but loses their ability. "
+      },
+      {
+        "id": "Slayer",
+        "reason": "If the Slayer slays the Lleech's host, the host dies. "
+      }
+    ]
+  }
 ]
