@@ -1,5 +1,10 @@
 # Release Notes
 
+### Version 2.15.1
+- fix Mephit not showing up on scripts
+
+---
+
 ### Version 2.15.0
 - clean up transparent portions of icons
 - add Magician & LLeech to list of available characters
