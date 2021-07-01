@@ -2,6 +2,7 @@
 
 ### Version 2.15.1
 - fix Mephit not showing up on scripts
+- add Boomdandy to list of available characters
 
 ---
 
