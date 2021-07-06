@@ -24,6 +24,17 @@
     </ul>
 
     <div
+      class="button-group st-reveal"
+      v-if="session.revealedGrimoire !== null"
+    >
+      <div class="button" @click="applyRevealedGrimoire">
+        Reveal grimoire
+      </div>
+      <div class="button" @click="dismissRevealedGrimoire">
+        Dismiss
+      </div>
+    </div>
+    <div
       class="bluffs"
       v-if="players.length"
       ref="bluffs"
@@ -251,6 +262,12 @@ export default {
       this.move = -1;
       this.swap = -1;
       this.nominate = -1;
+    },
+    applyRevealedGrimoire() {
+      this.$store.commit("updateGameState", this.session.revealedGrimoire);
+    },
+    dismissRevealedGrimoire() {
+      this.$store.commit("session/setRevealedGrimoire", null);
     }
   }
 };
@@ -639,6 +656,13 @@ export default {
       }
     }
   }
+}
+
+.st-reveal {
+  position: absolute;
+  margin: 0 auto;
+  bottom: 35%;
+  z-index: 10;
 }
 
 #townsquare:not(.spectator) .fabled ul li:hover .token:before {

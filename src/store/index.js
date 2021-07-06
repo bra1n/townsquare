@@ -258,6 +258,109 @@ export default new Vuex.Store({
         state.edition = edition;
       }
       state.modals.edition = false;
+    },
+    updateGameState(state, data) {
+      // data from socket _sendGameState
+      const {
+        playerState,
+        isLightweight,
+        isRevealedGrimoire,
+        isNight,
+        isVoteHistoryAllowed,
+        nomination,
+        votingSpeed,
+        votes,
+        lockedVote,
+        isVoteInProgress,
+        markedPlayer,
+        fabled,
+        bluffs
+      } = data;
+      const players = state.players.players;
+      // adjust number of players
+      if (players.length < playerState.length) {
+        for (let x = players.length; x < playerState.length; x++) {
+          this.commit("players/add", playerState[x].name);
+        }
+      } else if (players.length > playerState.length) {
+        for (let x = players.length; x > playerState.length; x--) {
+          this.commit("players/remove", x - 1);
+        }
+      }
+      // update status for each player
+      playerState.forEach((state, x) => {
+        const player = players[x];
+        // properties we always update
+        ["name", "id", "isDead", "isVoteless", "pronouns"].forEach(property => {
+          const value = state[property];
+          if (player[property] !== value) {
+            this.commit("players/update", { player, property, value });
+          }
+        });
+        // roles
+        const { roleId } = state;
+        if (roleId == {} && player.role.team === "traveler" && roleId !== -1) {
+          // special case for when a player stopped being a traveler
+          this.commit("players/update", {
+            player,
+            property: "role",
+            value: {}
+          });
+        } else if (roleId !== -1 && player.role.id !== roleId) {
+          const role =
+            this.state.roles.get(roleId) ||
+            this.getters.rolesJSONbyId.get(roleId) ||
+            {};
+          if (role) {
+            this.commit("players/update", {
+              player,
+              property: "role",
+              value: role
+            });
+          }
+        }
+        // reminder tokens
+        if (state.reminders !== -1) {
+          this.commit("players/update", {
+            player,
+            property: "reminders",
+            value: state.reminders
+          });
+        }
+      });
+      if (isLightweight) return;
+      // townsquare
+      this.commit("toggleNight", !!isNight);
+      this.commit("session/setVoteHistoryAllowed", isVoteHistoryAllowed);
+      if (nomination !== -1) {
+        this.commit("session/nomination", {
+          nomination,
+          votes,
+          votingSpeed,
+          lockedVote,
+          isVoteInProgress
+        });
+      }
+      this.commit("session/setMarkedPlayer", markedPlayer);
+      this.commit("players/setFabled", {
+        fabled: fabled.map(f => state.fabled.get(f.id) || f)
+      });
+      // bluffs
+      if (bluffs !== -1) {
+        bluffs.forEach((bluff, i) => {
+          const role =
+            this.state.roles.get(bluff.roleId) ||
+            this.getters.rolesJSONbyId.get(bluff.roleId) ||
+            {};
+          this.commit("players/setBluff", {
+            index: i,
+            role
+          });
+        });
+      }
+      if (isRevealedGrimoire) {
+        this.commit("session/setRevealedGrimoire", null);
+      }
     }
   },
   plugins: [persistence, socket]
