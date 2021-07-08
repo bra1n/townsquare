@@ -12,7 +12,7 @@
       }"
     ></li>
     <li v-if="players.length - teams.traveler < 5">
-      Please add more players!
+      {{ $t("Please add more players!") }}
     </li>
     <li>
       <span class="meta" v-if="!edition.isOfficial">
@@ -64,7 +64,7 @@
         />
       </span>
       <span v-if="grimoire.isNight">
-        Night phase
+        {{ $t("Night phase") }}
         <font-awesome-icon :icon="['fas', 'cloud-moon']" />
       </span>
     </li>

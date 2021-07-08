@@ -14,6 +14,7 @@
 
 ### Version 2.14.0
 - added Farmer to list of available characters
+- added i18n support
 
 ---
 
