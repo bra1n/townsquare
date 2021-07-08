@@ -235,7 +235,7 @@
     "otherNightReminder": "The previously poisoned player is no longer poisoned. The Poisoner points to a player. That player is poisoned.",
     "reminders": ["Poisoned"],
     "setup": false,
-    "ability": "Each night, choose a player: they are poisoned tonight and tomorrow day"
+    "ability": "Each night, choose a player: they are poisoned tonight and tomorrow day."
   },
   {
     "id": "spy",
@@ -1437,6 +1437,20 @@
     "ability": "If you publicly claim to be the Goblin when nominated & are executed that day, your team wins."
   },
   {
+    "id": "mezepheles",
+    "name": "Mezepheles",
+    "edition": "",
+    "team": "minion",
+    "firstNight": 24,
+    "firstNightReminder": "Show the Mezepheles their secret word.",
+    "otherNight": 17,
+    "otherNightReminder": "Wake the 1st good player that said the Mezepheles' secret word and show them the 'You are' card and the thumbs down evil signal.",
+    "reminders": ["Turns evil",
+        "No ability"],
+    "setup": false,
+    "ability": "You start knowing a secret word. The 1st good player to say this word becomes evil that night."
+  },
+  {
     "id": "mephit",
     "name": "Mephit",
     "edition": "",
@@ -1463,6 +1477,19 @@
     "remindersGlobal": ["Is the Marionette"],
     "setup": true,
     "ability": "You think you are a good character but you are not. The Demon knows who you are. [You neighbour the Demon]"
+  },
+  {
+    "id": "boomdandy",
+    "name": "Boomdandy",
+    "edition": "",
+    "team": "minion",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "ability": "If you are executed, all but 3 players die. 1 minute later, the player with the most players pointing at them dies."
   },
   {
     "id": "lilmonsta",
