@@ -1,5 +1,13 @@
 # Release Notes
 
+### Version 2.15.2
+- added mobile web application support
+- show correct number of leaves on roles with global reminders
+- fixed a bug with traveler list showing up when assigning demon bluffs
+- fixed a bug with homebrew scripts that contained negative night order positions
+
+---
+
 ### Version 2.15.1
 - fix Mephit not showing up on scripts
 - add Boomdandy to list of available characters
