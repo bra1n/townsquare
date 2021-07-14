@@ -19,10 +19,7 @@
       class="leaf-right"
       v-if="role.otherNight || role.otherNightReminder"
     ></span>
-    <span
-      v-if="role.reminders && role.reminders.length"
-      :class="['leaf-top' + role.reminders.length]"
-    ></span>
+    <span v-if="reminderLeaves" :class="['leaf-top' + reminderLeaves]"></span>
     <span class="leaf-orange" v-if="role.setup"></span>
     <svg viewBox="0 0 150 150" class="name">
       <path
@@ -61,6 +58,12 @@ export default {
     }
   },
   computed: {
+    reminderLeaves: function() {
+      return (
+        (this.role.reminders || []).length +
+        (this.role.remindersGlobal || []).length
+      );
+    },
     ...mapState(["grimoire"])
   },
   data() {
