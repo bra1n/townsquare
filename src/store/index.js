@@ -214,7 +214,7 @@ export default new Vuex.Store({
             state.roles.get(role.id) ||
             Object.assign({}, customRole, role)
         )
-        // default empty icons and placeholders
+        // default empty icons and placeholders, clean up firstNight / otherNight
         .map(role => {
           if (rolesJSONbyId.get(role.id)) return role;
           role.imageAlt = // map team to generic icon
@@ -225,6 +225,8 @@ export default new Vuex.Store({
               demon: "evil",
               fabled: "fabled"
             }[role.team] || "custom";
+          role.firstNight = Math.abs(role.firstNight);
+          role.otherNight = Math.abs(role.otherNight);
           return role;
         })
         // filter out roles that don't match an existing role and also don't have name/ability/team
