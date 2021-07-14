@@ -1,7 +1,7 @@
 # Release Notes
 
 ### Version 2.15.1
-- fix Mephit not showing up on scripts
+- fix Mephit not showing up on scripts, futureproof Mephit name change
 - add Boomdandy to list of available characters
 
 ---
