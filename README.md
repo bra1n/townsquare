@@ -90,7 +90,8 @@ For base game characters, it is sufficient to only provide the ID, similar to wh
   _Note_: custom images will only be visible after enabling them in the Grimoire menu!
 - **edition**: the ID of the edition for this character. can be left blank or "custom"
 - **firstNight** / **otherNight**: the position that this character acts on the first / other nights, compared to all
-  other characters
+  other characters<br>
+  _Note_: must be a positive number or zero, with zero being treated as "does not act during the night"
 - **firstNightReminder** / **otherNightReminder**: reminder text for first / other nights
 - **reminders**: reminder tokens, should be an empty array `[]` if none
 - **remindersGlobal**: global reminder tokens that will always be available, no matter if the character is assigned to a player or not
