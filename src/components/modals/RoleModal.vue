@@ -100,6 +100,7 @@ export default {
           value: role
         });
       }
+      this.tab = "editionRoles";
       this.$store.commit("toggleModal", "role");
     },
     close() {
