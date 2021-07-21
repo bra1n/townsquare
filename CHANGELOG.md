@@ -1,5 +1,8 @@
 # Release Notes
 
+### Version 2.15.3
+- add Huntsman/Damsel to list of available characters
+
 ### Version 2.15.2
 - added mobile web application support
 - show correct number of leaves on roles with global reminders
