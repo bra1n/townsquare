@@ -105,8 +105,14 @@ export default new Vuex.Store({
       isStatic: false,
       isMuted: false,
       isImageOptIn: false,
+      isTimerEnabled: false,
       zoom: 0,
       background: ""
+    },
+    countdownTimer: {
+      totalSeconds: 300,
+      remainingSeconds: 300,
+      isTicking: false
     },
     modals: {
       edition: false,
@@ -171,6 +177,7 @@ export default new Vuex.Store({
     toggleNight: toggle("isNight"),
     toggleGrimoire: toggle("isPublic"),
     toggleImageOptIn: toggle("isImageOptIn"),
+    toggleTimer: toggle("isTimerEnabled"),
     toggleModal({ modals }, name) {
       if (name) {
         modals[name] = !modals[name];
@@ -260,6 +267,14 @@ export default new Vuex.Store({
         state.edition = edition;
       }
       state.modals.edition = false;
+    },
+    /**
+     * Set timer state
+     * @param state
+     * @param payload Object with keys: `remainingSeconds`, `totalSeconds`, and `isTicking`
+     */
+    setTimerState(state, payload) {
+      state.countdownTimer = payload;
     }
   },
   plugins: [persistence, socket]

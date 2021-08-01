@@ -27,7 +27,12 @@ const state = () => ({
   voteHistory: [],
   markedPlayer: -1,
   isVoteHistoryAllowed: true,
-  isRolesDistributed: false
+  isRolesDistributed: false,
+  countdownTimer: {
+    totalSeconds: 300,
+    remainingSeconds: 300,
+    isTicking: false
+  }
 });
 
 const getters = {};
@@ -93,6 +98,12 @@ const mutations = {
   },
   clearVoteHistory(state) {
     state.voteHistory = [];
+  },
+  updateTimerState(state, payload) {
+    state.countdownTimer = payload;
+  },
+  distributeTimerAction(state, payload) {
+    state.countdownTimer = payload;
   },
   /**
    * Store a vote with and without syncing it to the live session.

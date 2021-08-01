@@ -138,6 +138,10 @@
               Send Characters
               <em><font-awesome-icon icon="theater-masks"/></em>
             </li>
+            <li v-if="!session.isSpectator" @click="toggleTimer">
+              Toggle timer
+              <em>[T]</em>
+            </li>
             <li
               v-if="session.voteHistory.length || !session.isSpectator"
               @click="toggleModal('voteHistory')"
@@ -344,6 +348,9 @@ export default {
       if (this.grimoire.isNight) {
         this.$store.commit("session/setMarkedPlayer", -1);
       }
+    },
+    toggleTimer() {
+      this.$store.commit("toggleTimer");
     },
     ...mapMutations([
       "toggleGrimoire",

@@ -205,6 +205,13 @@ class LiveSession {
       case "pronouns":
         this._updatePlayerPronouns(params);
         break;
+      case "timer":
+        this._handleTimerAction(params);
+        break;
+      case "isTimerEnabled":
+        if (!this._isSpectator) return;
+        this._store.commit("toggleTimer", params);
+        break;
     }
   }
 
@@ -284,6 +291,8 @@ class LiveSession {
         isVoteInProgress: session.isVoteInProgress,
         markedPlayer: session.markedPlayer,
         fabled: fabled.map(f => (f.isCustom ? f : { id: f.id })),
+        isTimerEnabled: grimoire.isTimerEnabled,
+        countdownTimer: session.countdownTimer,
         ...(session.nomination ? { votes: session.votes } : {})
       });
     }
@@ -307,7 +316,9 @@ class LiveSession {
       lockedVote,
       isVoteInProgress,
       markedPlayer,
-      fabled
+      fabled,
+      isTimerEnabled,
+      countdownTimer
     } = data;
     const players = this._store.state.players.players;
     // adjust number of players
@@ -365,6 +376,8 @@ class LiveSession {
       this._store.commit("players/setFabled", {
         fabled: fabled.map(f => this._store.state.fabled.get(f.id) || f)
       });
+      this._store.commit("toggleTimer", isTimerEnabled);
+      this._store.commit("setTimerState", countdownTimer);
     }
   }
 
@@ -669,6 +682,25 @@ class LiveSession {
   }
 
   /**
+   * Distribute new timer action to each player.
+   */
+  distributeTimerAction(payload) {
+    if (this._isSpectator) {
+      return;
+    }
+    this._send("timer", payload);
+  }
+
+  /**
+   * Handle a timer action.
+   * @param payload
+   * @private
+   */
+  _handleTimerAction(payload) {
+    this._store.commit("setTimerState", payload);
+  }
+
+  /**
    * A player nomination. ST only
    * This also syncs the voting speed to the players.
    * Payload can be an object with {nomination} property or just the nomination itself, or undefined.
@@ -701,6 +733,14 @@ class LiveSession {
   setIsNight() {
     if (this._isSpectator) return;
     this._send("isNight", this._store.state.grimoire.isNight);
+  }
+
+  /**
+   * Send the isTimerEnabled status. ST only
+   */
+  setIsTimerEnabled() {
+    if (this._isSpectator) return;
+    this._send("isTimerEnabled", this._store.state.grimoire.isTimerEnabled);
   }
 
   /**
@@ -859,6 +899,11 @@ export default store => {
           session.distributeRoles();
         }
         break;
+      case "session/distributeTimerAction":
+        if (payload) {
+          session.distributeTimerAction(payload);
+        }
+        break;
       case "session/nomination":
       case "session/setNomination":
         session.nomination(payload);
@@ -913,6 +958,9 @@ export default store => {
         } else {
           session.sendPlayer(payload);
         }
+        break;
+      case "toggleTimer":
+        session.setIsTimerEnabled();
         break;
     }
   });

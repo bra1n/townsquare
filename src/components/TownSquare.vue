@@ -46,39 +46,47 @@
       </ul>
     </div>
 
-    <div class="fabled" :class="{ closed: !isFabledOpen }" v-if="fabled.length">
-      <h3>
-        <span>Fabled</span>
-        <font-awesome-icon icon="times-circle" @click.stop="toggleFabled" />
-        <font-awesome-icon icon="plus-circle" @click.stop="toggleFabled" />
-      </h3>
-      <ul>
-        <li
-          v-for="(role, index) in fabled"
-          :key="index"
-          @click="removeFabled(index)"
-        >
-          <div
-            class="night-order first"
-            v-if="nightOrder.get(role).first && grimoire.isNightOrder"
+    <div id="top-left">
+      <div
+        class="fabled"
+        :class="{ closed: !isFabledOpen }"
+        v-if="fabled.length"
+      >
+        <h3>
+          <span>Fabled</span>
+          <font-awesome-icon icon="times-circle" @click.stop="toggleFabled" />
+          <font-awesome-icon icon="plus-circle" @click.stop="toggleFabled" />
+        </h3>
+        <ul>
+          <li
+            v-for="(role, index) in fabled"
+            :key="index"
+            @click="removeFabled(index)"
           >
-            <em>{{ nightOrder.get(role).first }}.</em>
-            <span v-if="role.firstNightReminder">{{
-              role.firstNightReminder
-            }}</span>
-          </div>
-          <div
-            class="night-order other"
-            v-if="nightOrder.get(role).other && grimoire.isNightOrder"
-          >
-            <em>{{ nightOrder.get(role).other }}.</em>
-            <span v-if="role.otherNightReminder">{{
-              role.otherNightReminder
-            }}</span>
-          </div>
-          <Token :role="role"></Token>
-        </li>
-      </ul>
+            <div
+              class="night-order first"
+              v-if="nightOrder.get(role).first && grimoire.isNightOrder"
+            >
+              <em>{{ nightOrder.get(role).first }}.</em>
+              <span v-if="role.firstNightReminder">{{
+                role.firstNightReminder
+              }}</span>
+            </div>
+            <div
+              class="night-order other"
+              v-if="nightOrder.get(role).other && grimoire.isNightOrder"
+            >
+              <em>{{ nightOrder.get(role).other }}.</em>
+              <span v-if="role.otherNightReminder">{{
+                role.otherNightReminder
+              }}</span>
+            </div>
+            <Token :role="role"></Token>
+          </li>
+        </ul>
+      </div>
+
+      <CountdownTimer v-if="grimoire.isTimerEnabled" />
     </div>
 
     <ReminderModal :player-index="selectedPlayer"></ReminderModal>
@@ -90,6 +98,7 @@
 import { mapGetters, mapState } from "vuex";
 import Player from "./Player";
 import Token from "./Token";
+import CountdownTimer from "./CountdownTimer";
 import ReminderModal from "./modals/ReminderModal";
 import RoleModal from "./modals/RoleModal";
 
@@ -97,6 +106,7 @@ export default {
   components: {
     Player,
     Token,
+    CountdownTimer,
     RoleModal,
     ReminderModal
   },
@@ -394,16 +404,32 @@ export default {
   }
 }
 
-/***** Demon bluffs / Fabled *******/
-#townsquare > .bluffs,
-#townsquare > .fabled {
+#top-left {
   position: absolute;
+  top: 10px;
+  left: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+/***** Demon bluffs / Fabled / Countdown Timer *******/
+#townsquare > .bluffs,
+#top-left > .fabled,
+#top-left > .countdown-timer {
   &.bluffs {
+    position: absolute;
     bottom: 10px;
   }
   &.fabled {
-    top: 10px;
+    width: 100%;
   }
+  &.countdown-timer {
+    width: 100%;
+  }
+  margin: 5px 0 0 0;
   left: 10px;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;

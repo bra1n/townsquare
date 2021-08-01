@@ -1,5 +1,8 @@
 # Release Notes
 
+### Version 2.15.4
+- add timer
+
 ### Version 2.15.3
 - add Huntsman/Damsel to list of available characters
 
