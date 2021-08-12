@@ -1,178 +1,236 @@
-[{
-		"id": "Chambermaid",
-		"hatred": [{
-			"id": "Mathematician",
-			"reason": "The Chambermaid learns if the Mathematician wakes tonight or not, even though the Chambermaid wakes first."
-		}]
-	},
-	{
-		"id": "Butler",
-		"hatred": [{
-			"id": "Cannibal",
-			"reason": "If the Cannibal gains the Butler ability, the Cannibal learns this."
-		}]
-	},
-	{
-		"id": "Mutant",
-		"hatred": [{
-			"id": "Undertaker",
-			"reason": "If the Mutant causes a second execution, the Undertaker learns either one or both executed characters (Storyteller's choice)."
-		}]
-	},
-	{
-		"id": "Lunatic",
-		"hatred": [{
-			"id": "Mathematician",
-			"reason": "The Mathematician learns if the Lunatic attacks a different player(s) than the real Demon attacked."
-		}]
-	},
-	{
-		"id": "Pit-Hag",
-		"hatred": [{
-				"id": "Politician",
-				"reason": "A Pit-Hag can not create an evil Politician."
-			},
-			{
-				"id": "Heretic",
-				"reason": "A Pit-Hag can not create a Heretic. "
-			}
-		]
-
-	},
-	{
-		"id": "Cerenovus",
-		"hatred": [{
-				"id": "Undertaker",
-				"reason": "If the Cerenovus causes a second execution, the Undertaker learns either one or both executed characters (Storyteller's choice)."
-			},
-			{
-				"id": "Goblin",
-				"reason": "The Cerenovus may choose to make a player mad that they are the Goblin."
-			}
-		]
-	},
-	{
-		"id": "Leviathan",
-		"hatred": [{
-				"id": "Soldier",
-				"reason": "If Leviathan nominates and executes the Soldier, the Soldier does not die."
-			},
-			{
-				"id": "Monk",
-				"reason": "If Leviathan nominates and executes the player the Monk chose, that player does not die."
-			},
-			{
-				"id": "Innkeeper",
-				"reason": "If Leviathan nominates and executes a player the Innkeeper chose, that player does not die."
-			},
-			{
-				"id": "Ravenkeeper",
-				"reason": "If Leviathan is in play & the Ravenkeeper dies by execution, they wake that night to use their ability."
-			},
-			{
-				"id": "Sage",
-				"reason": "If Leviathan is in play & the Sage dies by execution, they wake that night to use their ability."
-			},
-			{
-				"id": "Mayor",
-				"reason": "If Leviathan is in play & no execution occurs on day 5, good wins."
-			},
-			{
-				"id": "Farmer",
-				"reason": "If Leviathan is in play & a Farmer dies by execution, a good player becomes a Farmer that night."
-			}
-		]
-	},
-	{
-		"id": "Lil' Monsta",
-		"hatred": [{
-				"id": "Scarlet Woman",
-				"reason": "If there are 5 or more players alive and the player holding the Lil' Monsta token dies, the Scarlet Woman is given the Lil' Monsta token tonight."
-			},
-			{
-				"id": "Poppy Grower",
-				"reason": "If the Poppy Grower is in play, Minions don't wake together. They are woken one by one, until one of them chooses to take the Lil' Monsta token."
-			},
-			{
-				"id": "Magician",
-				"reason": "Only 1 jinxed character can be in play. "
-			}
-		]
-	},
-	{
-		"id": "Lycanthrope",
-		"hatred": [{
-			"id": "Gambler",
-			"reason": "If the Lycanthrope is alive and the Gambler kills themself at night, no other players can die tonight."
-		}]
-	},
-	{
-		"id": "Legion",
-		"hatred": [{
-			"id": "Preacher",
-			"reason": "Only 1 jinxed character can be in play. Evil players start knowing which player and character it is."
-		}]
-	},
-	{
-		"id": "Fang Gu",
-		"hatred": [{
-			"id": "Scarlet Woman",
-			"reason": "If the Fang Gu chooses an Outsider and dies, the Scarlet Woman does not become the Fang Gu."
-		}]
-	},
-	{
-		"id": "Spy",
-		"hatred": [{
-				"id": "Poppy Grower",
-				"reason": "If the Poppy Grower is in play, the Spy does not see the Grimoire until the Poppy Grower dies."
-			},
-			{
-				"id": "Heretic",
-				"reason": "Only 1 jinxed character can be in play."
-			},
-			{
-				"id": "Magician",
-				"reason": "When the Spy sees the Grimoire, the Demon and Magician's character tokens are removed."
-			}
-		]
-	},
-	{
-		"id": "Widow",
-		"hatred": [{
-				"id": "Poppy Grower",
-				"reason": "If the Poppy Grower is in play, the Widow does not see the Grimoire until the Poppy Grower dies."
-			},
-			{
-				"id": "Heretic",
-				"reason": "Only 1 jinxed character can be in play."
-			},
-			{
-				"id": "Magician",
-				"reason": "When the Widow sees the Grimoire, the Demon and Magician's character tokens are removed."
-			}
-		]
-	}, {
-		"id": "Godfather",
-		"hatred": [{
-			"id": "Heretic",
-			"reason": "Only 1 jinxed character can be in play."
-		}]
-	}, {
-		"id": "Marionette",
-		"hatred": [{
-				"id": "Lil' Monsta",
-				"reason": "The Marionette neighbors a Minion, not the Demon. The Marionette is not woken to choose who takes the Lil' Monsta token."
-			},
-			{
-				"id": "Poppy Grower",
-				"reason": "When the Poppy Grower dies, the Demon learns the Marionette but the Marionette learns nothing."
-			},
-			{
-				"id": "Balloonist",
-				"reason": "If the Marionette thinks that they are the Balloonist, +1 Outsider was added."
-			}
-		]
-	},
+[
+  {
+    "id": "Chambermaid",
+    "hatred": [
+      {
+        "id": "Mathematician",
+        "reason": "The Chambermaid learns if the Mathematician wakes tonight or not, even though the Chambermaid wakes first."
+      }
+    ]
+  },
+  {
+    "id": "Butler",
+    "hatred": [
+      {
+        "id": "Cannibal",
+        "reason": "If the Cannibal gains the Butler ability, the Cannibal learns this."
+      }
+    ]
+  },
+  {
+    "id": "Mutant",
+    "hatred": [
+      {
+        "id": "Undertaker",
+        "reason": "If the Mutant causes a second execution, the Undertaker learns either one or both executed characters (Storyteller's choice)."
+      }
+    ]
+  },
+  {
+    "id": "Lunatic",
+    "hatred": [
+      {
+        "id": "Mathematician",
+        "reason": "The Mathematician learns if the Lunatic attacks a different player(s) than the real Demon attacked."
+      }
+    ]
+  },
+  {
+    "id": "Pit-Hag",
+    "hatred": [
+      {
+        "id": "Heretic",
+        "reason": "A Pit-Hag can not create a Heretic. "
+      },
+      {
+        "id": "Damsel",
+        "reason": "If a Pit-Hag creates a Damsel, the Storyteller chooses which player it is."
+      },
+      {
+        "id": "Politician",
+        "reason": "A Pit-hag can not create an evil Politician."
+      }
+    ]
+  },
+  {
+    "id": "Cerenovus",
+    "hatred": [
+      {
+        "id": "Goblin",
+        "reason": "The Cerenovus may choose to make a player mad that they are the Goblin."
+      },
+      {
+        "id": "Undertaker",
+        "reason": "If the Cerenovus causes a second execution, the Undertaker learns either one or both executed characters (Storyteller's choice)."
+      }
+    ]
+  },
+  {
+    "id": "Leviathan",
+    "hatred": [
+      {
+        "id": "Soldier",
+        "reason": "If Leviathan nominates and executes the Soldier, the Soldier does not die."
+      },
+      {
+        "id": "Monk",
+        "reason": "If Leviathan nominates and executes the player the Monk chose, that player does not die."
+      },
+      {
+        "id": "Innkeeper",
+        "reason": "If Leviathan nominates and executes a player the Innkeeper chose, that player does not die."
+      },
+      {
+        "id": "Ravenkeeper",
+        "reason": "If Leviathan is in play & the Ravenkeeper dies by execution, they wake that night to use their ability."
+      },
+      {
+        "id": "Sage",
+        "reason": "If Leviathan is in play & the Sage dies by execution, they wake that night to use their ability."
+      },
+      {
+        "id": "Farmer",
+        "reason": "If Leviathan is in play & a Farmer dies by execution, a good player becomes a Farmer that night."
+      },
+      {
+        "id": "Mayor",
+        "reason": "If Leviathan is in play & no execution occurs on day 5, good wins."
+      }
+    ]
+  },
+  {
+    "id": "Al-Hadikhia",
+    "hatred": [
+      {
+        "id": "Scarlet Woman",
+        "reason": "If there are two living Al-Hadikhias, the Scarlet Woman Al-Hadikhia becomes the Scarlet Woman again."
+      },
+      {
+        "id": "Mastermind",
+        "reason": "Only 1 jinxed character can be in play. Evil players start knowing which player and character it is."
+      }
+    ]
+  },
+  {
+    "id": "Lil' Monsta",
+    "hatred": [
+      {
+        "id": "Poppy Grower",
+        "reason": "If the Poppy Grower is in play, Minions don't wake together. They are woken one by one, until one of them chooses to take the Lil' Monsta token."
+      },
+      {
+        "id": "Magician",
+        "reason": "Only 1 jinxed character can be in play. "
+      },
+      {
+        "id": "Scarlet Woman",
+        "reason": "If there are 5 or more players alive and the player holding the Lil' Monsta token dies, the Scarlet Woman is given the Lil' Monsta token tonight."
+      }
+    ]
+  },
+  {
+    "id": "Lycanthrope",
+    "hatred": [
+      {
+        "id": "Gambler",
+        "reason": "If the Lycanthrope is alive and the Gambler kills themself at night, no other players can die tonight."
+      }
+    ]
+  },
+  {
+    "id": "Legion",
+    "hatred": [
+      {
+        "id": "Preacher",
+        "reason": "Only 1 jinxed character can be in play."
+      }
+    ]
+  },
+  {
+    "id": "Fang Gu",
+    "hatred": [
+      {
+        "id": "Scarlet Woman",
+        "reason": "If the Fang Gu chooses an Outsider and dies, the Scarlet Woman does not become the Fang Gu."
+      }
+    ]
+  },
+  {
+    "id": "Spy",
+    "hatred": [
+      {
+        "id": "Magician",
+        "reason": "When the Spy sees the Grimoire, the Demon and Magician's character tokens are removed."
+      },
+      {
+        "id": "Poppy Grower",
+        "reason": "If the Poppy Grower is in play, the Spy does not see the Grimoire until the Poppy Grower dies."
+      },
+      {
+        "id": "Damsel",
+        "reason": "Only 1 jinxed character can be in play. "
+      },
+      {
+        "id": "Heretic",
+        "reason": "Only 1 jinxed character can be in play."
+      }
+    ]
+  },
+  {
+    "id": "Widow",
+    "hatred": [
+      {
+        "id": "Magician",
+        "reason": "When the Widow sees the Grimoire, the Demon and Magician's character tokens are removed."
+      },
+      {
+        "id": "Poppy Grower",
+        "reason": "If the Poppy Grower is in play, the Widow does not see the Grimoire until the Poppy Grower dies."
+      },
+      {
+        "id": "Damsel",
+        "reason": "Only 1 jinxed character can be in play."
+      },
+      {
+        "id": "Heretic",
+        "reason": "Only 1 jinxed character can be in play."
+      }
+    ]
+  },
+  {
+    "id": "Godfather",
+    "hatred": [
+      {
+        "id": "Heretic",
+        "reason": "Only 1 jinxed character can be in play."
+      }
+    ]
+  },
+  {
+    "id": "Marionette",
+    "hatred": [
+      {
+        "id": "Lil' Monsta",
+        "reason": "The Marionette neighbors a Minion, not the Demon. The Marionette is not woken to choose who takes the Lil' Monsta token."
+      },
+      {
+        "id": "Poppy Grower",
+        "reason": "When the Poppy Grower dies, the Demon learns the Marionette but the Marionette learns nothing."
+      },
+      {
+        "id": "Snitch",
+        "reason": "The Marionette learns 3 not in-play characters when the Snitch dies, instead of at the start of the game."
+      },
+      {
+        "id": "Balloonist",
+        "reason": "If the Marionette thinks that they are the Balloonist, +1 Outsider was added."
+      },
+      {
+        "id": "Huntsman",
+        "reason": "If the Marionette thinks that they are the Huntsman, the Damsel was added."
+      }
+    ]
+  },
   {
     "id": "Lleech",
     "hatred": [
