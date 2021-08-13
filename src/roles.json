@@ -1536,9 +1536,9 @@
     "name": "Lil' Monsta",
     "edition": "",
     "team": "demon",
-    "firstNight": 0,
+    "firstNight": 14,
     "firstNightReminder": "Wake all Minions together, allow them to vote by pointing at who they want to babysit Lil' Monsta.",
-    "otherNight": 0,
+    "otherNight": 34,
     "otherNightReminder": "Wake all Minions together, allow them to vote by pointing at who they want to babysit Lil' Monsta. Choose a player, that player dies.",
     "reminders": [],
     "remindersGlobal": ["Is the Demon",
@@ -1569,13 +1569,9 @@
     "firstNightReminder": "",
     "otherNight": 31,
     "otherNightReminder": "The Al-Hadikhia chooses 3 players. Announce the first player, wake them to nod yes to live or shake head no to die, kill or resurrect accordingly, then put to sleep and announce the next player. If all 3 are alive after this, all 3 die.",
-    "reminders": [
-
-        1,
-        2,
-        3
-
-    ],
+    "reminders": ["1", "2", "3",
+        "Chose death",
+        "Chose life"],
     "setup": false,
     "ability": "Each night*, choose 3 players (all players learn who): each silently chooses to live or die, but if all live, all die."
   },
