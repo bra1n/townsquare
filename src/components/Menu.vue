@@ -321,7 +321,11 @@ export default {
     },
     addPlayerList() {
       if (this.session.isSpectator) return;
-      if (confirm("This will clear all players. Are you sure you want to remove all players?")) {
+      if (
+        confirm(
+          "This will clear all players. Are you sure you want to do this?"
+        )
+      ) {
         // abort vote if in progress
         if (this.session.nomination) {
           this.$store.commit("session/nomination");
@@ -329,11 +333,11 @@ export default {
         this.$store.commit("players/clear");
         const names = prompt("Player names (separated by commas)");
         if (names) {
-          names.split(',').map(name => {
+          names.split(",").map(name => {
             this.$store.commit("players/add", name);
-          })
+          });
         }
-      }      
+      }
     },
     randomizeSeatings() {
       if (this.session.isSpectator) return;
