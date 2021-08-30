@@ -118,9 +118,7 @@
           <li class="headline" v-if="session.sessionId">
             {{ session.isSpectator ? "Playing" : "Hosting" }}
           </li>
-          <li class="headline" v-else>
-            Live Session
-          </li>
+          <li class="headline" v-else>Live Session</li>
           <template v-if="!session.sessionId">
             <li @click="hostSession">Host (Storyteller)<em>[H]</em></li>
             <li @click="joinSession">Join (Player)<em>[J]</em></li>
@@ -155,6 +153,9 @@
           <!-- Users -->
           <li class="headline">Players</li>
           <li @click="addPlayer" v-if="players.length < 20">Add<em>[A]</em></li>
+          <li @click="addPlayerList" v-if="players.length < 20">
+            Add (List)<em>[A]</em>
+          </li>
           <li @click="randomizeSeatings" v-if="players.length > 2">
             Randomize
             <em><font-awesome-icon icon="dice"/></em>
@@ -317,6 +318,22 @@ export default {
       if (name) {
         this.$store.commit("players/add", name);
       }
+    },
+    addPlayerList() {
+      if (this.session.isSpectator) return;
+      if (confirm("This will clear all players. Are you sure you want to remove all players?")) {
+        // abort vote if in progress
+        if (this.session.nomination) {
+          this.$store.commit("session/nomination");
+        }
+        this.$store.commit("players/clear");
+        const names = prompt("Player names (separated by commas)");
+        if (names) {
+          names.split(',').map(name => {
+            this.$store.commit("players/add", name);
+          })
+        }
+      }      
     },
     randomizeSeatings() {
       if (this.session.isSpectator) return;

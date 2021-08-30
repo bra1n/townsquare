@@ -1,6 +1,9 @@
 # Release Notes
 
 ### Version 2.15.3
+- add Add Player by comma separated list
+
+### Version 2.15.3
 - add Huntsman/Damsel, Noble, Al-Hadikhia to list of available characters
 
 ### Version 2.15.2
