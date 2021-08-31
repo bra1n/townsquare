@@ -1,7 +1,7 @@
 # Release Notes
 
 ### Version 2.15.3
-- add Huntsman/Damsel, Noble, Al-Hadikhia to list of available characters
+- add Huntsman/Damsel, Noble, Al-Hadikhia, Golem to list of available characters
 
 ### Version 2.15.2
 - added mobile web application support

@@ -113,14 +113,14 @@
   },
   {
     "id": "djinn",
-    "firstNight": 1,
-    "firstNightReminder": "Wake each evil player and show them which jinxed characters are in play, so that they know not to bluff as characters that can not be in play.",
+    "firstNight": 0,
+    "firstNightReminder": "",
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
     "name": "Djinn",
     "team": "fabled",
-    "ability": "Jinxed characters are not both in-play, but evil players know which ones are. Or, use the Djinn's \"Special Rule\"."
+    "ability": "Use the Djinn's special rule. All players know what it is."
   },
   {
     "id": "stormcatcher",
