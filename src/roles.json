@@ -836,7 +836,7 @@
     "reminders": ["Minions not nominated",
         "Minion nominated"],
     "setup": false,
-    "ability": "Each night*, you learn if a Minion nominated today"
+    "ability": "Each night*, you learn if a Minion nominated today."
   },
   {
     "id": "oracle",
@@ -1128,7 +1128,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "ability": "Each day, after the 1st execution, you nominate again."
+    "ability": "Each day, after the 1st execution, you may nominate again."
   },
   {
     "id": "bonecollector",
@@ -1435,6 +1435,19 @@
     "reminders": ["Guess used"],
     "setup": false,
     "ability": "All Minions know you are in play. If a Minion publicly guesses you (once), your team loses."
+  },
+  {
+    "id": "golem",
+    "name": "Golem",
+    "edition": "",
+    "team": "outsider",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": ["Can not nominate"],
+    "setup": false,
+    "ability": "You may only nominate once per game. When you do, if the nominee is not the Demon, they die."
   },
   {
     "id": "politician",
