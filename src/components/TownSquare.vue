@@ -247,6 +247,12 @@ export default {
         this.cancel();
       }
     },
+    callVote(player, voteType) {
+      if (this.session.isSpectator || this.session.lockedVote) return;
+      const nomination = [player, player, voteType || "Vote"];
+      this.$store.commit("session/nomination", { nomination });
+      this.cancel();
+    },
     cancel() {
       this.move = -1;
       this.swap = -1;

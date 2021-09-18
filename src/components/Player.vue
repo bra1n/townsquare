@@ -155,6 +155,12 @@
                 Nomination
               </li>
             </template>
+            <template v-if="!session.nomination">
+              <li @click="callVote(player)">
+                <font-awesome-icon icon="vote-yea" />
+                Call for Vote
+              </li>
+            </template>
           </template>
           <li
             @click="claimSeat"
@@ -325,6 +331,13 @@ export default {
     nominatePlayer(player) {
       this.isMenuOpen = false;
       this.$emit("trigger", ["nominatePlayer", player]);
+    },
+    callVote() {
+      this.isMenuOpen = false;
+      const votePrompt = "Vote Type (leave blank for no label)";
+      const voteType = prompt(votePrompt) || "Vote";
+      // console.log('voteType', voteType);
+      this.$emit("trigger", ["callVote", voteType, this.player]);
     },
     cancel() {
       this.$emit("trigger", ["cancel"]);

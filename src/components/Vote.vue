@@ -6,9 +6,16 @@
     </div>
     <div class="overlay">
       <audio src="../assets/sounds/countdown.mp3" preload="auto"></audio>
-      <em class="blue">{{ nominator.name }}</em> nominated
-      <em>{{ nominee.name }}</em
-      >!
+      <div v-if="isNomination">
+        <em class="blue">{{ nominator.name }}</em> nominated
+        <em>{{ nominee.name }}</em
+        >!
+      </div>
+      <div v-else>
+        <em class="blue">{{ nominator.name }}</em> called a vote!
+        <br />
+        {{ voteType ? "Vote Type: " + voteType : null }}
+      </div>
       <br />
       <em class="blue">
         {{ voters.length }} vote{{ voters.length !== 1 ? "s" : "" }}
@@ -55,7 +62,10 @@
           </template>
           <div class="button demon" @click="finish">Close</div>
         </div>
-        <div class="button-group mark" v-if="nominee.role.team !== 'traveler'">
+        <div
+          class="button-group mark"
+          v-if="nominee.role.team !== 'traveler' && isNomination"
+        >
           <div
             class="button"
             :class="{
@@ -146,6 +156,18 @@ export default {
         transitionDuration: this.session.votingSpeed - 100 + "ms"
       };
     },
+    isNomination: function() {
+      return (
+        this.session.nomination.length === 2 || !this.session.nomination[2]
+      );
+    },
+    voteType: function() {
+      if (this.isNomination || this.session.nomination[2] === "Vote") {
+        return null;
+      }
+
+      return this.session.nomination[2];
+    },
     player: function() {
       return this.players.find(p => p.id === this.session.playerId);
     },
@@ -155,6 +177,7 @@ export default {
     },
     canVote: function() {
       if (!this.player) return false;
+      if (this.session.nomination.length === 3) return true;
       if (this.player.isVoteless && this.nominee.role.team !== "traveler")
         return false;
       const session = this.session;

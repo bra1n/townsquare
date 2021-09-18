@@ -1,5 +1,8 @@
 # Release Notes
 
+### Version 2.15.4
+- added ability to run a non-nomination vote
+
 ### Version 2.15.3
 - add Huntsman/Damsel, Noble, Al-Hadikhia, Golem, Fearmonger to list of available characters
 
