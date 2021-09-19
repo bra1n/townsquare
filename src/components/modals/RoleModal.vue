@@ -1,5 +1,5 @@
 <template>
-  <Modal v-if="modals.role && availableRoles.length" @close="close">
+  <Modal v-if="isDisplayed" @close="close">
     <h3>
       Choose a new character for
       {{
@@ -8,20 +8,10 @@
           : "bluffing"
       }}
     </h3>
-    <ul class="tokens" v-if="tab === 'editionRoles' || !otherTravelers.size">
+    <ul class="tokens">
       <li
-        v-for="role in availableRoles"
-        :class="[role.team]"
-        :key="role.id"
-        @click="setRole(role)"
-      >
-        <Token :role="role" />
-      </li>
-    </ul>
-    <ul class="tokens" v-if="tab === 'otherTravelers' && otherTravelers.size">
-      <li
-        v-for="role in otherTravelers.values()"
-        :class="[role.team]"
+        v-for="role in displayedRoles"
+        :class="[role.team, { match: queryMatches(role.name) }]"
         :key="role.id"
         @click="setRole(role)"
       >
@@ -45,6 +35,13 @@
         >Other Travelers</span
       >
     </div>
+    <input
+      ref="searchInput"
+      class="role-search"
+      placeholder="Search"
+      v-model="query"
+      @keyup="keyup"
+    />
   </Modal>
 </template>
 
@@ -73,13 +70,22 @@ export default {
       availableRoles.push({});
       return availableRoles;
     },
+    isDisplayed() {
+      return this.modals.role && this.availableRoles.length;
+    },
+    displayedRoles() {
+      if (this.tab === "editionRoles" || !this.otherTravelers.size)
+        return this.availableRoles;
+      else return [...this.otherTravelers.values()];
+    },
     ...mapState(["modals", "roles", "session"]),
     ...mapState("players", ["players"]),
     ...mapState(["otherTravelers"])
   },
   data() {
     return {
-      tab: "editionRoles"
+      tab: "editionRoles",
+      query: ""
     };
   },
   methods: {
@@ -100,14 +106,39 @@ export default {
           value: role
         });
       }
-      this.tab = "editionRoles";
+      this.reset();
       this.$store.commit("toggleModal", "role");
     },
     close() {
-      this.tab = "editionRoles";
+      this.reset();
       this.toggleModal("role");
     },
+    reset() {
+      this.tab = "editionRoles";
+      this.query = "";
+    },
+    queryMatches(name) {
+      const simplify = str => str.replaceAll(/\W+/g, "").toLowerCase();
+      return simplify(name || "").startsWith(simplify(this.query));
+    },
+    keyup(event) {
+      // Allow Escape for modal dialog dismissal.
+      if (event.key == "Esc" || event.key == "Escape") return;
+
+      event.stopPropagation();
+      if (event.key == "Enter") {
+        const matchingRoles = this.displayedRoles.filter(r =>
+          this.queryMatches(r.name)
+        );
+        if (matchingRoles.length === 1) this.setRole(matchingRoles[0]);
+      }
+    },
     ...mapMutations(["toggleModal"])
+  },
+  watch: {
+    isDisplayed(shown) {
+      if (shown) this.$nextTick(() => this.$refs.searchInput.focus());
+    }
   }
 };
 </script>
@@ -140,9 +171,27 @@ ul.tokens li {
     transform: scale(1.2);
     z-index: 10;
   }
+  &:not(.match) {
+    opacity: 0.4;
+  }
 }
 
 #townsquare.spectator ul.tokens li.traveler {
   display: none;
+}
+
+input.role-search {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: solid white;
+  border-width: 0 0 1px 0;
+  outline: none;
+  color: white;
+  font-size: 1em;
+
+  &:not(:focus) {
+    border-bottom-color: #777;
+  }
 }
 </style>
