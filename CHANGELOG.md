@@ -2,6 +2,7 @@
 
 ### Version 2.15.3
 - add Huntsman/Damsel, Noble, Al-Hadikhia, Golem, Fearmonger to list of available characters
+- add a search function to the role modal
 
 ### Version 2.15.2
 - added mobile web application support
