@@ -1411,6 +1411,20 @@
     "ability": "Each night*, if either good living neighbour is drunk or poisoned, you die."
   },
   {
+    "id": "puzzlemaster",
+    "name": "Puzzlemaster",
+    "edition": "",
+    "team": "outsider",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": ["Drunk",
+        "Guess used"],
+    "setup": false,
+    "ability": "1 player is drunk, even if you die. If you guess (once) who it is, learn the Demon player, but guess wrong & get false info."
+  },
+  {
     "id": "heretic",
     "name": "Heretic",
     "edition": "",
@@ -1503,20 +1517,6 @@
     "ability": "If you publicly claim to be the Goblin when nominated & are executed that day, your team wins."
   },
   {
-    "id": "mezepheles",
-    "name": "Mezepheles",
-    "edition": "",
-    "team": "minion",
-    "firstNight": 25,
-    "firstNightReminder": "Show the Mezepheles their secret word.",
-    "otherNight": 18,
-    "otherNightReminder": "Wake the 1st good player that said the Mezepheles' secret word and show them the 'You are' card and the thumbs down evil signal.",
-    "reminders": ["Turns evil",
-        "No ability"],
-    "setup": false,
-    "ability": "You start knowing a secret word. The 1st good player to say this word becomes evil that night."
-  },
-  {
     "id": "mephit",
     "name": "Mephit",
     "edition": "",
@@ -1525,6 +1525,20 @@
     "firstNightReminder": "Show the Mephit their secret word.",
     "otherNight": 18,
     "otherNightReminder": "Wake the 1st good player that said the Mephit's secret word and show them the 'You are' card and the thumbs down evil signal.",
+    "reminders": ["Turns evil",
+        "No ability"],
+    "setup": false,
+    "ability": "You start knowing a secret word. The 1st good player to say this word becomes evil that night."
+  },
+  {
+    "id": "mezepheles",
+    "name": "Mezepheles",
+    "edition": "",
+    "team": "minion",
+    "firstNight": 25,
+    "firstNightReminder": "Show the Mezepheles their secret word.",
+    "otherNight": 18,
+    "otherNightReminder": "Wake the 1st good player that said the Mezepheles' secret word and show them the 'You are' card and the thumbs down evil signal.",
     "reminders": ["Turns evil",
         "No ability"],
     "setup": false,
