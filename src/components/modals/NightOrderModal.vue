@@ -115,7 +115,7 @@ export default {
           {
             id: "evil",
             name: "Minion info",
-            firstNight: 4,
+            firstNight: 5,
             team: "minion",
             players: this.players.filter(p => p.role.team === "minion"),
             firstNightReminder:
@@ -125,7 +125,7 @@ export default {
           {
             id: "evil",
             name: "Demon info & bluffs",
-            firstNight: 7,
+            firstNight: 8,
             team: "demon",
             players: this.players.filter(p => p.role.team === "demon"),
             firstNightReminder:
