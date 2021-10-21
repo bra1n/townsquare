@@ -141,6 +141,10 @@
     "id": "Legion",
     "hatred": [
       {
+        "id": "Engineer",
+        "reason": "Legion and the Engineer can not both be in play at the start of the game. If the Engineer creates Legion, most players (including all evil players) become evil Legion."
+      },
+      {
         "id": "Preacher",
         "reason": "Only 1 jinxed character can be in play."
       }
@@ -161,6 +165,10 @@
       {
         "id": "Magician",
         "reason": "When the Spy sees the Grimoire, the Demon and Magician's character tokens are removed."
+      },
+      {
+        "id": "Alchemist",
+        "reason": "The Alchemist can not have the Spy ability."
       },
       {
         "id": "Poppy Grower",
@@ -186,6 +194,10 @@
       {
         "id": "Poppy Grower",
         "reason": "If the Poppy Grower is in play, the Widow does not see the Grimoire until the Poppy Grower dies."
+      },
+      {
+        "id": "Alchemist",
+        "reason": "The Alchemist can not have the Widow ability."
       },
       {
         "id": "Damsel",
