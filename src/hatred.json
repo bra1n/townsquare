@@ -173,6 +173,10 @@
       {
         "id": "Heretic",
         "reason": "Only 1 jinxed character can be in play."
+      },
+      {
+        "id": "Alchemist",
+        "reason": "The Alchemist can not have the Spy ability."
       }
     ]
   },
@@ -194,6 +198,10 @@
       {
         "id": "Heretic",
         "reason": "Only 1 jinxed character can be in play."
+      },
+      {
+        "id": "Alchemist",
+        "reason": "The Alchemist can not have the Widow ability."
       }
     ]
   },
