@@ -1,5 +1,8 @@
 # Release Notes
 
+### Version 2.15.4
+own site
+
 ### Version 2.15.3
 - add Huntsman/Damsel, Noble, Al-Hadikhia, Golem, Fearmonger, Puzzlemaster, Alchemist, Engineer, Riot to list of available characters
 
