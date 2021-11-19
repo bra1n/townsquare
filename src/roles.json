@@ -1531,6 +1531,19 @@
     "ability": "Each night, choose a player. If you nominate & execute them, their team loses. All players know if you choose a new player."
   },
   {
+    "id": "psychopath",
+    "name": "Psychopath",
+    "edition": "",
+    "team": "minion",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "ability": "Each day, before nominations, you may publicly choose a player: they die. If executed, you only die if you lose roshambo."
+  },
+  {
     "id": "goblin",
     "name": "Goblin",
     "edition": "",
