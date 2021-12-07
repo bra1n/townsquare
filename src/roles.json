@@ -1712,6 +1712,19 @@
     "reminders": [],
     "setup": true,
     "ability": "Nominees die, but may nominate again immediately (on day 3, they must). After day 3, evil wins. [All Minions are Riot]"
+  },
+  {
+    "id": "gangster",
+    "name": "Gangster",
+    "edition": "",
+    "team": "traveler",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "ability": "Once per day, you may choose to kill an alive neighbour, if your other alive neighbour agrees."
   }
 ]
 
