@@ -1398,6 +1398,19 @@
     "ability": "Minions & Demons do not know each other. If you die, they learn who each other are that night."
   },
   {
+    "id": "atheist",
+    "name": "Atheist",
+    "edition": "",
+    "team": "townsfolk",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": true,
+    "ability": "The Storyteller can break the game rules & if executed, good wins, even if you are dead. [No evil characters]"
+  },
+  {
     "id": "cannibal",
     "name": "Cannibal",
     "edition": "",
@@ -1699,19 +1712,6 @@
     "reminders": [],
     "setup": true,
     "ability": "Nominees die, but may nominate again immediately (on day 3, they must). After day 3, evil wins. [All Minions are Riot]"
-  },
-  {
-    "id": "gangster",
-    "name": "Gangster",
-    "edition": "",
-    "team": "traveler",
-    "firstNight": 0,
-    "firstNightReminder": "",
-    "otherNight": 0,
-    "otherNightReminder": "",
-    "reminders": [],
-    "setup": false,
-    "ability": "Once per day, you may choose to kill an alive neighbour, if your other alive neighbour agrees."
   }
 ]
 
