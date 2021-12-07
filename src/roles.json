@@ -1398,6 +1398,19 @@
     "ability": "Minions & Demons do not know each other. If you die, they learn who each other are that night."
   },
   {
+    "id": "atheist",
+    "name": "Atheist",
+    "edition": "",
+    "team": "townsfolk",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": true,
+    "ability": "The Storyteller can break the game rules & if executed, good wins, even if you are dead. [No evil characters]"
+  },
+  {
     "id": "cannibal",
     "name": "Cannibal",
     "edition": "",
