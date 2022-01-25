@@ -12,10 +12,14 @@ register.setDefaultLabels({
 
 const PING_INTERVAL = 30000; // 30 seconds
 
-const server = https.createServer({
-  cert: fs.readFileSync("cert.pem"),
-  key: fs.readFileSync("key.pem")
-});
+const options = {};
+
+if (process.env.NODE_ENV !== "development") {
+  options.cert = fs.readFileSync("cert.pem");
+  options.key = fs.readFileSync("key.pem");
+}
+
+const server = https.createServer(options);
 const wss = new WebSocket.Server({
   ...(process.env.NODE_ENV === "development" ? { port: 8081 } : { server }),
   verifyClient: info =>
@@ -234,7 +238,7 @@ const interval = setInterval(function ping() {
             ws.readyState === WebSocket.CONNECTING)
       )
     ) {
-      metrics.channels_list.remove([channel]);
+      metrics.channels_list.remove({ name: channel });
       delete channels[channel];
     }
   }
