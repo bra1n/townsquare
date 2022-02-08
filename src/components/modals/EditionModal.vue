@@ -32,7 +32,7 @@
       <h3>Load custom script / characters</h3>
       To play with a custom script, you need to select the characters you want
       to play with in the official
-      <a href="https://bloodontheclocktower.com/script-tool/" target="_blank"
+      <a href="https://script.bloodontheclocktower.com/" target="_blank"
         >Script Tool</a
       >
       and then upload the generated "custom-list.json" either directly here or
