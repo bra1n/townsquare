@@ -40,7 +40,9 @@ export default {
         roles: this.edition.isOfficial
           ? ""
           : this.$store.getters.customRolesStripped,
-        fabled: this.players.fabled.map(({ id }) => id),
+        fabled: this.players.fabled.map(fabled =>
+          fabled.isCustom ? fabled : { id: fabled.id }
+        ),
         players: this.players.players.map(player => ({
           ...player,
           role: player.role.id || {}
@@ -79,7 +81,12 @@ export default {
         }
         if (fabled) {
           this.$store.commit("players/setFabled", {
-            fabled: fabled.map(id => this.$store.state.fabled.get(id))
+            fabled: fabled.map(
+              f =>
+                this.$store.state.fabled.get(f) ||
+                this.$store.state.fabled.get(f.id) ||
+                f
+            )
           });
         }
         if (players) {
