@@ -18,15 +18,6 @@
     ]
   },
   {
-    "id": "Mutant",
-    "hatred": [
-      {
-        "id": "Undertaker",
-        "reason": "If the Mutant causes a second execution, the Undertaker learns either one or both executed characters (Storyteller's choice)."
-      }
-    ]
-  },
-  {
     "id": "Lunatic",
     "hatred": [
       {
@@ -58,10 +49,6 @@
       {
         "id": "Goblin",
         "reason": "The Cerenovus may choose to make a player mad that they are the Goblin."
-      },
-      {
-        "id": "Undertaker",
-        "reason": "If the Cerenovus causes a second execution, the Undertaker learns either one or both executed characters (Storyteller's choice)."
       }
     ]
   },
@@ -141,6 +128,10 @@
     "id": "Legion",
     "hatred": [
       {
+        "id": "Engineer",
+        "reason": "Legion and the Engineer can not both be in play at the start of the game. If the Engineer creates Legion, most players (including all evil players) become evil Legion."
+      },
+      {
         "id": "Preacher",
         "reason": "Only 1 jinxed character can be in play."
       }
@@ -161,6 +152,10 @@
       {
         "id": "Magician",
         "reason": "When the Spy sees the Grimoire, the Demon and Magician's character tokens are removed."
+      },
+      {
+        "id": "Alchemist",
+        "reason": "The Alchemist can not have the Spy ability."
       },
       {
         "id": "Poppy Grower",
@@ -186,6 +181,10 @@
       {
         "id": "Poppy Grower",
         "reason": "If the Poppy Grower is in play, the Widow does not see the Grimoire until the Poppy Grower dies."
+      },
+      {
+        "id": "Alchemist",
+        "reason": "The Alchemist can not have the Widow ability."
       },
       {
         "id": "Damsel",
@@ -226,8 +225,125 @@
         "reason": "If the Marionette thinks that they are the Balloonist, +1 Outsider was added."
       },
       {
+        "id": "Damsel",
+        "reason": "The Marionette does not learn that a Damsel is in play."
+      },
+      {
         "id": "Huntsman",
         "reason": "If the Marionette thinks that they are the Huntsman, the Damsel was added."
+      }
+    ]
+  },
+  {
+    "id": "Riot",
+    "hatred": [
+      {
+        "id": "Engineer",
+        "reason": "Riot and the Engineer can not both be in play at the start of the game. \nIf the Engineer creates Riot, the evil players become Riot."
+      },
+      {
+        "id": "Golem",
+        "reason": "If The Golem nominates Riot, the Riot player does not die."
+      },
+      {
+        "id": "Snitch",
+        "reason": "If the Snitch is in play, each Riot player gets an extra 3 bluffs."
+      },
+      {
+        "id": "Saint",
+        "reason": "If a good player nominates and kills the Saint, the Saint's team loses."
+      },
+      {
+        "id": "Butler",
+        "reason": "The Butler can not nominate their master."
+      },
+      {
+        "id": "Pit-Hag",
+        "reason": "If the Pit-Hag creates Riot, all evil players become Riot. \nIf the Pit-Hag creates Riot after day 3, the game continues for one more day."
+      },
+      {
+        "id": "Mayor",
+        "reason": "If the 3rd day begins with just three players alive, the players may choose (as a group) not to nominate at all. If so (and a Mayor is alive) then the Mayor's team wins."
+      },
+      {
+        "id": "Monk",
+        "reason": "If a Riot player nominates and kills the Monk-protected-player, the Monk-protected-player does not die."
+      },
+      {
+        "id": "Farmer",
+        "reason": "If a Riot player nominates and kills a Farmer, the Farmer uses their ability tonight."
+      },
+      {
+        "id": "Innkeeper",
+        "reason": "If a Riot player nominates an Innkeeper-protected-player, the Innkeeper-protected-player does not die."
+      },
+      {
+        "id": "Sage",
+        "reason": "If a Riot player nominates and kills a Sage, the Sage uses their ability tonight."
+      },
+      {
+        "id": "Ravenkeeper",
+        "reason": "If a Riot player nominates and kills the Ravenkeeper, the Ravenkeeper uses their ability tonight."
+      },
+      {
+        "id": "Soldier",
+        "reason": "If a Riot player nominates the Soldier, the Soldier does not die."
+      },
+      {
+        "id": "Grandmother",
+        "reason": "If a Riot player nominates and kills the Grandchild, the Grandmother dies too."
+      },
+      {
+        "id": "King",
+        "reason": "If a Riot player nominates and kills the King and the Choirboy is alive, the Choirboy uses their ability tonight."
+      },
+      {
+        "id": "Exorcist",
+        "reason": "Only 1 jinxed character can be in play."
+      },
+      {
+        "id": "Minstrel",
+        "reason": "Only 1 jinxed character can be in play."
+      },
+      {
+        "id": "Flowergirl",
+        "reason": "Only 1 jinxed character can be in play."
+      },
+      {
+        "id": "Undertaker",
+        "reason": "Players that die by nomination register as being executed to the Undertaker."
+      },
+      {
+        "id": "Cannibal",
+        "reason": "Players that die by nomination register as being executed to the Cannibal."
+      },
+      {
+        "id": "Pacifist",
+        "reason": "Players that die by nomination register as being executed to the Pacifist."
+      },
+      {
+        "id": "Devil's Advocate",
+        "reason": "Players that die by nomination register as being executed to the Devil's Advocate."
+      },
+      {
+        "id": "Investigator",
+        "reason": "Riot registers as a Minion to the Investigator."
+      },
+      {
+        "id": "Clockmaker",
+        "reason": "Riot registers as a Minion to the Clockmaker."
+      },
+      {
+        "id": "Town Crier",
+        "reason": "Riot registers as a Minion to the Town Crier."
+      },
+      {
+        "id": "Damsel",
+        "reason": "Riot registers as a Minion to the Damsel."
+      },
+      {
+        "id": "Preacher",
+        "reason": "Riot registers as a Minion to the Preacher."
       }
     ]
   },
