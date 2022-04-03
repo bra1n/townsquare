@@ -3,6 +3,7 @@
 ### Version 2.15.3
 - add Huntsman/Damsel, Noble, Al-Hadikhia, Golem, Fearmonger, Puzzlemaster, Alchemist, Engineer, Riot, Psychopath, Atheist, Nightwatchman to list of available characters
 - fixed game state JSON not handling custom Fabled correctly
+- fixed flickering of add reminder token
 
 ### Version 2.15.2
 - added mobile web application support

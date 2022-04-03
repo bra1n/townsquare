@@ -200,6 +200,7 @@
     <div class="reminder add" @click="$emit('trigger', ['openReminderModal'])">
       <span class="icon"></span>
     </div>
+    <div class="reminderHoverTarget"></div>
   </li>
 </template>
 
@@ -927,6 +928,19 @@ li.move:not(.from) .player .overlay svg.move {
     opacity: 1;
   }
 }
+
+.circle .reminderHoverTarget {
+  opacity: 0;
+  width: calc(50% + 8px);
+  padding-top: calc(50% + 38px);
+  margin-top: calc(-25% - 33px);
+  margin-left: calc(-25% - 1px);
+  border-radius: 0 0 999px 999px;
+  pointer-events: auto;
+  transform: none !important;
+  z-index: -1;
+}
+
 .circle li:hover .reminder.add {
   opacity: 1;
   top: 0;
