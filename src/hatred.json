@@ -218,7 +218,7 @@
       },
       {
         "id": "Snitch",
-        "reason": "The Marionette learns 3 not in-play characters when the Snitch dies, instead of at the start of the game."
+        "reason": "The Marionette does not learn 3 not in-play characters. The Demon learns an extra 3 instead."
       },
       {
         "id": "Balloonist",
