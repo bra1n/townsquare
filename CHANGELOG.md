@@ -2,6 +2,7 @@
 
 ### Version 2.15.4
 - fixed flickering of add reminder token
+- added redirect to Chinese version
 
 ---
 
