@@ -112,7 +112,7 @@ For base game characters, it is sufficient to only provide the ID, similar to wh
 * [Blood on the Clocktower](https://bloodontheclocktower.com/) is a trademark of Steven Medway and [The Pandemonium Institute](https://www.thepandemoniuminstitute.com/)
 * Night reminders and other auxiliary text written by [Ben Finney](http://bignose.whitetree.org/projects/botc/diy/)
 * Iconography by [Font Awesome](https://fontawesome.com/)
-* Background image by [Ryan Maloney](https://www.artstation.com/maloney94)
+* Background image copyright and permission granted by [Ryan Maloney](https://www.artstation.com/maloney94)
 * Webfonts by [Google Fonts](https://fonts.google.com/) and [Online Web Fonts](https://www.onlinewebfonts.com/)
 * All other images and icons are copyright to their respective owners
 
