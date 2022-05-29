@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import persistence from "./persistence";
 import socket from "./socket";
+import subscriptions from "./subscriptions";
 import players from "./modules/players";
 import session from "./modules/session";
 import editionJSON from "../editions.json";
@@ -262,5 +263,5 @@ export default new Vuex.Store({
       state.modals.edition = false;
     }
   },
-  plugins: [persistence, socket]
+  plugins: [persistence, socket, subscriptions]
 });
