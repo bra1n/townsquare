@@ -333,6 +333,10 @@ export default {
     claimSeat() {
       this.isMenuOpen = false;
       this.$emit("trigger", ["claimSeat"]);
+      const savedPronouns = localStorage.getItem("pronouns");
+      if (savedPronouns) {
+        this.updatePlayer("pronouns", savedPronouns);
+      }
     },
     /**
      * Allow the ST to override a locked vote.

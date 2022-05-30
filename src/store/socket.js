@@ -627,14 +627,18 @@ class LiveSession {
    */
   _updateSeat([index, value]) {
     if (this._isSpectator) return;
-    const property = "id";
     const players = this._store.state.players.players;
     // remove previous seat
     const oldIndex = players.findIndex(({ id }) => id === value);
     if (oldIndex >= 0 && oldIndex !== index) {
       this._store.commit("players/update", {
         player: players[oldIndex],
-        property,
+        property: "id",
+        value: ""
+      });
+      this._store.commit("players/update", {
+        player: players[oldIndex],
+        property: "pronouns",
         value: ""
       });
     }
@@ -642,7 +646,7 @@ class LiveSession {
     if (index >= 0) {
       const player = players[index];
       if (!player) return;
-      this._store.commit("players/update", { player, property, value });
+      this._store.commit("players/update", { player, property: "id", value });
     }
     // update player session list as if this was a ping
     this._handlePing([true, value, 0]);
