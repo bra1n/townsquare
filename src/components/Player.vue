@@ -259,6 +259,7 @@ export default {
       const pronouns = prompt("Player pronouns", this.player.pronouns);
       //Only update pronouns if not null (prompt was not cancelled)
       if (pronouns !== null) {
+        localStorage.setItem("pronouns", pronouns);
         this.updatePlayer("pronouns", pronouns, true);
       }
     },
