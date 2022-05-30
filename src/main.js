@@ -16,6 +16,7 @@ const faIcons = [
   "CloudMoon",
   "Cog",
   "Copy",
+  "Clipboard",
   "Dice",
   "Dragon",
   "ExchangeAlt",
