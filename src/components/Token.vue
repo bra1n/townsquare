@@ -198,9 +198,11 @@ export default {
 
   .ability {
     display: flex;
-    position: absolute;
+    position: fixed;
     padding: 5px 10px;
-    left: 120%;
+    left: 50%;
+    top: 105%;
+    transform: translate(-50%, 0);
     width: 250px;
     z-index: 25;
     font-size: 80%;
