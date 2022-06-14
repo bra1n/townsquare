@@ -69,6 +69,9 @@
         <div class="button" @click="promptURL">
           <font-awesome-icon icon="link" /> Enter URL
         </div>
+        <div class="button" @click="readFromClipboard">
+          <font-awesome-icon icon="clipboard" /> Use JSON from Clipboard
+        </div>
         <div class="button" @click="isCustom = false">
           <font-awesome-icon icon="undo" /> Back
         </div>
@@ -154,6 +157,15 @@ export default {
         } catch (e) {
           alert("Error loading custom script: " + e.message);
         }
+      }
+    },
+    async readFromClipboard() {
+      const text = await navigator.clipboard.readText();
+      try {
+        const roles = JSON.parse(text);
+        this.parseRoles(roles);
+      } catch (e) {
+        alert("Error reading custom script: " + e.message);
       }
     },
     parseRoles(roles) {

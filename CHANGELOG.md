@@ -1,5 +1,10 @@
 # Release Notes
 
+### Version 2.16.0
+- Add ability to use json from clipboard to upload script (by @alexanderfletcher)
+
+---
+
 ### Version 2.15.4
 - fixed flickering of add reminder token
 - added redirect to Chinese version
