@@ -24,6 +24,12 @@ const getters = {
     );
     return Math.min(nonTravelers.length, 15);
   },
+  aliveNonTravelers({ players }) {
+    const nonTravelers = players.filter(
+      player => !player.isDead && player.role.team !== "traveler"
+    );
+    return Math.min(nonTravelers.length, 15);
+  },
   // calculate a Map of player => night order
   nightOrder({ players, fabled }) {
     const firstNight = [0];

@@ -121,7 +121,7 @@ export default {
   computed: {
     ...mapState("players", ["players"]),
     ...mapState(["session", "grimoire"]),
-    ...mapGetters({ alive: "players/alive" }),
+    ...mapGetters({ alive: "players/aliveNonTravelers" }),
     nominator: function() {
       return this.players[this.session.nomination[0]];
     },
