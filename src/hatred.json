@@ -206,6 +206,15 @@
     ]
   },
   {
+    "id": "Baron",
+    "hatred": [
+      {
+        "id": "Heretic",
+        "reason": "The Baron might only add 1 Outsider, not 2."
+      }
+    ]
+  },
+  {
     "id": "Marionette",
     "hatred": [
       {
@@ -357,6 +366,10 @@
       {
         "id": "Slayer",
         "reason": "If the Slayer slays the Lleech's host, the host dies. "
+      },
+      {
+        "id": "Heretic",
+        "reason": "If the Lleech has poisoned the Heretic then the Lleech dies, the Heretic remains poisoned."
       }
     ]
   }
