@@ -1,5 +1,10 @@
 # Release Notes
 
+### Version 2.16.1
+Updated character night order to be consistent with script tool
+
+---
+
 ### Version 2.16.0
 - Add ability to use json from clipboard to upload script (by @alexanderfletcher)
 
