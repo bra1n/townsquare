@@ -1,8 +1,6 @@
 <template>
   <Modal v-if="modals.fabled && fabled.length" @close="toggleModal('fabled')">
-    <h3>
-      Choose a fabled character to add to the game
-    </h3>
+    <h3>{{ locale.modal.fabled.title }}</h3>
     <ul class="tokens">
       <li v-for="role in fabled" :key="role.id" @click="setFabled(role)">
         <Token :role="role" />
@@ -19,7 +17,7 @@ import Token from "../Token";
 export default {
   components: { Token, Modal },
   computed: {
-    ...mapState(["modals", "fabled", "grimoire"]),
+    ...mapState(["modals", "fabled", "grimoire", "locale"]),
     fabled() {
       const fabled = [];
       this.$store.state.fabled.forEach(role => {

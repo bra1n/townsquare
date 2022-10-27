@@ -1,0 +1,146 @@
+[
+  {
+    "id": "doomsayer",
+		"name": "Prédicateur",
+		"team": "fabled",
+		"firstNightReminder": "",
+		"otherNightReminder": "",
+		"reminders": [],
+		"setup": false,
+		"ability": "Si 4 joueurs ou plus sont en vie, chaque joueur vivant peut, une fois par partie, décider qu'un joueur de son propre alignement meurre."
+  },
+  {
+    "id": "angel",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": ["Protégé", "Catastrophe"],
+    "setup": false,
+    "name": "Ange",
+    "team": "fabled",
+    "ability": "Quelque chose de mauvais peut arriver à la personne que le Narrateur juge la plus responsable de la mort d'un nouveau joueur."
+  },
+  {
+    "id": "buddhist",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "name": "Bouddhiste",
+    "team": "fabled",
+    "ability": "Chaque jour, les joueurs vétérans ne peuvent pas parler pendant les 2 premières minutes."
+  },
+  {
+    "id": "hellslibrarian",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": ["Catastrophe"],
+    "setup": false,
+    "name": "Libraire infernal",
+    "team": "fabled",
+    "ability": "Si un joueur ne cède pas la parole quand le Narrateur appelle au silence, quelque chose de mauvais peut lui arriver."
+  },
+  {
+    "id": "revolutionary",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": ["Utilisé"],
+    "setup": false,
+    "name": "Révolutionnaire",
+    "team": "fabled",
+    "ability": "2 joueurs voisins désignés avant la partie sont obligatoirement du même alignement. Une fois par partie, l'un d'eux peut apparaitre avec un rôle de l'alignement opposé."
+  },
+  {
+    "id": "fiddler",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "name": "Violoniste",
+    "team": "fabled",
+    "ability": "Une fois par partie, le Démon choisit un joueur Bon en secret: tous les joueurs votent pour décider l'équipe duquel de ces 2 joueurs a gagné."
+  },
+  {
+    "id": "toymaker",
+    "firstNightReminder": "",
+    "otherNight": 1,
+    "otherNightReminder": "Si le Démon pourrait terminer la partie cette nuit, mais qu'il a toujours son marqueur 'nuit sans attaque', il n'agit pas cette nuit (ne le réveillez pas)",
+    "reminders": ["Nuit sans attaque"],
+    "setup": false,
+    "name": "Fabricant de Jouet",
+    "team": "fabled",
+    "ability": "Le Démon peut choisir de ne pas attaquer et doit le faire obligatoirement au moins une fois une fois au cours de la partie. Les joueurs Mauvais ont accès aux informations de début de partie normales."
+  },
+  {
+    "id": "fibbin",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": ["Utilisé"],
+    "setup": false,
+    "name": "Mensonge",
+    "team": "fabled",
+    "ability": "Une fois par partie, un joueur Bon peut recevoir une information fausse."
+  },
+  {
+    "id": "duchess",
+    "firstNightReminder": "",
+    "otherNight": 1,
+    "otherNightReminder": "Reveillez chaque visiteur dans l'ordre un par un. Indiquez à chacun d'entre eux combien de Visiteurs sont mauvais. Excepté celui qui reçoit les fausses informations qui recevra à la place n'importe quel autre nombre.",
+    "reminders": ["Visiteur 1", "Visiteur 2", "Visiteur 3", "Fausse Info"],
+    "setup": false,
+    "name": "Duchesse",
+    "team": "fabled",
+    "ability": "Chaque jour, jusqu'à 3 joueurs peuvent choisir de rendre visite au Narrateur. Chaque nuit*, chaque visiteur apprend combien de joueurs étaient Mauvais parmis eux. L'un d'eux apprend une fausse information."
+  },
+  {
+    "id": "sentinel",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": true,
+    "name": "Sentinelle",
+    "team": "fabled",
+    "ability": "Il peut y avoir un étranger de plus ou de moins."
+  },
+  {
+    "id": "spiritofivory",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": ["Pas de méchant suplémentaire"],
+    "setup": false,
+    "name": "Esprit d'Ivoire",
+    "team": "fabled",
+    "ability": "Il ne peut pas y avoir plus d'un joueur mauvais supplémentaire."
+  },
+  {
+    "id": "djinn",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "name": "Djinn",
+    "team": "fabled",
+    "ability": "Le Narrateur met en place une règle spéciale et l'explique aux joueurs avant le début de la partie."
+  },
+  {
+    "id": "stormcatcher",
+    "firstNight": 1,
+    "firstNightReminder": "Marquez un joueur comme \"Sûr\". Réveillez chaque joueur Mauvais et indiquez lui qui est ce joueur.",
+    "otherNightReminder": "",
+    "reminders": ["Sûr"],
+    "setup": false,
+    "name": "Chasse tempête",
+    "team": "fabled",
+    "ability": "Désignez un rôle de gentil. S'il est en jeu, il ne peut mourrir que par exécution, mais les joueurs mauvais savent qui a ce rôle."
+  },
+  {
+    "id": "deusexfiasco",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": ["Whoops"],
+    "setup": false,
+    "name": "Deus ex Fiasco",
+    "team": "fabled",
+    "ability": "Une fois par partie, le Narrateur fait une \"Erreur\", il la corrige et l'admet publiquement."
+  }
+]

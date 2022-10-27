@@ -1,0 +1,363 @@
+[
+  {
+    "id": "Chambermaid",
+    "hatred": [
+      {
+        "id": "Mathematician",
+        "reason": "La femme de chambre apprend si le Mathématicien va se réveiller, même si elle se réveille avant lui. "
+      }
+    ]
+  },
+  {
+    "id": "Butler",
+    "hatred": [
+      {
+        "id": "Cannibal",
+        "reason": "Si le Cannibale gagne le pouvoir du Majordome, il l'apprend. "
+      }
+    ]
+  },
+  {
+    "id": "Lunatic",
+    "hatred": [
+      {
+        "id": "Mathematician",
+        "reason": "Le Mathématicien apprend si le Lunatique attaque des joueurs différents du véritable Démon. "
+      }
+    ]
+  },
+  {
+    "id": "Pit-Hag",
+    "hatred": [
+      {
+        "id": "Heretic",
+        "reason": "Le chaudronnier ne peut pas créer un Hérétique. "
+      },
+      {
+        "id": "Damsel",
+        "reason": "Si le Chaudronnier crée une Demoiselle, c'est le Narrateur qui choisi quel joueur le devient. "
+      },
+      {
+        "id": "Politician",
+        "reason": "Un Chaudronnier ne peut pas créer un Politicien Méchant. "
+      }
+    ]
+  },
+  {
+    "id": "Cerenovus",
+    "hatred": [
+      {
+        "id": "Goblin",
+        "reason": "Le Cerenovus peut choisir de rendre un joueur fou d'être le Goblin. "
+      }
+    ]
+  },
+  {
+    "id": "Leviathan",
+    "hatred": [
+      {
+        "id": "Soldier",
+        "reason": "Si une accusation par le Léviathan aboutit à l'exécution du Soldat, le Soldat ne meurt pas. "
+      },
+      {
+        "id": "Monk",
+        "reason": "Si une accusation par le Léviathan aboutit à l'éxécution d'un joueur protégé par le Moine, ce joueur ne meurt pas. "
+      },
+      {
+        "id": "Innkeeper",
+        "reason": "Si une accusation par le Léviathan aboutit à l'éxécution d'un joueur protégé par l'Aubergiste, ce joueur ne meurt pas. "
+      },
+      {
+        "id": "Ravenkeeper",
+        "reason": "Si le Léviathan est en jeu et que le Corbeau meurt par exécution, Il se réveille cette nuit pour utiliser son pouvoir. "
+      },
+      {
+        "id": "Sage",
+        "reason": "Si le Léviathan est en jeu et que le Sage meurt par execution, Il se réveille cette nuit pour utiliser son pouvoir. "
+      },
+      {
+        "id": "Farmer",
+        "reason": "Si le Léviathan est en jeu et que le Fermier meurt par éxécution, Un joueur gentil devient un Fermier cette nuit. "
+      },
+      {
+        "id": "Mayor",
+        "reason": "Si le Léviathan est en jeu et qu'il n'y a pas d'exécution le cinquième jour, Les méchants remportent la partie. "
+      }
+    ]
+  },
+  {
+    "id": "Al-Hadikhia",
+    "hatred": [
+      {
+        "id": "Scarlet Woman",
+        "reason": "S'il y a deux Al-Hadikhias en vie, le Gourgandin devenu Al-Hadikhia redevient Gourgandin. "
+      },
+      {
+        "id": "Mastermind",
+        "reason": "Un seul personnage maudit peut être en jeu à la fois. Les joueurs Mauvais commencent la partie en sachant de quel joueur et quel rôle il s'agit. "
+      }
+    ]
+  },
+  {
+    "id": "Lil' Monsta",
+    "hatred": [
+      {
+        "id": "Poppy Grower",
+        "reason": "Si le Cultivateur de Pavots est en jeu, Les Serviteurs ne se réveillent pas ensemble. Ils sont réveillés un par un jusqu'à ce que l'un d'entre eux décide d'être babysitter. "
+      },
+      {
+        "id": "Magician",
+        "reason": "Un seul personnage maudit peut être en jeu. "
+      },
+      {
+        "id": "Scarlet Woman",
+        "reason": "S'il y a 5 joueurs ou plus en vie et que le babysitter du Bébé Monstre se fait exécuter, le Gourgandin récupére le Bébé Monstre cette nuit. "
+      }
+    ]
+  },
+  {
+    "id": "Lycanthrope",
+    "hatred": [
+      {
+        "id": "Gambler",
+        "reason": "Si le Lycanthrope est en vie et que le Joueur se suicide la nuit, aucun autre joueur ne peut mourrir cette nuit. "
+      }
+    ]
+  },
+  {
+    "id": "Legion",
+    "hatred": [
+      {
+        "id": "Engineer",
+        "reason": "Legion et l'Ingénieur ne peuvent pas être tous les deux en jeu au début de la partie. Si l'Ingénieur crée une Légion, la moité des joueurs (Y compris les Mauvais joueurs) deviennent de Mauvaises Légions. "
+      },
+      {
+        "id": "Preacher",
+        "reason": "Un seul personnage Maudit peut être en jeu à la fois. "
+      }
+    ]
+  },
+  {
+    "id": "Fang Gu",
+    "hatred": [
+      {
+        "id": "Scarlet Woman",
+        "reason": "Si le Fang Gu désigne un étranger et meurt, Le Gourgandin ne devient pas le Fang Gu . "
+      }
+    ]
+  },
+  {
+    "id": "Spy",
+    "hatred": [
+      {
+        "id": "Magician",
+        "reason": "Quand l'Espion regarde le grimoire, les jetons du Démon et du Magicien sont retirés. "
+      },
+      {
+        "id": "Alchemist",
+        "reason": "L'alchimiste ne peut pas avoir la capacité de l'Espion. "
+      },
+      {
+        "id": "Poppy Grower",
+        "reason": "Si le Cultivateur de Pavot est en jeu, l'Espion ne peut pas voir le Grimoire avant la mort du Cultivateur de Pavots. "
+      },
+      {
+        "id": "Damsel",
+        "reason": "Un seul personnage maudit peut être en jeu. "
+      },
+      {
+        "id": "Heretic",
+        "reason": "Un seul personnage maudit peut être en jeu. "
+      }
+    ]
+  },
+  {
+    "id": "Widow",
+    "hatred": [
+      {
+        "id": "Magician",
+        "reason": "Quand la Veuve regarde le Grimoire, Les jetons du Démon et du Magicien sont retirés. "
+      },
+      {
+        "id": "Poppy Grower",
+        "reason": "Si le Cultivateur de Pavot est en jeu, La Veuve ne voit pas le Grimoire avant la mort du Cultivateur de Pavot. "
+      },
+      {
+        "id": "Alchemist",
+        "reason": "L'alchimiste ne peut pas avoir la capacité de la Veuve. "
+      },
+      {
+        "id": "Damsel",
+        "reason": "Un seul personnage maudit peut être en jeu. "
+      },
+      {
+        "id": "Heretic",
+        "reason": "Un seul personnage maudit peut être en jeu. "
+      }
+    ]
+  },
+  {
+    "id": "Godfather",
+    "hatred": [
+      {
+        "id": "Heretic",
+        "reason": "Un seul personnage maudit peut être en jeu. "
+      }
+    ]
+  },
+  {
+    "id": "Marionette",
+    "hatred": [
+      {
+        "id": "Lil' Monsta",
+        "reason": "La Marionette est voisine d'un Serviteur, pas du Démon. La Marionette n'est pas réveillée pour décider qui babysit le Bébé Monstre. "
+      },
+      {
+        "id": "Poppy Grower",
+        "reason": "Quand le Cultivateur de Pavots meurt, le Démon apprend qui est la Marionette, mais la Marionette n'apprend rien. "
+      },
+      {
+        "id": "Snitch",
+        "reason": "La Marionette n'apprend pas 3 rôles qui ne sont pas en jeu. Le Démon en apprend 3 suplémentaires à la place. "
+      },
+      {
+        "id": "Balloonist",
+        "reason": "Si la Marionette pense être le Montgolfier, [+1 Etranger]. "
+      },
+      {
+        "id": "Damsel",
+        "reason": "La Marionette n'apprend pas qu'une Demoiselle est en jeu. "
+      },
+      {
+        "id": "Huntsman",
+        "reason": "Si la Marionette croit être un Chasseur, Une Demoiselle est ajoutée au jeu. "
+      }
+    ]
+  },
+  {
+    "id": "Riot",
+    "hatred": [
+      {
+        "id": "Engineer",
+        "reason": "Emeute et Ingénieur ne peuvent pas être tous les deux en jeu au début de la partie. \nSi l'ingénieur crée une Emeute, tous les joueurs Mauvais deviennent des Emeutes. "
+      },
+      {
+        "id": "Golem",
+        "reason": "Si le Golem accuse une Emeute, ce joueur ne meurt pas. "
+      },
+      {
+        "id": "Snitch",
+        "reason": "Si la Balance est en jeu, chaque joueur qui a le rôle d'Emeute reçoit 3 bluffs supplémentaires. "
+      },
+      {
+        "id": "Saint",
+        "reason": "Si un joueur Gentil accuse et exécute le Saint, l'équipe du Saint perd. "
+      },
+      {
+        "id": "Butler",
+        "reason": "Le Majordome ne peut pas Accuser son Maître. "
+      },
+      {
+        "id": "Pit-Hag",
+        "reason": "Si le Chaudronnier crée une Emeute, tous les joueurs Mauvais deviennent des Emeutes. \nSi le Chaudronnier crée une Emeute après le jour 3, la partie continue pour un jour de plus. "
+      },
+      {
+        "id": "Mayor",
+        "reason": "Si le 3ème jour commence avec seulement 3 joueurs en vie, les joueurs peuvent collectivement décider de ne pas accuser. S'il le font (et que le Maire est en vie) l'équipe du Maire gagne la partie. "
+      },
+      {
+        "id": "Monk",
+        "reason": "Si un joueur d'Emeute accuse un joueur protégé par le Moine, ce joueur ne meurt pas. "
+      },
+      {
+        "id": "Farmer",
+        "reason": "Si un joueur d'Emeute accuse et tue un Fermier, le Fermier utilise son Pouvoir cette nuit. "
+      },
+      {
+        "id": "Innkeeper",
+        "reason": "Si un joueur d'Emeute accuse et tue un joueur protégé par l'Aubergiste, ce joueur ne meurt pas. "
+      },
+      {
+        "id": "Sage",
+        "reason": "Si un joueur d'Emeute accuse et tue le Sage, le Sage utilise son pouvoir cette nuit. "
+      },
+      {
+        "id": "Ravenkeeper",
+        "reason": "Si un Joueur d'Emeute accuse et tue le Corbeau, le Corbeau utilise son pouvoir cette nuit. "
+      },
+      {
+        "id": "Soldier",
+        "reason": "Si un joueur d'Emeute accuse le Soldat, le Soldat ne meurt pas. "
+      },
+      {
+        "id": "Grandmother",
+        "reason": "Si un joueur d'Emeute accuse et tue la Grand-mère, le Petit-Fils meurt aussi. "
+      },
+      {
+        "id": "King",
+        "reason": "Si une joueur d'Emeute accuse et tue le Roi et que l'Enfant de Choeur est en vie, l'Enfant de Choeur utilise son pouvoir cette nuit. "
+      },
+      {
+        "id": "Exorcist",
+        "reason": "Un seul personnage maudit peut être en jeu. "
+      },
+      {
+        "id": "Minstrel",
+        "reason": "Un seul personnage maudit peut être en jeu. "
+      },
+      {
+        "id": "Flowergirl",
+        "reason": "Un seul personnage maudit peut être en jeu. "
+      },
+      {
+        "id": "Undertaker",
+        "reason": "Les joueurs qui meurent par accusation sont considérés comme exécutés pour le Fossoyeur. "
+      },
+      {
+        "id": "Cannibal",
+        "reason": "Les joueurs qui meurent par accusation sont considérés comme exécutés pour le Cannibale. "
+      },
+      {
+        "id": "Pacifist",
+        "reason": "Les joueurs qui meurent par accusation sont considérés comme exécutés pour le Pacifiste. "
+      },
+      {
+        "id": "Devil's Advocate",
+        "reason": "Les joueurs qui meurent par accusation sont considérés comme exécutés pour l'Avocat du Diable. "
+      },
+      {
+        "id": "Investigator",
+        "reason": "Emeute est considéré comme un Serviteur pour l'Enquéteur. "
+      },
+      {
+        "id": "Clockmaker",
+        "reason": "Emeute est considéré comme un Serviteur pour l'Horloger. "
+      },
+      {
+        "id": "Town Crier",
+        "reason": "Emeute est considéré comme un Serviteur pour la Criée. "
+      },
+      {
+        "id": "Damsel",
+        "reason": "Emeute est considéré comme un Serviteur pour la Demoiselle. "
+      },
+      {
+        "id": "Preacher",
+        "reason": "Emeute est considéré comme un Serviteur pour le précheur. "
+      }
+    ]
+  },
+  {
+    "id": "Lleech",
+    "hatred": [
+      {
+        "id": "Mastermind",
+        "reason": "Si le Cerveau est en vie et que la Sangsue meurt par execution, la Sangsue survie mais perd son pouvoir. "
+      },
+      {
+        "id": "Slayer",
+        "reason": "Si le Tueur tire sur l'hôte de la Sangsue, l'hôte meurt. "
+      }
+    ]
+  }
+]

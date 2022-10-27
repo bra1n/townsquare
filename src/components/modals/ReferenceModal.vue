@@ -11,7 +11,7 @@
       title="Show Night Order"
     />
     <h3>
-      Character Reference
+      {{ locale.modal.reference.title }}
       <font-awesome-icon icon="address-card" />
       {{ edition.name || "Custom Script" }}
     </h3>
@@ -21,7 +21,7 @@
       :class="['team', team]"
     >
       <aside>
-        <h4>{{ team }}</h4>
+        <h4>{{ locale.modal.reference.teamNames[team] }}</h4>
       </aside>
       <ul>
         <li v-for="role in teamRoles" :class="[team]" :key="role.id">
@@ -53,7 +53,7 @@
 
     <div class="team jinxed" v-if="jinxed.length">
       <aside>
-        <h4>Jinxed</h4>
+        <h4>{{ locale.modal.reference.jinxed }}</h4>
       </aside>
       <ul>
         <li v-for="(jinx, index) in jinxed" :key="index">
@@ -140,7 +140,7 @@ export default {
       });
       return players;
     },
-    ...mapState(["roles", "modals", "edition", "grimoire", "jinxes"]),
+    ...mapState(["roles", "modals", "edition", "grimoire", "jinxes", "locale"]),
     ...mapState("players", ["players"])
   },
   methods: {

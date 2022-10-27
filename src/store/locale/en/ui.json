@@ -1,0 +1,206 @@
+{
+  "menu":{
+    "grimoire":{
+      "title": "Grimoire",
+      "hide": "Hide",
+      "show": "Show",
+      "nightSwitch": "Switch to Night",
+      "daySwitch": "Switch to Day",
+      "order": "Night order",
+      "zoom": "Zoom",
+      "background": "Background image",
+      "customImages": "Show Custom Images",
+      "animations": "Disable Animations",
+      "mute": "Mute Sounds"
+    },
+    "session":{
+      "title":{
+        "player": "Playing",
+        "host": "Hosting",
+        "create": "Live Session"
+      },
+      "player": "Join (Player)",
+      "players": "players",
+      "host": "host",
+      "storyteller": "Host (Storyteller)",
+      "delay": "Delay",
+      "link": "Copy player link",
+      "sendRoles": "Send Characters",
+      "voteHistory": "Vote history",
+      "leave": "Leave Session"
+    },
+    "players":{
+      "title": "Players",
+      "add": "Add",
+      "randomize": "Randomize",
+      "removeAll": "Remove all"
+    },
+    "characters":{
+      "title": "Characters",
+      "selectEdition": "Select Edition",
+      "assign": "Choose & Assign",
+      "addFabled": "Add Fabled",
+      "removeAll": "Remove all"
+    },
+    "help":{
+      "title": "Help",
+      "reference": "Reference Sheet",
+      "nightOrder": "Night Order Sheet",
+      "gameState": "Game State JSON",
+      "discord": "Join Discord",
+      "source": "Source code"
+    }
+  },
+  "prompt":{
+    "background": "Enter custom background URL",
+    "createSession": "Enter a channel number / name for your session",
+    "sendRoles": "Do you want to distribute assigned characters to all SEATED players?",
+    "imageOptIn": "Are you sure you want to allow custom images? A malicious script file author might track your IP address this way.",
+    "joinSession": "Enter the channel number / name of the session you want to join",
+    "leaveSession": "Are you sure you want to leave the active live game?",
+    "addPlayer": "Player name",
+    "randomizeSeatings": "Are you sure you want to randomize seatings?",
+    "clearPlayers": "Are you sure you want to remove all players?",
+    "clearRoles": "Are you sure you want to remove all player roles?",
+    "customUrl": "Enter URL to a custom-script?json file",
+    "customError": "Error loading custom script",
+    "customNote": "Add a custom reminder node"
+  },
+  "vote":{
+    "nominated": "nominated",
+    "votes": "votes",
+    "inFavor": "in favor",
+    "majorityIs": "majority is",
+    "timePerPlayer": "Time per player:",
+    "countdown": "Countdown",
+    "restart": "Restart",
+    "start": "Start",
+    "pause": "Pause",
+    "resume": "Resume",
+    "reset": "Reset",
+    "close": "Close",
+    "setMarked": "Mark for execution",
+    "removeMarked": "Clear mark",
+    "secondsBetweenVotes": "seconds between votes",
+    "handDown": "Hand DOWN",
+    "handUp": "Hand UP",
+    "seatToVote": "Pleas claim a seat to vote",
+    "doVote": "Go"
+  },
+  "townsquare":{
+    "others": "Other characters",
+    "bluffs": "Demon bluffs",
+    "fabled": "Fabled"
+  },
+  "towninfo":{
+    "addPlayers":"Please add more players!"
+  },
+  "player":{
+    "handUp": "Hand UP",
+    "handDown": "Hand DOWN",
+    "cancel": "Cancel",
+    "swap": "Swap seats with this player",
+    "move": "Move player to this seat",
+    "nominate": "Nominate this player",
+    "ghostVote": "Ghost vote",
+    "changePronouns": "Change Pronouns",
+    "changeName": "Rename",
+    "movePlayer": "Move player",
+    "swapPlayers": "Swap seats",
+    "removePlayer": "Remove",
+    "emptySeat": "Empty seat",
+    "nomination": "Nomination",
+    "claimSeat": "Claim seat",
+    "vacateSeat": "Vacate seat",
+    "occupiedSeat": "Seat occupied"
+  },
+  "intro":{
+    "header": "Welcome to the (unofficial) Virtual Town Square and Grimoire for Blood on the Clocktower! Please add more players through the",
+    "menu": "Menu",
+    "body": "on the top right or by pressing [A]. You can also join a game session by pressing [J].",
+    "footerStart": "This project is free and open source and can be found on",
+    "footerEnd": ". It is not affiliated with The Pandemonium Institute. \"Blood on the Clocktower\" is a trademark of Steven Medway and The Pandemonium Institute."
+  },
+  "modal":{
+    "edition":{
+      "title": "Select an edition:",
+      "custom": {
+        "button": "Custom Script / Characters",
+        "title": "Load custom script / characters",
+        "introStart": "To play with a custom script, you need to select the characters you want to play with in the official",
+        "scriptTool": "Script Tool",
+        "introEnd": "and then upload the generated \"custom-list.json\" either directly here or provide a URL to such a hosted JSON file.",
+        "instructionsStart": "To play with custom characters, please read",
+        "documentation": "the documentation",
+        "instructionsEnd": "on how to write a custom character definition file.",
+        "warning": "Only load custom JSON files from sources that you trust!",
+        "popularScripts": "Some popular custom scripts:",
+        "upload": "Upload JSON",
+        "url": "Enter URL",
+        "clipboard": "Use JSON from Clipboard",
+        "back": "Back"
+      }
+    },
+    "fabled": {
+      "title": "Choose a fabled character to add to the game "
+    },
+    "gameState": {
+      "title": "Current Game State",
+      "copy": "Copy JSON",
+      "load": "Load State"
+    },
+    "nightOrder": {
+      "title": "Night Order",
+      "custom": "Custom Script",
+      "firstNight": "First Night",
+      "otherNights": "Other Nights",
+      "minionInfo": "Minion info",
+      "minionInfoDescription": "• If more than one Minion, they all make eye contact with each other. • Show the “This is the Demon” card. Point to the Demon.",
+      "demonInfo": "Demon info & bluffs",
+      "demonInfoDescription": "• Show the “These are your minions” card. Point to each Minion. • Show the “These characters are not in play” card. Show 3 character tokens of good characters not in play."
+    },
+    "reference": {
+        "title": "Character Reference",
+        "jinxed": "Jinxed",
+        "teamNames": {
+          "townsfolk": "townfolk",
+          "outsider": "outsider",
+          "minion": "minion",
+          "demon": "demon"
+        }
+    },
+    "reminder": {
+      "title": "Choose a reminder token:",
+      "good": "Good",
+      "evil": "Evil",
+      "custom": "Custom Note"
+    },
+    "role": {
+      "title": "Choose a new character for",
+      "bluff": "bluffing",
+      "editionRoles": "Edition Roles",
+      "otherTravelers": "Other Travelers"
+    },
+    "roles": {
+      "titleStart": "Select the characters for",
+      "titleEnd": "players:",
+      "warning":"Warning: there are characters selected that modify the game setup! The randomizer does not account for these characters.",
+      "allowMultiple": "Allow duplicate characters",
+      "assignStart": "Assign ",
+      "assignEnd": "characters randomly",
+      "shuffle": "Shuffle characters"
+    },
+    "voteHistory":{
+      "title": "Vote history",
+      "accessibility": "Accessible to players",
+      "clear": "Clear for everyone",
+      "time": "Time",
+      "nominator": "Nominator",
+      "nominee": "Nominee",
+      "type": "Type",
+      "votes": "Votes",
+      "majority": "Majority",
+      "voters": "Voters"
+    }
+  }
+}

@@ -4,7 +4,13 @@
     v-if="modals.roles && nonTravelers >= 5"
     @close="toggleModal('roles')"
   >
-    <h3>Select the characters for {{ nonTravelers }} players:</h3>
+    <h3>
+      {{
+        locale.modal.roles.titleStart +
+          nonTravelers +
+          locale.modal.roles.titleEnd
+      }}:
+    </h3>
     <ul class="tokens" v-for="(teamRoles, team) in roleSelection" :key="team">
       <li class="count" :class="[team]">
         {{ teamRoles.reduce((a, { selected }) => a + selected, 0) }} /
@@ -30,15 +36,12 @@
     </ul>
     <div class="warning" v-if="hasSelectedSetupRoles">
       <font-awesome-icon icon="exclamation-triangle" />
-      <span>
-        Warning: there are characters selected that modify the game setup! The
-        randomizer does not account for these characters.
-      </span>
+      <span>{{ locale.modal.roles.warning }}</span>
     </div>
     <label class="multiple" :class="{ checked: allowMultiple }">
       <font-awesome-icon :icon="allowMultiple ? 'check-square' : 'square'" />
       <input type="checkbox" name="allow-multiple" v-model="allowMultiple" />
-      Allow duplicate characters
+      {{ locale.modal.roles.allowMultiple }}
     </label>
     <div class="button-group">
       <div
@@ -49,11 +52,15 @@
         }"
       >
         <font-awesome-icon icon="people-arrows" />
-        Assign {{ selectedRoles }} characters randomly
+        {{
+          locale.modal.roles.assignStart +
+            selectedRoles +
+            locale.modal.roles.assignEnd
+        }}
       </div>
       <div class="button" @click="selectRandomRoles">
         <font-awesome-icon icon="random" />
-        Shuffle characters
+        {{ locale.modal.roles.shuffle }}
       </div>
     </div>
   </Modal>
@@ -90,7 +97,7 @@ export default {
         roles.some(role => role.selected && role.setup)
       );
     },
-    ...mapState(["roles", "modals"]),
+    ...mapState(["roles", "modals", "locale"]),
     ...mapState("players", ["players"]),
     ...mapGetters({ nonTravelers: "players/nonTravelers" })
   },

@@ -1,0 +1,206 @@
+{
+  "menu":{
+    "grimoire":{
+      "title": "Grimoire",
+      "hide": "Cacher",
+      "show": "Montrer",
+      "nightSwitch": "Passer à la nuit",
+      "daySwitch": "Passer au jour",
+      "order": "Ordre Nocturne",
+      "zoom": "Zoom",
+      "background": "Image de fond",
+      "customImages": "Images Importées",
+      "animations": "Effets réduits",
+      "mute": "Silencieux"
+    },
+    "session":{
+      "title":{
+        "player": "Joueur",
+        "host": "Hôte",
+        "create": "Session Live"
+      },
+      "player": "Joueur",
+      "players": "Joueurs",
+      "host": "Hôte",
+      "storyteller": "Hôte (Narrateur)",
+      "delay": "Délais",
+      "link": "Copier Lien Joueurs",
+      "sendRoles": "Envoyer les rôles",
+      "voteHistory": "Historique Votes",
+      "leave": "Quitter Session"
+    },
+    "players":{
+      "title": "Joueurs",
+      "add": "Ajouter",
+      "randomize": "Mélanger Sièges",
+      "removeAll": "Retirer Joueurs"
+    },
+    "characters":{
+      "title": "Personnages",
+      "selectEdition": "Choisir Scénario",
+      "assign": "Attribuer Rôles",
+      "addFabled": "Ajouter Fabuleux",
+      "removeAll": "Effacer Rôles"
+    },
+    "help":{
+      "title": "Aide",
+      "reference": "Référence rôles",
+      "nightOrder": "Ordre Nocturne",
+      "gameState": "Etat JSON du jeu",
+      "discord": "Rejoindre Discord",
+      "source": "Code Source"
+    }
+  },
+  "prompt":{
+    "background": "Entrez l'URL de l'image de fond",
+    "createSession": "Entrez un nom ou numéro de session",
+    "sendRoles": "Voulez-vous envoyer les rôles à tous les joueurs ASSIS ?",
+    "imageOptIn": "Etes-vous sûr de vouloir autoriser les images externes ? Un auteur de script mal intentionné pourrait s'en servir pour traquer votre adresse IP.",
+    "joinSession": "Entrez le nom ou numéro de la session que vous souhaitez rejoindre",
+    "leaveSession": "Etes-vous sur de vouloir quitter la partie en cours ?",
+    "addPlayer": "Nom du joueur",
+    "randomizeSeatings": "Êtes-vous sur de vouloir mélanger les sièges ?",
+    "clearPlayers": "Etes-vous sur de vouloir supprimer tous les joueurs ?",
+    "clearRoles": "Etes-vous sur de vouloir effacer tous les rôles ?",
+    "customUrl": "Entrer l'URL du fichier JSON de personnalisation de script",
+    "customError": "Erreur lors du chargement du script",
+    "customNote": "Ajouter une note personnalisée"
+  },
+  "vote":{
+    "nominated": "accuse",
+    "votes": "votes",
+    "inFavor": "pour",
+    "majorityIs": "majorité à",
+    "timePerPlayer": "Temps par Joueur :",
+    "countdown": "Compte à rebours",
+    "restart": "Relancer",
+    "start": "Démarrer",
+    "pause": "Pause",
+    "resume": "Continuer",
+    "reset": "Annuler",
+    "close": "Fermer",
+    "setMarked": "Marquer comme condamné",
+    "removeMarked": "Effacer la marque",
+    "secondsBetweenVotes": "secondes par vote",
+    "handDown": "Baisser la Main",
+    "handUp": "Lever la Main",
+    "seatToVote": "Asseyez-vous pour pouvoir voter",
+    "doVote": "Votez"
+  },
+  "townsquare":{
+    "others": "Autres Rôles",
+    "bluffs": "Bluffs de Démon",
+    "fabled": "Fabuleux"
+  },
+  "towninfo":{
+    "addPlayers":"Appuyez sur [A] pour ajouter plus de joueurs !"
+  },
+  "player":{
+    "handUp": "Main levée",
+    "handDown": "Main baissée",
+    "cancel": "Annuler",
+    "swap": "Echanger de siège avec ce joueur",
+    "move": "Déplacer le joueur vers ce siège",
+    "nominate": "Accuse ce joueur",
+    "ghostVote": "Vote Fantôme",
+    "changePronouns": "Changer de Pronom",
+    "changeName": "Renommer",
+    "movePlayer": "Déplacer le joueur",
+    "swapPlayers": "Echanger les sièges",
+    "removePlayer": "Retirer le joueur",
+    "emptySeat": "Vider le siège",
+    "nomination": "Accusation",
+    "claimSeat": "S'asseoir ici",
+    "vacateSeat": "Libérer le Siège",
+    "occupiedSeat": "Siège Occupé"
+  },
+  "intro":{
+    "header": "Bienvenue sur le Centre-ville Virtuel (non-officiel) pour Blood on the Clocktower! Veuillez ajouter des Joueurs via le",
+    "menu": "Menu",
+    "body": "en haut à droite ou en appuyant sur [A] pour commencer. Vous pouvez aussi rejoindre une ssession en appuyant sur [J].",
+    "footerStart": "Ce programme est libre et ses sources peuvent être trouvées sur",
+    "footerEnd": ". Ce site n'est pas affilié à The Pandemonium Institute. \"Blood on the Clocktower\" est une marque déposée de Steven Medway & The Pandemonium Institute."
+  },
+  "modal":{
+    "edition":{
+      "title": "Choisir un Scénario :",
+      "custom": {
+        "button": "Scénario Perso / Personnages",
+        "title": "Charger un Scénario Perso",
+        "introStart": "Pour jouer avec un script personnalisé, vous pouvez sélectionner les personnages de votre choix grace à l'",
+        "scriptTool": "outil officiel d'édition de scripts",
+        "introEnd": "puis téléverser le fichier json généré directement ici ou depuis une URL hébergée.",
+        "instructionsStart": "Pour plus d'informations, vous pouvez vous réferrer à",
+        "documentation": "la documentation",
+        "instructionsEnd": "pour apprendre comment rédiger des fiches de personnages personnalisés.",
+        "warning": "Ne chargez des fichier JSON qu'à partir de sources de confiance !",
+        "popularScripts": "Quelques scénarios populaires :",
+        "upload": "Téléversersement JSON",
+        "url": "Entrer une URL",
+        "clipboard": "Presse-papier",
+        "back": "Retour"
+      }
+    },
+    "fabled": {
+      "title": "Choisissez un personnage fabuleux à ajouter à la partie"
+    },
+    "gameState": {
+      "title": "Etat Actuel de la Partie",
+      "copy": "Copier JSON",
+      "load": "Charger l'état"
+    },
+    "nightOrder": {
+      "title": "Ordre Nocturne",
+      "custom": "Scénario Perso",
+      "firstNight": "Première Nuit",
+      "otherNights": "Autres Nuits",
+      "minionInfo": "Informations Serviteurs",
+      "minionInfoDescription": "• S'il y a plusieurs Serviteurs, ils apprennent qui sont les autres Serviteurs. • Indiquez aux Serviteurs qui est le Démon.",
+      "demonInfo": "Info & Bluffs Démon",
+      "demonInfoDescription": "• Indiquez au Démon qui sont ses serviteurs.• Indiquez les rôles de 3 personnages Bons qui ne sont pas en jeu."
+    },
+    "reference": {
+        "title": "Réference de rôles",
+        "jinxed": "Jinx",
+        "teamNames": {
+          "townsfolk": "villageois",
+          "outsider": "étranger",
+          "minion": "serviteur",
+          "demon": "démon"
+        }
+    },
+    "reminder": {
+      "title": "Apposer une note:",
+      "good": "Bon",
+      "evil": "Mauvais",
+      "custom": "Note"
+    },
+    "role": {
+      "title": "Choisissez un personnage pour",
+      "bluff": "bluffer",
+      "editionRoles": "Rôles de ce Scénario",
+      "otherTravelers": "Autres Voyageurs"
+    },
+    "roles": {
+      "titleStart": "Selectionner les personnages pour",
+      "titleEnd": "joueurs:",
+      "warning":"Attention: certains des personnages sélectionnés changent la distribution de début de partie ! La distribution aléatoire n'effectue pas elle même ces changements, pensez à modifier les attributions en conséquence avant d'envoyer les rôles aux joueurs.",
+      "allowMultiple": "Permettre les doublons de personnages",
+      "assignStart": "Attribuer aléatoirement ces ",
+      "assignEnd": "rôles",
+      "shuffle": "Tirer les personnages au sort"
+    },
+    "voteHistory":{
+      "title": "Historique de votes",
+      "accessibility": "Accessible aux Joueurs",
+      "clear": "Effacer pour tous",
+      "time": "Temps",
+      "nominator": "Accusateur",
+      "nominee": "Accusé",
+      "type": "Type",
+      "votes": "Voix",
+      "majority": "Majorité",
+      "voters": "Votants"
+    }
+  }
+}

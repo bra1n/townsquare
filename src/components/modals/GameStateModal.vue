@@ -4,7 +4,7 @@
     v-if="modals.gameState"
     @close="toggleModal('gameState')"
   >
-    <h3>Current Game State</h3>
+    <h3>{{ locale.modal.gameState.title }}</h3>
     <textarea
       :value="gamestate"
       @input.stop="input = $event.target.value"
@@ -13,10 +13,10 @@
     ></textarea>
     <div class="button-group">
       <div class="button townsfolk" @click="copy">
-        <font-awesome-icon icon="copy" /> Copy JSON
+        <font-awesome-icon icon="copy" /> {{ locale.modal.gameState.copy }}
       </div>
       <div class="button demon" @click="load" v-if="!session.isSpectator">
-        <font-awesome-icon icon="cog" /> Load State
+        <font-awesome-icon icon="cog" /> {{ locale.modal.gameState.load }}
       </div>
     </div>
   </Modal>
@@ -49,7 +49,7 @@ export default {
         }))
       });
     },
-    ...mapState(["modals", "players", "edition", "roles", "session"])
+    ...mapState(["modals", "players", "edition", "roles", "session", "locale"])
   },
   data() {
     return {

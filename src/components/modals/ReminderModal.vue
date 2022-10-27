@@ -3,7 +3,7 @@
     v-if="modals.reminder && availableReminders.length && players[playerIndex]"
     @close="toggleModal('reminder')"
   >
-    <h3>Choose a reminder token:</h3>
+    <h3>Apposer une marque:</h3>
     <ul class="reminders">
       <li
         v-for="reminder in availableReminders"
@@ -82,12 +82,12 @@ export default {
         }
       });
 
-      reminders.push({ role: "good", name: "Good" });
-      reminders.push({ role: "evil", name: "Evil" });
-      reminders.push({ role: "custom", name: "Custom note" });
+      reminders.push({ role: "good", name: this.locale.modal.reminder.good });
+      reminders.push({ role: "evil", name: this.locale.modal.reminder.evil });
+      reminders.push({ role: "custom", name: this.locale.modal.reminder.custom });
       return reminders;
     },
-    ...mapState(["modals", "grimoire"]),
+    ...mapState(["modals", "grimoire", "locale"]),
     ...mapState("players", ["players"])
   },
   methods: {
@@ -95,7 +95,7 @@ export default {
       const player = this.$store.state.players.players[this.playerIndex];
       let value;
       if (reminder.role === "custom") {
-        const name = prompt("Add a custom reminder note");
+        const name = prompt(this.locale.prompt.customNote);
         if (!name) return;
         value = [...player.reminders, { role: "custom", name }];
       } else {

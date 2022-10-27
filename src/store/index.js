@@ -4,10 +4,14 @@ import persistence from "./persistence";
 import socket from "./socket";
 import players from "./modules/players";
 import session from "./modules/session";
-import editionJSON from "../editions.json";
-import rolesJSON from "../roles.json";
-import fabledJSON from "../fabled.json";
-import jinxesJSON from "../hatred.json";
+
+import {
+  locale,
+  rolesJSON,
+  jinxesJSON,
+  fabledJSON,
+  editionJSON
+} from "./modules/locale";
 
 Vue.use(Vuex);
 
@@ -120,10 +124,12 @@ export default new Vuex.Store({
       voteHistory: false
     },
     edition: editionJSONbyId.get("tb"),
+    editions: editionJSON,
     roles: getRolesByEdition(),
     otherTravelers: getTravelersNotInEdition(),
     fabled,
-    jinxes
+    jinxes,
+    locale
   },
   getters: {
     /**

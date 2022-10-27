@@ -1,7 +1,7 @@
 <template>
   <Modal class="editions" v-if="modals.edition" @close="toggleModal('edition')">
     <div v-if="!isCustom">
-      <h3>Select an edition:</h3>
+      <h3>{{ locale.modal.edition.title }}</h3>
       <ul class="editions">
         <li
           v-for="edition in editions"
@@ -24,29 +24,27 @@
             backgroundImage: `url(${require('../../assets/editions/custom.png')})`
           }"
         >
-          Custom Script / Characters
+          {{ locale.modal.edition.custom.button }}
         </li>
       </ul>
     </div>
     <div class="custom" v-else>
-      <h3>Load custom script / characters</h3>
-      To play with a custom script, you need to select the characters you want
-      to play with in the official
+      <h3>{{ locale.modal.edition.custom.title }}</h3>
+      {{ locale.modal.edition.custom.introStart }}
       <a href="https://script.bloodontheclocktower.com/" target="_blank"
-        >Script Tool</a
+        >{{ locale.modal.edition.custom.scriptTool }}</a
       >
-      and then upload the generated "custom-list.json" either directly here or
-      provide a URL to such a hosted JSON file.<br />
+      {{ locale.modal.edition.custom.introEnd }}.<br />
       <br />
-      To play with custom characters, please read
+      {{ locale.modal.edition.custom.instructionsStart }}
       <a
         href="https://github.com/bra1n/townsquare#custom-characters"
         target="_blank"
-        >the documentation</a
+        >{{ locale.modal.edition.custom.documentation }}n</a
       >
-      on how to write a custom character definition file.
-      <b>Only load custom JSON files from sources that you trust!</b>
-      <h3>Some popular custom scripts:</h3>
+      {{ locale.modal.edition.custom.instructionsEnd }}<br/>
+      <b>{{ locale.modal.edition.custom.warning }}</b>
+      <h3>{{ locale.modal.edition.popularScripts }}</h3>
       <ul class="scripts">
         <li
           v-for="(script, index) in scripts"
@@ -64,16 +62,20 @@
       />
       <div class="button-group">
         <div class="button" @click="openUpload">
-          <font-awesome-icon icon="file-upload" /> Upload JSON
+          <font-awesome-icon icon="file-upload" />
+          {{ locale.modal.edition.custom.upload }}
         </div>
         <div class="button" @click="promptURL">
-          <font-awesome-icon icon="link" /> Enter URL
+          <font-awesome-icon icon="link" />
+          {{ locale.modal.edition.custom.url }}
         </div>
         <div class="button" @click="readFromClipboard">
-          <font-awesome-icon icon="clipboard" /> Use JSON from Clipboard
+          <font-awesome-icon icon="clipboard" />
+          {{ locale.modal.edition.custom.clipboard }}
         </div>
         <div class="button" @click="isCustom = false">
-          <font-awesome-icon icon="undo" /> Back
+          <font-awesome-icon icon="undo" />
+          {{ locale.modal.edition.custom.back }}
         </div>
       </div>
     </div>
@@ -81,7 +83,6 @@
 </template>
 
 <script>
-import editionJSON from "../../editions";
 import { mapMutations, mapState } from "vuex";
 import Modal from "./Modal";
 
@@ -91,7 +92,7 @@ export default {
   },
   data: function() {
     return {
-      editions: editionJSON,
+      editions: this.$store.state.editions,
       isCustom: false,
       scripts: [
         [
@@ -121,7 +122,9 @@ export default {
       ]
     };
   },
-  computed: mapState(["modals"]),
+  computed: {
+    ...mapState(["modals", "locale", "editions"])
+  },
   methods: {
     openUpload() {
       this.$refs.upload.click();
@@ -143,7 +146,7 @@ export default {
       }
     },
     promptURL() {
-      const url = prompt("Enter URL to a custom-script.json file");
+      const url = prompt(this.locale.prompt.customUrl);
       if (url) {
         this.handleURL(url);
       }
@@ -155,7 +158,7 @@ export default {
           const script = await res.json();
           this.parseRoles(script);
         } catch (e) {
-          alert("Error loading custom script: " + e.message);
+          alert(this.locale.prompt.customError + ": " + e.message);
         }
       }
     },

@@ -1,11 +1,11 @@
 <template>
   <Modal v-if="modals.role && availableRoles.length" @close="close">
     <h3>
-      Choose a new character for
+      {{ locale.modal.role.title }}
       {{
         playerIndex >= 0 && players.length
           ? players[playerIndex].name
-          : "bluffing"
+          : locale.modal.role.bluff
       }}
     </h3>
     <ul class="tokens" v-if="tab === 'editionRoles' || !otherTravelers.size">
@@ -36,13 +36,13 @@
         class="button"
         :class="{ townsfolk: tab === 'editionRoles' }"
         @click="tab = 'editionRoles'"
-        >Edition Roles</span
+        >{{ locale.modal.role.editionRoles }}</span
       >
       <span
         class="button"
         :class="{ townsfolk: tab === 'otherTravelers' }"
         @click="tab = 'otherTravelers'"
-        >Other Travelers</span
+        >{{ locale.modal.role.otherTravelers }}</span
       >
     </div>
   </Modal>
@@ -73,7 +73,7 @@ export default {
       availableRoles.push({});
       return availableRoles;
     },
-    ...mapState(["modals", "roles", "session"]),
+    ...mapState(["modals", "roles", "session", "locale"]),
     ...mapState("players", ["players"]),
     ...mapState(["otherTravelers"])
   },

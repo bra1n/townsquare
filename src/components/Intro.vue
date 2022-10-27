@@ -2,27 +2,18 @@
   <div class="intro">
     <img src="static/apple-icon.png" alt="" class="logo" />
     <div>
-      Welcome to the (unofficial)
-      <b>Virtual Town Square and Grimoire</b> for Blood on the Clocktower!
-      Please add more players through the
+      {{ locale.intro.header }}
       <span class="button" @click="toggleMenu">
-        <font-awesome-icon icon="cog" /> Menu
+        <font-awesome-icon icon="cog" /> {{ locale.intro.menu }}
       </span>
-      on the top right or by pressing <b>[A]</b>. You can also join a game
-      session by pressing <b>[J]</b>.<br />
+      {{ locale.intro.body }}
       <div class="footer">
-        This project is free and open source and can be found on
-        <a href="https://github.com/bra1n/townsquare" target="_blank">GitHub</a
-        >. It is not affiliated with The Pandemonium Institute. "Blood on the
-        Clocktower" is a trademark of Steven Medway and The Pandemonium
-        Institute.
+        {{ locale.intro.footerStart }}
+        <a href="https://github.com/bra1n/townsquare" target="_blank">GitHub</a>
+        {{ locale.intro.footerEnd }}
       </div>
     </div>
-    <a
-      class="redirect"
-      v-if="language === 'zh-CN'"
-      href="https://clocktower.gstonegames.com"
-    >
+    <a class="redirect" v-if="language === 'zh-CN'" href="https://clocktower.gstonegames.com">
       <img src="../assets/gstone.png" class="gstone" alt="" />
       你想使用中文版魔典吗？
     </a>
@@ -30,9 +21,13 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapState, mapGetters } from "vuex";
 
 export default {
+  computed: {
+    ...mapState(["locale"]),
+    ...mapGetters({ nightOrder: "players/nightOrder" })
+  },
   data() {
     return {
       language: window.navigator.userLanguage || window.navigator.language

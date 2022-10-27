@@ -11,13 +11,13 @@
       title="Show Character Reference"
     />
     <h3>
-      Night Order
+      {{ locale.modal.nightOrder.title }}
       <font-awesome-icon icon="cloud-moon" />
-      {{ edition.name || "Custom Script" }}
+      {{ edition.name || locale.modal.nightOrder.custom }}
     </h3>
     <div class="night">
       <ul class="first">
-        <li class="headline">First Night</li>
+        <li class="headline">{{ locale.modal.nightOrder.firstNight }}</li>
         <li
           v-for="role in rolesFirstNight"
           :key="role.name"
@@ -56,7 +56,7 @@
         </li>
       </ul>
       <ul class="other">
-        <li class="headline">Other Nights</li>
+        <li class="headline">{{ locale.modal.nightOrder.otherNights }}</li>
         <li
           v-for="role in rolesOtherNight"
           :key="role.name"
@@ -109,29 +109,24 @@ export default {
   computed: {
     rolesFirstNight: function() {
       const rolesFirstNight = [];
-      // add minion / demon infos to night order sheet
+      // Ajouter minion / demon infos à l'ordre nocturne
       if (this.players.length > 6) {
         rolesFirstNight.push(
           {
             id: "evil",
-            name: "Minion info",
+            name: this.locale.modal.nightOrder.minionInfo,
             firstNight: 5,
             team: "minion",
             players: this.players.filter(p => p.role.team === "minion"),
-            firstNightReminder:
-              "• If more than one Minion, they all make eye contact with each other. " +
-              "• Show the “This is the Demon” card. Point to the Demon."
+            firstNightReminder: this.locale.modal.nightOrder.minionInfoDescription
           },
           {
             id: "evil",
-            name: "Demon info & bluffs",
+            name: this.locale.modal.nightOrder.demonInfo,
             firstNight: 8,
             team: "demon",
             players: this.players.filter(p => p.role.team === "demon"),
-            firstNightReminder:
-              "• Show the “These are your minions” card. Point to each Minion. " +
-              "• Show the “These characters are not in play” card. Show 3 character tokens of good " +
-              "characters not in play."
+            firstNightReminder: this.locale.modal.nightOrder.demonInfoDescription
           }
         );
       }
@@ -165,7 +160,7 @@ export default {
       rolesOtherNight.sort((a, b) => a.otherNight - b.otherNight);
       return rolesOtherNight;
     },
-    ...mapState(["roles", "modals", "edition", "grimoire"]),
+    ...mapState(["roles", "modals", "edition", "grimoire", "locale"]),
     ...mapState("players", ["players", "fabled"])
   },
   methods: {

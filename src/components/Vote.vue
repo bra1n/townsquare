@@ -6,22 +6,22 @@
     </div>
     <div class="overlay">
       <audio src="../assets/sounds/countdown.mp3" preload="auto"></audio>
-      <em class="blue">{{ nominator.name }}</em> nominated
+      <em class="blue">{{ nominator.name }}</em> {{ locale.vote.nominated }}
       <em>{{ nominee.name }}</em
       >!
       <br />
       <em class="blue">
-        {{ voters.length }} vote{{ voters.length !== 1 ? "s" : "" }}
+        {{ voters.length }} {{ locale.vote.votes }}
       </em>
-      in favor
+      {{ locale.vote.inFavor }}
       <em v-if="nominee.role.team !== 'traveler'">
-        (majority is {{ Math.ceil(alive / 2) }})
+        ({{ locale.vote.majorityIs }} {{ Math.ceil(alive / 2) }})
       </em>
-      <em v-else>(majority is {{ Math.ceil(players.length / 2) }})</em>
+      <em v-else>({{ locale.vote.majorityIs }} {{ Math.ceil(players.length / 2) }})</em>
 
       <template v-if="!session.isSpectator">
         <div v-if="!session.isVoteInProgress && session.lockedVote < 1">
-          Time per player:
+          {{ locale.vote.timePerPlayer }}
           <font-awesome-icon
             @mousedown.prevent="setVotingSpeed(-500)"
             icon="minus-circle"
@@ -38,10 +38,10 @@
             v-if="!session.isVoteInProgress"
             @click="countdown"
           >
-            Countdown
+            {{ locale.vote.countdown }}
           </div>
           <div class="button" v-if="!session.isVoteInProgress" @click="start">
-            {{ session.lockedVote ? "Restart" : "Start" }}
+            {{ session.lockedVote ? locale.vote.restart : locale.vote.start }}
           </div>
           <template v-else>
             <div
@@ -49,11 +49,11 @@
               :class="{ disabled: !session.lockedVote }"
               @click="pause"
             >
-              {{ voteTimer ? "Pause" : "Resume" }}
+              {{ voteTimer ? locale.vote.pause : locale.vote.resume }}
             </div>
-            <div class="button" @click="stop">Reset</div>
+            <div class="button" @click="stop">{{ locale.vote.reset }}</div>
           </template>
-          <div class="button demon" @click="finish">Close</div>
+          <div class="button demon" @click="finish">{{ locale.vote.close }}</div>
         </div>
         <div class="button-group mark" v-if="nominee.role.team !== 'traveler'">
           <div
@@ -63,16 +63,16 @@
             }"
             @click="setMarked"
           >
-            Mark for execution
+            {{ locale.vote.setMarked }}
           </div>
           <div class="button" @click="removeMarked">
-            Clear mark
+            {{ locale.vote.removeMarked }}
           </div>
         </div>
       </template>
       <template v-else-if="canVote">
         <div v-if="!session.isVoteInProgress">
-          {{ session.votingSpeed / 1000 }} seconds between votes
+          {{ session.votingSpeed / 1000 }} {{ locale.vote.secondsBetweenVotes }}
         </div>
         <div class="button-group">
           <div
@@ -80,19 +80,19 @@
             @click="vote(false)"
             :class="{ disabled: !currentVote }"
           >
-            Hand DOWN
+            {{ locale.vote.handDown }}
           </div>
           <div
             class="button demon"
             @click="vote(true)"
             :class="{ disabled: currentVote }"
           >
-            Hand UP
+            {{ locale.vote.handUp }}
           </div>
         </div>
       </template>
       <div v-else-if="!player">
-        Please claim a seat to vote.
+        {{ locale.vote.seatToVote }}
       </div>
     </div>
     <transition name="blur">
@@ -103,7 +103,7 @@
         <span>3</span>
         <span>2</span>
         <span>1</span>
-        <span>GO</span>
+        <span>{{ locale.vote.doVote }}</span>
         <audio
           :autoplay="!grimoire.isMuted"
           src="../assets/sounds/countdown.mp3"
@@ -120,7 +120,7 @@ import { mapGetters, mapState } from "vuex";
 export default {
   computed: {
     ...mapState("players", ["players"]),
-    ...mapState(["session", "grimoire"]),
+    ...mapState(["session", "grimoire", "locale"]),
     ...mapGetters({ alive: "players/alive" }),
     nominator: function() {
       return this.players[this.session.nomination[0]];

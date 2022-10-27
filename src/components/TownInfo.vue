@@ -12,12 +12,12 @@
       }"
     ></li>
     <li v-if="players.length - teams.traveler < 5">
-      Please add more players!
+      {{ locale.towninfo.addPlayers }}
     </li>
     <li>
       <span class="meta" v-if="!edition.isOfficial">
         {{ edition.name }}
-        {{ edition.author ? "by " + edition.author : "" }}
+        {{ edition.author ? " ©" + edition.author : "" }}
       </span>
       <span>
         {{ players.length }} <font-awesome-icon class="players" icon="users" />
