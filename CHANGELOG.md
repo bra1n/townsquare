@@ -1,5 +1,10 @@
 # Release Notes
 
+### Version 2.16.2
+Added Organ Grinder!
+
+---
+
 ### Version 2.16.1
 Updated character night order to be consistent with script tool
 
