@@ -13,11 +13,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install and Build 🔧
-      - uses: actions/setup-node@v3
+        uses: actions/setup-node@v3
         with:
           node-version: 16
       - run: npm ci
-      - run: npm test
+      - run: npm build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.5
