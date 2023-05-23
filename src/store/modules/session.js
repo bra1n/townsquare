@@ -26,8 +26,9 @@ const state = () => ({
   isVoteInProgress: false,
   voteHistory: [],
   markedPlayer: -1,
-  isVoteHistoryAllowed: true,
-  isRolesDistributed: false
+  isVoteHistoryAllowed: false,
+  isVoteWatchingAllowed: true,
+  isRolesDistributed: false,
 });
 
 const getters = {};
@@ -35,7 +36,7 @@ const getters = {};
 const actions = {};
 
 // mutations helper functions
-const set = key => (state, val) => {
+const set = (key) => (state, val) => {
   state[key] = val;
 };
 
@@ -50,6 +51,7 @@ const mutations = {
   setMarkedPlayer: set("markedPlayer"),
   setNomination: set("nomination"),
   setVoteHistoryAllowed: set("isVoteHistoryAllowed"),
+  setVoteWatchingAllowed: set("isVoteWatchingAllowed"),
   claimSeat: set("claimedSeat"),
   distributeRoles: set("isRolesDistributed"),
   setSessionId(state, sessionId) {
@@ -84,11 +86,11 @@ const mutations = {
       nominee: players[state.nomination[1]].name,
       type: isExile ? "Exile" : "Execution",
       majority: Math.ceil(
-        players.filter(player => !player.isDead || isExile).length / 2
+        players.filter((player) => !player.isDead || isExile).length / 2
       ),
       votes: players
         .filter((player, index) => state.votes[index])
-        .map(({ name }) => name)
+        .map(({ name }) => name),
     });
   },
   clearVoteHistory(state) {
@@ -104,7 +106,7 @@ const mutations = {
   voteSync: handleVote,
   lockVote(state, lock) {
     state.lockedVote = lock !== undefined ? lock : state.lockedVote + 1;
-  }
+  },
 };
 
 export default {
@@ -112,5 +114,5 @@ export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 };

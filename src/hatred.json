@@ -372,5 +372,30 @@
         "reason": "If the Lleech has poisoned the Heretic then the Lleech dies, the Heretic remains poisoned."
       }
     ]
+  },
+  {
+    "id": "Organ Grinder",
+    "hatred": [
+      {
+        "id": "Butler",
+        "reason": "If the Organ Grinder is causing eyes closed voting, the Butler may raise their hand to vote but their vote is only counted if their master voted too."
+      },
+      {
+        "id": "Flowergirl",
+        "reason": "If players' eyes were closed during the nominations, the Flowergirl learns how many times the Demon voted."
+      },
+      {
+        "id": "Lil' Monsta",
+        "reason": "Votes for the Organ Grinder count if the Organ Grinder is babysitting Lil' Monsta."
+      },
+      {
+        "id": "Minstrel",
+        "reason": "Only 1 jinxed character can be in play. Evil players start knowing which character it is."
+      },
+      {
+        "id": "Preacher",
+        "reason": "Only 1 jinxed character can be in play. Evil players start knowing which character it is."
+      }
+    ]
   }
 ]

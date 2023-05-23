@@ -20,7 +20,13 @@
       <em v-else>(majority is {{ Math.ceil(players.length / 2) }})</em>
 
       <template v-if="!session.isSpectator">
-        <div v-if="!session.isVoteInProgress && session.lockedVote < 1">
+        <div
+          v-if="
+            session.isVoteWatchingAllowed &&
+              !session.isVoteInProgress &&
+              session.lockedVote < 1
+          "
+        >
           Time per player:
           <font-awesome-icon
             @mousedown.prevent="setVotingSpeed(-500)"
@@ -59,7 +65,7 @@
           <div
             class="button"
             :class="{
-              disabled: session.nomination[1] === session.markedPlayer
+              disabled: session.nomination[1] === session.markedPlayer,
             }"
             @click="setMarked"
           >
@@ -71,7 +77,7 @@
         </div>
       </template>
       <template v-else-if="canVote">
-        <div v-if="!session.isVoteInProgress">
+        <div v-if="session.isVoteWatchingAllowed && !session.isVoteInProgress">
           {{ session.votingSpeed / 1000 }} seconds between votes
         </div>
         <div class="button-group">
@@ -130,7 +136,7 @@ export default {
       const nomination = this.session.nomination[0];
       return {
         transform: `rotate(${Math.round((nomination / players) * 360)}deg)`,
-        transitionDuration: this.session.votingSpeed - 100 + "ms"
+        transitionDuration: this.session.votingSpeed - 100 + "ms",
       };
     },
     nominee: function() {
@@ -143,14 +149,16 @@ export default {
       const rotation = (360 * (nomination + Math.min(lock, players))) / players;
       return {
         transform: `rotate(${Math.round(rotation)}deg)`,
-        transitionDuration: this.session.votingSpeed - 100 + "ms"
+        transitionDuration: this.session.votingSpeed - 100 + "ms",
       };
     },
     player: function() {
-      return this.players.find(p => p.id === this.session.playerId);
+      return this.players.find((p) => p.id === this.session.playerId);
     },
     currentVote: function() {
-      const index = this.players.findIndex(p => p.id === this.session.playerId);
+      const index = this.players.findIndex(
+        (p) => p.id === this.session.playerId
+      );
       return index >= 0 ? !!this.session.votes[index] : undefined;
     },
     canVote: function() {
@@ -173,17 +181,17 @@ export default {
         );
       const reorder = [
         ...voters.slice(nomination + 1),
-        ...voters.slice(0, nomination + 1)
+        ...voters.slice(0, nomination + 1),
       ];
       return (this.session.lockedVote
         ? reorder.slice(0, this.session.lockedVote - 1)
         : reorder
-      ).filter(n => !!n);
-    }
+      ).filter((n) => !!n);
+    },
   },
   data() {
     return {
-      voteTimer: null
+      voteTimer: null,
     };
   },
   methods: {
@@ -198,13 +206,18 @@ export default {
       this.$store.commit("session/lockVote", 1);
       this.$store.commit("session/setVoteInProgress", true);
       clearInterval(this.voteTimer);
-      this.voteTimer = setInterval(() => {
-        this.$store.commit("session/lockVote");
-        if (this.session.lockedVote > this.players.length) {
-          clearInterval(this.voteTimer);
-          this.$store.commit("session/setVoteInProgress", false);
-        }
-      }, this.session.votingSpeed);
+
+      if (this.session.isVoteWatchingAllowed) {
+        this.voteTimer = setInterval(() => {
+          this.$store.commit("session/lockVote");
+          if (this.session.lockedVote > this.players.length) {
+            clearInterval(this.voteTimer);
+            this.$store.commit("session/setVoteInProgress", false);
+          }
+        }, this.session.votingSpeed);
+      } else {
+        this.$store.commit("session/lockVote", this.players, length + 1);
+      }
     },
     pause() {
       if (this.voteTimer) {
@@ -233,7 +246,9 @@ export default {
     },
     vote(vote) {
       if (!this.canVote) return false;
-      const index = this.players.findIndex(p => p.id === this.session.playerId);
+      const index = this.players.findIndex(
+        (p) => p.id === this.session.playerId
+      );
       if (index >= 0 && !!this.session.votes[index] !== vote) {
         this.$store.commit("session/voteSync", [index, vote]);
       }
@@ -249,8 +264,8 @@ export default {
     },
     removeMarked() {
       this.$store.commit("session/setMarkedPlayer", -1);
-    }
-  }
+    },
+  },
 };
 </script>
 

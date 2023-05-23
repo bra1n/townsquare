@@ -6,13 +6,17 @@
       :class="[
         {
           dead: player.isDead,
-          marked: session.markedPlayer === index,
+          marked:
+            (!session.isSpectator || session.isVoteWatchingAllowed) &&
+            session.markedPlayer === index,
           'no-vote': player.isVoteless,
           you: session.sessionId && player.id && player.id === session.playerId,
-          'vote-yes': session.votes[index],
-          'vote-lock': voteLocked
+          'vote-yes':
+            (!session.isSpectator || session.isVoteWatchingAllowed) &&
+            session.votes[index],
+          'vote-lock': voteLocked,
         },
-        player.role.team
+        player.role.team,
       ]"
     >
       <div class="shroud" @click="toggleStatus()"></div>
@@ -191,7 +195,7 @@
                 : require('../assets/icons/' +
                     (reminder.imageAlt || reminder.role) +
                     '.png')
-            })`
+            })`,
           }"
         ></span>
         <span class="text">{{ reminder.name }}</span>
@@ -210,13 +214,13 @@ import { mapGetters, mapState } from "vuex";
 
 export default {
   components: {
-    Token
+    Token,
   },
   props: {
     player: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     ...mapState("players", ["players"]),
@@ -244,12 +248,12 @@ export default {
       } else {
         return { width: 12 + this.grimoire.zoom + unit };
       }
-    }
+    },
   },
   data() {
     return {
       isMenuOpen: false,
-      isSwap: false
+      isSwap: false,
     };
   },
   methods: {
@@ -305,7 +309,7 @@ export default {
       this.$store.commit("players/update", {
         player: this.player,
         property,
-        value
+        value,
       });
       if (closeMenu) {
         this.isMenuOpen = false;
@@ -342,10 +346,10 @@ export default {
       if (!this.voteLocked) return;
       this.$store.commit("session/voteSync", [
         this.index,
-        !this.session.votes[this.index]
+        !this.session.votes[this.index],
       ]);
-    }
-  }
+    },
+  },
 };
 </script>
 

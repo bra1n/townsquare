@@ -20,10 +20,19 @@
           <font-awesome-icon
             :icon="[
               'fas',
-              session.isVoteHistoryAllowed ? 'check-square' : 'square'
+              session.isVoteHistoryAllowed ? 'check-square' : 'square',
             ]"
           />
           Accessible to players
+        </div>
+        <div class="option" @click="setVoteWatching">
+          <font-awesome-icon
+            :icon="[
+              'fas',
+              session.isVoteWatchingAllowed ? 'check-square' : 'square',
+            ]"
+          />
+          Vote Watching
         </div>
         <div class="option" @click="clearVoteHistory">
           <font-awesome-icon icon="trash-alt" />
@@ -73,7 +82,7 @@
             <font-awesome-icon
               :icon="[
                 'fas',
-                vote.votes.length >= vote.majority ? 'check-square' : 'square'
+                vote.votes.length >= vote.majority ? 'check-square' : 'square',
               ]"
             />
           </td>
@@ -92,10 +101,10 @@ import { mapMutations, mapState } from "vuex";
 
 export default {
   components: {
-    Modal
+    Modal,
   },
   computed: {
-    ...mapState(["session", "modals"])
+    ...mapState(["session", "modals"]),
   },
   methods: {
     clearVoteHistory() {
@@ -106,9 +115,23 @@ export default {
         "session/setVoteHistoryAllowed",
         !this.session.isVoteHistoryAllowed
       );
+
+      if (this.session.isVoteHistoryAllowed) {
+        this.$store.commit("session/setVoteWatchingAllowed", true);
+      }
     },
-    ...mapMutations(["toggleModal"])
-  }
+    setVoteWatching() {
+      this.$store.commit(
+        "session/setVoteWatchingAllowed",
+        !this.session.isVoteWatchingAllowed
+      );
+
+      if (!this.session.isVoteWatchingAllowed) {
+        this.$store.commit("session/setVoteHistoryAllowed", false);
+      }
+    },
+    ...mapMutations(["toggleModal"]),
+  },
 };
 </script>
 
