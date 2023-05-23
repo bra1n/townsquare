@@ -1412,6 +1412,32 @@
     "ability": "You have the ability of the recently killed executee. If they are evil, you are poisoned until a good player dies by execution."
   },
   {
+    "id": "steward",
+    "name": "Steward",
+    "edition": "",
+    "team": "townsfolk",
+    "firstNight": 40,
+    "firstNightReminder": "Point to the marked player.",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": ["Known"],
+    "setup": false,
+    "ability": "You start knowing 1 good player."
+  },
+  {
+    "id": "knight",
+    "name": "Knight",
+    "edition": "",
+    "team": "townsfolk",
+    "firstNight": 40,
+    "firstNightReminder": "Point to the 2 marked players.",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": ["Known"],
+    "setup": false,
+    "ability": "You start knowing 2 players that are not the Demon."
+  },
+  {
     "id": "snitch",
     "name": "Snitch",
     "edition": "",
@@ -1620,6 +1646,19 @@
     "reminders": ["About to die"],
     "setup": false,
     "ability": "All players keep their eyes closed when voting & the vote tally is secret. Votes for you only count if you vote."
+  },
+  {
+    "id": "vizier",
+    "name": "Vizier",
+    "edition": "",
+    "team": "minion",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "ability": "All players know who you are. You can not die during the day. If good voted, you may choose to execute immediately."
   },
   {
     "id": "lilmonsta",
