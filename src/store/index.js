@@ -1,4 +1,3 @@
-import Vue from "vue";
 import Vuex from "vuex";
 import persistence from "./persistence";
 import socket from "./socket";
@@ -8,8 +7,6 @@ import editionJSON from "../editions.json";
 import rolesJSON from "../roles.json";
 import fabledJSON from "../fabled.json";
 import jinxesJSON from "../hatred.json";
-
-Vue.use(Vuex);
 
 // helper functions
 const getRolesByEdition = (edition = editionJSON[0]) => {
@@ -105,7 +102,7 @@ const customRole = {
   isCustom: true,
 };
 
-export default new Vuex.Store({
+export const store = Vuex.createStore({
   modules: {
     players,
     session,
