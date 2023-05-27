@@ -4,12 +4,14 @@
     @close="toggleModal('nightOrder')"
     v-if="modals.nightOrder && roles.size"
   >
-    <font-awesome-icon
-      @click="toggleModal('reference')"
-      icon="address-card"
-      class="toggle"
-      title="Show Character Reference"
-    />
+    <div @click="toggleModal('reference')">
+      <font-awesome-icon
+        icon="address-card"
+        class="toggle"
+        title="Show Character Reference"
+      />
+    </div>
+
     <h3>
       Night Order
       <font-awesome-icon icon="cloud-moon" />
@@ -47,7 +49,7 @@
                   : require('../../assets/icons/' +
                       (role.imageAlt || role.id) +
                       '.png')
-              })`
+              })`,
             }"
           ></span>
           <span class="reminder" v-if="role.firstNightReminder">
@@ -72,7 +74,7 @@
                   : require('../../assets/icons/' +
                       (role.imageAlt || role.id) +
                       '.png')
-              })`
+              })`,
             }"
           ></span>
           <span class="name">
@@ -104,10 +106,10 @@ import { mapMutations, mapState } from "vuex";
 
 export default {
   components: {
-    Modal
+    Modal,
   },
   computed: {
-    rolesFirstNight: function() {
+    rolesFirstNight: function () {
       const rolesFirstNight = [];
       // add minion / demon infos to night order sheet
       if (this.players.length > 6) {
@@ -117,60 +119,60 @@ export default {
             name: "Minion info",
             firstNight: 5,
             team: "minion",
-            players: this.players.filter(p => p.role.team === "minion"),
+            players: this.players.filter((p) => p.role.team === "minion"),
             firstNightReminder:
               "• If more than one Minion, they all make eye contact with each other. " +
-              "• Show the “This is the Demon” card. Point to the Demon."
+              "• Show the “This is the Demon” card. Point to the Demon.",
           },
           {
             id: "evil",
             name: "Demon info & bluffs",
             firstNight: 8,
             team: "demon",
-            players: this.players.filter(p => p.role.team === "demon"),
+            players: this.players.filter((p) => p.role.team === "demon"),
             firstNightReminder:
               "• Show the “These are your minions” card. Point to each Minion. " +
               "• Show the “These characters are not in play” card. Show 3 character tokens of good " +
-              "characters not in play."
+              "characters not in play.",
           }
         );
       }
-      this.roles.forEach(role => {
-        const players = this.players.filter(p => p.role.id === role.id);
+      this.roles.forEach((role) => {
+        const players = this.players.filter((p) => p.role.id === role.id);
         if (role.firstNight && (role.team !== "traveler" || players.length)) {
           rolesFirstNight.push(Object.assign({ players }, role));
         }
       });
       this.fabled
         .filter(({ firstNight }) => firstNight)
-        .forEach(fabled => {
+        .forEach((fabled) => {
           rolesFirstNight.push(Object.assign({ players: [] }, fabled));
         });
       rolesFirstNight.sort((a, b) => a.firstNight - b.firstNight);
       return rolesFirstNight;
     },
-    rolesOtherNight: function() {
+    rolesOtherNight: function () {
       const rolesOtherNight = [];
-      this.roles.forEach(role => {
-        const players = this.players.filter(p => p.role.id === role.id);
+      this.roles.forEach((role) => {
+        const players = this.players.filter((p) => p.role.id === role.id);
         if (role.otherNight && (role.team !== "traveler" || players.length)) {
           rolesOtherNight.push(Object.assign({ players }, role));
         }
       });
       this.fabled
         .filter(({ otherNight }) => otherNight)
-        .forEach(fabled => {
+        .forEach((fabled) => {
           rolesOtherNight.push(Object.assign({ players: [] }, fabled));
         });
       rolesOtherNight.sort((a, b) => a.otherNight - b.otherNight);
       return rolesOtherNight;
     },
     ...mapState(["roles", "modals", "edition", "grimoire"]),
-    ...mapState("players", ["players", "fabled"])
+    ...mapState("players", ["players", "fabled"]),
   },
   methods: {
-    ...mapMutations(["toggleModal"])
-  }
+    ...mapMutations(["toggleModal"]),
+  },
 };
 </script>
 

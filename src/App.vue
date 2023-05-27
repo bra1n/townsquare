@@ -1,16 +1,16 @@
 <template>
   <div
-    id="app"
+    id="townsquare-app"
     @keyup="keyup"
     tabindex="-1"
     :class="{
       night: grimoire.isNight,
-      static: grimoire.isStatic
+      static: grimoire.isStatic,
     }"
     :style="{
       backgroundImage: grimoire.background
         ? `url('${grimoire.background}')`
-        : ''
+        : '',
     }"
   >
     <video
@@ -20,29 +20,42 @@
       autoplay
       loop
     ></video>
+
     <div class="backdrop"></div>
-    <transition name="blur">
-      <Intro v-if="!players.length"></Intro>
-      <TownInfo v-if="players.length && !session.nomination"></TownInfo>
-      <Vote v-if="session.nomination"></Vote>
-    </transition>
+
+    <Intro v-if="!players.length"></Intro>
+
+    <TownInfo v-if="players.length && !session.nomination"></TownInfo>
+
+    <Vote v-if="session.nomination"></Vote>
+
     <TownSquare></TownSquare>
+
     <Menu ref="menu"></Menu>
+
     <EditionModal />
+
     <FabledModal />
+
     <RolesModal />
+
     <ReferenceModal />
+
     <NightOrderModal />
+
     <VoteHistoryModal />
+
     <GameStateModal />
+
     <Gradients />
+
     <span id="version">v{{ version }}</span>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import { version } from "../package.json";
+import Package from "../package.json";
 import TownSquare from "./components/TownSquare";
 import TownInfo from "./components/TownInfo";
 import Menu from "./components/Menu";
@@ -71,15 +84,15 @@ export default {
     Menu,
     EditionModal,
     RolesModal,
-    Gradients
+    Gradients,
   },
   computed: {
     ...mapState(["grimoire", "session"]),
-    ...mapState("players", ["players"])
+    ...mapState("players", ["players"]),
   },
   data() {
     return {
-      version
+      version: Package.version,
     };
   },
   methods: {
@@ -124,8 +137,8 @@ export default {
         case "escape":
           this.$store.commit("toggleModal");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -198,6 +211,10 @@ ul {
 }
 
 #app {
+  height: 100%;
+  width: 100%;
+}
+#townsquare-app {
   height: 100%;
   background-position: center center;
   background-size: cover;
@@ -326,7 +343,7 @@ video#background {
 }
 
 /* Night phase backdrop */
-#app > .backdrop {
+#townsquare-app > .backdrop {
   position: absolute;
   left: 0;
   right: 0;
@@ -364,7 +381,7 @@ video#background {
   }
 }
 
-#app.night > .backdrop {
+#townsquare-app.night > .backdrop {
   opacity: 0.5;
 }
 </style>

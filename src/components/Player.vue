@@ -47,41 +47,33 @@
       />
 
       <!-- Overlay icons -->
-      <div class="overlay">
-        <font-awesome-icon
-          icon="hand-paper"
-          class="vote"
-          title="Hand UP"
-          @click="vote()"
-        />
-        <font-awesome-icon
-          icon="times"
-          class="vote"
-          title="Hand DOWN"
-          @click="vote()"
-        />
-        <font-awesome-icon
-          icon="times-circle"
-          class="cancel"
-          title="Cancel"
-          @click="cancel()"
-        />
+      <div class="overlay" @click="vote()">
+        <font-awesome-icon icon="hand-paper" class="vote" title="Hand UP" />
+      </div>
+      <div class="overlay" @click="vote()">
+        <font-awesome-icon icon="times" class="vote" title="Hand DOWN" />
+      </div>
+      <div class="overlay" @click="cancel()">
+        <font-awesome-icon icon="times-circle" class="cancel" title="Cancel" />
+      </div>
+      <div class="overlay" @click="swapPlayer(player)">
         <font-awesome-icon
           icon="exchange-alt"
           class="swap"
-          @click="swapPlayer(player)"
           title="Swap seats with this player"
         />
+      </div>
+      <div class="overlay" @click="movePlayer(player)">
         <font-awesome-icon
           icon="redo-alt"
           class="move"
-          @click="movePlayer(player)"
           title="Move player to this seat"
         />
+      </div>
+      <div class="overlay" @click="nominatePlayer(player)">
         <font-awesome-icon
           icon="hand-point-right"
           class="nominate"
-          @click="nominatePlayer(player)"
           title="Nominate this player"
         />
       </div>
@@ -95,13 +87,14 @@
       />
 
       <!-- Ghost vote icon -->
-      <font-awesome-icon
-        icon="vote-yea"
-        class="has-vote"
-        v-if="player.isDead && !player.isVoteless"
-        @click="updatePlayer('isVoteless', true)"
-        title="Ghost vote"
-      />
+      <div @click="updatePlayer('isVoteless', true)">
+        <font-awesome-icon
+          icon="vote-yea"
+          class="has-vote"
+          v-if="player.isDead && !player.isVoteless"
+          title="Ghost vote"
+        />
+      </div>
 
       <!-- On block icon -->
       <div class="marked">
@@ -125,7 +118,7 @@
             @click="changePronouns"
             v-if="
               !session.isSpectator ||
-                (session.isSpectator && player.id === session.playerId)
+              (session.isSpectator && player.id === session.playerId)
             "
           >
             <font-awesome-icon icon="venus-mars" />Change Pronouns
@@ -166,9 +159,7 @@
             :class="{ disabled: player.id && player.id !== session.playerId }"
           >
             <font-awesome-icon icon="chair" />
-            <template v-if="!player.id">
-              Claim seat
-            </template>
+            <template v-if="!player.id"> Claim seat </template>
             <template v-else-if="player.id === session.playerId">
               Vacate seat
             </template>
@@ -226,10 +217,10 @@ export default {
     ...mapState("players", ["players"]),
     ...mapState(["grimoire", "session"]),
     ...mapGetters({ nightOrder: "players/nightOrder" }),
-    index: function() {
+    index: function () {
       return this.players.indexOf(this.player);
     },
-    voteLocked: function() {
+    voteLocked: function () {
       const session = this.session;
       const players = this.players.length;
       if (!session.nomination) return false;
@@ -237,7 +228,7 @@ export default {
         (this.index - 1 + players - session.nomination[1]) % players;
       return indexAdjusted < session.lockedVote - 1;
     },
-    zoom: function() {
+    zoom: function () {
       const unit = window.innerWidth > window.innerHeight ? "vh" : "vw";
       if (this.players.length < 7) {
         return { width: 18 + this.grimoire.zoom + unit };
@@ -554,7 +545,7 @@ export default {
       fill: url(#default);
     }
     &:hover *,
-    &.fa-hand-paper * {
+    &.fa-hand * {
       fill: url(#demon);
     }
     &.fa-times * {
@@ -564,14 +555,14 @@ export default {
 }
 
 // other player voted yes, but is not locked yet
-#townsquare.vote .player.vote-yes .overlay svg.vote.fa-hand-paper {
+#townsquare.vote .player.vote-yes .overlay svg.vote.fa-hand {
   opacity: 0.5;
   transform: scale(1);
 }
 
 // you voted yes | a locked vote yes | a locked vote no
-#townsquare.vote .player.you.vote-yes .overlay svg.vote.fa-hand-paper,
-#townsquare.vote .player.vote-lock.vote-yes .overlay svg.vote.fa-hand-paper,
+#townsquare.vote .player.you.vote-yes .overlay svg.vote.fa-hand,
+#townsquare.vote .player.vote-lock.vote-yes .overlay svg.vote.fa-hand,
 #townsquare.vote .player.vote-lock:not(.vote-yes) .overlay svg.vote.fa-times {
   opacity: 1;
   transform: scale(1);

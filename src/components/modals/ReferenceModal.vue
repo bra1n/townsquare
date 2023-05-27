@@ -4,12 +4,14 @@
     @close="toggleModal('reference')"
     v-if="modals.reference && roles.size"
   >
-    <font-awesome-icon
-      @click="toggleModal('nightOrder')"
-      icon="cloud-moon"
-      class="toggle"
-      title="Show Night Order"
-    />
+    <div @click="toggleModal('nightOrder')">
+      <font-awesome-icon
+        icon="cloud-moon"
+        class="toggle"
+        title="Show Night Order"
+      />
+    </div>
+
     <h3>
       Character Reference
       <font-awesome-icon icon="address-card" />
@@ -35,7 +37,7 @@
                   : require('../../assets/icons/' +
                       (role.imageAlt || role.id) +
                       '.png')
-              })`
+              })`,
             }"
           ></span>
           <div class="role">
@@ -62,7 +64,7 @@
             :style="{
               backgroundImage: `url(${require('../../assets/icons/' +
                 jinx.first.id +
-                '.png')})`
+                '.png')})`,
             }"
           ></span>
           <span
@@ -70,7 +72,7 @@
             :style="{
               backgroundImage: `url(${require('../../assets/icons/' +
                 jinx.second.id +
-                '.png')})`
+                '.png')})`,
             }"
           ></span>
           <div class="role">
@@ -93,23 +95,23 @@ import { mapMutations, mapState } from "vuex";
 
 export default {
   components: {
-    Modal
+    Modal,
   },
   computed: {
     /**
      * Return a list of jinxes in the form of role IDs and a reason
      * @returns {*[]} [{first, second, reason}]
      */
-    jinxed: function() {
+    jinxed: function () {
       const jinxed = [];
-      this.roles.forEach(role => {
+      this.roles.forEach((role) => {
         if (this.jinxes.get(role.id)) {
           this.jinxes.get(role.id).forEach((reason, second) => {
             if (this.roles.get(second)) {
               jinxed.push({
                 first: role,
                 second: this.roles.get(second),
-                reason
+                reason,
               });
             }
           });
@@ -117,9 +119,9 @@ export default {
       });
       return jinxed;
     },
-    rolesGrouped: function() {
+    rolesGrouped: function () {
       const rolesGrouped = {};
-      this.roles.forEach(role => {
+      this.roles.forEach((role) => {
         if (!rolesGrouped[role.team]) {
           rolesGrouped[role.team] = [];
         }
@@ -128,7 +130,7 @@ export default {
       delete rolesGrouped["traveler"];
       return rolesGrouped;
     },
-    playersByRole: function() {
+    playersByRole: function () {
       const players = {};
       this.players.forEach(({ name, role }) => {
         if (role && role.id && role.team !== "traveler") {
@@ -141,11 +143,11 @@ export default {
       return players;
     },
     ...mapState(["roles", "modals", "edition", "grimoire", "jinxes"]),
-    ...mapState("players", ["players"])
+    ...mapState("players", ["players"]),
   },
   methods: {
-    ...mapMutations(["toggleModal"])
-  }
+    ...mapMutations(["toggleModal"]),
+  },
 };
 </script>
 

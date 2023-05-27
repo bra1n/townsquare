@@ -23,20 +23,19 @@
         <div
           v-if="
             session.isVoteWatchingAllowed &&
-              !session.isVoteInProgress &&
-              session.lockedVote < 1
+            !session.isVoteInProgress &&
+            session.lockedVote < 1
           "
         >
           Time per player:
-          <font-awesome-icon
-            @mousedown.prevent="setVotingSpeed(-500)"
-            icon="minus-circle"
-          />
+          <span @mousedown.prevent="setVotingSpeed(-500)">
+            <font-awesome-icon icon="minus-circle"
+          /></span>
+
           {{ session.votingSpeed / 1000 }}s
-          <font-awesome-icon
-            @mousedown.prevent="setVotingSpeed(500)"
-            icon="plus-circle"
-          />
+          <span @mousedown.prevent="setVotingSpeed(500)">
+            <font-awesome-icon icon="plus-circle" />
+          </span>
         </div>
         <div class="button-group">
           <div
@@ -71,9 +70,7 @@
           >
             Mark for execution
           </div>
-          <div class="button" @click="removeMarked">
-            Clear mark
-          </div>
+          <div class="button" @click="removeMarked">Clear mark</div>
         </div>
       </template>
       <template v-else-if="canVote">
@@ -97,9 +94,7 @@
           </div>
         </div>
       </template>
-      <div v-else-if="!player">
-        Please claim a seat to vote.
-      </div>
+      <div v-else-if="!player">Please claim a seat to vote.</div>
     </div>
     <transition name="blur">
       <div
@@ -128,10 +123,10 @@ export default {
     ...mapState("players", ["players"]),
     ...mapState(["session", "grimoire"]),
     ...mapGetters({ alive: "players/alive" }),
-    nominator: function() {
+    nominator: function () {
       return this.players[this.session.nomination[0]];
     },
-    nominatorStyle: function() {
+    nominatorStyle: function () {
       const players = this.players.length;
       const nomination = this.session.nomination[0];
       return {
@@ -139,10 +134,10 @@ export default {
         transitionDuration: this.session.votingSpeed - 100 + "ms",
       };
     },
-    nominee: function() {
+    nominee: function () {
       return this.players[this.session.nomination[1]];
     },
-    nomineeStyle: function() {
+    nomineeStyle: function () {
       const players = this.players.length;
       const nomination = this.session.nomination[1];
       const lock = this.session.lockedVote;
@@ -152,16 +147,16 @@ export default {
         transitionDuration: this.session.votingSpeed - 100 + "ms",
       };
     },
-    player: function() {
+    player: function () {
       return this.players.find((p) => p.id === this.session.playerId);
     },
-    currentVote: function() {
+    currentVote: function () {
       const index = this.players.findIndex(
         (p) => p.id === this.session.playerId
       );
       return index >= 0 ? !!this.session.votes[index] : undefined;
     },
-    canVote: function() {
+    canVote: function () {
       if (!this.player) return false;
       if (this.player.isVoteless && this.nominee.role.team !== "traveler")
         return false;
@@ -172,7 +167,7 @@ export default {
         (index - 1 + players - session.nomination[1]) % players;
       return indexAdjusted >= session.lockedVote - 1;
     },
-    voters: function() {
+    voters: function () {
       const nomination = this.session.nomination[1];
       const voters = Array(this.players.length)
         .fill("")
@@ -183,9 +178,10 @@ export default {
         ...voters.slice(nomination + 1),
         ...voters.slice(0, nomination + 1),
       ];
-      return (this.session.lockedVote
-        ? reorder.slice(0, this.session.lockedVote - 1)
-        : reorder
+      return (
+        this.session.lockedVote
+          ? reorder.slice(0, this.session.lockedVote - 1)
+          : reorder
       ).filter((n) => !!n);
     },
   },
