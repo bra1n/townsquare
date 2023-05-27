@@ -17,7 +17,7 @@
     <ul class="tokens" v-if="filteredRoles.length > 0">
       <li
         v-for="role in filteredRoles.slice(0, 10)"
-        @class="[role.team]"
+        :class="[role.team]"
         :key="role.id"
         @click="setRole(role)"
       >
