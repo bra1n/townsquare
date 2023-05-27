@@ -11,26 +11,26 @@
   },
   "main": "App.vue",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.32",
-    "@fortawesome/free-brands-svg-icons": "^5.15.1",
-    "@fortawesome/free-solid-svg-icons": "^5.15.1",
-    "@fortawesome/vue-fontawesome": "^0.1.10",
-    "@vue/cli-service": "^4.5.9",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-brands-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/vue-fontawesome": "^3.0.3",
+    "@vue/cli-service": "^5.0.8",
     "prom-client": "^13.0.0",
     "sass": "^1.30.0",
     "sass-loader": "^8.0.2",
-    "vue": "^2.6.12",
-    "vue-template-compiler": "^2.6.12",
-    "vuex": "^3.6.0",
-    "ws": "^7.4.6"
+    "vue": "^3.3.4",
+    "@vue/compat": "^3.3.4",
+    "vuex": "^4.1.0",
+    "ws": "^7.4.6",
+    "vue-loader": "^17.1.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-eslint": "^4.5.9",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-prettier": "^3.2.0",
-    "eslint-plugin-vue": "^6.2.2",
-    "prettier": "^1.19.1"
+    "@vue/compiler-sfc": "^3.3.4",
+    "eslint": "^8.41.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.14.0",
+    "prettier": "^2.8.8"
   },
   "keywords": [
     "botc",

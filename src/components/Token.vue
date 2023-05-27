@@ -1,5 +1,7 @@
 <template>
+
   <div class="token" @click="setRole" :class="[role.id]">
+
     <span
       class="icon"
       v-if="role.id"
@@ -8,42 +10,52 @@
           role.image && grimoire.isImageOptIn
             ? role.image
             : require('../assets/icons/' + (role.imageAlt || role.id) + '.png')
-        })`
+        })`,
       }"
     ></span>
+
     <span
       class="leaf-left"
       v-if="role.firstNight || role.firstNightReminder"
     ></span>
+
     <span
       class="leaf-right"
       v-if="role.otherNight || role.otherNightReminder"
     ></span>
+
     <span v-if="reminderLeaves" :class="['leaf-top' + reminderLeaves]"></span>
+
     <span class="leaf-orange" v-if="role.setup"></span>
+
     <svg viewBox="0 0 150 150" class="name">
+
       <path
         d="M 13 75 C 13 160, 138 160, 138 75"
         id="curve"
         fill="transparent"
       />
+
       <text
         width="150"
         x="66.6%"
         text-anchor="middle"
         class="label mozilla"
-        :font-size="role.name | nameToFontSize"
+        :font-size="nameToFontSize(role.name)"
       >
-        <textPath xlink:href="#curve">
-          {{ role.name }}
-        </textPath>
+
+        <textPath xlink:href="#curve"> {{ role.name }} </textPath>
+
       </text>
+
     </svg>
+
     <div class="edition" :class="[`edition-${role.edition}`, role.team]"></div>
-    <div class="ability" v-if="role.ability">
-      {{ role.ability }}
-    </div>
+
+    <div class="ability" v-if="role.ability"> {{ role.ability }} </div>
+
   </div>
+
 </template>
 
 <script>
@@ -54,8 +66,8 @@ export default {
   props: {
     role: {
       type: Object,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   computed: {
     reminderLeaves: function() {
@@ -64,19 +76,19 @@ export default {
         (this.role.remindersGlobal || []).length
       );
     },
-    ...mapState(["grimoire"])
+    ...mapState(["grimoire"]),
   },
   data() {
     return {};
   },
-  filters: {
-    nameToFontSize: name => (name && name.length > 10 ? "90%" : "110%")
-  },
   methods: {
+    nameToFontSize(name) {
+      name && name.length > 10 ? "90%" : "110%";
+    },
     setRole() {
       this.$emit("set-role");
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -233,3 +245,4 @@ export default {
   }
 }
 </style>
+

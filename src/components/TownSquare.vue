@@ -5,7 +5,7 @@
     :class="{
       public: grimoire.isPublic,
       spectator: session.isSpectator,
-      vote: session.nomination
+      vote: session.nomination,
     }"
   >
     <ul class="circle" :class="['size-' + players.length]">
@@ -18,7 +18,7 @@
           from: Math.max(swap, move, nominate) === index,
           swap: swap > -1,
           move: move > -1,
-          nominate: nominate > -1
+          nominate: nominate > -1,
         }"
       ></Player>
     </ul>
@@ -31,10 +31,16 @@
     >
       <h3>
         <span v-if="session.isSpectator">Other characters</span>
+
         <span v-else>Demon bluffs</span>
-        <font-awesome-icon icon="times-circle" @click.stop="toggleBluffs" />
-        <font-awesome-icon icon="plus-circle" @click.stop="toggleBluffs" />
+
+        <span @click.stop="toggleBluffs">
+          <font-awesome-icon
+            :icon="['fas', isBluffsOpen ? 'minus-circle' : 'plus-circle']"
+          />
+        </span>
       </h3>
+
       <ul>
         <li
           v-for="index in bluffSize"
@@ -49,9 +55,13 @@
     <div class="fabled" :class="{ closed: !isFabledOpen }" v-if="fabled.length">
       <h3>
         <span>Fabled</span>
-        <font-awesome-icon icon="times-circle" @click.stop="toggleFabled" />
-        <font-awesome-icon icon="plus-circle" @click.stop="toggleFabled" />
+        <span @click.stop="toggleFabled">
+          <font-awesome-icon
+            :icon="['fas', isFabledOpen ? 'minus-circle' : 'plus-circle']"
+          />
+        </span>
       </h3>
+
       <ul>
         <li
           v-for="(role, index) in fabled"
@@ -63,25 +73,30 @@
             v-if="nightOrder.get(role).first && grimoire.isNightOrder"
           >
             <em>{{ nightOrder.get(role).first }}.</em>
-            <span v-if="role.firstNightReminder">{{
-              role.firstNightReminder
-            }}</span>
+
+            <span v-if="role.firstNightReminder">
+              {{ role.firstNightReminder }}
+            </span>
           </div>
+
           <div
             class="night-order other"
             v-if="nightOrder.get(role).other && grimoire.isNightOrder"
           >
             <em>{{ nightOrder.get(role).other }}.</em>
-            <span v-if="role.otherNightReminder">{{
-              role.otherNightReminder
-            }}</span>
+
+            <span v-if="role.otherNightReminder">
+              {{ role.otherNightReminder }}
+            </span>
           </div>
+
           <Token :role="role"></Token>
         </li>
       </ul>
     </div>
 
     <ReminderModal :player-index="selectedPlayer"></ReminderModal>
+
     <RoleModal :player-index="selectedPlayer"></RoleModal>
   </div>
 </template>
@@ -98,12 +113,12 @@ export default {
     Player,
     Token,
     RoleModal,
-    ReminderModal
+    ReminderModal,
   },
   computed: {
     ...mapGetters({ nightOrder: "players/nightOrder" }),
     ...mapState(["grimoire", "roles", "session"]),
-    ...mapState("players", ["players", "bluffs", "fabled"])
+    ...mapState("players", ["players", "bluffs", "fabled"]),
   },
   data() {
     return {
@@ -113,7 +128,7 @@ export default {
       move: -1,
       nominate: -1,
       isBluffsOpen: true,
-      isFabledOpen: true
+      isFabledOpen: true,
     };
   },
   methods: {
@@ -170,7 +185,7 @@ export default {
             // update nomination array if removed player has lower index
             this.$store.commit("session/setNomination", [
               nomination[0] > playerIndex ? nomination[0] - 1 : nomination[0],
-              nomination[1] > playerIndex ? nomination[1] - 1 : nomination[1]
+              nomination[1] > playerIndex ? nomination[1] - 1 : nomination[1],
             ]);
           }
         }
@@ -186,7 +201,7 @@ export default {
         if (this.session.nomination) {
           // update nomination if one of the involved players is swapped
           const swapTo = this.players.indexOf(to);
-          const updatedNomination = this.session.nomination.map(nom => {
+          const updatedNomination = this.session.nomination.map((nom) => {
             if (nom === this.swap) return swapTo;
             if (nom === swapTo) return this.swap;
             return nom;
@@ -200,7 +215,7 @@ export default {
         }
         this.$store.commit("players/swap", [
           this.swap,
-          this.players.indexOf(to)
+          this.players.indexOf(to),
         ]);
         this.cancel();
       }
@@ -214,7 +229,7 @@ export default {
         if (this.session.nomination) {
           // update nomination if it is affected by the move
           const moveTo = this.players.indexOf(to);
-          const updatedNomination = this.session.nomination.map(nom => {
+          const updatedNomination = this.session.nomination.map((nom) => {
             if (nom === this.move) return moveTo;
             if (nom > this.move && nom <= moveTo) return nom - 1;
             if (nom < this.move && nom >= moveTo) return nom + 1;
@@ -229,7 +244,7 @@ export default {
         }
         this.$store.commit("players/move", [
           this.move,
-          this.players.indexOf(to)
+          this.players.indexOf(to),
         ]);
         this.cancel();
       }
@@ -251,8 +266,8 @@ export default {
       this.move = -1;
       this.swap = -1;
       this.nominate = -1;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -301,14 +316,14 @@ export default {
 }
 
 @mixin on-circle($item-count) {
-  $angle: (360 / $item-count);
+  $angle: calc(360 / $item-count);
   $rot: 0;
 
   // rotation and tooltip placement
   @for $i from 1 through $item-count {
     &:nth-child(#{$i}) {
       transform: rotate($rot * 1deg);
-      @if $i - 1 <= $item-count / 2 {
+      @if $i - 1 <= calc($item-count / 2) {
         // first half of players
         z-index: $item-count - $i + 1;
         // open menu on the left
@@ -372,15 +387,15 @@ export default {
       }
 
       // move reminders closer to the sides of the circle
-      $q: $item-count / 4;
+      $q: calc($item-count / 4);
       $x: $i - 1;
-      @if $x < $q or ($x >= $item-count / 2 and $x < $q * 3) {
+      @if $x < $q or ($x >= calc($item-count / 2) and $x < $q * 3) {
         .player {
           margin-bottom: -10% + 20% * (1 - ($x % $q / $q));
         }
       } @else {
         .player {
-          margin-bottom: -10% + 20% * ($x % $q / $q);
+          margin-bottom: -10% + 20% * ($x % calc($q / $q));
         }
       }
     }

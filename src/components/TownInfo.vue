@@ -1,5 +1,7 @@
 <template>
+
   <ul class="info">
+
     <li
       class="edition"
       :class="['edition-' + edition.id]"
@@ -8,67 +10,94 @@
           edition.logo && grimoire.isImageOptIn
             ? edition.logo
             : require('../assets/editions/' + edition.id + '.png')
-        })`
+        })`,
       }"
     ></li>
+
     <li v-if="players.length - teams.traveler < 5">
-      Please add more players!
+       Please add more players!
     </li>
+
     <li>
+
       <span class="meta" v-if="!edition.isOfficial">
-        {{ edition.name }}
-        {{ edition.author ? "by " + edition.author : "" }}
+         {{ edition.name }} {{ edition.author ? "by " + edition.author : "" }}
       </span>
+
       <span>
-        {{ players.length }} <font-awesome-icon class="players" icon="users" />
+         {{ players.length }}
+        <font-awesome-icon class="players" icon="users" />
+
       </span>
+
       <span>
-        {{ teams.alive }}
+         {{ teams.alive }}
         <font-awesome-icon class="alive" icon="heartbeat" />
+
       </span>
+
       <span>
-        {{ teams.votes }} <font-awesome-icon class="votes" icon="vote-yea" />
+         {{ teams.votes }}
+        <font-awesome-icon class="votes" icon="vote-yea" />
+
       </span>
+
     </li>
+
     <li v-if="players.length - teams.traveler >= 5">
+
       <span>
-        {{ teams.townsfolk }}
+         {{ teams.townsfolk }}
         <font-awesome-icon class="townsfolk" icon="user-friends" />
+
       </span>
+
       <span>
-        {{ teams.outsider }}
+         {{ teams.outsider }}
         <font-awesome-icon
           class="outsider"
           :icon="teams.outsider > 1 ? 'user-friends' : 'user'"
         />
+
       </span>
+
       <span>
-        {{ teams.minion }}
+         {{ teams.minion }}
         <font-awesome-icon
           class="minion"
           :icon="teams.minion > 1 ? 'user-friends' : 'user'"
         />
+
       </span>
+
       <span>
-        {{ teams.demon }}
+         {{ teams.demon }}
         <font-awesome-icon
           class="demon"
           :icon="teams.demon > 1 ? 'user-friends' : 'user'"
         />
+
       </span>
+
       <span v-if="teams.traveler">
-        {{ teams.traveler }}
+         {{ teams.traveler }}
         <font-awesome-icon
           class="traveler"
           :icon="teams.traveler > 1 ? 'user-friends' : 'user'"
         />
+
       </span>
+
       <span v-if="grimoire.isNight">
-        Night phase
+         Night phase
         <font-awesome-icon :icon="['fas', 'cloud-moon']" />
+
       </span>
+
     </li>
+
   </ul>
+
 </template>
 
 <script>
@@ -80,7 +109,7 @@ export default {
     teams: function() {
       const { players } = this.$store.state.players;
       const nonTravelers = this.$store.getters["players/nonTravelers"];
-      const alive = players.filter(player => player.isDead !== true).length;
+      const alive = players.filter((player) => player.isDead !== true).length;
       return {
         ...gameJSON[nonTravelers - 5],
         traveler: players.length - nonTravelers,
@@ -88,13 +117,13 @@ export default {
         votes:
           alive +
           players.filter(
-            player => player.isDead === true && player.isVoteless !== true
-          ).length
+            (player) => player.isDead === true && player.isVoteless !== true
+          ).length,
       };
     },
     ...mapState(["edition", "grimoire"]),
-    ...mapState("players", ["players"])
-  }
+    ...mapState("players", ["players"]),
+  },
 };
 </script>
 
@@ -178,3 +207,4 @@ export default {
   }
 }
 </style>
+

@@ -1,5 +1,5 @@
-import Vue from "vue";
-import App from "./App";
+import { createApp } from "vue";
+import App from "./App.vue";
 import store from "./store";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -52,17 +52,15 @@ const faIcons = [
   "VolumeMute",
   "VoteYea",
   "WindowMaximize",
-  "WindowMinimize"
+  "WindowMinimize",
 ];
 const fabIcons = ["Github", "Discord"];
 library.add(
-  ...faIcons.map(i => fas["fa" + i]),
-  ...fabIcons.map(i => fab["fa" + i])
+  ...faIcons.map((i) => fas["fa" + i]),
+  ...fabIcons.map((i) => fab["fa" + i])
 );
-Vue.component("font-awesome-icon", FontAwesomeIcon);
-Vue.config.productionTip = false;
 
-new Vue({
-  render: h => h(App),
-  store
-}).$mount("#app");
+createApp(App)
+  .component("font-awesome-icon", FontAwesomeIcon)
+  .use(store)
+  .mount("#app");

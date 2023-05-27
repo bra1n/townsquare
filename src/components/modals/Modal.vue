@@ -10,16 +10,21 @@
         @click.stop=""
       >
         <div class="top-right-buttons">
-          <font-awesome-icon
+          <div
             @click="isMaximized = !isMaximized"
-            class="top-right-button"
-            :icon="['fas', isMaximized ? 'window-minimize' : 'window-maximize']"
-          />
-          <font-awesome-icon
-            @click="close"
-            class="top-right-button"
-            icon="times-circle"
-          />
+            style="display: inline-block"
+          >
+            <font-awesome-icon
+              class="top-right-button"
+              :icon="[
+                'fas',
+                isMaximized ? 'window-minimize' : 'window-maximize',
+              ]"
+            />
+          </div>
+          <div @click="close" style="display: inline-block">
+            <font-awesome-icon class="top-right-button" icon="times-circle" />
+          </div>
         </div>
         <div class="slot">
           <slot></slot>
@@ -31,16 +36,17 @@
 
 <script>
 export default {
-  data: function() {
+  emits: ["close"],
+  data: function () {
     return {
-      isMaximized: false
+      isMaximized: false,
     };
   },
   methods: {
     close() {
       this.$emit("close");
-    }
-  }
+    },
+  },
 };
 </script>
 

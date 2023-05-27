@@ -4,13 +4,14 @@
     v-if="modals.voteHistory && (session.voteHistory || !session.isSpectator)"
     @close="toggleModal('voteHistory')"
   >
-    <font-awesome-icon
-      @click="clearVoteHistory"
-      icon="trash-alt"
-      class="clear"
-      title="Clear vote history"
-      v-if="session.isSpectator"
-    />
+    <div @click="clearVoteHistory">
+      <font-awesome-icon
+        icon="trash-alt"
+        class="clear"
+        title="Clear vote history"
+        v-if="session.isSpectator"
+      />
+    </div>
 
     <h3>Vote history</h3>
 
@@ -58,16 +59,8 @@
       <tbody>
         <tr v-for="(vote, index) in session.voteHistory" :key="index">
           <td>
-            {{
-              vote.timestamp
-                .getHours()
-                .toString()
-                .padStart(2, "0")
-            }}:{{
-              vote.timestamp
-                .getMinutes()
-                .toString()
-                .padStart(2, "0")
+            {{ vote.timestamp.getHours().toString().padStart(2, "0") }}:{{
+              vote.timestamp.getMinutes().toString().padStart(2, "0")
             }}
           </td>
           <td>{{ vote.nominator }}</td>
