@@ -142,5 +142,15 @@
     "name": "Deus ex Fiasco",
     "team": "fabled",
     "ability": "Once per game, the Storyteller will make a \"mistake\", correct it and publicly admit to it."
+  },
+  {
+    "id": "plusone",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": true,
+    "name": "Plussy McOneface",
+    "team": "fabled",
+    "ability": "One role from off the script will be in play, it can be either a player or a demon bluff."
   }
 ]

@@ -1,7 +1,5 @@
 <template>
-
   <div class="token" @click="setRole" :class="[role.id]">
-
     <span
       class="icon"
       v-if="role.id"
@@ -29,7 +27,6 @@
     <span class="leaf-orange" v-if="role.setup"></span>
 
     <svg viewBox="0 0 150 150" class="name">
-
       <path
         d="M 13 75 C 13 160, 138 160, 138 75"
         id="curve"
@@ -43,19 +40,14 @@
         class="label mozilla"
         :font-size="nameToFontSize(role.name)"
       >
-
-        <textPath xlink:href="#curve"> {{ role.name }} </textPath>
-
+        <textPath xlink:href="#curve">{{ role.name }}</textPath>
       </text>
-
     </svg>
 
     <div class="edition" :class="[`edition-${role.edition}`, role.team]"></div>
 
-    <div class="ability" v-if="role.ability"> {{ role.ability }} </div>
-
+    <div class="ability" v-if="role.ability">{{ role.ability }}</div>
   </div>
-
 </template>
 
 <script>
@@ -70,7 +62,7 @@ export default {
     },
   },
   computed: {
-    reminderLeaves: function() {
+    reminderLeaves: function () {
       return (
         (this.role.reminders || []).length +
         (this.role.remindersGlobal || []).length
@@ -83,7 +75,7 @@ export default {
   },
   methods: {
     nameToFontSize(name) {
-      name && name.length > 10 ? "90%" : "110%";
+      return name && name.length > 10 ? "90%" : "110%";
     },
     setRole() {
       this.$emit("set-role");
@@ -245,4 +237,3 @@ export default {
   }
 }
 </style>
-
