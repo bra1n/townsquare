@@ -8,7 +8,26 @@
           : "bluffing"
       }}
     </h3>
-    <ul class="tokens" v-if="tab === 'editionRoles' || !otherTravelers.size">
+    <div
+      v-if="fabled.find((r) => r.id === 'plusone') && tab === 'editionRoles'"
+    >
+      <span>Find a Plus One character: </span>
+      <input type="text" v-model="filter" />
+    </div>
+    <ul class="tokens" v-if="filteredRoles.length > 0">
+      <li
+        v-for="role in filteredRoles.slice(0, 10)"
+        :class="[role.team]"
+        :key="role.id"
+        @click="setRole(role)"
+      >
+        <token :role="role" />
+      </li>
+    </ul>
+    <ul
+      class="tokens"
+      v-if="tab === 'editionRoles' || !otherTravelers.length > 0"
+    >
       <li
         v-for="role in availableRoles"
         :class="[role.team]"
@@ -18,9 +37,12 @@
         <Token :role="role" />
       </li>
     </ul>
-    <ul class="tokens" v-if="tab === 'otherTravelers' && otherTravelers.size">
+    <ul
+      class="tokens"
+      v-if="tab === 'otherTravelers' && otherTravelers.length > 0"
+    >
       <li
-        v-for="role in otherTravelers.values()"
+        v-for="role in otherTravelers"
         :class="[role.team]"
         :key="role.id"
         @click="setRole(role)"
@@ -30,7 +52,9 @@
     </ul>
     <div
       class="button-group"
-      v-if="playerIndex >= 0 && otherTravelers.size && !session.isSpectator"
+      v-if="
+        playerIndex >= 0 && otherTravelers.length > 0 && !session.isSpectator
+      "
     >
       <span
         class="button"
@@ -57,15 +81,24 @@ export default {
   components: { Token, Modal },
   props: ["playerIndex"],
   computed: {
+    filteredRoles() {
+      if (this.filter === "") {
+        return [];
+      }
+      var filteredRoles = this.otherRoles.filter((role) => {
+        return role.name.toLowerCase().includes(this.filter.toLowerCase());
+      });
+      return filteredRoles;
+    },
     availableRoles() {
       const availableRoles = [];
       const players = this.$store.state.players.players;
-      this.$store.state.roles.forEach(role => {
+      this.$store.state.roles.forEach((role) => {
         // don't show bluff roles that are already assigned to players
         if (
           this.playerIndex >= 0 ||
           (this.playerIndex < 0 &&
-            !players.some(player => player.role.id === role.id))
+            !players.some((player) => player.role.id === role.id))
         ) {
           availableRoles.push(role);
         }
@@ -74,12 +107,14 @@ export default {
       return availableRoles;
     },
     ...mapState(["modals", "roles", "session"]),
-    ...mapState("players", ["players"]),
-    ...mapState(["otherTravelers"])
+    ...mapState("players", ["players", "fabled"]),
+    ...mapState(["otherTravelers"]),
+    ...mapState(["otherRoles"]),
   },
   data() {
     return {
-      tab: "editionRoles"
+      tab: "editionRoles",
+      filter: "",
     };
   },
   methods: {
@@ -88,7 +123,7 @@ export default {
         // assign to bluff slot (index < 0)
         this.$store.commit("players/setBluff", {
           index: this.playerIndex * -1 - 1,
-          role
+          role,
         });
       } else {
         if (this.session.isSpectator && role.team === "traveler") return;
@@ -97,7 +132,7 @@ export default {
         this.$store.commit("players/update", {
           player,
           property: "role",
-          value: role
+          value: role,
         });
       }
       this.tab = "editionRoles";
@@ -105,10 +140,11 @@ export default {
     },
     close() {
       this.tab = "editionRoles";
+      this.filter = "";
       this.toggleModal("role");
     },
-    ...mapMutations(["toggleModal"])
-  }
+    ...mapMutations(["toggleModal"]),
+  },
 };
 </script>
 
