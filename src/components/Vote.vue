@@ -5,7 +5,6 @@
       <span class="nominator" :style="nominatorStyle"></span>
     </div>
     <div class="overlay">
-      <audio src="../assets/sounds/countdown.mp3" preload="auto"></audio>
       <em class="blue">{{ nominator.name }}</em> nominated
       <em>{{ nominee.name }}</em
       >!
@@ -105,11 +104,6 @@
         <span>2</span>
         <span>1</span>
         <span>GO</span>
-        <audio
-          :autoplay="!grimoire.isMuted"
-          src="../assets/sounds/countdown.mp3"
-          :muted="grimoire.isMuted"
-        ></audio>
       </div>
     </transition>
   </div>
@@ -117,6 +111,7 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
+import bongs from "../assets/sounds/countdown.mp3";
 
 export default {
   computed: {
@@ -194,6 +189,10 @@ export default {
     countdown() {
       this.$store.commit("session/lockVote", 0);
       this.$store.commit("session/setVoteInProgress", true);
+      if (!this.grimoire.isMuted) {
+        var sound = new Audio(bongs);
+        sound.play();
+      }
       this.voteTimer = setInterval(() => {
         this.start();
       }, 4000);
