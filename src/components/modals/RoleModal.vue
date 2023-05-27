@@ -88,7 +88,6 @@ export default {
       var filteredRoles = this.otherRoles.filter((role) => {
         return role.name.toLowerCase().includes(this.filter.toLowerCase());
       });
-      console.log(filteredRoles);
       return filteredRoles;
     },
     availableRoles() {
@@ -141,6 +140,7 @@ export default {
     },
     close() {
       this.tab = "editionRoles";
+      this.filter = "";
       this.toggleModal("role");
     },
     ...mapMutations(["toggleModal"]),

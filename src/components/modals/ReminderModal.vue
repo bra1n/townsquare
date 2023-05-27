@@ -88,6 +88,8 @@ export default {
       this.$store.state.otherRoles.forEach((role) => {
         if (players.some((p) => p.role.id === role.id)) {
           reminders = [...reminders, ...role.reminders.map(mapReminder(role))];
+        } else if (bluffs.some((bluff) => bluff.id === role.id)) {
+          reminders = [...reminders, ...role.reminders.map(mapReminder(role))];
         }
       });
 
