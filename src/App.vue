@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     keyup({ key, ctrlKey, metaKey }) {
-      if (ctrlKey || metaKey) return;
+      if (ctrlKey || metaKey || true) return;
       switch (key.toLocaleLowerCase()) {
         case "g":
           this.$store.commit("toggleGrimoire");

@@ -22,28 +22,20 @@ const getRolesByEdition = (edition = editionJSON[0]) => {
 };
 
 const getTravelersNotInEdition = (edition = editionJSON[0]) => {
-  return new Map(
-    rolesJSON
-      .filter(
-        (r) =>
-          r.team === "traveler" &&
-          r.edition !== edition.id &&
-          !edition.roles.includes(r.id)
-      )
-      .map((role) => [role.id, role])
+  return rolesJSON.filter(
+    (r) =>
+      r.team === "traveler" &&
+      r.edition !== edition.id &&
+      !edition.roles.includes(r.id)
   );
 };
 
 const getRolesNotInEdition = (edition = editionJSON[0]) => {
-  return new Map(
-    rolesJSON
-      .filter(
-        (r) =>
-          r.team !== "traveler" &&
-          r.edition !== edition.id &&
-          !edition.roles.includes(r.id)
-      )
-      .map((role) => [role.id, role.name])
+  return rolesJSON.filter(
+    (r) =>
+      r.team !== "traveler" &&
+      r.edition !== edition.id &&
+      !edition.roles.includes(r.id)
   );
 };
 
@@ -144,7 +136,7 @@ export default new Vuex.Store({
     edition: editionJSONbyId.get("tb"),
     roles: getRolesByEdition(),
     otherTravelers: getTravelersNotInEdition(),
-    otherRoles: getTravelersNotInEdition(),
+    otherRoles: getRolesNotInEdition(),
     fabled,
     jinxes,
   },
@@ -284,6 +276,7 @@ export default new Vuex.Store({
         state.edition = editionJSONbyId.get(edition.id);
         state.roles = getRolesByEdition(state.edition);
         state.otherTravelers = getTravelersNotInEdition(state.edition);
+        state.otherRoles = getRolesNotInEdition(state.edition);
       } else {
         state.edition = edition;
       }
