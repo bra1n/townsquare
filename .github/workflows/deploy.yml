@@ -14,13 +14,11 @@ jobs:
 
       - name: Install and Build 🔧
         uses: actions/setup-node@v3
-        with:
-          node-version: 16
       - run: npm ci
       - run: npm run build
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: dist
