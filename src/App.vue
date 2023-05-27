@@ -87,7 +87,7 @@ export default {
     Gradients,
   },
   computed: {
-    ...mapState(["grimoire", "session"]),
+    ...mapState(["grimoire", "session", "modals"]),
     ...mapState("players", ["players"]),
   },
   data() {
@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     keyup({ key, ctrlKey, metaKey }) {
-      if (ctrlKey || metaKey || true) return;
+      if (ctrlKey || metaKey || this.modals.role) return;
       switch (key.toLocaleLowerCase()) {
         case "g":
           this.$store.commit("toggleGrimoire");
