@@ -1,5 +1,40 @@
 [
   {
+    "id": "ib",
+    "name": "Indigestion Brewing",
+    "author": "Mozart is Lift Music",
+    "description": "Spicy TB",
+    "level": "Veteran",
+    "roles": [
+      "noble",
+      "clockmaker",
+      "grandmother",
+      "pixie",
+      "sailor",
+      "cultleader",
+      "snakecharmer",
+      "innkeeper",
+      "professor",
+      "amnesiac",
+      "tealady",
+      "farmer",
+      "cannibal",
+      "goon",
+      "snitch",
+      "klutz",
+      "puzzlemaster",
+      "godfather",
+      "cerenovus",
+      "devilsadvocate",
+      "widow",
+      "lilmonsta",
+      "fanggu",
+      "lleech",
+      "legion"
+    ],
+    "isOfficial": true
+  },
+  {
     "id": "tb",
     "name": "Trouble Brewing",
     "author": "The Pandemonium Institute",
@@ -32,7 +67,19 @@
     "author": "The Pandemonium Institute",
     "description": "",
     "level": "Veteran",
-    "roles": ["balloonist", "savant", "amnesiac", "fisherman", "artist", "cannibal", "mutant", "lunatic", "widow", "goblin", "leviathan"],
+    "roles": [
+      "balloonist",
+      "savant",
+      "amnesiac",
+      "fisherman",
+      "artist",
+      "cannibal",
+      "mutant",
+      "lunatic",
+      "widow",
+      "goblin",
+      "leviathan"
+    ],
     "isOfficial": true
   }
 ]
