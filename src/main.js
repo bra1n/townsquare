@@ -39,7 +39,6 @@ const faIcons = [
   "Skull",
   "Square",
   "TheaterMasks",
-  "Times",
   "TimesCircle",
   "TrashAlt",
   "Undo",
@@ -53,6 +52,8 @@ const faIcons = [
   "VoteYea",
   "WindowMaximize",
   "WindowMinimize",
+  "Times",
+  "Xmark",
 ];
 const fabIcons = ["Github", "Discord"];
 library.add(

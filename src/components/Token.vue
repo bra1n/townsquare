@@ -75,7 +75,9 @@ export default {
   },
   methods: {
     nameToFontSize(name) {
-      return name && name.length > 10 ? "90%" : "110%";
+      if (name && name.length > 14) return "80%";
+      if (name && name.length > 10) return "90%";
+      return "110%";
     },
     setRole() {
       this.$emit("set-role");
