@@ -1445,7 +1445,7 @@
     "firstNight": 50,
     "firstNightReminder": "Each night, wake the High Priestess. Point to a player. Put the High Priestess to sleep.",
     "otherNightReminder": "Each night, wake the High Priestess. Point to a player. Put the High Priestess to sleep.",
-    "reminders": [],
+    "reminders": ["Friend"],
     "setup": false,
     "ability": "Each night, learn which player the Storyteller believes you should talk to most."
   },
