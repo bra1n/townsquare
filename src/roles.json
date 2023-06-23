@@ -1438,6 +1438,18 @@
     "ability": "You start knowing 2 players that are not the Demon."
   },
   {
+    "id": "highpriestess",
+    "name": "High Priestess",
+    "edition": "",
+    "team": "townsfolk",
+    "firstNight": 50,
+    "firstNightReminder": "Each night, wake the High Priestess. Point to a player. Put the High Priestess to sleep.",
+    "otherNightReminder": "Each night, wake the High Priestess. Point to a player. Put the High Priestess to sleep.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Each night, learn which player the Storyteller believes you should talk to most."
+  },
+  {
     "id": "snitch",
     "name": "Snitch",
     "edition": "",
