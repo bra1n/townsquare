@@ -51,7 +51,7 @@
         <font-awesome-icon icon="hand-paper" class="vote" title="Hand UP" />
       </div>
       <div class="overlay" @click="vote()">
-        <font-awesome-icon icon="times" class="vote" title="Hand DOWN" />
+        <font-awesome-icon icon="xmark" class="vote" title="Hand DOWN" />
       </div>
       <div class="overlay" @click="cancel()">
         <font-awesome-icon icon="times-circle" class="cancel" title="Cancel" />
@@ -548,7 +548,7 @@ export default {
     &.fa-hand * {
       fill: url(#demon);
     }
-    &.fa-times * {
+    &.fa-xmark * {
       fill: url(#townsfolk);
     }
   }
@@ -563,7 +563,7 @@ export default {
 // you voted yes | a locked vote yes | a locked vote no
 #townsquare.vote .player.you.vote-yes .overlay svg.vote.fa-hand,
 #townsquare.vote .player.vote-lock.vote-yes .overlay svg.vote.fa-hand,
-#townsquare.vote .player.vote-lock:not(.vote-yes) .overlay svg.vote.fa-times {
+#townsquare.vote .player.vote-lock:not(.vote-yes) .overlay svg.vote.fa-xmark {
   opacity: 1;
   transform: scale(1);
 }
