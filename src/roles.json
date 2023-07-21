@@ -1673,6 +1673,19 @@
     "ability": "All players know who you are. You can not die during the day. If good voted, you may choose to execute immediately."
   },
   {
+    "id": "harpy",
+    "name": "Harpy",
+    "edition": "",
+    "team": "minion",
+    "firstNight": 25,
+    "firstNightReminder": "Select two players, one at a time.",
+    "otherNight": 15,
+    "otherNightReminder": "Select two players, one at a time.",
+    "reminders": ["Mad", "2nd"],
+    "setup": false,
+    "ability": "Each night, choose 2 players: tomorrow, the 1st player is mad that the 2nd is evil, or both might die."
+  },
+  {
     "id": "lilmonsta",
     "name": "Lil' Monsta",
     "edition": "",
