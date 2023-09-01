@@ -1541,6 +1541,14 @@
     "ability": "If you were the player most responsible for your team losing, you change alignment & win, even if dead."
   },
   {
+    "id": "plaguedoctor",
+    "reminders": ["Storyteller Ability"],
+    "setup": false,
+    "name": "Plague Doctor",
+    "team": "outsider",
+    "ability": "If you die, the Storyteller gains a not-in-play Minion ability."
+  },
+  {
     "id": "widow",
     "name": "Widow",
     "edition": "",
