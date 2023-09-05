@@ -75,8 +75,8 @@ export default {
         reminders = [...reminders, ...role.reminders.map(mapReminder(role))];
       });
 
-      // add out of script traveler reminders
-      this.$store.state.otherTravelers.forEach(role => {
+      // add out of script traveller reminders
+      this.$store.state.otherTravellers.forEach(role => {
         if (players.some(p => p.role.id === role.id)) {
           reminders = [...reminders, ...role.reminders.map(mapReminder(role))];
         }

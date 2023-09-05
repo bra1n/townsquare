@@ -146,7 +146,7 @@ export default {
     },
     openRoleModal(playerIndex) {
       const player = this.players[playerIndex];
-      if (this.session.isSpectator && player && player.role.team === "traveler")
+      if (this.session.isSpectator && player && player.role.team === "traveller")
         return;
       this.selectedPlayer = playerIndex;
       this.$store.commit("toggleModal", "role");

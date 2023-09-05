@@ -1,14 +1,14 @@
 <template>
   <Modal
     class="roles"
-    v-if="modals.roles && nonTravelers >= 5"
+    v-if="modals.roles && nonTravellers >= 5"
     @close="toggleModal('roles')"
   >
-    <h3>Select the characters for {{ nonTravelers }} players:</h3>
+    <h3>Select the characters for {{ nonTravellers }} players:</h3>
     <ul class="tokens" v-for="(teamRoles, team) in roleSelection" :key="team">
       <li class="count" :class="[team]">
         {{ teamRoles.reduce((a, { selected }) => a + selected, 0) }} /
-        {{ game[nonTravelers - 5][team] }}
+        {{ game[nonTravellers - 5][team] }}
       </li>
       <li
         v-for="role in teamRoles"
@@ -45,7 +45,7 @@
         class="button"
         @click="assignRoles"
         :class="{
-          disabled: selectedRoles > nonTravelers || !selectedRoles
+          disabled: selectedRoles > nonTravellers || !selectedRoles
         }"
       >
         <font-awesome-icon icon="people-arrows" />
@@ -92,7 +92,7 @@ export default {
     },
     ...mapState(["roles", "modals"]),
     ...mapState("players", ["players"]),
-    ...mapGetters({ nonTravelers: "players/nonTravelers" })
+    ...mapGetters({ nonTravellers: "players/nonTravellers" })
   },
   methods: {
     selectRandomRoles() {
@@ -104,8 +104,8 @@ export default {
         this.roleSelection[role.team].push(role);
         this.$set(role, "selected", 0);
       });
-      delete this.roleSelection["traveler"];
-      const playerCount = Math.max(5, this.nonTravelers);
+      delete this.roleSelection["traveller"];
+      const playerCount = Math.max(5, this.nonTravellers);
       const composition = this.game[playerCount - 5];
       Object.keys(composition).forEach(team => {
         for (let x = 0; x < composition[team]; x++) {
@@ -121,7 +121,7 @@ export default {
       });
     },
     assignRoles() {
-      if (this.selectedRoles <= this.nonTravelers && this.selectedRoles) {
+      if (this.selectedRoles <= this.nonTravellers && this.selectedRoles) {
         // generate list of selected roles and randomize it
         const roles = Object.values(this.roleSelection)
           .map(roles =>
@@ -135,7 +135,7 @@ export default {
           .sort((a, b) => a[0] - b[0])
           .map(a => a[1]);
         this.players.forEach(player => {
-          if (player.role.team !== "traveler" && roles.length) {
+          if (player.role.team !== "traveller" && roles.length) {
             const value = roles.pop();
             this.$store.commit("players/update", {
               player,
@@ -194,8 +194,8 @@ ul.tokens {
     &.demon {
       box-shadow: 0 0 10px $demon, 0 0 10px $demon;
     }
-    &.traveler {
-      box-shadow: 0 0 10px $traveler, 0 0 10px $traveler;
+    &.traveller {
+      box-shadow: 0 0 10px $traveller, 0 0 10px $traveller;
     }
     &:hover {
       transform: scale(1.2);

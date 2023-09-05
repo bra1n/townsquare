@@ -125,13 +125,13 @@ export default {
         }
         rolesGrouped[role.team].push(role);
       });
-      delete rolesGrouped["traveler"];
+      delete rolesGrouped["traveller"];
       return rolesGrouped;
     },
     playersByRole: function() {
       const players = {};
       this.players.forEach(({ name, role }) => {
-        if (role && role.id && role.team !== "traveler") {
+        if (role && role.id && role.team !== "traveller") {
           if (!players[role.id]) {
             players[role.id] = [];
           }

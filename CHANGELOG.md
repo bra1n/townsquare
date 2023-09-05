@@ -25,7 +25,7 @@ Updated character night order to be consistent with script tool
 ### Version 2.15.2
 - added mobile web application support
 - show correct number of leaves on roles with global reminders
-- fixed a bug with traveler list showing up when assigning demon bluffs
+- fixed a bug with traveller list showing up when assigning demon bluffs
 - fixed a bug with homebrew scripts that contained negative night order positions
 
 ---
@@ -124,14 +124,14 @@ Updated character night order to be consistent with script tool
 ---
 
 ## Version 2.5.0
-- all travelers from the base editions are now optionally available (thanks @davotronic5000)
+- all travellers from the base editions are now optionally available (thanks @davotronic5000)
 - night order shows player names near roles now
 
 ---
 
 ## Version 2.4.0
 - added spoiler role (Pixie!)
-- fixed bug with ST sending out roles that are not part of the current edition / script (ie. travelers or base set roles)
+- fixed bug with ST sending out roles that are not part of the current edition / script (ie. travellers or base set roles)
 - better Lycanthrope icon (thanks @AWConant)
 
 ---
@@ -181,20 +181,20 @@ Updated character night order to be consistent with script tool
 ---
 
 ## Version 2.0.4
-- fix bug with live sessions that contain travelers from a different set
+- fix bug with live sessions that contain travellers from a different set
 - fix server channel cleanup
 
 ---
 
 ## Version 2.0.3
-- load roles that belong to different editions (like travelers) from gamestate
+- load roles that belong to different editions (like travellers) from gamestate
 - close session when missing custom roles and open edition modal
 - added a few more metrics
 
 ---
 
 ## Version 2.0.2
-- fix nomination history type not detecting travelers
+- fix nomination history type not detecting travellers
 - fix live session domain whitelist
 - fix build path
 - fix changelog version numbering

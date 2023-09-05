@@ -472,7 +472,7 @@ export default {
     }
   }
 
-  &.traveler .life {
+  &.traveller .life {
     filter: grayscale(100%);
   }
 }
@@ -487,13 +487,13 @@ export default {
     transform: perspective(400px) rotateY(0deg);
   }
 
-  &.traveler:not(.dead) .token {
+  &.traveller:not(.dead) .token {
     transform: perspective(400px) scale(0.8);
     pointer-events: none;
     transition-delay: 0s;
   }
 
-  &.traveler.dead .token {
+  &.traveller.dead .token {
     transition-delay: 0s;
   }
 }
@@ -636,7 +636,7 @@ li.move:not(.from) .player .overlay svg.move {
 @include glow("outsider", $outsider);
 @include glow("demon", $demon);
 @include glow("minion", $minion);
-@include glow("traveler", $traveler);
+@include glow("traveller", $traveller);
 
 .player.you .token {
   animation: townsfolk-glow 5s ease-in-out infinite;
