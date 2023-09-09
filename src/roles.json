@@ -1791,5 +1791,47 @@
     "reminders": [],
     "setup": false,
     "ability": "Once per day, you may choose to kill an alive neighbour, if your other alive neighbour agrees."
+  },
+  {
+    "id": "saintnick",
+    "edition": "custom",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 28,
+    "otherNightReminder": "Choose two alive players to alive players to recieve a gift.",
+    "reminders": ["Gift"],
+    "remindersGlobal": [],
+    "setup": true,
+    "name": "Saint Nick",
+    "team": "townsfolk",
+    "ability": "Each night* you choose two alive players to recieve a gift."
+  },
+  {
+    "id": "grinch",
+    "edition": "custom",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 29,
+    "otherNightReminder": "Find out who recieved Saint Nicks Gifts tonight and switch one for a bomb",
+    "reminders": ["Bomb", "Is The Grinch"],
+    "remindersGlobal": [],
+    "setup": true,
+    "name": "Grinch",
+    "team": "fabled",
+    "ability": "A minion is selected to be the Grinch, Each night* the minion is woken and selects one of Saint Nick's gifts to switch out for a bomb"
+  },
+  {
+    "id": "septemberchild",
+    "edition": "custom",
+    "firstNight": 12,
+    "firstNightReminder": "",
+    "otherNight": 5,
+    "otherNightReminder": "Wake September child for the ability they have, do not tell them what their ability is.",
+    "reminders": ["Has Ability"],
+    "remindersGlobal": [],
+    "setup": true,
+    "name": "September Child",
+    "team": "townsfolk",
+    "ability": "Each night* You have an in play ability. One additional September Child is drunk or evil [+0-2 September Child]"
   }
 ]
