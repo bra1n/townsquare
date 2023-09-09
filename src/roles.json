@@ -1850,7 +1850,6 @@
   },
   {
     "id": "sculptor_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/sculptor_fall_of_rome.png",
     "firstNightReminder": "Point to a player. Place the SCULPTURE token next to that player.",
     "otherNightReminder": "If the player with the SCULPTURE token nominated today. Show the Sculptor an evil thumbs down sign if the nominated player is evil. Otherwise: show the Sculptor a good thumbs up sign. Remove the NOMINATED token (if any).",
     "reminders": ["Sculpture", "Nominated"],
@@ -1863,7 +1862,6 @@
   },
   {
     "id": "vestalvirgin_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/vestalvirgin_fall_of_rome.png",
     "firstNightReminder": "Show 1 good and 1 evil character token: one of these is in play. Place the LEARNS next to the in-play character. ",
     "otherNightReminder": "If the player with the LEARNS token died today, remove the token. Show 1 good and 1 evil character token: one of these is in play. Place the LEARNS next to the in-play character. ",
     "reminders": ["Learns"],
@@ -1876,7 +1874,6 @@
   },
   {
     "id": "physician_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/physician_fall_of_rome.png",
     "firstNightReminder": "The Physician points to two players not themselves. Mark both players with the PATIENT token.",
     "otherNightReminder": "Remove all PATIENT tokens. The Physician points to two players not themselves. Mark both players with the PATIENT token. If a player with a PATIENT token was killed by the Demon, place the 1ST DEMON token next to the Physician and wake the Physician and show them Demon token.",
     "reminders": ["Patient", "1st Demon"],
@@ -1889,7 +1886,6 @@
   },
   {
     "id": "legionary_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/legionary_fall_of_rome.png",
     "firstNightReminder": "Show the hand signal for the number (0, 1, 2, etc.) of living evil players between the Legionary and the next clockwise Legionary (exclusive).",
     "otherNightReminder": "Show the hand signal for the number (0, 1, 2, etc.) of living evil players between the Legionary and the next clockwise Legionary (exclusive).",
     "setup": true,
@@ -1902,7 +1898,6 @@
   },
   {
     "id": "trumpeter_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/trumpeter_fall_of_rome.png",
     "otherNightReminder": "Show the hand signal for the number (0, 1, 2, etc.) of evil players who publicly claimed to be Spartacus today.",
     "reminders": ["Evil Claim"],
     "name": "Trumpeter",
@@ -1913,7 +1908,6 @@
   },
   {
     "id": "mortician_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/mortician_fall_of_rome.png",
     "otherNightReminder": "If a player was executed today: Show the head signal (nod 'yes', shake 'no') for whether one of the neighbours is evil.",
     "reminders": ["Recently Executed"],
     "name": "Mortician",
@@ -1924,7 +1918,6 @@
   },
   {
     "id": "standardbearer_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/standardbearer_fall_of_rome.png",
     "otherNightReminder": "If the Standard Bearer's public statement was true: show the head signal (nod 'true'). Otherwise: show the head signal (shake 'false').",
     "reminders": ["True", "False"],
     "name": "Standard Bearer",
@@ -1935,7 +1928,6 @@
   },
   {
     "id": "centurion1_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/centurion1_fall_of_rome.png",
     "reminders": ["Drunk"],
     "name": "Centurion",
     "team": "townsfolk",
@@ -1944,7 +1936,6 @@
   },
   {
     "id": "merchant_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/merchant_fall_of_rome.png",
     "otherNightReminder": "If the Merchant has not yet used their ability: the Merchant either shows a shake 'no' head signal, or a nod 'yes' head signal. If the Merchant chose 'yes', show the character tokens of players with a NOMINATED token (in any order). Place the NO ABILITY token.",
     "reminders": ["Nominated", "No Ability"],
     "name": "Merchant",
@@ -1955,7 +1946,6 @@
   },
   {
     "id": "gladiator_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/gladiator_fall_of_rome.png",
     "otherNightReminder": "If the Gladiator used their ability today wake the Gladiator and the player they chose: both players silently play roshambo (rock \"fist\", scissors \"two fingers\" or paper \"flat hand\"). If they both chose the same, play again. Play until someone wins. The loser dies.",
     "reminders": ["Duel", "Dead", "No Ability"],
     "name": "Gladiator",
@@ -1966,7 +1956,6 @@
   },
   {
     "id": "actor_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/actor_fall_of_rome.png",
     "otherNightReminder": "If the Actor used their ability today: Show the hand signal for the number (0, 1, 2, or 3) of CORRECT markers. Place the NO ABILITY marker.",
     "reminders": ["Correct", "No Ability"],
     "name": "Actor",
@@ -1977,7 +1966,6 @@
   },
   {
     "id": "blacksmith_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/blacksmith_fall_of_rome.png",
     "otherNightReminder": "If the Blacksmith was killed by a Demon. Show the Blacksmith a not-in-play Townsfolk character token. Swap the not-in-play character token with the Blacksmith token. Place the IS THE BLACKSMITH token next to the not-in-play character token. Wake the Blacksmith and show 'You are', then their new character ability.",
     "reminders": ["Is the Blacksmith"],
     "name": "Blacksmith",
@@ -1988,7 +1976,6 @@
   },
   {
     "id": "scholar_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/scholar_fall_of_rome.png",
     "otherNightReminder": "If the Scholar nominated an Outsider today, place the NO ABILITY token. Wake the nominated player. Show 'You are', then their new character token.",
     "reminders": ["Lectured", "No Ability"],
     "setup": true,
@@ -2000,7 +1987,6 @@
   },
   {
     "id": "thetwins_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/thetwins_fall_of_rome.png",
     "firstNightReminder": "Point to a player. Place the REMUS token next to that player.",
     "otherNightReminder": "If The Twins has a TOWNSFOLK DRUNK token, all Townsfolk are drunk until dusk.",
     "reminders": ["Remus", "Townsfolk Drunk"],
@@ -2013,7 +1999,6 @@
   },
   {
     "id": "winemaker_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/winemaker_fall_of_rome.png",
     "firstNightReminder": "Place either the ODD or EVEN token. If ODD, the Winemaker is drunk on the 1st night and every other night after. Otherwise: the Winemaker is drunk on the 2nd night and every other night after.",
     "otherNightReminder": "Check which ODD or EVEN token is placed. If an odd night and the ODD token is placed, the Winemaker is drunk until dusk. If an even night and the EVEN token is placed, the Winemaker is drunk until dusk. Otherwise their Townsfolk neighbours are drunk until dusk.",
     "reminders": ["Odd", "Even", "Drunk"],
@@ -2026,7 +2011,6 @@
   },
   {
     "id": "spartacus_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/spartacus_fall_of_rome.png",
     "reminders": ["Guess Used"],
     "name": "Spartacus",
     "team": "outsider",
@@ -2035,7 +2019,6 @@
   },
   {
     "id": "badomen_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/badomen_fall_of_rome.png",
     "remindersGlobal": ["Is a Bad Omen"],
     "setup": true,
     "name": "Bad Omen",
@@ -2045,7 +2028,6 @@
   },
   {
     "id": "temptress_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/temptress_fall_of_rome.png",
     "firstNightReminder": "The Temptress points to two players. Place the SEDUCED token next to the two players. Wake the two players separately. Show the 'This character selected you' card, then the Temptress token. ",
     "otherNightReminder": "If a player with a SEDUCED token is executed and dies, remove their SEDUCED token. The player with the remaining SEDUCED turns evil. Remove their SEDUCED token and replace it with the EVIL token. Wake the evil player and show them the 'You are' card and the thumbs down evil signal.",
     "reminders": ["Seduced", "Evil"],
@@ -2058,7 +2040,6 @@
   },
   {
     "id": "haruspex_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/haruspex_fall_of_rome.png",
     "firstNightReminder": "The Haruspex points to a player. Show that player\u2019s character token. Place a FORETOLD token next that player. ",
     "otherNightReminder": "The Haruspex points to a player. Show that player\u2019s character token. Place a FORETOLD token next that player: if that player already has a FORETOLD token. That player dies, also place the CAN'T KILL token next to the Haruspex.",
     "reminders": ["Foretold", "Dead", "Can't Kill"],
@@ -2072,7 +2053,6 @@
   },
   {
     "id": "glykon1_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/glykon1_fall_of_rome.png",
     "reminders": ["Snake Bite", "Poisoned"],
     "name": "Glykon",
     "team": "minion",
@@ -2081,7 +2061,6 @@
   },
   {
     "id": "augur_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/augur_fall_of_rome.png",
     "name": "Augur",
     "team": "minion",
     "ability": "If a Townsfolk nominates you, they immediately become a Bad Omen.",
@@ -2089,7 +2068,6 @@
   },
   {
     "id": "cleopatra_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/cleopatra_fall_of_rome.png",
     "firstNightReminder": "Cleopatra points to two players. ",
     "otherNightReminder": "If a previously chosen player nominated today they die. Remove all CHOSEN tokens. Cleopatra points to two players. Place the CHOSEN token next to both players.",
     "reminders": ["Chosen", "Dead"],
@@ -2102,7 +2080,6 @@
   },
   {
     "id": "crassus_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/crassus_fall_of_rome.png",
     "otherNightReminder": "Crassus points to a player. That player dies. If the 1st Crassus publicly claimed to be Spartacus today and points to themselves (or was executed), with 5 or more players alive, replace the character of 1 evil player with a spare Crassus token. Show the 'You are' card, then the Crassus token. ",
     "reminders": ["Dead", "1st Crassus"],
     "name": "Crassus",
@@ -2113,7 +2090,6 @@
   },
   {
     "id": "hannibal_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/hannibal_fall_of_rome.png",
     "firstNightReminder": "Select 2 good players and place the IS HANNIBAL reminder tokens. Wake all Minions together, show them the Hannibals and show them three not-in-play character tokens (these must be the same).",
     "otherNightReminder": "Choose a player, that player dies. If a Hannibal died today, wake that player and show them the 'You are' card, the Hannibal token and then the thumbs up good signal.",
     "remindersGlobal": ["Is Hannibal", "Dead"],
@@ -2128,7 +2104,6 @@
   },
   {
     "id": "caesar_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/caesar_fall_of_rome.png",
     "otherNightReminder": "If an evil player was executed today, Caesar points to two players. Otherwise: Caesar points to a player. Chosen players die.",
     "reminders": ["Betrayal", "Used", "Dead"],
     "name": "Caesar",
@@ -2139,7 +2114,6 @@
   },
   {
     "id": "mercenary_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/mercenary_fall_of_rome.png",
     "otherNightReminder": "Show the Mercenary a character that publicly claimed to be Spartacus today, they have that ability tonight and tomorrow until dusk. ",
     "reminders": ["Good", "Evil", "Good Ability", "Evil Ability"],
     "name": "Mercenary",
@@ -2150,7 +2124,6 @@
   },
   {
     "id": "architect_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/architect_fall_of_rome.png",
     "otherNightReminder": "The Architect points to a player. Choose which ability will effect the chosen player. Treat them accordingly (not-in-play character or character swap). Wake affected players individually. Show 'You are', then their new character token.",
     "reminders": ["Redesigned"],
     "name": "Architect",
@@ -2161,7 +2134,6 @@
   },
   {
     "id": "sibyl_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/sibyl_fall_of_rome.png",
     "name": "Sibyl",
     "team": "traveler",
     "ability": "Each day, after the 1st execution, you may publicly choose a dead player: they may nominate. If the majority of the dead and yourself agree, they are executed.",
@@ -2170,7 +2142,6 @@
   },
   {
     "id": "highpriest1_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/highpriest1_fall_of_rome.png",
     "otherNightReminder": "If the High Priest successfully blessed a player today, something good happens to that player and/or their team.",
     "reminders": ["Blessed", "Failed"],
     "name": "High Priest",
@@ -2181,7 +2152,6 @@
   },
   {
     "id": "highpriest2_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/highpriest2_fall_of_rome.png",
     "otherNightReminder": "If the High Priest successfully blessed a player today, wake the High Priest. The High Priest chooses whether the statement is true tomorrow with a hand signal (true \"thumbs up\", false \"thumbs down\").",
     "reminders": ["Blessed", "Failed", "True", "False"],
     "name": "High Priest",
@@ -2192,7 +2162,6 @@
   },
   {
     "id": "emperor_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/emperor_fall_of_rome.png",
     "otherNightReminder": "If a player was executed today and the outcome was not overturned by the Emperor: Show the hand signal (thumbs down 'evil', thumbs up 'good') for the players alignment.",
     "reminders": ["Executed"],
     "name": "Emperor",
@@ -2203,7 +2172,6 @@
   },
   {
     "id": "iamspartacus_fall_of_rome",
-    "image": "https://www.bloodstar.xyz/p/AlexS/Fall_of_Rome/iamspartacus_fall_of_rome.png",
     "reminders": ["I am Spartacus!"],
     "name": "\"I Am Spartacus!\"",
     "team": "fabled",
