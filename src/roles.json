@@ -2173,9 +2173,19 @@
   {
     "id": "iamspartacus_fall_of_rome",
     "reminders": ["I am Spartacus!"],
-    "name": "\"I Am Spartacus!\"",
+    "name": "I Am Spartacus!",
     "team": "fabled",
     "ability": "Each day, up to half the living players (rounded up & Travellers don\u2019t count) may publicly claim to be Spartacus.",
     "flavor": "I am Spartacus!"
+  },
+  {
+    "id": "shugenja",
+    "firstNight": 33,
+    "firstNightReminder": "Wake the Shugenja; point horizontally in the direction of the closest evil player. If the two closest evil players are equidistant, point your finger horizontally in either direction.",
+    "otherNight": 0,
+    "setup": false,
+    "name": "Shugenja",
+    "team": "townsfolk",
+    "ability": "You start knowing if your closest evil player is clockwise or anti-clockwise. If equidistant, this info is arbitrary."
   }
 ]
