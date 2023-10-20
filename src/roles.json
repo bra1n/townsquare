@@ -1781,6 +1781,16 @@
     "ability": "Nominees die, but may nominate again immediately (on day 3, they must). After day 3, evil wins. [All Minions are Riot]"
   },
   {
+    "id": "ojo",
+    "firstNight": 0,
+    "otherNight": 32.2,
+    "otherNightReminder": "The Ojo points to a character on the sheet; if in play, that player dies. If it is not in play, the Storyteller chooses who dies instead.",
+    "reminders": ["Dead"],
+    "name": "Ojo",
+    "team": "demon",
+    "ability": "Each night*, choose a character: they die. If they are not in play, the Storyteller chooses who dies."
+  },
+  {
     "id": "gangster",
     "name": "Gangster",
     "edition": "",
