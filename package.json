@@ -1,6 +1,6 @@
 {
   "name": "townsquare",
-  "version": "2.16.0",
+  "version": "2.16.2",
   "description": "Blood on the Clocktower Town Square",
   "author": "Steffen Baumgart",
   "scripts": {
@@ -15,22 +15,22 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/vue-fontawesome": "^0.1.10",
-    "@vue/cli-service": "^4.5.9",
+    "@vue/cli-service": "^5.0.8",
     "prom-client": "^13.0.0",
     "sass": "^1.30.0",
     "sass-loader": "^8.0.2",
     "vue": "^2.6.12",
-    "vue-template-compiler": "^2.6.12",
+    "vue-template-compiler": "^2.7.15",
     "vuex": "^3.6.0",
     "ws": "^7.4.6"
   },
   "devDependencies": {
-    "@vue/cli-plugin-eslint": "^4.5.9",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-prettier": "^3.2.0",
-    "eslint-plugin-vue": "^6.2.2",
-    "prettier": "^1.19.1"
+    "@vue/cli-plugin-eslint": "^5.0.8",
+    "@vue/eslint-config-prettier": "^8.0.0",
+    "eslint": "^8.53.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-vue": "^9.18.1",
+    "prettier": "^3.0.3"
   },
   "keywords": [
     "botc",
