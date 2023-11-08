@@ -137,7 +137,7 @@ export default {
       }
       this.roles.forEach(role => {
         const players = this.players.filter(p => p.role.id === role.id);
-        if (role.firstNight && (role.team !== "traveler" || players.length)) {
+        if (role.firstNight && (role.team !== "traveller" || players.length)) {
           rolesFirstNight.push(Object.assign({ players }, role));
         }
       });
@@ -153,7 +153,7 @@ export default {
       const rolesOtherNight = [];
       this.roles.forEach(role => {
         const players = this.players.filter(p => p.role.id === role.id);
-        if (role.otherNight && (role.team !== "traveler" || players.length)) {
+        if (role.otherNight && (role.team !== "traveller" || players.length)) {
           rolesOtherNight.push(Object.assign({ players }, role));
         }
       });

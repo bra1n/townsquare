@@ -11,7 +11,7 @@
         })`
       }"
     ></li>
-    <li v-if="players.length - teams.traveler < 5">
+    <li v-if="players.length - teams.traveller < 5">
       Please add more players!
     </li>
     <li>
@@ -30,7 +30,7 @@
         {{ teams.votes }} <font-awesome-icon class="votes" icon="vote-yea" />
       </span>
     </li>
-    <li v-if="players.length - teams.traveler >= 5">
+    <li v-if="players.length - teams.traveller >= 5">
       <span>
         {{ teams.townsfolk }}
         <font-awesome-icon class="townsfolk" icon="user-friends" />
@@ -56,11 +56,11 @@
           :icon="teams.demon > 1 ? 'user-friends' : 'user'"
         />
       </span>
-      <span v-if="teams.traveler">
-        {{ teams.traveler }}
+      <span v-if="teams.traveller">
+        {{ teams.traveller }}
         <font-awesome-icon
-          class="traveler"
-          :icon="teams.traveler > 1 ? 'user-friends' : 'user'"
+          class="traveller"
+          :icon="teams.traveller > 1 ? 'user-friends' : 'user'"
         />
       </span>
       <span v-if="grimoire.isNight">
@@ -79,11 +79,11 @@ export default {
   computed: {
     teams: function() {
       const { players } = this.$store.state.players;
-      const nonTravelers = this.$store.getters["players/nonTravelers"];
+      const nonTravellers = this.$store.getters["players/nonTravellers"];
       const alive = players.filter(player => player.isDead !== true).length;
       return {
-        ...gameJSON[nonTravelers - 5],
-        traveler: players.length - nonTravelers,
+        ...gameJSON[nonTravellers - 5],
+        traveller: players.length - nonTravellers,
         alive,
         votes:
           alive +
@@ -160,8 +160,8 @@ export default {
     .demon {
       color: $demon;
     }
-    .traveler {
-      color: $traveler;
+    .traveller {
+      color: $traveller;
     }
   }
 

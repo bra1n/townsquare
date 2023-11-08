@@ -8,7 +8,7 @@
           : "bluffing"
       }}
     </h3>
-    <ul class="tokens" v-if="tab === 'editionRoles' || !otherTravelers.size">
+    <ul class="tokens" v-if="tab === 'editionRoles' || !otherTravellers.size">
       <li
         v-for="role in availableRoles"
         :class="[role.team]"
@@ -18,9 +18,9 @@
         <Token :role="role" />
       </li>
     </ul>
-    <ul class="tokens" v-if="tab === 'otherTravelers' && otherTravelers.size">
+    <ul class="tokens" v-if="tab === 'otherTravellers' && otherTravellers.size">
       <li
-        v-for="role in otherTravelers.values()"
+        v-for="role in otherTravellers.values()"
         :class="[role.team]"
         :key="role.id"
         @click="setRole(role)"
@@ -30,7 +30,7 @@
     </ul>
     <div
       class="button-group"
-      v-if="playerIndex >= 0 && otherTravelers.size && !session.isSpectator"
+      v-if="playerIndex >= 0 && otherTravellers.size && !session.isSpectator"
     >
       <span
         class="button"
@@ -40,9 +40,9 @@
       >
       <span
         class="button"
-        :class="{ townsfolk: tab === 'otherTravelers' }"
-        @click="tab = 'otherTravelers'"
-        >Other Travelers</span
+        :class="{ townsfolk: tab === 'otherTravellers' }"
+        @click="tab = 'otherTravellers'"
+        >Other Travellers</span
       >
     </div>
   </Modal>
@@ -75,7 +75,7 @@ export default {
     },
     ...mapState(["modals", "roles", "session"]),
     ...mapState("players", ["players"]),
-    ...mapState(["otherTravelers"])
+    ...mapState(["otherTravellers"])
   },
   data() {
     return {
@@ -91,7 +91,7 @@ export default {
           role
         });
       } else {
-        if (this.session.isSpectator && role.team === "traveler") return;
+        if (this.session.isSpectator && role.team === "traveller") return;
         // assign to player
         const player = this.$store.state.players.players[this.playerIndex];
         this.$store.commit("players/update", {
@@ -133,8 +133,8 @@ ul.tokens li {
   &.demon {
     box-shadow: 0 0 10px $demon, 0 0 10px $demon;
   }
-  &.traveler {
-    box-shadow: 0 0 10px $traveler, 0 0 10px $traveler;
+  &.traveller {
+    box-shadow: 0 0 10px $traveller, 0 0 10px $traveller;
   }
   &:hover {
     transform: scale(1.2);
@@ -142,7 +142,7 @@ ul.tokens li {
   }
 }
 
-#townsquare.spectator ul.tokens li.traveler {
+#townsquare.spectator ul.tokens li.traveller {
   display: none;
 }
 </style>

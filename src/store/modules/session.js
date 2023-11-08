@@ -77,7 +77,7 @@ const mutations = {
   addHistory(state, players) {
     if (!state.isVoteHistoryAllowed && state.isSpectator) return;
     if (!state.nomination || state.lockedVote <= players.length) return;
-    const isExile = players[state.nomination[1]].role.team === "traveler";
+    const isExile = players[state.nomination[1]].role.team === "traveller";
     state.voteHistory.push({
       timestamp: new Date(),
       nominator: players[state.nomination[0]].name,
