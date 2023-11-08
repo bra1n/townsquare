@@ -1638,6 +1638,19 @@
     "ability": "If you are executed, all but 3 players die. 1 minute later, the player with the most players pointing at them dies."
   },
   {
+    "id": "vizier",
+    "name": "Vizier",
+    "edition": "",
+    "team": "minion",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "ability": "All players know who you are. You can not die during the day. If good voted, you may choose to execute immediately."
+  },
+  {
     "id": "lilmonsta",
     "name": "Lil' Monsta",
     "edition": "",

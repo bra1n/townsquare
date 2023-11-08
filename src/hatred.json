@@ -53,6 +53,23 @@
     ]
   },
   {
+    "id": "Vizier",
+    "hatred": [
+      {
+        "id": "Alchemist",
+        "reason": "An Alchemist with the Vizier ability requires three players to vote in order to force an execution."
+      }
+      {
+        "id": "Magician",
+        "reason": "Only 1 jinxed character can be in play. Evil players start knowing which character it is."
+      },
+      {
+        "id": "Preacher",
+        "reason": "If the Vizier loses their ability, they learn this and if the Vizier is executed while they have their ability, their team wins."
+      }
+    ]
+  },
+  {
     "id": "Leviathan",
     "hatred": [
       {
