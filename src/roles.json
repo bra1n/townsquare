@@ -2190,5 +2190,15 @@
     "name": "Shugenja",
     "team": "townsfolk",
     "ability": "You start knowing if your closest evil player is clockwise or anti-clockwise. If equidistant, this info is arbitrary."
+  },
+  {
+    "id": "hatter",
+    "firstNight": 0,
+    "otherNight": 40.1,
+    "otherNightReminder": "If the Hatter died today: Wake the Minions and Demon. Show them the 'This Character Selected You' info token, then the Hatter token. Each player either shakes their head no or points to another character of the same type as their current character.  If a second player would end up with the same character as another player, shake your head no and gesture for them to choose again. Put them to sleep. Change each player to the character they chose.",
+    "reminders": ["Tea Party Tonight"],
+    "name": "Hatter",
+    "team": "outsider",
+    "ability": "If you died today or tonight, the Minion & Demon players may choose new Minion & Demon characters to be."
   }
 ]
