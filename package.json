@@ -1,6 +1,6 @@
 {
   "name": "townsquare",
-  "version": "2.16.0",
+  "version": "3.0.0",
   "description": "Blood on the Clocktower Town Square",
   "author": "Steffen Baumgart",
   "scripts": {
@@ -40,6 +40,6 @@
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com//bra1n/townsquare.git"
+    "url": "https://github.com/davotronic5000/townsquare.git"
   }
 }

@@ -216,11 +216,11 @@
             </em>
           </li>
           <li>
-            <a href="https://github.com/bra1n/townsquare" target="_blank">
+            <a href="https://github.com/davotronic5000/townsquare" target="_blank">
               Source code
             </a>
             <em>
-              <a href="https://github.com/bra1n/townsquare" target="_blank">
+              <a href="https://github.com/davotronic5000/townsquare" target="_blank">
                 <font-awesome-icon :icon="['fab', 'github']" />
               </a>
             </em>
