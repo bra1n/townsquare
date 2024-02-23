@@ -136,6 +136,7 @@ export default {
         });
       }
       this.tab = "editionRoles";
+      this.filter = "";
       this.$store.commit("toggleModal", "role");
     },
     close() {

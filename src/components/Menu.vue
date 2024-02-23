@@ -265,9 +265,15 @@ export default {
       }
     },
     copySessionUrl() {
-      const url = window.location.href.split("#")[0];
+      try{
+        const url = window.location.href.split("#")[0];
       const link = url + "#" + this.session.sessionId;
       navigator.clipboard.writeText(link);
+      }
+      catch (error)
+      {
+      }
+      
     },
     distributeRoles() {
       if (this.session.isSpectator) return;
@@ -295,7 +301,9 @@ export default {
       let sessionId = prompt(
         "Enter the channel number / name of the session you want to join"
       );
-      if (sessionId.match(/^https?:\/\//i)) {
+      if (sessionId)
+      {
+        if (sessionId.match(/^https?:\/\//i)) {
         sessionId = sessionId.split("#").pop();
       }
       if (sessionId) {
@@ -304,6 +312,8 @@ export default {
         this.$store.commit("toggleGrimoire", false);
         this.$store.commit("session/setSessionId", sessionId);
       }
+      }
+      
     },
     leaveSession() {
       if (confirm("Are you sure you want to leave the active live game?")) {

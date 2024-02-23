@@ -267,6 +267,12 @@ export const store = Vuex.createStore({
           )
           .map((role) => [role.id, role])
       );
+      state.otherRoles = rolesJSON.filter(
+        (r) =>
+          r.team !== "traveler" &&
+          r.team !== "fabled" &&
+          !roles.some((i) => i.id === r.id)
+      );
     },
     setEdition(state, edition) {
       if (editionJSONbyId.has(edition.id)) {
